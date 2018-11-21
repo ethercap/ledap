@@ -3,6 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.ts',
+  context: path.resolve("./"),
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',

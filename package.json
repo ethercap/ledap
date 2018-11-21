@@ -2,7 +2,7 @@
   "name": "ether-mvc",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "webpack --mode=\"development\"",
     "watch": "webpack --mode=\"development\" --watch",
