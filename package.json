@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/build.js",
   "scripts": {
-    "dev": "webpack --mode=\"development\"",
+    "dev": "webpack --mode=\"development\" --display-modules",
     "watch": "webpack --mode=\"development\" --watch",
     "build": "webpack --mode=\"production\"",
     "test": "webpack --config=example/webpack.config.js  --mode=development"
@@ -12,6 +12,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/lodash": "^4.14.118",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-lodash": "^3.3.4",
     "css-loader": "^1.0.1",
     "ts-loader": "^5.3.0",
     "typescript": "^3.1.6",
@@ -22,6 +29,20 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.118"
+    "@babel/runtime": "^7.1.5",
+    "lodash": "^4.17.11",
+    "lodash-webpack-plugin": "^0.11.5",
+    "webpack-bundle-analyzer": "^3.0.3"
+  },
+  "babel": {
+    "compact": false,
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime",
+      "lodash"
+    ]
   }
 }
