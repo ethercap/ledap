@@ -1,12 +1,11 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "outDir": "./dist/",
         "sourceMap": true,
         "strict": false,
         "noImplicitReturns": true,
-        "module": "es2015",
-        "target": "es5"
+        "module": "ES6",
+        "target": "ES5"
     },
     "include": [
         "./src/**/*"

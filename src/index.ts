@@ -2,6 +2,6 @@ import Model from "./base/Model";
 import Pagination from "./base/Pagination";
 
 export default {
-    Model:Model,
+    Model: Model,
     Pagination: Pagination,
 };
