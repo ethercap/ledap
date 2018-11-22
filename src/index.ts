@@ -1,7 +1,5 @@
 import Model from "./base/Model";
 import Pagination from "./base/Pagination";
+import Event from "./base/Event";
 
-export default {
-    Model: Model,
-    Pagination: Pagination,
-};
+export {Model, Pagination, Event};
