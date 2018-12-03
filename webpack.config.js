@@ -13,9 +13,6 @@ module.exports = {
         library: 'ether-mvc',
         libraryTarget: 'umd',
     },
-    externals: {
-        lodash: 'lodash'
-    },
     module: {
         unknownContextCritical: false,
         rules: [{
@@ -49,7 +46,10 @@ module.exports = {
     },
     devtool: '#eval-source-map',
     plugins: [
-        new LodashModuleReplacementPlugin(),
+        new LodashModuleReplacementPlugin({
+            'caching': true,
+            'paths': true
+        }),
         // new BundleAnalyzerPlugin({
         //     analyzerMode: 'static',
         //     reportFilename: 'report.html',
