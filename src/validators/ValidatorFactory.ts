@@ -11,6 +11,7 @@ import EmailValidator from "./EmailValidator";
 import RangeValidator from "./RangeValidator";
 import UrlValidator from "./UrlValidator";
 import IpValidator from "./IpValidator";
+import DictValidator from "./DictValidator";
 
 export default class ValidatorFactory
 {
@@ -28,6 +29,8 @@ export default class ValidatorFactory
         "in"       : RangeValidator,
         "url"      : UrlValidator,
         "ip"       : IpValidator,
+        "dict"     : DictValidator,
+        "array"    : DictValidator,
     };
 
     //静态方法
