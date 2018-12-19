@@ -46,13 +46,14 @@ export default class DataProvider extends BaseObject {
         this._modelClass = modelClass;
     }
 
-    public load(data:object) {
-        if(data["params"]) {
-            this.searchModel.load(data["params"]);
-        }
-        if(data["meta"]) {
-            this.pager.load(data["meta"]);
-        }
+    public load(data:object) 
+    {
+        let params = lodash.get(data, "params", []);
+        this.searchModel.load(params);
+        
+        let meta = lodash.get(data, "meta", []);
+        this.pager.load(meta);
+        
         let modelClass = this._modelClass;
         if(!modelClass) {
             modelClass = Model;

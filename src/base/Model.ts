@@ -68,7 +68,7 @@ export default class Model extends BaseObject
     //只load数据
     public load(data:object):void {
         for (let key in data) {
-            if (typeof(data[key]) == "object" && data[key].hasOwnProperty("value")) {
+            if (typeof(data[key]) == "object" && data[key] !== null && data[key].hasOwnProperty("value")) {
                 let rules = this.rules();
                 let attrLabels = this.attributeLabels();
                 let attrHints = this.attributeHints();
