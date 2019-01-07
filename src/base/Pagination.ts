@@ -32,4 +32,14 @@ export default class Pagination extends BaseObject {
         this.emit(Pagination.EVENT_SETPAGE, this, {"oldValue":this._page, "value":value});
         this._page = value;
     }
+
+    public hasPrev()
+    {
+        return this.currentPage > 1;
+    }
+
+    public hasNext() 
+    {
+        return this.currentPage < this.pageCount;    
+    }
 }
