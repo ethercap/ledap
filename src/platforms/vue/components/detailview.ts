@@ -1,7 +1,7 @@
-import Column from "../../../widgets/Column"
+import Column from '../../../widgets/Column';
 export default {
     name : 'detail-view',
-    props:{
+    props: {
         /**
          *  [
          *      'id',
@@ -25,67 +25,67 @@ export default {
          *      },
          *
          *  ]
-         **/
-        columns:{
+         */
+        columns: {
             type: Array,
-            default : function() { return [];},
+            default() { return []; },
         },
-        dataModel:{
+        dataModel: {
             type: Object,
             required: true,
         },
         labelWidth : {
             type: String,
-            default : "20%",
+            default : '20%',
         },
         labelOptions : {
             type: Object,
-            default: function(){
+            default() {
                 return {};
             },
         },
-        contentOptions :{
+        contentOptions : {
             type : Object,
-            default : function(){
+            default() {
                 return {};
             },
-        }
+        },
     },
     computed: {
-        nColumns : function(){
+        nColumns() {
             return Column.normalizeColumns(this.columns, this);
-        }  
+        },
     },
     methods : {
-        getValue : function(value, format, createElement) {
-            if(format == "html") {
+        getValue(value, format, createElement) {
+            if (format === 'html') {
                 return createElement({
                     template: '<div>' + value + '</div>',
                 });
             }
             return value;
-        }
+        },
     },
-    render: function (createElement, context) {
-        let colgroups = [];
-        colgroups.push(createElement("col", {"attrs": {"width":this.labelWidth}}));
-        colgroups.push(createElement("col", {"attrs":{"width":"auto"}}));
-        
-        let contents = [];
-        contents.push(createElement("colgroup", colgroups));
-        let nColumns = this.nColumns;
-        for(const i in nColumns) {
-            let column = nColumns[i];
-            let tempArr = [];
-            tempArr.push(createElement("td", {"attrs": this.labelOptions}, [
+    render(createElement, context) {
+        const colgroups = [];
+        colgroups.push(createElement('col', {attrs: {width: this.labelWidth}}));
+        colgroups.push(createElement('col', {attrs: {width: 'auto'}}));
+
+        const contents = [];
+        contents.push(createElement('colgroup', colgroups));
+        const nColumns = this.nColumns;
+        for (const i in nColumns) {
+            const column = nColumns[i];
+            const tempArr = [];
+            tempArr.push(createElement('td', {attrs: this.labelOptions}, [
                 this.getValue(column.getLabel(this.dataModel, createElement), column.labelFormat, createElement),
             ]));
-            tempArr.push(createElement("td", {"attrs": this.contentOptions}, [
+            tempArr.push(createElement('td', {attrs: this.contentOptions}, [
                 this.getValue(column.getValue(this.dataModel, i, createElement), column.format, createElement),
             ]));
-            
-            contents.push(createElement("tr", tempArr));
+
+            contents.push(createElement('tr', tempArr));
         }
-        return createElement("table", contents);
+        return createElement('table', contents);
     },
 };

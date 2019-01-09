@@ -1,35 +1,33 @@
 export default {
     name : 'tab',
-    props:{
+    props: {
         dataKey : {
             type: String,
             default : null,
         },
     },
-    data:function(){
+    data() {
         return {
-            "status" : false,
-            "groupKey" : this.dataKey,
+            status : false,
+            groupKey : this.dataKey,
         };
     },
-    created: function(){
-    },
     methods : {
-        open: function(){
+        open() {
             this.status = true;
         },
-        close: function() {
+        close() {
             this.status = false;
         },
-        isOpen : function() {
-            return this.status == true;
+        isOpen() {
+            return this.status === true;
         },
-        click: function(){
-            let type = "open";
+        click() {
+            const type = 'open';
             this.open();
-            this.$emit("toggle", {
-                "type" : type,
-                "vm" : this,
+            this.$emit('toggle', {
+                type,
+                vm : this,
             });
         },
     },

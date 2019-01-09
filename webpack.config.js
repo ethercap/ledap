@@ -22,6 +22,11 @@ module.exports = {
                 loader: 'babel-loader'
             }, {
                 loader: 'ts-loader'
+            }, {
+                loader: 'tslint-loader',
+                options: {
+                    fix: true
+                }
             }]
         }, {
             test: /\.js$/,
@@ -77,7 +82,7 @@ if (process.env.NODE_ENV === 'production') {
             minimize: true
         })
     ]);
-}else if(process.env.NODE_ENV === 'development'){
+} else if (process.env.NODE_ENV === 'development') {
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {

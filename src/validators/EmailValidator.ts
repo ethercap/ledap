@@ -1,26 +1,24 @@
-import Validator from "./Validator";
-import Model from "../base/Model";
-import * as lodash from "lodash";
+import * as lodash from 'lodash';
+import Model from '../base/Model';
+import Validator from './Validator';
 
-export default class EmailValidator extends Validator
-{
-    public validateAttribute(model:Model):void
-    {
+export default class EmailValidator extends Validator {
+    public validateAttribute(model: Model): void {
         const attribute = this.attribute;
-        const options = this.options;
+        const options: any = this.options;
         const value = model[attribute];
-        if (options["skipOnEmpty"] && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && lodash.isEmpty(value)) {
             return;
         }
-        let valid = true,
-            regexp = /^((?:"?([^"]*)"?\s)?)(?:\s+)?(?:(<?)((.+)@([^>]+))(>?))$/,
-            matches = regexp.exec(value);
+        let valid = true;
+        const regexp = /^((?:"?([^"]*)"?\s)?)(?:\s+)?(?:(<?)((.+)@([^>]+))(>?))$/;
+        const matches = regexp.exec(value);
 
         if (matches === null) {
             valid = false;
         } else {
-            let localPart = matches[5],
-                domain = matches[6];
+            const localPart = matches[5];
+            const domain = matches[6];
 
             /*if (options["enableIDN"]) {
                 localPart = punycode.toASCII(localPart);
@@ -34,12 +32,12 @@ export default class EmailValidator extends Validator
             } else if ((localPart + '@' + domain).length > 254) {
                 valid = false;
             } else {
-                valid = options["pattern"].test(value) || (options["allowName"] && options["fullPattern"].test(value));
+                valid = options.pattern.test(value) || (options.allowName && options.fullPattern.test(value));
             }
         }
 
         if (!valid) {
-            model.addError(attribute, options["message"]);
+            model.addError(attribute, options.message);
         }
 
     }

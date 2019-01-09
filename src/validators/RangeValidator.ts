@@ -1,27 +1,25 @@
-import Validator from "./Validator";
-import Model from "../base/Model";
-import * as lodash from "lodash";
+import * as lodash from 'lodash';
+import Model from '../base/Model';
+import Validator from './Validator';
 
-export default class RangeValidator extends Validator
-{
-    public validateAttribute(model:Model):void
-    {
+export default class RangeValidator extends Validator {
+    public validateAttribute(model: Model): void {
         const attribute = this.attribute;
-        const options = this.options;
+        const options: any = this.options;
         const value = model[attribute];
-        if (options["skipOnEmpty"] && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && lodash.isEmpty(value)) {
             return;
         }
 
-        if (!options["allowArray"] && lodash.isArray(value)) {
-            model.addError(attribute, options["message"]);
+        if (!options.allowArray && lodash.isArray(value)) {
+            model.addError(attribute, options.message);
             return;
         }
 
         let inArray = true;
 
-        lodash.each(lodash.isArray(value) ? value : [value], function (i, v) {
-            if (lodash.indexOf(options["range"], v) == -1) {
+        lodash.each(lodash.isArray(value) ? value : [value], (i, v) => {
+            if (lodash.indexOf(options.range, v) === -1) {
                 inArray = false;
                 return false;
             } else {
@@ -29,14 +27,13 @@ export default class RangeValidator extends Validator
             }
         });
 
-        if (options["not"] === undefined) {
-            options["not"] = false;
+        if (options.not === undefined) {
+            options.not = false;
         }
 
-        if (options["not"] === inArray) {
-            model.addError(attribute, options["message"]);
+        if (options.not === inArray) {
+            model.addError(attribute, options.message);
         }
 
     }
 }
-

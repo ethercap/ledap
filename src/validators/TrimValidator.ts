@@ -1,11 +1,9 @@
-import Validator from "./Validator";
-import Model from "../base/Model";
-import * as lodash from "lodash";
+import * as lodash from 'lodash';
+import Model from '../base/Model';
+import Validator from './Validator';
 
-export default class TrimValidator extends Validator
-{
-    public validateAttribute(model:Model):void
-    {
+export default class TrimValidator extends Validator {
+    public validateAttribute(model: Model): void {
         const attribute = this.attribute;
         model[attribute] = lodash.trim(model[attribute]);
     }
