@@ -2,5 +2,10 @@ import Model from "./base/Model";
 import Pagination from "./base/Pagination";
 import Event from "./base/Event";
 import DataProvider from "./base/DataProvider";
-
-export {Model, Pagination, Event, DataProvider};
+import DetailView from "./platforms/vue/components/detailview";
+import Grid from "./platforms/vue/components/grid";
+import Pager from "./platforms/vue/components/pager";
+import List from "./platforms/vue/components/list/list";
+import Group from "./platforms/vue/components/group";
+import Tab from "./platforms/vue/components/tab";
+export {Model, Pagination, Event, DataProvider, DetailView, Grid, Pager, List, Group, Tab};
