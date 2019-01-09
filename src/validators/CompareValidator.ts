@@ -1,31 +1,30 @@
-import Validator from "./Validator";
-import Model from "../base/Model";
-import * as lodash from "lodash";
+import * as lodash from 'lodash';
+import Model from '../base/Model';
+import Validator from './Validator';
 
-export default class CompareValidator extends Validator
-{
-    public validateAttribute(model:Model):void
-    {
+export default class CompareValidator extends Validator {
+    public validateAttribute(model: Model): void {
         const attribute = this.attribute;
-        const options = this.options;
+        const options: any = this.options;
         let value = model[attribute];
-        if (options["skipOnEmpty"] && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && lodash.isEmpty(value)) {
             return;
         }
 
-        let compareValue,
-            valid = true;
-        if (options["compareAttribute"] === undefined) {
-            compareValue = options["compareValue"];
+        let compareValue;
+        let valid = true;
+        if (options.compareAttribute === undefined) {
+            compareValue = options.compareValue;
         } else {
-            compareValue = model[options["compareAttribute"]];
+            compareValue = model[options.compareAttribute];
         }
 
-        if (options["type"] === 'number') {
+        if (options.type === 'number') {
             value = parseFloat(value);
             compareValue = parseFloat(compareValue);
         }
-        switch (options["operator"]) {
+        /* tslint:disable:triple-equals */
+        switch (options.operator) {
             case '==':
                 valid = value == compareValue;
                 break;
@@ -56,9 +55,8 @@ export default class CompareValidator extends Validator
         }
 
         if (!valid) {
-            model.addError(value, options["message"]);
+            model.addError(value, options.message);
         }
 
     }
 }
-

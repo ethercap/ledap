@@ -15,38 +15,36 @@ export default {
     </form>
 </div>
     `,
-    props:{
-        dataProvider:{
+    props: {
+        dataProvider: {
             type: Object,
         },
     },
     computed: {
-        pagination : function(){
+        pagination() {
             return this.dataProvider.pager;
-        }
+        },
     },
-    data : function() {
+    data() {
         return {
-            "jumpPage" : 0,
+            jumpPage : 0,
         };
     },
-    methods:{
-        changePage : function(page) {
-            let oldPage = this.pagination.currentPage;
+    methods: {
+        changePage(page) {
+            const oldPage = this.pagination.currentPage;
             this.pagination.currentPage = page;
-            this.$emit("dprefresh", {
-                "type": "page",
-                "old": oldPage,
-                "new": this.pagination.currentPage
+            this.$emit('dprefresh', {
+                type: 'page',
+                old: oldPage,
+                new: this.pagination.currentPage,
             });
         },
-        toPrev : function()
-        {
+        toPrev() {
             this.changePage(this.pagination.currentPage + 1);
         },
-        toNext : function()
-        {
+        toNext() {
             this.changePage(this.pagination.currentPage - 1);
-        }
+        },
     },
 };

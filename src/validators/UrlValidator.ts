@@ -1,26 +1,24 @@
-import Validator from "./Validator";
-import Model from "../base/Model";
-import * as lodash from "lodash";
+import * as lodash from 'lodash';
+import Model from '../base/Model';
+import Validator from './Validator';
 
-export default class UrlValidator extends Validator
-{
-    public validateAttribute(model:Model):void
-    {
+export default class UrlValidator extends Validator {
+    public validateAttribute(model: Model): void {
         const attribute = this.attribute;
-        const options = this.options;
+        const options: any = this.options;
         let value = model[attribute];
-        if(options["pattern"] && typeof(options["pattern"]) === "string") {
-            options["pattern"] = new RegExp(options["pattern"]);
+        if (options.pattern && typeof(options.pattern) === 'string') {
+            options.pattern = new RegExp(options.pattern);
         }
-        if (options["skipOnEmpty"] && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && lodash.isEmpty(value)) {
             return;
         }
 
-        if (options["defaultScheme"] && !/:\/\//.test(value)) {
-            value = options["defaultScheme"] + '://' + value;
+        if (options.defaultScheme && !/:\/\//.test(value)) {
+            value = options.defaultScheme + '://' + value;
         }
 
-        let valid = true;
+        const valid = true;
 
         /*if (options["enableIDN"]) {
             let matches = /^([^:]+):\/\/([^\/]+)(.*)$/.exec(value);
@@ -31,10 +29,9 @@ export default class UrlValidator extends Validator
             }
         }*/
 
-        if (!valid || !options["pattern"].test(value)) {
-            model.addError(attribute, options["message"]);
+        if (!valid || !options.pattern.test(value)) {
+            model.addError(attribute, options.message);
         }
- 
+
     }
 }
-

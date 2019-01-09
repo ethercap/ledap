@@ -8,15 +8,15 @@ export default {
     <slot name="footer"></slot>
 </component>
     `,
-    props:{
-        dataProvider:{
+    props: {
+        dataProvider: {
             type: Object,
         },
         tagName : {
             type: String,
-            default : "div",
+            default : 'div',
         },
     },
-    methods:{
+    methods: {
     },
 };
