@@ -1,6 +1,6 @@
 {
   "name": "ether-mvc",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "./dist/build.js",
   "scripts": {
