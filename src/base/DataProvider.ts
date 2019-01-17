@@ -14,10 +14,45 @@ export default class DataProvider extends BaseObject {
         return this._modelClass;
     }
 
+    get sort(): string|object {
+        const arr = [];
+        for (const key in this._sort) {
+            const value = this._sort[key];
+            if (value === DataProvider.SORT_DESC) {
+                arr.push('-' + key);
+            } else {
+                arr.push(key);
+            }
+        }
+        return arr.join(',');
+    }
+
+    set sort(sort: string|object) {
+        if (typeof(sort) === 'string') {
+            const arr = sort.split(',');
+            this._sort = {};
+            for (const i in arr) {
+                const str = arr[i];
+                if (str.slice(0, 1) === '-') {
+                    const temp = str.slice(1, str.length);
+                    this._sort[temp] = DataProvider.SORT_DESC;
+                } else {
+                    this._sort[str] = DataProvider.SORT_ASC;
+                }
+            }
+        }
+
+        if (typeof(sort) === 'object') {
+            this._sort = sort;
+        }
+    }
+    public static SORT_ASC = 3;
+    public static SORT_DESC = 4;
+
     public static getInstance(data: object, searchModelClass: any = null, modelClass: any= null, paginationClass: any = null): DataProvider {
         const models = [];
         let searchModel;
-        let pagination;
+        let pagination = null;
         if (!searchModelClass) {
             searchModelClass = Model;
         }
@@ -37,11 +72,11 @@ export default class DataProvider extends BaseObject {
     public searchModel: Model;
     public pager: Pagination;
     public models: Model[];
-    public sort: string;
 
+    private _sort: object;
     private _modelClass: any;
 
-    constructor(searchModel: Model, models: Model[], pager: Pagination, sort: string= '') {
+    constructor(searchModel: Model, models: Model[], pager: Pagination, sort: object|string = {}) {
         super();
         this.searchModel = searchModel;
         this.pager = pager;

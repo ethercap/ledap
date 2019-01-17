@@ -1,3 +1,4 @@
+import * as lodash from 'lodash';
 import Column from '../../../widgets/Column';
 export default {
     name : 'grid',
@@ -50,7 +51,7 @@ export default {
     },
     computed: {
         nColumns() {
-            return Column.normalizeColumns(this.columns);
+            return Column.normalizeColumns(this.columns, this);
         },
     },
     methods : {
@@ -75,10 +76,20 @@ export default {
 
         for (const index in this.nColumns) {
             const column =  this.nColumns[index];
-            colgroups.push(createElement('col'));
-            headers.push(createElement('th', {}, [
-                this.getValue(column.getLabel(model, createElement), column.labelFormat, createElement),
-            ]));
+            if (column.visible) {
+                colgroups.push(createElement('col', {
+                    attrs : {
+                        width: column.width,
+                    },
+                }));
+                headers.push(createElement('th', {
+                    attrs: lodash.get(column.labelOptions, 'attrs', {}),
+                    style: lodash.get(column.labelOptions, 'style', {}),
+                    class: lodash.get(column.labelOptions, 'class', {}),
+                }, [
+                    this.getValue(column.getLabel(model, createElement), column.labelFormat, createElement),
+                ]));
+            }
         }
         const contents = [];
         contents.push(createElement('colgroup', colgroups));
@@ -88,9 +99,15 @@ export default {
             const tempArr = [];
             for (const j in this.nColumns) {
                 const column = this.nColumns[j];
-                tempArr.push(createElement('td', {attrs: this.contentOptions}, [
-                    this.getValue(column.getValue(model, i, createElement), column.format, createElement),
-                ]));
+                if (column.visible) {
+                    tempArr.push(createElement('td', {
+                        attrs: lodash.get(column.contentOptions, 'attrs', {}),
+                        style: lodash.get(column.contentOptions, 'style', {}),
+                        class: lodash.get(column.contentOptions, 'class', {}),
+                    }, [
+                        this.getValue(column.getValue(model, i, createElement), column.format, createElement),
+                    ]));
+                }
             }
             contents.push(createElement('tr', tempArr));
         }

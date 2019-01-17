@@ -1,3 +1,4 @@
+import * as lodash from 'lodash';
 import Column from '../../../widgets/Column';
 export default {
     name : 'detail-view',
@@ -38,18 +39,6 @@ export default {
             type: String,
             default : '20%',
         },
-        labelOptions : {
-            type: Object,
-            default() {
-                return {};
-            },
-        },
-        contentOptions : {
-            type : Object,
-            default() {
-                return {};
-            },
-        },
     },
     computed: {
         nColumns() {
@@ -76,11 +65,22 @@ export default {
         const nColumns = this.nColumns;
         for (const i in nColumns) {
             const column = nColumns[i];
+            if (!column.visible) {
+                continue;
+            }
             const tempArr = [];
-            tempArr.push(createElement('td', {attrs: this.labelOptions}, [
+            tempArr.push(createElement('td', {
+                attrs: lodash.get(column.headerOptions, 'attrs', {}),
+                style: lodash.get(column.headerOptions, 'style', {}),
+                class: lodash.get(column.headerOptions, 'class', {}),
+            }, [
                 this.getValue(column.getLabel(this.dataModel, createElement), column.labelFormat, createElement),
             ]));
-            tempArr.push(createElement('td', {attrs: this.contentOptions}, [
+            tempArr.push(createElement('td', {
+                attrs: lodash.get(column.contentOptions, 'attrs', {}),
+                style: lodash.get(column.contentOptions, 'style', {}),
+                class: lodash.get(column.contentOptions, 'class', {}),
+            }, [
                 this.getValue(column.getValue(this.dataModel, i, createElement), column.format, createElement),
             ]));
 

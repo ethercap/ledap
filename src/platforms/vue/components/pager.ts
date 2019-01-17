@@ -4,8 +4,8 @@ export default {
 <div class="ui-pagination">
     <span class="ui-pagination-total">共{{ pagination.totalCount }}条记录</span>
     <span class="ui-pagination-gap"></span>
-    <a class="ui-pagination-num" v-show="pagination.hasPrev()" @click="">上一页</a>
-    <a class="ui-pagination-num" v-show="pagination.hasNext()" @click="">下一页</a>
+    <a class="ui-pagination-num" v-show="pagination.hasPrev()" @click="toPrev()">上一页</a>
+    <a class="ui-pagination-num" v-show="pagination.hasNext()" @click="toNext()">下一页</a>
     <span class="ui-pagination-summary">第 {{ pagination.currentPage }}/{{ pagination.pageCount }} 页</span>
     <form class="ui-pagination-jumper" @submit.prevent.stop="changePage(jumpPage)">
         <span class="ui-pagination-text">跳至&nbsp;</span>

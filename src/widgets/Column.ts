@@ -43,16 +43,17 @@ export default class Column extends BaseObject {
     public useSort: number = 0;
     public value: string|Function;
     // 是否可见
-    public visible: boolean;
-    public headOptions: object;
-    public contentOptions: object;
+    public visible: boolean = true;
+    public width: string = 'auto';
+    public headOptions: object = {};
+    public contentOptions: object = {};
 
     // 上层容器，可能是vm或者其它组件
     private container: any;
 
-    public getValue(model: Model, index: number, createElement: any= null): any {
+    public getValue(model: Model, index: string, createElement: any= null): any {
         if (typeof(this.value) === 'function') {
-            return this.value.call(this.container, model, this.attribute, index + 1, createElement);
+            return this.value.call(this.container, model, this.attribute, parseInt(index, 10) + 1, createElement);
         }
         if (!lodash.isEmpty(this.value)) {
             return this.value;
