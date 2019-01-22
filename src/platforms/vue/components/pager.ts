@@ -6,7 +6,7 @@ export default {
     <span class="ui-pagination-gap"></span>
     <a class="ui-pagination-num" v-show="pagination.hasPrev()" @click="toPrev()">上一页</a>
     <a class="ui-pagination-num" v-show="pagination.hasNext()" @click="toNext()">下一页</a>
-    <span class="ui-pagination-summary">第 {{ pagination.currentPage }}/{{ pagination.pageCount }} 页</span>
+    <span class="ui-pagination-summary">第 {{ page }}/{{ pagination.pageCount }} 页</span>
     <form class="ui-pagination-jumper" @submit.prevent.stop="changePage(jumpPage)">
         <span class="ui-pagination-text">跳至&nbsp;</span>
         <input type="text" class="ui-pagination-input" v-model="jumpPage">
@@ -20,20 +20,18 @@ export default {
             type: Object,
         },
     },
-    computed: {
-        pagination() {
-            return this.dataProvider.pager;
-        },
-    },
     data() {
         return {
             jumpPage : 0,
+            pagination : this.dataProvider.pager,
+            page: this.dataProvider.pager.currentPage,
         };
     },
     methods: {
         changePage(page) {
             const oldPage = this.pagination.currentPage;
             this.pagination.currentPage = page;
+            this.page = this.pagination.currentPage;
             this.$emit('dprefresh', {
                 type: 'page',
                 old: oldPage,
@@ -41,10 +39,10 @@ export default {
             });
         },
         toPrev() {
-            this.changePage(this.pagination.currentPage + 1);
+            this.changePage(this.pagination.currentPage - 1);
         },
         toNext() {
-            this.changePage(this.pagination.currentPage - 1);
+            this.changePage(this.pagination.currentPage + 1);
         },
     },
 };
