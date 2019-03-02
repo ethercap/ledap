@@ -49,20 +49,20 @@ export default class Model extends BaseObject {
     public createValidators() {
         this._validators = [];
         const rules = this.rules();
-        for (const attribute in rules) {
-            for (const type in rules[attribute]) {
+        Object.keys(rules).forEach( (attribute) => {
+            Object.keys(rules[attribute]).forEach((type) => {
                 const validator = ValidatorFactory.getInstance(attribute, type, rules[attribute][type]);
                 if (validator) {
                     this._validators.push(validator);
                 }
-            }
-        }
+            });
+        });
         return this._validators;
     }
 
     // 只load数据
     public load(data: object): void {
-        for (const key in data) {
+        Object.keys(data).forEach( (key) => {
             if (typeof(data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
                 const rules = this.rules();
                 const attrLabels = this.attributeLabels();
@@ -76,12 +76,12 @@ export default class Model extends BaseObject {
                 }
                 if (obj.hasOwnProperty('rules')) {
                     // 依次将rule规则存入到model中
-                    for (const i in obj.rules) {
+                    Object.keys(obj.rules).forEach( (i) => {
                         const rule = obj.rules[i];
                         if (rule.hasOwnProperty('type') && rule.hasOwnProperty('options')) {
                             lodash.set(rules, [key, rule.type], rule.options);
                         }
-                    }
+                    });
                 }
                 this[key] = obj.value;
                 this.attributeHints = () => {
@@ -96,7 +96,7 @@ export default class Model extends BaseObject {
             } else {
                 this[key] = data[key];
             }
-        }
+        });
         this.init();
     }
 
@@ -110,9 +110,9 @@ export default class Model extends BaseObject {
         const scenarios = {};
         scenarios[Model.SCENARIO_DEFAULT] = [];
         // 将所有的字段填充到DEFAULT中
-        for (const key in this) {
+        Object.keys(this).forEach( (key) => {
             scenarios[Model.SCENARIO_DEFAULT].push(key);
-        }
+        });
         return scenarios;
     }
 
@@ -145,12 +145,12 @@ export default class Model extends BaseObject {
         attributes = lodash.intersection(attributes, scenarios[scenario]);
 
         const validators = this.getValidators();
-        for (const index in validators) {
+        Object.keys(validators).forEach((index) => {
             const validator = validators[index];
             if (attributes.indexOf(validator.attribute) > -1) {
                 validator.validateAttribute(this);
             }
-        }
+        });
 
         this.afterValidate();
         return !this.hasErrors();

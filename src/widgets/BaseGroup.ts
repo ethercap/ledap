@@ -11,10 +11,10 @@ export default abstract class BaseGroup extends BaseObject {
     public abstract init();
 
     public addList(components: any[]) {
-        for (const i in components) {
+        Object.keys(components).forEach((i) => {
             const component = components[i];
             this.add(component);
-        }
+        });
         this.init();
     }
 

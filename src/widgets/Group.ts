@@ -27,7 +27,7 @@ export default class Group extends BaseGroup {
 
     // 初始化,将所有的参数都归位
     public init() {
-        for (const i in this._components) {
+        Object.keys(this._components).forEach((i) => {
             const component = this._components[i];
             const key = this.getKey(component);
             if (component.isOpen() && this._selected.indexOf(key) < 0) {
@@ -39,7 +39,7 @@ export default class Group extends BaseGroup {
                 component.open();
                 this.toggle('open', component);
             }
-        }
+        });
     }
 
     public toggle(type: string, component: any) {
@@ -64,12 +64,14 @@ export default class Group extends BaseGroup {
     }
 
     public getKey(component: any) {
-        for (const i in this._components) {
+        let index = null;
+        Object.keys(this._components).forEach((i) => {
             if (this._components[i] === component) {
-                return i;
+                index = i;
+                return;
             }
-        }
-        return null;
+        });
+        return index;
     }
 
     // 选中某个组件
@@ -123,11 +125,11 @@ export default class Group extends BaseGroup {
     public getSelectComponent() {
         const arr = this.selected;
         const tempArr = [];
-        for (const i in arr) {
+        Object.keys(arr).forEach((i) => {
             if (this._components.hasOwnProperty(i)) {
                 tempArr.push(this._components[i]);
             }
-        }
+        });
         return tempArr;
     }
 }
