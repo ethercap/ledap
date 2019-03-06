@@ -5,10 +5,10 @@ export default class BaseObject {
         this.init();
     }
 
-    public load(data: object) {
-        for (const key in data) {
+    public load(data: object = {}) {
+        Object.keys(data).forEach( (key) => {
             this[key] = data[key];
-        }
+        });
         this.init();
     }
 

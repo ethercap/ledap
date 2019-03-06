@@ -6,7 +6,7 @@ export default class Column extends BaseObject {
 
     public static normalizeColumns(columns: any[] = [], container: any= null): Column[] {
         const fColumns = [];
-        for (const index in columns) {
+        Object.keys(columns).forEach((index) => {
             let column = columns[index];
             if (column == null) {
                 throw new Error('column can\'t be null');
@@ -32,7 +32,7 @@ export default class Column extends BaseObject {
             cModel.load(column);
             cModel.container = container;
             fColumns.push(cModel);
-        }
+        });
         return fColumns;
     }
     public attribute: string;
