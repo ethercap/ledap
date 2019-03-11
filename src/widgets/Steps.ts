@@ -45,12 +45,12 @@ export default class Steps extends BaseGroup
     public getStep(component:any) 
     {
         let index:number = -1;
-        for(const i in this._components) {
+        Object.keys(this._components).forEach(i =>{
             if(component == this._components[i]) {
                 index = parseInt(i);
-                break;
+                return;    
             }
-        }
+        });
         //假设没有找到,则不跳转，因此step = 0
         if(index == -1) {
             return 0;

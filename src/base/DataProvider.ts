@@ -6,24 +6,19 @@ import Pagination from './Pagination';
 // 分页器类,主要是来解决分页的问题
 export default class DataProvider extends BaseObject {
 
-    set modelClass(modelClass: object) {
-        this._modelClass = modelClass;
-    }
-
-    get modelClass() {
-        return this._modelClass;
-    }
-
     get sort(): string|object {
         const arr = [];
-        for (const key in this._sort) {
+        if (lodash.isEmpty(this._sort)) {
+            this._sort = {};
+        }
+        Object.keys(this._sort).forEach((key) => {
             const value = this._sort[key];
             if (value === DataProvider.SORT_DESC) {
                 arr.push('-' + key);
             } else {
                 arr.push(key);
             }
-        }
+        });
         return arr.join(',');
     }
 
@@ -31,7 +26,7 @@ export default class DataProvider extends BaseObject {
         if (typeof(sort) === 'string') {
             const arr = sort.split(',');
             this._sort = {};
-            for (const i in arr) {
+            Object.keys(arr).forEach((i) => {
                 const str = arr[i];
                 if (str.slice(0, 1) === '-') {
                     const temp = str.slice(1, str.length);
@@ -39,7 +34,7 @@ export default class DataProvider extends BaseObject {
                 } else {
                     this._sort[str] = DataProvider.SORT_ASC;
                 }
-            }
+            });
         }
 
         if (typeof(sort) === 'object') {
@@ -77,7 +72,7 @@ export default class DataProvider extends BaseObject {
     public  isLoad: boolean = false;
 
     private _sort: object;
-    private _modelClass: any;
+    private modelClass: any;
 
     constructor(searchModel: Model, models: Model[], pager: Pagination, sort: object|string = {}) {
         super();
@@ -85,25 +80,25 @@ export default class DataProvider extends BaseObject {
         this.pager = pager;
         this.models = models;
         this.sort = sort;
-        this._modelClass = null;
+        this.modelClass = null;
         this.init();
     }
 
     // 如果不传参则获取当前的url, params的传参会优先
-    public getParams(args: object = null) {
+    public getParams(args: object = {}) {
         const params = {};
-        for (const key in this.searchModel) {
+        Object.keys(this.searchModel).forEach((key) => {
             params[key] = this.searchModel[key];
-        }
+        });
         params['page'] = this.pager.currentPage;
         params['per-page'] = this.pager.perPage;
         params['sort'] = this.sort;
         if (!args) {
             return params;
         }
-        for (const key in args) {
+        Object.keys(args).forEach((key) => {
             params[key] = args[key];
-        }
+        });
         return params;
     }
 
@@ -114,7 +109,7 @@ export default class DataProvider extends BaseObject {
         const meta = lodash.get(data, 'meta', {});
         this.pager.load(meta);
 
-        let modelClass = this._modelClass;
+        let modelClass = this.modelClass;
         if (!modelClass) {
             modelClass = Model;
         }
@@ -123,12 +118,12 @@ export default class DataProvider extends BaseObject {
             models = [];
         }
         const items = lodash.get(data, 'items', []);
-        for (const key in items) {
+        Object.keys(items).forEach((key) => {
             const item = data['items'][key];
             const model = new modelClass();
             model.load(item);
             models.push(model);
-        }
+        });
         this.models = models;
         this.isLoad = true;
     }
