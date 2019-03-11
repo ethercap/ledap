@@ -61,12 +61,15 @@ export default class DataProvider extends BaseObject {
         pagination = new paginationClass();
         const dp =  new DataProvider(searchModel, models, pagination, '');
         dp.modelClass = modelClass;
-        dp.load(data);
+        if (!lodash.isEmpty(data)) {
+            dp.load(data);
+        }
         return dp;
     }
     public searchModel: Model;
     public pager: Pagination;
     public models: Model[];
+    public  isLoad: boolean = false;
 
     private _sort: object;
     private modelClass: any;
@@ -99,7 +102,7 @@ export default class DataProvider extends BaseObject {
         return params;
     }
 
-    public load(data: object) {
+    public load(data: object, append: boolean = false) {
         const params = lodash.get(data, 'params', {});
         this.searchModel.load(params);
 
@@ -110,7 +113,10 @@ export default class DataProvider extends BaseObject {
         if (!modelClass) {
             modelClass = Model;
         }
-        const models = [];
+        let models = this.models;
+        if (lodash.isEmpty(models) || !append) {
+            models = [];
+        }
         const items = lodash.get(data, 'items', []);
         Object.keys(items).forEach((key) => {
             const item = data['items'][key];
@@ -119,5 +125,6 @@ export default class DataProvider extends BaseObject {
             models.push(model);
         });
         this.models = models;
+        this.isLoad = true;
     }
 }
