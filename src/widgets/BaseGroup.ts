@@ -11,7 +11,7 @@ export default abstract class BaseGroup extends BaseObject {
     public abstract init();
 
     public addList(components: any[]) {
-        Object.keys(components).forEach((i) => {
+        Object.keys(components).forEach(i => {
             const component = components[i];
             this.add(component);
         });

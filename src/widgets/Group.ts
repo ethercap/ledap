@@ -27,7 +27,7 @@ export default class Group extends BaseGroup {
 
     // 初始化,将所有的参数都归位
     public init() {
-        Object.keys(this._components).forEach((i) => {
+        Object.keys(this._components).forEach(i => {
             const component = this._components[i];
             const key = this.getKey(component);
             if (component.isOpen() && this._selected.indexOf(key) < 0) {
@@ -65,7 +65,7 @@ export default class Group extends BaseGroup {
 
     public getKey(component: any) {
         let index = null;
-        Object.keys(this._components).forEach((i) => {
+        Object.keys(this._components).forEach(i => {
             if (this._components[i] === component) {
                 index = i;
                 return;
@@ -125,7 +125,7 @@ export default class Group extends BaseGroup {
     public getSelectComponent() {
         const arr = this.selected;
         const tempArr = [];
-        Object.keys(arr).forEach((i) => {
+        Object.keys(arr).forEach(i => {
             if (this._components.hasOwnProperty(i)) {
                 tempArr.push(this._components[i]);
             }

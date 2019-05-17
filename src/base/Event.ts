@@ -10,18 +10,30 @@ export default class Event {
      * @param context 上下文
      */
     public static on(name: string, callback: Function, context: any) {
-        const observers: Observer[] = Event.listeners[name];
+        if (typeof callback !== 'function') return;
+
+        let observers: Observer[] = Event.listeners[name];
         if (!observers) {
-            Event.listeners[name] = [];
+            Event.listeners[name] = observers = [];
         }
+
+        const length = observers.length;
+        for (let i = 0; i < length; i++) {
+            const observer = observers[i];
+            if (observer.compare(callback, context)) return;
+        }
+
         Event.listeners[name].push(new Observer(callback, context));
     }
 
     public static once(name: string, callback: Function, context: any) {
-        const on = (ctx) => {
-            Event.off(name, on, ctx);
-            callback.apply(ctx);
+        if (typeof callback !== 'function') return;
+
+        const on = (...args) => {
+            Event.off(name, on, context);
+            callback.apply(context, args);
         };
+
         return Event.on(name, on, context);
     }
 
@@ -32,17 +44,30 @@ export default class Event {
      * @param context 上下文
      */
     public static off(name: string, callback: Function, context: any) {
+        // 未制定name则清空所有事件
+        if (typeof name === 'undefined') {
+            Event.listeners = {};
+            return;
+        }
+
         const observers: Observer[] = Event.listeners[name];
-        if (!observers) { return; }
-        const length = observers.length;
-        for (let i = 0; i < length; i++) {
-            const observer = observers[i];
-            if (observer.compare(context)) {
-                observers.splice(i, 1);
-                break;
+        if (!observers) return;
+
+        // 未指定callback则清空所有回调
+        if (typeof callback !== 'function') {
+            Event.listeners[name] = [];
+        } else {
+            const length = observers.length;
+            for (let i = 0; i < length; i++) {
+                const observer = observers[i];
+                if (observer.compare(callback, context)) {
+                    observers.splice(i, 1);
+                    break;
+                }
             }
         }
-        if (observers.length === 0) {
+
+        if (!observers.length) {
             delete Event.listeners[name];
         }
     }
@@ -52,12 +77,14 @@ export default class Event {
      * @param name 事件名称
      */
     public static emit(name: string, ...args: any[]) {
+        if (typeof name === 'undefined') return;
         const observers: Observer[] = Event.listeners[name];
-        if (!observers) { return; }
+        if (!observers) return;
+
         const length = observers.length;
         for (let i = 0; i < length; i++) {
             const observer = observers[i];
-            observer.notify(name, ...args);
+            observer.notify(...args);
         }
     }
     /** 监听数组 */
@@ -76,9 +103,8 @@ class Observer {
     private context: any = null;
 
     constructor(callback: Function, context: any) {
-        const self = this;
-        self.callback = callback;
-        self.context = context;
+        this.callback = callback;
+        this.context = context;
     }
 
     /**
@@ -86,15 +112,14 @@ class Observer {
      * @param args 不定参数
      */
     public notify(...args: any[]): void {
-        const self = this;
-        self.callback.call(self.context, ...args);
+        this.callback.apply(this.context, args);
     }
 
     /**
      * 上下文比较
      * @param context 上下文
      */
-    public compare(context: any): boolean {
-        return context === this.context;
+    public compare(callback: Function, context: any): boolean {
+        return context === this.context && callback === this.callback;
     }
 }

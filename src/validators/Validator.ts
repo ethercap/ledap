@@ -12,7 +12,7 @@ export default abstract class Validator extends BaseObject {
         this.attribute = attribute;
         this.type = type;
         // 默认所有的带pattern名的参数，且以/开头的字符串都认为是正则表达式
-        Object.keys(options).forEach((key) => {
+        Object.keys(options).forEach(key => {
             const p = /pattern/i;
             if (p.test(key) && typeof(options[key]) === 'string' && options[key][0] === '/') {
                 // tslint:disable-next-line:no-eval

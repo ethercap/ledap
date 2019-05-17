@@ -1,5 +1,6 @@
 import * as lodash from 'lodash';
 import Column from '../../../widgets/Column';
+
 export default {
     name : 'detail-view',
     props: {

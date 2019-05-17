@@ -1,12 +1,8 @@
 import Event from './Event';
 
 export default class BaseObject {
-    constructor() {
-        this.init();
-    }
-
     public load(data: object = {}) {
-        Object.keys(data).forEach( (key) => {
+        Object.keys(data).forEach(key => {
             this[key] = data[key];
         });
         this.init();

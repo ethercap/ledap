@@ -26,7 +26,7 @@ export default class DictValidator extends Validator {
         if (options.max !== undefined && value.length > options.max) {
             model.addError(attribute, options.tooMuch);
         }
-        Object.keys(value).forEach( (index) => {
+        Object.keys(value).forEach(index => {
             const val = value[index];
             if ( (!options.list.hasOwnProperty(val)) || options.excludes.hasOwnProperty(val)) {
                 model.addError(attribute, options.message);

@@ -3,17 +3,30 @@
     "extends": [
         "tslint:recommended"
     ],
-    "jsRules": {},
     "rules": {
-        "quotemark": [true, "single"],
-        "max-line-length": [true, 160],
-        "only-arrow-functions": [true, "allow-named-functions"],
+        "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+        "prefer-for-of": true,
+        "curly": [true, "ignore-same-line"],
+        "no-console": {"serverity": "warning"},
         "no-string-literal": false,
+        "switch-default": true,
+        "arrow-return-shorthand": true,
+        "object-literal-key-quotes": [true, "as-needed"],
+        "object-literal-shorthand": true,
+        "space-before-function-paren": [true, {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+        "arrow-parens": [true, "ban-single-arg-parens"],
+        "quotemark": [true, "single", "avoid-escape"],
+        "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
+        "whitespace": [true, "check-branch", "check-operator", "check-separator"],
+        "max-line-length": false,
         "forin": false,
         "max-classes-per-file": false,
         "ban-types": false,
         "object-literal-sort-keys": false,
         "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"]
     },
-    "rulesDirectory": []
+    "jsRules": {},
+    "linterOptions": {
+        "exclude": []
+    }
 }

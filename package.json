@@ -2,12 +2,12 @@
   "name": "ether-mvc",
   "version": "0.0.6",
   "description": "",
-  "main": "./dist/build.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "dev": "webpack --mode=\"development\" --display-modules",
-    "watch": "webpack --mode=\"development\" --watch",
-    "build": "webpack --mode=\"production\"",
-    "test": "webpack --config=example/webpack.config.js  --mode=development"
+    "dev": "webpack --display-modules",
+    "watch": "webpack  --watch",
+    "build": "webpack --env.prod",
+    "test": "webpack --config=example/webpack.config.js --mode=development"
   },
   "author": "",
   "license": "ISC",
@@ -19,23 +19,20 @@
     "@types/lodash": "^4.14.118",
     "babel-loader": "^8.0.4",
     "babel-plugin-lodash": "^3.3.4",
-    "css-loader": "^1.0.1",
-    "fileloader": "^2.0.0",
+    "clean-webpack-plugin": "^2.0.2",
+    "lodash-webpack-plugin": "^0.11.5",
+    "terser-webpack-plugin": "^1.2.3",
     "ts-loader": "^5.3.0",
     "tslint": "^5.12.0",
     "tslint-loader": "^3.5.4",
     "typescript": "^3.2.2",
-    "vue": "^2.5.17",
-    "vue-loader": "^15.4.2",
-    "vue-template-compiler": "^2.5.17",
     "webpack": "^4.26.0",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
-    "lodash": "^4.17.11",
-    "lodash-webpack-plugin": "^0.11.5",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "lodash": "^4.17.11"
   },
   "babel": {
     "compact": false,

@@ -1,98 +1,82 @@
 const path = require('path');
+
 const webpack = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const merge = require('webpack-merge');
 
-module.exports = {
-    entry: './src/index.ts',
-    context: path.resolve("./"),
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'build.js',
-        library: 'ether-mvc',
-        libraryTarget: 'umd',
-    },
-    module: {
-        unknownContextCritical: false,
-        rules: [{
-            test: /\.ts(x?)$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: 'babel-loader'
+const Clean = require('clean-webpack-plugin');
+const Terser = require('terser-webpack-plugin');
+const Lodash = require('lodash-webpack-plugin');
+
+function r(...args) {
+    return path.resolve(...args);
+}
+
+module.exports = (env = {}, argv) => {
+    const prod = env.prod || env === 'prod';
+
+    const commonConfig = {
+        context: r('.'),
+        entry: {
+            index: './src/index.ts',
+            base: './src/base/index.ts',
+            widgets: './src/widgets/index.ts',
+            'platforms/vue': './src/platforms/vue/index.ts',
+        },
+        output: {
+            path: r('dist'),
+            filename: '[name].js',
+            library: 'ether-mvc',
+            libraryTarget: 'umd',
+            globalObject: 'this'
+        },
+        resolve: {
+            modules: [r('node_modules'), r('src')],
+            extensions: ['.ts', '.js', '.vue', '.json'],
+        },
+        module: {
+            rules: [{
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader'
+                }, {
+                    loader: 'ts-loader'
+                }, {
+                    loader: 'tslint-loader',
+                    options: {
+                        fix: true
+                    }
+                }]
             }, {
-                loader: 'ts-loader'
-            }, {
-                loader: 'tslint-loader',
-                options: {
-                    fix: true
-                }
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader'
+                }]
             }]
-        }, {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: 'babel-loader'
-            }]
-        }]
-    },
-    resolve: {
-        extensions: ['.ts', '.js', '.vue', '.json'],
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+        },
+        plugins: [
+            new Clean(),
+            new Lodash()
+        ]
+    };
+
+    const devConfig = merge(commonConfig, {
+        mode: 'development',
+        devtool: 'cheap-module-eval-source-map',
+    });
+
+    const prodConfig = merge(commonConfig, {
+        mode: 'production',
+        optimization: {
+            minimizer: [
+                new Terser({
+                    cache: true,
+                    parallel: true,
+                }),
+            ]
         }
-    },
-    devServer: {
-        historyApiFallback: true,
-        noInfo: true
-    },
-    performance: {
-        hints: false
-    },
-    devtool: '#eval-source-map',
-    plugins: [
-        new LodashModuleReplacementPlugin({
-            'caching': true,
-            'paths': true
-        }),
-        // new BundleAnalyzerPlugin({
-        //     analyzerMode: 'static',
-        //     reportFilename: 'report.html',
-        //     openAnalyzer: true,
-        // })
-    ]
-}
+    });
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports.devtool = '#source-map';
-    // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
-    ]);
-} else if (process.env.NODE_ENV === 'development') {
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"development"'
-            }
-        }),
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            reportFilename: 'report.html',
-            openAnalyzer: true,
-        })
-    ]);
-}
+    return prod ? prodConfig : devConfig;
+};

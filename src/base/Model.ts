@@ -49,8 +49,8 @@ export default class Model extends BaseObject {
     public createValidators() {
         this._validators = [];
         const rules = this.rules();
-        Object.keys(rules).forEach( (attribute) => {
-            Object.keys(rules[attribute]).forEach((type) => {
+        Object.keys(rules).forEach(attribute => {
+            Object.keys(rules[attribute]).forEach(type => {
                 const validator = ValidatorFactory.getInstance(attribute, type, rules[attribute][type]);
                 if (validator) {
                     this._validators.push(validator);
@@ -62,7 +62,7 @@ export default class Model extends BaseObject {
 
     // 只load数据
     public load(data: object): void {
-        Object.keys(data).forEach( (key) => {
+        Object.keys(data).forEach(key => {
             if (typeof(data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
                 const rules = this.rules();
                 const attrLabels = this.attributeLabels();
@@ -76,7 +76,7 @@ export default class Model extends BaseObject {
                 }
                 if (obj.hasOwnProperty('rules')) {
                     // 依次将rule规则存入到model中
-                    Object.keys(obj.rules).forEach( (i) => {
+                    Object.keys(obj.rules).forEach(i => {
                         const rule = obj.rules[i];
                         if (rule.hasOwnProperty('type') && rule.hasOwnProperty('options')) {
                             lodash.set(rules, [key, rule.type], rule.options);
@@ -110,7 +110,7 @@ export default class Model extends BaseObject {
         const scenarios = {};
         scenarios[Model.SCENARIO_DEFAULT] = [];
         // 将所有的字段填充到DEFAULT中
-        Object.keys(this).forEach( (key) => {
+        Object.keys(this).forEach(key => {
             scenarios[Model.SCENARIO_DEFAULT].push(key);
         });
         return scenarios;
@@ -145,7 +145,7 @@ export default class Model extends BaseObject {
         attributes = lodash.intersection(attributes, scenarios[scenario]);
 
         const validators = this.getValidators();
-        Object.keys(validators).forEach((index) => {
+        Object.keys(validators).forEach(index => {
             const validator = validators[index];
             if (attributes.indexOf(validator.attribute) > -1) {
                 validator.validateAttribute(this);

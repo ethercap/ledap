@@ -11,7 +11,7 @@ export default class DataProvider extends BaseObject {
         if (lodash.isEmpty(this._sort)) {
             this._sort = {};
         }
-        Object.keys(this._sort).forEach((key) => {
+        Object.keys(this._sort).forEach(key => {
             const value = this._sort[key];
             if (value === DataProvider.SORT_DESC) {
                 arr.push('-' + key);
@@ -26,7 +26,7 @@ export default class DataProvider extends BaseObject {
         if (typeof(sort) === 'string') {
             const arr = sort.split(',');
             this._sort = {};
-            Object.keys(arr).forEach((i) => {
+            Object.keys(arr).forEach(i => {
                 const str = arr[i];
                 if (str.slice(0, 1) === '-') {
                     const temp = str.slice(1, str.length);
@@ -45,86 +45,98 @@ export default class DataProvider extends BaseObject {
     public static SORT_DESC = 4;
 
     public static getInstance(data: object, searchModelClass: any = null, modelClass: any= null, paginationClass: any = null): DataProvider {
-        const models = [];
-        let searchModel;
-        let pagination = null;
-        if (!searchModelClass) {
-            searchModelClass = Model;
-        }
-        searchModel = new searchModelClass();
-        if (!modelClass) {
-            modelClass = Model;
-        }
-        if (!paginationClass) {
-            paginationClass = Pagination;
-        }
-        pagination = new paginationClass();
-        const dp =  new DataProvider(searchModel, models, pagination, '');
-        dp.modelClass = modelClass;
-        if (!lodash.isEmpty(data)) {
-            dp.load(data);
-        }
-        return dp;
+        const config =  {
+            data,
+            searchModelClass,
+            modelClass,
+            paginationClass,
+        };
+        return new DataProvider(config);
     }
     public searchModel: Model;
     public pager: Pagination;
     public models: Model[];
-    public  isLoad: boolean = false;
+    public isLoad: boolean = false;
+    public modelClass: any;
+    public searchModelClass: any;
+    public paginationClass: any;
 
     private _sort: object;
-    private modelClass: any;
 
-    constructor(searchModel: Model, models: Model[], pager: Pagination, sort: object|string = {}) {
+    constructor(config: object) {
         super();
-        this.searchModel = searchModel;
-        this.pager = pager;
-        this.models = models;
-        this.sort = sort;
-        this.modelClass = null;
-        this.init();
+        this.searchModelClass = lodash.get(config, 'searchModelClass', Model);
+        this.modelClass = lodash.get(config, 'modelClass', Model);
+        this.paginationClass = lodash.get(config, 'paginationClass', Pagination);
+
+        this.searchModel = lodash.get(config, 'searchModel', '');
+        if (lodash.isEmpty(this.searchModel)) {
+            this.searchModel = new this['searchModelClass']();
+        }
+        this.pager = lodash.get(config, 'pager', '');
+        if (lodash.isEmpty(this.pager)) {
+            this.pager = new this['paginationClass']();
+        }
+        this.sort = lodash.get(config, 'sort', '');
+        const data = lodash.get(config, 'data', {});
+        this.load(data);
     }
 
     // 如果不传参则获取当前的url, params的传参会优先
     public getParams(args: object = {}) {
         const params = {};
-        Object.keys(this.searchModel).forEach((key) => {
+        Object.keys(this.searchModel).forEach(key => {
             params[key] = this.searchModel[key];
         });
         params['page'] = this.pager.currentPage;
         params['per-page'] = this.pager.perPage;
         params['sort'] = this.sort;
-        if (!args) {
-            return params;
-        }
-        Object.keys(args).forEach((key) => {
+        Object.keys(args).forEach(key => {
             params[key] = args[key];
         });
         return params;
     }
 
-    public load(data: object, append: boolean = false) {
+    public load(data: object, append: boolean = false, primaryKey: string = '') {
         const params = lodash.get(data, 'params', {});
         this.searchModel.load(params);
 
         const meta = lodash.get(data, 'meta', {});
         this.pager.load(meta);
 
-        let modelClass = this.modelClass;
-        if (!modelClass) {
-            modelClass = Model;
-        }
         let models = this.models;
         if (lodash.isEmpty(models) || !append) {
             models = [];
         }
         const items = lodash.get(data, 'items', []);
-        Object.keys(items).forEach((key) => {
-            const item = data['items'][key];
-            const model = new modelClass();
+        const modelDict = {};
+        // 如果设置了primaryKey，则按primaryKey进行去重
+        if (!lodash.isEmpty(primaryKey)) {
+            Object.keys(models).forEach(key => {
+                const tempModel = models[key];
+                if (tempModel.hasOwnProperty(primaryKey)) {
+                    modelDict[tempModel[primaryKey]] = key;
+                }
+            });
+        }
+        Object.keys(items).forEach(key => {
+            const item = items[key];
+            const model = new this.modelClass();
             model.load(item);
-            models.push(model);
+            if (!lodash.isEmpty(primaryKey) && model.hasOwnProperty(primaryKey)) {
+                if (modelDict.hasOwnProperty(model[primaryKey])) {
+                    const tempKey = modelDict[model[primaryKey]];
+                    models[tempKey] = model;
+                } else {
+                    modelDict[model[primaryKey]] = models.length;
+                    models.push(model);
+                }
+            } else {
+                models.push(model);
+            }
         });
         this.models = models;
         this.isLoad = true;
+        this.init();
     }
 }
