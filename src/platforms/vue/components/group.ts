@@ -35,7 +35,7 @@ export default {
         };
     },
     mounted() {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
             this.init();
         });
     },
@@ -56,9 +56,8 @@ export default {
             this.group.addList(this.$children);
             for (const i in this.$children) {
                 const vm = this.$children[i];
-                const _this = this;
-                vm.$on('toggle', (obj) => {
-                    _this.change(obj);
+                vm.$on('toggle', obj => {
+                    this.change(obj);
                 });
             }
             this.group.selected = this.selected;

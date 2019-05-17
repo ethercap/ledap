@@ -14,7 +14,7 @@ export default class Pagination extends BaseObject {
         if (value <= 0) {
             value = 1;
         }
-        this.emit(Pagination.EVENT_SETPAGE, this, {oldValue: this._page, value});
+        this.emit(Pagination.EVENT_SETPAGE, value, this._page, this);
         this._page = value;
     }
 
