@@ -44,7 +44,7 @@ export default class DataProvider extends BaseObject {
     public static SORT_ASC = 3;
     public static SORT_DESC = 4;
 
-    public static getInstance(data: object, searchModelClass: any = null, modelClass: any= null, paginationClass: any = null): DataProvider {
+    public static getInstance(data: object, searchModelClass: any = Model, modelClass: any= Model, paginationClass: any = Pagination): DataProvider {
         const config =  {
             data,
             searchModelClass,

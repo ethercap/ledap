@@ -1,2 +1,2 @@
 export * from './base/index';
-export * from './platforms/vue/index';
+export {default as EtherVue} from './platforms/vue/index';

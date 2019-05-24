@@ -1,6 +1,8 @@
-export {default as DetailView} from './components/detailview';
-export {default as Pager} from './components/pager';
-export {default as Grid} from './components/grid';
-export {default as Group} from './components/group';
-export {default as Tab} from './components/tab';
-export {default as List} from './components/list/list';
+import {default as DetailView} from './components/detailview';
+import {default as Grid} from './components/grid';
+import {default as Group} from './components/group';
+import {default as List} from './components/list/list';
+import {default as Pager} from './components/pager';
+import {default as Tab} from './components/tab';
+
+export default {DetailView, Pager, Grid, Group, Tab, List};
