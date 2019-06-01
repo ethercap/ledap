@@ -1,4 +1,5 @@
 import * as lodash from 'lodash';
+import BaseHelper from '../helpers/BaseHelper';
 import BooleanValidator from './BooleanValidator';
 import CompareValidator from './CompareValidator';
 import DictValidator from './DictValidator';
@@ -34,7 +35,7 @@ export default class ValidatorFactory {
 
     // 静态方法
     public static getInstance(attribute: string, type: string, options: object): Validator {
-        if (lodash.isEmpty(attribute) || lodash.isEmpty(type)) {
+        if (BaseHelper.isEmpty(attribute) || BaseHelper.isEmpty(type)) {
             throw  new Error('数据格式错误');
         }
         const classObj = lodash.get(ValidatorFactory.typeList, type, null);

@@ -1,5 +1,6 @@
 import * as lodash from 'lodash';
 import Model from '../base/Model';
+import BaseHelper from '../helpers/BaseHelper';
 import Validator from './Validator';
 
 export default class RequiredValidator extends Validator {
@@ -10,7 +11,7 @@ export default class RequiredValidator extends Validator {
         let valid = false;
         if (options.requiredValue === undefined) {
             const isString = typeof value === 'string' || value instanceof String;
-            if (options.strict && value !== undefined || !options.strict && !lodash.isEmpty(isString ? lodash.trim(value) : value)) {
+            if (options.strict && value !== undefined || !options.strict && !BaseHelper.isEmpty(isString ? lodash.trim(value) : value)) {
                 valid = true;
             }
         // tslint:disable-next-line:triple-equals

@@ -1,5 +1,5 @@
-import * as lodash from 'lodash';
 import Model from '../base/Model';
+import BaseHelper from '../helpers/BaseHelper';
 import Validator from './Validator';
 
 export default class BooleanValidator extends Validator {
@@ -7,7 +7,7 @@ export default class BooleanValidator extends Validator {
         const attribute = this.attribute;
         const value = model[attribute];
         const options: any = this.options;
-        if (options.skipOnEmpty && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
             return;
         }
         // tslint:disable-next-line:triple-equals

@@ -1,5 +1,5 @@
-import * as lodash from 'lodash';
 import Model from '../base/Model';
+import BaseHelper from '../helpers/BaseHelper';
 import Validator from './Validator';
 
 export default class NumberValidator extends Validator {
@@ -10,7 +10,7 @@ export default class NumberValidator extends Validator {
         if (options.pattern && typeof(options.pattern) === 'string') {
             options.pattern = new RegExp(options.pattern);
         }
-        if (options.skipOnEmpty && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
             return;
         }
 

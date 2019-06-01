@@ -1,5 +1,5 @@
-import * as lodash from 'lodash';
 import Model from '../base/Model';
+import BaseHelper from '../helpers/BaseHelper';
 import Validator from './Validator';
 
 export default class CompareValidator extends Validator {
@@ -7,7 +7,7 @@ export default class CompareValidator extends Validator {
         const attribute = this.attribute;
         const options: any = this.options;
         let value = model[attribute];
-        if (options.skipOnEmpty && lodash.isEmpty(value)) {
+        if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
             return;
         }
 

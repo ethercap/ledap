@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ether-mvc示例</title>
+    <script src="assets/js/vue.js"></script>
+    <script src="dist/index.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+  </head>
+  <body>
+      <div id="app" class="container">
+          <grid class="table table-bordered table-striped table-hover" :data-provider=dp :columns=columns>
+          </grid>
+      </div>
+  </body>
+  <script>
+const artful = window["ether-mvc"];
+const Grid = artful.EtherVue.Grid;
+const DataProvider = artful.DataProvider;
+Vue.component(Grid.name, Grid);
+
+var app = new Vue({
+  el: '#app',
+  data: {
+      dp:new DataProvider({}),
+      columns :[
+        "name",
+        {
+            "attribute":"jquery",
+            "label" : "jquery示例",
+            "value" : function(model, attribute, index){
+                const value = model[attribute];
+                if(value.length == 0) {
+                    return "待完善";
+                }
+                str = "<ul>";
+                Object.keys(value).forEach(index => {
+                    str += '<li><a href="' + value[index].href + '" target="_blank">' + value[index].title + '</a></li>';
+                })
+                return str + '</ul>';
+            },
+            "format" : "html",
+        },
+        {
+            "attribute":"vue",
+            "label" : "Vue示例",
+            //注意createElement仅在vue中可用
+            "value" : function(model, attribute, index, createElement) {
+                const value = model[attribute];
+                if(value.length == 0) {
+                    return "待完善";
+                }
+                links = [];
+                Object.keys(value).forEach(index => {
+                    let link = createElement("a", {
+                        'attrs': {
+                            href : value[index].href,
+                            target : "_blank",
+                        }
+                    }, value[index].title);
+                    links.push(createElement('li', [link]))
+                });
+                return createElement("ul", links);
+            }
+        },
+        {
+            "attribute":"comment",
+            "label" : "备注",
+            "width" : "40%",
+        },
+      ],
+  },
+  created:function(){
+    let data = {
+        "items": [
+            {"name":"Model", "comment":"", "jquery": [], "vue":[]},
+            {"name":"WebDataProvider", "comment":"适用于列表页数据的获取等。WebDataProvider是DataProvider的子类，本页面使用DataProvider示例", 
+                "jquery": [{"href":"/xxx", "title":"jquery"}], 
+                "vue":[]
+            },
+            {"name":"Form", "comment":"表单，有多种form-item", "jquery": [], "vue":[]},
+            {"name":"Group", "comment":"主要应用于单选，多选的各种情况，可以适用于TabBar, checkBoxGroup, radioGroup等，有较多展示组件", 
+                "jquery": [{"title":"Group逻辑组件写法", "href":"/jquery/group.html"}],
+                "vue":[{"title":"Vue组件写法", "href":"/vue/group.html"}]
+            },
+            {"name":"Column", "comment":"主要应用于表格，代表表格的一列。有grid,detai两种展示组件", 
+                "jquery": [{"title":"Column逻辑组件写法", "href":""}],
+                "vue":[
+                    {"title":"Column+Grid写法", "href":""},
+                    {"title":"Column+Detail写法", "href":""},
+                ]
+            },
+        ]
+    };
+    this.dp.load(data);
+  }
+});
+  </script>
+</html>

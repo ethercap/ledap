@@ -57,7 +57,10 @@ module.exports = (env = {}, argv) => {
         },
         plugins: [
             new Clean(),
-            new Lodash()
+            new Lodash({
+                'caching': true,
+                'paths': true
+            })
         ]
     };
 
