@@ -2,7 +2,8 @@ import * as lodash from 'lodash';
 import BaseGroup from './BaseGroup';
 // group组件组
 export default class Group extends BaseGroup {
-    public max: number;
+    public static EVENT_DATACHANGED = 'GROUP_CHANGED';
+    public _max: number = 1;
     public excludes = [];
     // 默认模式为unstrict, 出现错误会自己处理，strict模式会throw出错误，交给上层处理
     public mode = 'unstrict';
@@ -60,6 +61,7 @@ export default class Group extends BaseGroup {
             return true;
         }
         this._selected.splice(index, 1);
+        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type:'close'});
         return true;
     }
 
@@ -103,6 +105,7 @@ export default class Group extends BaseGroup {
                 this._components[closeKey].close();
             }
         }
+        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type:'open'});
         return true;
     }
 
@@ -118,6 +121,22 @@ export default class Group extends BaseGroup {
         }
         if (typeof value === 'object') {
             this._selected = value;
+        }
+        this.init();
+    }
+
+    get max(): number {
+        return this._max;
+    }
+
+    set max(value: number) {
+        if (value < 1) {
+            this._max = 1;
+            return;
+        }
+        this._max = lodash.ceil(value);
+        while (this._selected.length > this._max) {
+            this._selected.pop();
         }
         this.init();
     }

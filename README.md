@@ -126,9 +126,9 @@ function getComponent(key)
 var group = new Group();
 group.multiple = false;
 var component1 = getComponent("#id1");
-var component2 = getCom ponent(".class1");
-group.addComponent(component1);
-group.addComponent(component2);
+var component2 = getComponent(".class1");
+group.add(component1);
+group.add(component2);
 ```
 
 #### 组件列表
@@ -147,6 +147,16 @@ ether-mvc把前端常见的页面分为如下三类:
 * [列表页](docs/ListPage.md)
 * [提交&修改页](docs/UpdatePage.md)
 * 信息展示页
+
+### 代码示例
+本代码中有丰富的代码示例。
+
+1. 首先下载代码或glone至本地。
+2. cd进入工程目录,运行`npm install`下载npm依赖。
+3. 运行`npm run dev`来编译线下测试代码。
+4. 运行`npm run init`来初始化example环境。
+5. 运行`npm run example`来启动http服务器。
+6. 在浏览器中输入 http://localhost:8000即可访问example中的示例了。
 
 ### 代码自动生成
 做了上面的代码分层后，使得后续代码的自动生成变的有可能了，因此，后续会考虑代码自动生成。

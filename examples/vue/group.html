@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue-group示例</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <style>
+    </style>
+
+  </head>
+  <body>
+      <div id="app" class="container">
+        <div>
+            如下为采用系统默认的组件书写好的group,单选，不允许选第3项。group的选中值为:{{group1}}
+        </div>
+        <group :tag="'div'" class="btn-group" :max=1 :excludes="['2']" :init-value="group1" @change="group1Changed">
+            <tab class="btn btn-default">tab1</tab>
+            <tab class="btn btn-default">tab2</tab>
+            <tab class="btn btn-default">tab3(我在excludes中)</tab>
+            <tab class="btn btn-default">tab4</tab>
+            <a class="ui-tab btn btn-default">我不被Group接受</a>
+        </group>
+        <div>
+            如下为多选,最多选2个，不允许选tab3选项。 group的选中值为:{{group2}}
+        </div>
+        <group :init-value="group2" class="btn-group" :max=2 :multiple=true :excludes="['tab3']" @change="group2Changed">
+            <tab class="btn btn-default" :data-key="'tab1'">tab1</tab>
+            <tab class="btn btn-default" :data-key="'tab2'">tab2</tab>
+            <tab class="btn btn-default" :data-key="'tab3'">tab3(我在excludes中)</tab>
+            <tab class="btn btn-default" :data-key="'tab4'">tab4</tab>
+            <a class="ui-tab btn btn-default" :data-key="'tab5'">我不被Group接受</a>
+        </group>
+
+        <div class="row">
+            只要实现了group的interface接口，group下的一级子组件均会被group管理。如果用户需要写自己的group子组件，可以参照代码中tab的写法
+        </div>
+      </div>
+  </body>
+  <script>
+const artful = window["ether-mvc"];
+const GroupComp = artful.EtherVue.Group;
+const Tab = artful.EtherVue.Tab;
+Vue.component(GroupComp.name, GroupComp);
+Vue.component(Tab.name, Tab);
+
+var app = new Vue({
+  el: '#app',
+  data: {
+      group1 : 1,
+      group2 : ["tab1", "tab2"]
+  },
+  created:function(){
+  },
+  methods:{
+    group1Changed:function(data){
+        this.group1 = data;
+    },  
+    group2Changed:function(data) {
+        this.group2 = data;
+    }
+  }
+});
+  </script>
+</html>

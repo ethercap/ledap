@@ -94,7 +94,8 @@ export default {
         }
         const contents = [];
         contents.push(createElement('colgroup', colgroups));
-        contents.push(createElement('tr', headers));
+        contents.push(createElement('thead', [createElement('tr', headers)]));
+        const tbodys = [];
         for (const i in this.dataProvider.models) {
             model = this.dataProvider.models[i];
             const tempArr = [];
@@ -110,8 +111,9 @@ export default {
                     ]));
                 }
             }
-            contents.push(createElement('tr', tempArr));
+            tbodys.push(createElement('tr', tempArr));
         }
+        contents.push(createElement('tbody', tbodys));
         return createElement('table', contents);
     },
 };

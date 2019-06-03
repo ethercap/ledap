@@ -1,6 +1,10 @@
 export default {
     name : 'tab',
     props: {
+        tag : {
+            type: String,
+            default : 'a',
+        },
         dataKey : {
             type: String,
             default : null,
@@ -10,6 +14,7 @@ export default {
         return {
             status : false,
             groupKey : this.dataKey,
+            tagName : this.tag,
         };
     },
     methods : {
@@ -32,7 +37,7 @@ export default {
         },
     },
     template : `
-    <a class="ui-tab" :class="{'active': isOpen()}" @click="click">
+    <component :is="tagName" :class="{'active': isOpen()}" @click="click">
         <slot></slot>
-   </a>`,
+   </component>`,
 };

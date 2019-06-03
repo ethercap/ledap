@@ -1,9 +1,11 @@
 {
   "name": "ether-mvc",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
+    "init" : "cd examples && npm install && ln -s -f ../dist ./",
+    "example" : "cd examples/ && npm run start",
     "dev": "webpack --display-modules",
     "watch": "webpack  --watch",
     "build": "webpack --env.prod",

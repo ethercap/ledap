@@ -1,6 +1,6 @@
-import * as lodash from 'lodash';
 import BaseObject from '../base/BaseObject';
 import Model from '../base/Model';
+import StringHelper from '../helpers/StringHelper';
 
 export default abstract class Validator extends BaseObject {
     public attribute: string;
@@ -15,8 +15,7 @@ export default abstract class Validator extends BaseObject {
         Object.keys(options).forEach(key => {
             const p = /pattern/i;
             if (p.test(key) && typeof(options[key]) === 'string' && options[key][0] === '/') {
-                // tslint:disable-next-line:no-eval
-                options[key] = eval(options[key]);
+                options[key] = StringHelper.toRegExp(options[key]);
             }
         });
         this.options = options;
