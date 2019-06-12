@@ -22,9 +22,9 @@ export default class BaseObject {
     public clone(deep: Boolean = false) {
         let obj;
         if (deep) {
-            obj = lodash.clone(this);
-        } else {
             obj = lodash.cloneDeep(this);
+        } else {
+            obj = lodash.clone(this);
         }
         // 无法clone不可编历的属性
         Object.getOwnPropertyNames(this).forEach(key => {

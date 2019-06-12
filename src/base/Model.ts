@@ -87,6 +87,8 @@ export default class Model extends BaseObject {
                         }
                     });
                 }
+                this.emit(Model.EVENT_LOAD, this, key, obj.value);
+                this[key] = obj.value;
                 this.attributeHints = () => {
                     return attrHints;
                 };
@@ -96,9 +98,10 @@ export default class Model extends BaseObject {
                 this.rules = () => {
                     return rules;
                 };
+            } else {
+                this.emit(Model.EVENT_LOAD, this, key, data[key]);
+                this[key] = data[key];
             }
-            this.emit(Model.EVENT_LOAD, this, key, data[key]);
-            this[key] = data[key];
         });
         this.init();
         this.emit(Model.EVENT_AFTERLOAD, this);
