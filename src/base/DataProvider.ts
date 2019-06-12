@@ -99,10 +99,10 @@ export default class DataProvider extends BaseObject {
 
     public load(data: object, append: boolean = false, primaryKey: string = '') {
         const params = lodash.get(data, 'params', {});
-        this.searchModel.load(params);
+        this.searchModel = this.searchModel.load(params).clone();
 
         const meta = lodash.get(data, 'meta', {});
-        this.pager.load(meta);
+        this.pager = this.pager.load(meta).clone();
 
         let models = this.models;
         if (lodash.isEmpty(models) || !append) {
@@ -138,5 +138,40 @@ export default class DataProvider extends BaseObject {
         this.models = models;
         this.isLoad = true;
         this.init();
+        return this;
+    }
+
+    public remove(index: string|number|object = 0) {
+        if (typeof index === 'string') {
+            index = parseInt(index, 0);
+        }
+        if (typeof index === 'number') {
+            return this.models.splice(index, 1);
+        }
+        let value = null;
+        Object.keys(this.models).forEach(key => {
+            if (index === this.models[key]) {
+                value = this.remove(key);
+            }
+        });
+        return value;
+    }
+
+    public sortModels(attribute: string, asc: boolean = true, sortBy: any = null) {
+        if (sortBy === null) {
+            sortBy =  (value1, value2, sortType) => {
+                if (value1 === value2) {
+                    return 0;
+                }
+                if (sortType)  {
+                    return value1 > value2 ? 1 : -1;
+                }
+                return value1 < value2 ? 1 : -1;
+            };
+        }
+        const compare = (a, b) => {
+            return sortBy(a[attribute], b[attribute], asc);
+        };
+        this.models.sort(compare);
     }
 }

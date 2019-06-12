@@ -53,13 +53,13 @@ export default class WebDataProvider extends DataProvider {
             this.append = true;
             this.changePage(this.pager.currentPage + 1, true);
         } else {
-            this.append = true;
+            this.append = false;
             this.changePage(this.pager.currentPage, true);
         }
     }
 
     // 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
-    public setParams(params: object, reload: boolean = false, changePage: boolean = true) {
+    public setParams(params: object, reload: boolean = true, changePage: boolean = true) {
         // 设置参数
         this.searchModel.load(params);
         const page = changePage ? 1 : this.pager.currentPage;

@@ -48,7 +48,12 @@ export default {
                 return {};
             },
         },
-
+        vm : {
+            type : Object,
+            default() {
+                return this.$parent;
+            },
+        },
     },
     computed: {
         nColumns() {
@@ -56,13 +61,23 @@ export default {
         },
     },
     methods : {
-        getValue(value, format, createElement) {
+        getValue(obj, format, createElement) {
             if (format === 'html') {
+                const _this = this;
                 return createElement({
-                    template: '<div>' + value + '</div>',
+                    data() {
+                        return {
+                            vm : _this.vm,
+                            model : obj.model,
+                            attribute : obj.column.attribute,
+                            value : obj.value,
+                            index : obj.index,
+                        };
+                    },
+                    template: '<div>' + obj.value + '</div>',
                 });
             }
-            return value;
+            return obj.value;
         },
     },
     render(createElement) {
@@ -88,7 +103,12 @@ export default {
                     style: lodash.get(column.labelOptions, 'style', {}),
                     class: lodash.get(column.labelOptions, 'class', {}),
                 }, [
-                    this.getValue(column.getLabel(model, createElement), column.labelFormat, createElement),
+                    this.getValue({
+                        value: column.getLabel(model, createElement),
+                        model: null,
+                        index: null,
+                        column,
+                    }, column.labelFormat, createElement),
                 ]));
             }
         }
@@ -107,7 +127,12 @@ export default {
                         style: lodash.get(column.contentOptions, 'style', {}),
                         class: lodash.get(column.contentOptions, 'class', {}),
                     }, [
-                        this.getValue(column.getValue(model, i, createElement), column.format, createElement),
+                        this.getValue({
+                            value: column.getValue(model, i, createElement),
+                            model,
+                            index: i,
+                            column,
+                        }, column.format, createElement),
                     ]));
                 }
             }

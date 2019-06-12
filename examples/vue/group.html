@@ -33,10 +33,14 @@
             <tab class="btn btn-default" :data-key="'tab3'">tab3(我在excludes中)</tab>
             <tab class="btn btn-default" :data-key="'tab4'">tab4</tab>
             <a class="ui-tab btn btn-default" :data-key="'tab5'">我不被Group接受</a>
+            <br/><br/>
+            <radio class="radio" :data-key="'radio'">radio</radio>
+            <checkbox class="checkbox" :data-key="'checkbox'">checkbox</checkbox>
         </group>
 
         <div class="row">
-            只要实现了group的interface接口，group下的一级子组件均会被group管理。如果用户需要写自己的group子组件，可以参照代码中tab的写法
+            只要实现了group的interface接口，group下的一级子组件均会被group管理。由上例可以看出，我们也可以把不同种类的item级联在一起。
+            当然，现实中一般不会有这样的需求，上面只是一个示例。如果用户需要写自己的group子组件，可以参照代码中tab，checkbox的写法。
         </div>
       </div>
   </body>
@@ -44,8 +48,12 @@
 const artful = window["ether-mvc"];
 const GroupComp = artful.EtherVue.Group;
 const Tab = artful.EtherVue.Tab;
+const Radio = artful.EtherVue.Radio;
+const CheckBox = artful.EtherVue.CheckBox;
 Vue.component(GroupComp.name, GroupComp);
 Vue.component(Tab.name, Tab);
+Vue.component(Radio.name, Radio);
+Vue.component(CheckBox.name, CheckBox);
 
 var app = new Vue({
   el: '#app',

@@ -5,6 +5,9 @@ import BaseObject from './BaseObject';
 
 export default class Model extends BaseObject {
     public static SCENARIO_DEFAULT = 'default';
+    public static EVENT_BEFORELOAD = 'MODEL_BEFORE_LOAD';
+    public static EVENT_LOAD = 'MODEL_LOAD';
+    public static EVENT_AFTERLOAD = 'MODEL_AFTER_LOAD';
 
     // 当前的错误
     private _errors: object;
@@ -61,7 +64,8 @@ export default class Model extends BaseObject {
     }
 
     // 只load数据
-    public load(data: object): void {
+    public load(data: object) {
+        this.emit(Model.EVENT_BEFORELOAD, this);
         Object.keys(data).forEach(key => {
             if (typeof(data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
                 const rules = this.rules();
@@ -83,7 +87,6 @@ export default class Model extends BaseObject {
                         }
                     });
                 }
-                this[key] = obj.value;
                 this.attributeHints = () => {
                     return attrHints;
                 };
@@ -93,11 +96,13 @@ export default class Model extends BaseObject {
                 this.rules = () => {
                     return rules;
                 };
-            } else {
-                this[key] = data[key];
             }
+            this.emit(Model.EVENT_LOAD, this, key, data[key]);
+            this[key] = data[key];
         });
         this.init();
+        this.emit(Model.EVENT_AFTERLOAD, this);
+        return this;
     }
 
     /*返回所有的scenarios,格式
@@ -198,7 +203,7 @@ export default class Model extends BaseObject {
     }
     public getAttributeHint(attribute) {
         const hints = this.attributeHints();
-        if (attribute in hints) {
+        if (hints.hasOwnProperty(attribute)) {
             return hints[attribute];
         }
         return '';
@@ -211,7 +216,7 @@ export default class Model extends BaseObject {
     // 根据attribute获取label
     public getAttributeLabel(attribute) {
         const attrLabels = this.attributeLabels();
-        if (attribute in attrLabels) {
+        if (attrLabels.hasOwnProperty(attribute)) {
             return attrLabels[attribute];
         }
         return attribute;

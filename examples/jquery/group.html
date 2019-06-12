@@ -73,6 +73,10 @@
                 group.max = max;
                 group.init();
             });
+            var group1 = new mvc.Group();
+            group1.on(mvc.Group.EVENT_DATACHANGED, function(obj, data){
+                console.log("group1");
+            });
         </script>
     </body>
 </html>

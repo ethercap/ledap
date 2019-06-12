@@ -40,6 +40,12 @@ export default {
             type: String,
             default : '20%',
         },
+        vm : {
+            type : Object,
+            default() {
+                return this.$parent;
+            },
+        },
     },
     computed: {
         nColumns() {
@@ -47,13 +53,24 @@ export default {
         },
     },
     methods : {
-        getValue(value, format, createElement) {
+        getValue(obj, format, createElement) {
             if (format === 'html') {
+                const _this = this;
                 return createElement({
-                    template: '<div>' + value + '</div>',
+                    data() {
+                        return {
+                            vm : _this.vm,
+                            model : obj.model,
+                            attribute : obj.column.attribute,
+                            value : obj.value,
+                            index : obj.index,
+                            isLabel : obj.isLabel,
+                        };
+                    },
+                    template: '<div>' + obj.value + '</div>',
                 });
             }
-            return value;
+            return obj.value;
         },
     },
     render(createElement, context) {
@@ -64,6 +81,7 @@ export default {
         const contents = [];
         contents.push(createElement('colgroup', colgroups));
         const nColumns = this.nColumns;
+        const tbody = [];
         for (const i in nColumns) {
             const column = nColumns[i];
             if (!column.visible) {
@@ -75,18 +93,31 @@ export default {
                 style: lodash.get(column.headerOptions, 'style', {}),
                 class: lodash.get(column.headerOptions, 'class', {}),
             }, [
-                this.getValue(column.getLabel(this.dataModel, createElement), column.labelFormat, createElement),
+                this.getValue({
+                    value: column.getLabel(this.dataModel, createElement),
+                    model: this.dataModel,
+                    index: i,
+                    column,
+                    isLabel : true,
+                }, column.labelFormat, createElement),
             ]));
             tempArr.push(createElement('td', {
                 attrs: lodash.get(column.contentOptions, 'attrs', {}),
                 style: lodash.get(column.contentOptions, 'style', {}),
                 class: lodash.get(column.contentOptions, 'class', {}),
             }, [
-                this.getValue(column.getValue(this.dataModel, i, createElement), column.format, createElement),
+                this.getValue({
+                    value: column.getValue(this.dataModel, i, createElement),
+                    model: this.dataModel,
+                    index: i,
+                    column,
+                    isLabel : false,
+                }, column.format, createElement),
             ]));
 
-            contents.push(createElement('tr', tempArr));
+            tbody.push(createElement('tr', tempArr));
         }
+        contents.push(createElement('tbody', tbody));
         return createElement('table', contents);
     },
 };

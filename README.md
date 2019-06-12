@@ -156,7 +156,7 @@ ether-mvc把前端常见的页面分为如下三类:
 3. 运行`npm run dev`来编译线下测试代码。
 4. 运行`npm run init`来初始化example环境。
 5. 运行`npm run example`来启动http服务器。
-6. 在浏览器中输入 http://localhost:8000即可访问example中的示例了。
+6. 在浏览器中输入 http://localhost:8000 即可访问example中的示例了。
 
 ### 代码自动生成
 做了上面的代码分层后，使得后续代码的自动生成变的有可能了，因此，后续会考虑代码自动生成。

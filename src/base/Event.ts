@@ -2,39 +2,43 @@
  * 事件
  */
 export default class Event {
+    public static instance = null;
 
-    /**
-     * 注册事件
-     * @param name 事件名称
-     * @param callback 回调函数
-     * @param context 上下文
-     */
-    public static on(name: string, callback: Function, context: any) {
-        if (typeof callback !== 'function') return;
-
-        let observers: Observer[] = Event.listeners[name];
-        if (!observers) {
-            Event.listeners[name] = observers = [];
+    public static getInstance() {
+        if (Event.instance) {
+            return Event.instance;
         }
-
-        const length = observers.length;
-        for (let i = 0; i < length; i++) {
-            const observer = observers[i];
-            if (observer.compare(callback, context)) return;
-        }
-
-        Event.listeners[name].push(new Observer(callback, context));
+        Event.instance = new Event();
+        return Event.instance;
+    }
+    public static once(name: string, callback: Function, context: any) {
+        Event.getInstance().once(name, callback, context);
     }
 
-    public static once(name: string, callback: Function, context: any) {
+    public static off(name: string, callback: Function, context: any) {
+        Event.getInstance().off(name, callback, context);
+    }
+
+    public static emit(name: string, ...args: any[]) {
+        Event.getInstance().emit(name, ...args);
+    }
+
+    public static on(name: string, callback: Function, context: any) {
+        Event.getInstance().on(name, callback, context);
+    }
+
+    /** 监听数组 */
+    private  listeners = {};
+
+    public once(name: string, callback: Function, context: any) {
         if (typeof callback !== 'function') return;
 
         const on = (...args) => {
-            Event.off(name, on, context);
+            this.off(name, on, context);
             callback.apply(context, args);
         };
 
-        return Event.on(name, on, context);
+        return this.on(name, on, context);
     }
 
     /**
@@ -43,19 +47,19 @@ export default class Event {
      * @param callback 回调函数
      * @param context 上下文
      */
-    public static off(name: string, callback: Function, context: any) {
+    public off(name: string, callback: Function, context: any) {
         // 未制定name则清空所有事件
         if (typeof name === 'undefined') {
-            Event.listeners = {};
+            this.listeners = {};
             return;
         }
 
-        const observers: Observer[] = Event.listeners[name];
+        const observers: Observer[] = this.listeners[name];
         if (!observers) return;
 
         // 未指定callback则清空所有回调
         if (typeof callback !== 'function') {
-            Event.listeners[name] = [];
+            this.listeners[name] = [];
         } else {
             const length = observers.length;
             for (let i = 0; i < length; i++) {
@@ -68,7 +72,7 @@ export default class Event {
         }
 
         if (!observers.length) {
-            delete Event.listeners[name];
+            delete this.listeners[name];
         }
     }
 
@@ -76,9 +80,9 @@ export default class Event {
      * 发送事件
      * @param name 事件名称
      */
-    public static emit(name: string, ...args: any[]) {
+    public emit(name: string, ...args: any[]) {
         if (typeof name === 'undefined') return;
-        const observers: Observer[] = Event.listeners[name];
+        const observers: Observer[] = this.listeners[name];
         if (!observers) return;
 
         const length = observers.length;
@@ -87,8 +91,29 @@ export default class Event {
             observer.notify(...args);
         }
     }
-    /** 监听数组 */
-    private static listeners = {};
+
+    /**
+     * 注册事件
+     * @param name 事件名称
+     * @param callback 回调函数
+     * @param context 上下文
+     */
+    public on(name: string, callback: Function, context: any) {
+        if (typeof callback !== 'function') return;
+
+        let observers: Observer[] = this.listeners[name];
+        if (!observers) {
+            this.listeners[name] = observers = [];
+        }
+
+        const length = observers.length;
+        for (let i = 0; i < length; i++) {
+            const observer = observers[i];
+            if (observer.compare(callback, context)) return;
+        }
+
+        this.listeners[name].push(new Observer(callback, context));
+    }
 }
 
 /* tslint:disable:max-classes-per-file */
