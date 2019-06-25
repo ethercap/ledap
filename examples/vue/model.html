@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DetailView示例</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <script src="../assets/js/bootstrap-theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+  </head>
+  <body>
+      <div id="app" class="container">
+          <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
+          <hr/>
+          <form class="form-horizontal col-sm-6 col-sm-offset-3">
+              <baseinput class="form-group" :model="model" :attr="'phone'" :validate="['input']"></baseinput>
+              <dropdown class="form-group" :model="model" :attr="'city'"></dropdown>
+              <buttongroup class="form-group" :model="model" :attr="'stayCity'"></buttongroup>
+              <radiogroup class="form-group" :model="model" :attr="'sex'"></radiogroup>
+              <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
+          </form>
+      </div>
+  </body>
+  <script>
+const artful = window["ether-mvc"];
+const Model = artful.Model;
+//注册本页面所需要的组件
+window.Theme1.register(["dropdown", "baseinput", "checkboxgroup", "radiogroup", "buttongroup"], Vue);
+
+var app = new Vue({
+  el: '#app',
+  methods : {
+      submit: function(event){
+          if(this.model.validate()) {
+            alert("提交数据："+ JSON.stringify(this.model));
+          } else {
+            alert(this.model.getFirstError());
+          }
+          event.preventDefault();
+      },
+  },
+  data: function(){
+      return {
+          model : new Model(),
+    };
+  },
+  created:function(){
+     //数据可以从任何地方来，也可以是本地的
+    axios.request({
+      url: "/data/model.json"
+    }).then((res) => {
+        let model = new Model();
+        this.model = model.load(res.data);
+    });
+  }
+});
+  </script>
+</html>

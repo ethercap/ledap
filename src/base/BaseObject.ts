@@ -19,23 +19,6 @@ export default class BaseObject {
         return this;
     }
 
-    public clone(deep: Boolean = false) {
-        let obj;
-        if (deep) {
-            obj = lodash.cloneDeep(this);
-        } else {
-            obj = lodash.clone(this);
-        }
-        // 无法clone不可编历的属性
-        Object.getOwnPropertyNames(this).forEach(key => {
-            if (this.isHideKey(key)) {
-                obj[key] = this[key];
-            }
-        });
-        obj.init();
-        return obj;
-    }
-
     public isHideKey(key: string) {
         if (key.substr(0, 1) === '_') {
             return true;
@@ -47,16 +30,19 @@ export default class BaseObject {
     }
 
     public init() {
-        for (const key in this) {
+        Object.getOwnPropertyNames(this).forEach(key => {
             if (this.isHideKey(key)) {
-                Object.defineProperty(this, key, {
-                    enumerable: false,
-                    value: this[key],
-                    configurable: true,
-                    writable: true,
-                });
+                const property = Object.getOwnPropertyDescriptor(this, key);
+                if (property && property.configurable === false) {
+                    return;
+                }
+                if (!property) {
+                    return;
+                }
+                property['enumerable'] = false;
+                Object.defineProperty(this, key, property);
             }
-        }
+        });
     }
 
     public on(name: string, callback: Function, context: any = null) {

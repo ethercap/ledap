@@ -118,13 +118,14 @@ var app = new Vue({
   created:function(){
       //数据可以从任何地方来，也可以是本地的
       let data = {"name":"Model", "comment":"", "jquery": [], "vue":[]};
-      // 由于Js的问题，Vue无法获取到数据的set，delete事件，如果希望有vue双绑，可以简单使用clone,但是会消耗少量内存
-      this.model = this.model.load(data).clone();
+      // 由于Js的问题，Vue无法获取到数据的set，delete事件，如果希望有vue双绑，最好重新new Model
+      let model = new Model();
+      this.model = model.load(data);
       // model在load数据时，会抛出事件，我们也可以直接传入callback来设置
       this.model1.on('MODEL_LOAD', function(model, key, val){
         Vue.set(model, key, val);
       });
-      this.model1 = this.model1.load(data);
+      this.model1.load(data);
   }
 });
   </script>

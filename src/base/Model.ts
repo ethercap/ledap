@@ -8,6 +8,8 @@ export default class Model extends BaseObject {
     public static EVENT_BEFORELOAD = 'MODEL_BEFORE_LOAD';
     public static EVENT_LOAD = 'MODEL_LOAD';
     public static EVENT_AFTERLOAD = 'MODEL_AFTER_LOAD';
+    public static EVENT_BEFORE_VALIDATE = 'MODEL_BEFORE_VALIDATE';
+    public static EVENT_AFTER_VALIDATE = 'MODEL_AFTER_VALIDATE';
 
     // 当前的错误
     private _errors: object;
@@ -125,16 +127,21 @@ export default class Model extends BaseObject {
     }
 
     public beforeValidate() {
+        this.emit(Model.EVENT_BEFORE_VALIDATE, this);
         return true;
     }
 
     public afterValidate(): void {
         // TODO: emit events
+        this.emit(Model.EVENT_AFTER_VALIDATE, this);
         return;
     }
 
     // validate方法，判断model的数据是否合法,如果返回false代表不合法
     public validate(attributes = [], clearErrors = true) {
+        if (typeof attributes === 'string') {
+            attributes = [attributes];
+        }
         if (clearErrors) {
             this.clearErrors();
         }
@@ -164,6 +171,12 @@ export default class Model extends BaseObject {
         return !this.hasErrors();
     }
 
+    // 判断是否为required
+    public isRequired(attribute) {
+        const rules = this.rules();
+        return lodash.get(rules, [attribute, 'required'], false);
+    }
+
     // 判断当前attribute是否有错误
     public hasErrors(attribute = null) {
         // 如果没有传attribute
@@ -179,6 +192,17 @@ export default class Model extends BaseObject {
             return this._errors;
         }
         return lodash.get(this._errors, attribute, []);
+    }
+
+    public getFirstError(attribute = null) {
+        const error = this.getErrors(attribute);
+        if (attribute) {
+            return lodash.get(error, '0', '');
+        }
+        for (const attr in error) {
+            return error[attr][0];
+        }
+        return '';
     }
 
     // 添加错误

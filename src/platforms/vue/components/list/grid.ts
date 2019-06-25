@@ -1,5 +1,5 @@
 import * as lodash from 'lodash';
-import Column from '../../../widgets/Column';
+import Column from '../../../../widgets/Column';
 
 export default {
     name : 'grid',

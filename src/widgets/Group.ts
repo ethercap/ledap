@@ -113,6 +113,9 @@ export default class Group extends BaseGroup {
         return this._selected;
     }
     set selected(value: any) {
+        if (value === null) {
+            value = [];
+        }
         if (typeof value === 'string') {
             this._selected = [value];
         }

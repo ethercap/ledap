@@ -22,7 +22,7 @@ npm i ether-mvc --save
 也可以在package.json中,加入如下的行, 然后执行`npm install`：
 
 ```javascript
-"ether-mvc": "^0.0.8"
+"ether-mvc": "^0.1.1"
 ```
 
 ## 使用

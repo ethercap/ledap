@@ -41,8 +41,8 @@ export default class DataProvider extends BaseObject {
             this._sort = sort;
         }
     }
-    public static SORT_ASC = 3;
-    public static SORT_DESC = 4;
+    public static SORT_ASC = 4;
+    public static SORT_DESC = 3;
 
     public static getInstance(data: object, searchModelClass: any = Model, modelClass: any= Model, paginationClass: any = Pagination): DataProvider {
         const config =  {
@@ -99,10 +99,16 @@ export default class DataProvider extends BaseObject {
 
     public load(data: object, append: boolean = false, primaryKey: string = '') {
         const params = lodash.get(data, 'params', {});
-        this.searchModel = this.searchModel.load(params).clone();
-
+        if (!this.isLoad) {
+            const searchModel = new this['searchModelClass']();
+            searchModel.load(params);
+            this.searchModel = searchModel;
+        } else {
+            this.searchModel = this.searchModel.load(params);
+        }
         const meta = lodash.get(data, 'meta', {});
-        this.pager = this.pager.load(meta).clone();
+        this.pager = this.pager.load(meta);
+        this.sort = lodash.get(data, 'sort', '');
 
         let models = this.models;
         if (lodash.isEmpty(models) || !append) {
