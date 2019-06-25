@@ -4,7 +4,7 @@ import BaseObject from './BaseObject';
 export default class Pagination extends BaseObject {
 
     get currentPage() {
-        return this._page;
+        return this.page;
     }
     set currentPage(value) {
         // page不允许超出范围
@@ -14,24 +14,15 @@ export default class Pagination extends BaseObject {
         if (value <= 0) {
             value = 1;
         }
-        this.emit(Pagination.EVENT_SETPAGE, value, this._page, this);
-        this._page = value;
+        this.emit(Pagination.EVENT_SETPAGE, value, this.page, this);
+        this.page = value;
     }
 
     public static EVENT_SETPAGE = 'page_setpage';
-    public totalCount: number;
-    public pageCount: number;
-    public perPage: number;
-    private _page: number;
-
-    constructor() {
-        super();
-        this.totalCount = 0;
-        this.pageCount = 0;
-        this._page = 1;
-        this.perPage = 20;
-        this.init();
-    }
+    public totalCount: number = 0;
+    public pageCount: number = 0;
+    public perPage: number = 20;
+    public page: number = 1;
 
     public hasPrev() {
         return this.currentPage > 1;

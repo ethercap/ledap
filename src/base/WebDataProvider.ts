@@ -66,6 +66,13 @@ export default class WebDataProvider extends DataProvider {
         this.changePage(page, reload);
     }
 
+    public setSort(sort: string|object = '', reload: boolean = true, changePage: boolean = false) {
+        // 设置参数
+        this.sort = sort;
+        const page = changePage ? 1 : this.pager.currentPage;
+        this.changePage(page, reload);
+    }
+
     // 用于网页的页码点击中
     public changePage(page: number, reload: boolean = true) {
         this.pager.currentPage = page;

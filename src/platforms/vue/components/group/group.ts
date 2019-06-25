@@ -1,4 +1,4 @@
-import Group from '../../../widgets/Group';
+import Group from '../../../../widgets/Group';
 
 export default {
     name : 'group',
@@ -35,21 +35,32 @@ export default {
         };
     },
     mounted() {
-        this.$nextTick(function () {
+        this.$nextTick(() => {
+            this.init();
+        });
+    },
+    updated() {
+        this.$nextTick(() => {
             this.init();
         });
     },
     computed: {
     },
     watch: {
-        multiple() {this.init(); },
+        multiple() {
+            this.init();
+        },
+        initValue() {
+            this.selected = this.initValue;
+            this.init();
+        },
         max() { this.init(); },
         mode() { this.init(); },
         excludes() { this.init(); },
     },
     methods : {
         init() {
-            this.group = new Group();
+            this.group = new Group(),
             this.group.max = this.multiple ? this.max : 1;
             this.group.excludes = this.excludes;
             this.group.mode = this.mode;
