@@ -4,6 +4,7 @@ import {default as EtherVue} from './index';
 
 export default class Theme extends BaseObject {
     public static themes = {};
+
     // 全局的一些配置
     public static getInstance(config: object = {}, key='default') {
         let  theme =  null;
@@ -25,6 +26,7 @@ export default class Theme extends BaseObject {
     }
     public key = 'default';
     public components = {};
+    private _registerComps = {};
 
     public getComponentByName(name: string) {
         return lodash.get(this.components, name, null);
@@ -50,7 +52,7 @@ export default class Theme extends BaseObject {
     }
 
     // 注册组件, 循环遍历整棵树
-    public register(name, vue, dict = {}) {
+    public register(name, vue) {
         const objs = [];
         if (typeof name === 'string') {
             const comp = this.getComponentByName(name);
@@ -69,11 +71,11 @@ export default class Theme extends BaseObject {
         Object.keys(objs).forEach(key => {
             const obj = objs[key];
             // 如果有depend先register depend组件
-            if (obj.hasOwnProperty('depends') && !dict.hasOwnProperty(obj.name)) {
-                this.register(obj['depends'], vue, dict);
+            if (obj.hasOwnProperty('depends') && !this._registerComps.hasOwnProperty(obj.name)) {
+                this.register(obj['depends'], vue);
             }
             vue['component'](this.getName(obj.name), obj);
-            dict[obj.name] = true;
+            this._registerComps[obj.name] = true;
         });
     }
 
