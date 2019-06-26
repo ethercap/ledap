@@ -39,24 +39,10 @@ export default {
             this.init();
         });
     },
-    updated() {
-        this.$nextTick(() => {
-            this.init();
-        });
-    },
-    computed: {
-    },
     watch: {
-        multiple() {
-            this.init();
-        },
         initValue() {
-            this.selected = this.initValue;
             this.init();
         },
-        max() { this.init(); },
-        mode() { this.init(); },
-        excludes() { this.init(); },
     },
     methods : {
         init() {
@@ -67,10 +53,14 @@ export default {
             this.group.addList(this.$children);
             for (const i in this.$children) {
                 const vm = this.$children[i];
-                vm.$on('toggle', obj => {
-                    this.change(obj);
-                });
+                if (!vm['toggleEvent']) {
+                    vm.$on('toggle', obj => {
+                        this.change(obj);
+                    });
+                    vm['toggleEvent'] = true;
+                }
             }
+            this.selected = this.initValue;
             this.group.selected = this.selected;
             this.setSelected();
         },

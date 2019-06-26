@@ -10,7 +10,8 @@ Model是后台数据的前端映射，是整个前端的业务汇聚地，它将
 
 ```javascript     
 var data = {};
-var model = Model.load(data);
+var model = new Model();
+model.load(data);
 ```
 
 ##  model的特性
