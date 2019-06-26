@@ -82,6 +82,18 @@ export default class DataProvider extends BaseObject {
         this.load(data);
     }
 
+    // 切换排序方式
+    public toggleSort() {
+        Object.keys(this._sort).forEach(key => {
+            const value = this._sort[key];
+            if (value === DataProvider.SORT_DESC) {
+                this._sort[key] = DataProvider.SORT_ASC;
+            } else if (value === DataProvider.SORT_ASC) {
+                this._sort[key] = DataProvider.SORT_DESC;
+            }
+        });
+    }
+
     // 如果不传参则获取当前的url, params的传参会优先
     public getParams(args: object = {}) {
         const params = {};

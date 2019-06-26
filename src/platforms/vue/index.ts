@@ -12,6 +12,7 @@ import {default as DetailView} from './components/detailview';
 import {default as BaseInput} from './components/formItem/baseinput';
 import {default as CheckBoxGroup} from './components/formItem/checkboxgroup';
 import {default as DropDown} from './components/formItem/dropdown';
+import {default as GroupInput} from './components/formItem/groupinput';
 import {default as RadioGroup} from './components/formItem/radiogroup';
 
-export default {DetailView, Pager, Grid, Group, Tab, List, Radio, CheckBox, BaseInput, DropDown, CheckBoxGroup, RadioGroup};
+export default {DetailView, Pager, Grid, Group, Tab, List, Radio, CheckBox, BaseInput, DropDown, CheckBoxGroup, RadioGroup, GroupInput};

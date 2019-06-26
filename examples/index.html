@@ -103,7 +103,10 @@ var app = new Vue({
   created:function(){
     let data = {
         "items": [
-            {"name":"Model", "comment":"", "jquery": [], "vue":[]},
+            {"name":"Model", "comment":"", "jquery": [], "vue":[{
+                title : "model+form表单",
+                href  : "/vue/model.html",
+            }]},
             {"name":"WebDataProvider", "comment":"适用于列表页数据的获取等。WebDataProvider是DataProvider的子类，本页面使用DataProvider示例",
                 "jquery": [{"href":"/jquery/dataprovider.html", "title":"jquery WebDataProvider示例"}],
                 "vue":[{"href": "/vue/WebDataProvider.html", "title": "vue WebDataProvider示例"}]

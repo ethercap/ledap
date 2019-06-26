@@ -24,7 +24,19 @@ export default {
         validate : {
             type: Array,
             default() {
-                return [];
+                return ['blur'];
+            },
+        },
+        labelOptions : {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        inputOptions : {
+            type: Object,
+            default() {
+                return {};
             },
         },
     },
@@ -33,34 +45,34 @@ export default {
             showError : this.model.getFirstError(this.attr),
         };
     },
+    updated() {
+        this.$nextTick(() => {
+            this.model.on(Model.EVENT_AFTER_VALIDATE, this.syncError);
+        });
+    },
     methods : {
         syncError() {
             this.showError = this.model.getFirstError(this.attr);
         },
         inputValue(event) {
-            this.model.on(Model.EVENT_AFTER_VALIDATE, this.syncError);
             if (event) {
                 this.model[this.attr] = event.target.value;
             }
-            if (this.validate.indexOf('input') > -1) {
-                this.model.validate(this.attr);
-            }
+            this.checkValue('input');
+            this.$emit('input', this.model[this.attr], event);
         },
-        blur() {
-            if (this.validate.indexOf('blur') > -1) {
-                this.model.validate(this.attr);
-            }
-            this.$emit('blur', {
-                vm : this,
-            });
+        blur(event) {
+            this.checkValue('blur');
+            this.$emit('blur', event);
         },
-        focus() {
-            if (this.validate.indexOf('focus') > -1) {
-                this.model.validate(this.attr);
+        focus(event) {
+            this.checkValue('focus');
+            this.$emit('focus', event);
+        },
+        checkValue(index) {
+            if (this.validate.indexOf(index) > -1) {
+                this.model.validate();
             }
-            this.$emit('focus', {
-                vm: this,
-            });
         },
     },
     computed: {
@@ -73,11 +85,18 @@ export default {
         showHint() {
             return this.hint || this.model.getAttributeHint(this.attr);
         },
+        inputListeners () {
+            return Object.assign({}, this.$listeners,  {
+                input: this.inputValue,
+                focus : this.focus,
+                blur : this.blur,
+            });
+        },
     },
     template : `
     <component :is="tag">
-        <label>{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
-        <input :name="attr" :value="showValue" :placeholder="showHint" @input="inputValue"/>
+        <label v-bind="labelOptions">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
+        <input :name="attr" :value="showValue" v-bind="inputOptions" :placeholder="showHint" v-on="inputListeners" />
         <p v-show="showError">{{showError}}</p>
     </component>`,
 };

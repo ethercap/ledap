@@ -22,7 +22,7 @@
             }
           }
         ],
-        "value": "其他"
+        "value": "上海"
       },
       "stayCity": {
         "label": "常驻城市",
@@ -43,7 +43,7 @@
               "multiple": true,
               "excludes" : ["武汉"],
               "max" : 3,
-              "message": "城市的值不正确",
+              "message": "常驻城市的值不正确",
               "skipOnEmpty": 1
             }
           }
@@ -84,6 +84,28 @@
           }
         ],
         "hint" : "请输入手机号",
+        "value": ""
+      },
+      "password": {
+        "label": "密码",
+        "rules": [
+          {
+            "type": "match",
+            "options": {
+              "pattern": "/(?=^.{8,16}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
+              "not": false,
+              "message": "密码必须8-16位且包含大小写字母，数字或特殊字符。",
+              "skipOnEmpty": 1
+            }
+          },
+          {
+             "type":"required",
+             "options" : {
+                "message" : "密码必须填写"
+             }
+          }
+        ],
+        "hint" : "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
         "value": ""
       }
 }
