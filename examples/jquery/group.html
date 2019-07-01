@@ -27,7 +27,7 @@
             <button maxNum="1">单选</button>
             <button maxNum="3">多选(最多3个)</button>
         </div>
-        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script src="../../assets/js/jquery.min.js"></script>
         <script src="../dist/index.js"></script>
         <script src="../dist/widgets.js"></script>
         <script>
@@ -72,6 +72,10 @@
                 let max = $(this).attr("maxNum");
                 group.max = max;
                 group.init();
+            });
+            var group1 = new mvc.Group();
+            group1.on(mvc.Group.EVENT_DATACHANGED, function(obj, data){
+                console.log("group1");
             });
         </script>
     </body>

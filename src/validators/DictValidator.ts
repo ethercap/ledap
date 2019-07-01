@@ -28,7 +28,7 @@ export default class DictValidator extends Validator {
         }
         Object.keys(value).forEach(index => {
             const val = value[index];
-            if ( (!options.list.hasOwnProperty(val)) || options.excludes.hasOwnProperty(val)) {
+            if ( (!options.list.hasOwnProperty(val)) || options.excludes.indexOf(val) > -1) {
                 model.addError(attribute, options.message);
             }
         });

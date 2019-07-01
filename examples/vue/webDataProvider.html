@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ether-mvc示例</title>
+    <script src="../assets/js/axios.min.js"></script>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.12-pre/lodash.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <grid class="table table-bordered table-striped table-hover" :data-provider=dp :columns=columns>
+        </grid>
+        <button class="btn btn-info" @click="dp.changePage(2)">第2页</button>
+        <button class="btn btn-info" @click="dp.prePage()" :disabled="!dp.pager.hasPrev()">上一页</button>
+        <button class="btn btn-info" @click="dp.nextPage()" :disabled="!dp.pager.hasNext()">下一页</button>
+        <button class="btn btn-info" @click="dp.refresh('header')">下拉刷新</button>
+        <button class="btn btn-info" @click="dp.refresh('footer')" :disabled="!dp.pager.hasNext()">上拉加载</button>
+        <button class="btn btn-info" @click="dp.setParams({perPage:20})">修改筛选条件</button>
+        <hr/>
+        <p>
+            我们也可以用系统的分页器,自己可以写点css来适配。
+        </p>
+        <pager :data-provider=dp > </pager>
+        <hr/>
+        <p>
+            如果不喜欢系统的template，可以自己写template
+        </p>
+        <newpager :data-provider=dp> dsd</newpager>
+        <hr/>
+        <p>在上面的表格点击上拉后，我们会发现页面上有重复id的数据，这在实际中也很常见，由于用户页面翻页之前，后端的数据有变动，就会产生这样的情况。我们可以通过<a class="btn btn-info" @click="setPrimaryKey()">设置primaryKey</a>来去重。</p>
+        <p>
+        去重后，我们可以看见，相同id的数据会被新数据覆盖，这样页面上不会产生重复的数据。
+        </p>
+    </div>
+</body>
+<script>
+const artful = window["ether-mvc"];
+const WebDataProvider = artful.WebDataProvider;
+const Grid = artful.EtherVue.Grid;
+const Pager = artful.EtherVue.Pager;
+Vue.component(Grid.name, Grid);
+//自己修改默认的模板,可以写在全局。如果不想两个template共存，可以直接修改而不是cloneDeep，本处只是为了演示需要。
+const newPager = _.cloneDeep(Pager);
+newPager.name = "newpager";
+newPager.template = `<nav>
+  <ul class="pagination">
+    <li>
+      <a  @click="toPrev()" :disabled="!dataProvider.pager.hasPrev()">
+        <span>&laquo;</span>
+      </a>
+    </li>
+    <li><a @click="changePage(1)">1</a></li>
+    <li><a @click="changePage(2)">2</a></li>
+    <li>
+      <a :disabled="!dataProvider.pager.hasNext()" @click="toNext()">
+        <span>&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>`;
+Vue.component(newPager.name, newPager);
+Vue.component(Pager.name, Pager);
+
+
+var app = new Vue({
+    el: '#app',
+    data: function(){
+        return {
+          // webDP的httpRequest方法一般写在全局
+          dp: new WebDataProvider({
+              httpOptions: {
+                  url: '/data/dp_1.json',
+                  params: {
+                      'per-page': 10
+                  }
+              },
+              primaryKey: "",
+              httpRequest(opts, suc, fail) {
+                  axios.request({
+                      url: opts.url
+                  }).then(function(res) {
+                      // 这里手写了data的格式，项目中后端会返回下面的格式，不用自己构造
+                      var data = {
+                          items : res.data,
+                          sort: [],
+                          meta: {
+                              currentPage: opts.url === "/data/dp_1.json" ?  1 : 2,
+                              pageCount: 2,
+                              perPage: 20,
+                              totalCount : opts.url === "/data/dp_1.json" ?  40 : 50,
+                          }
+                      };
+                      suc(data);
+                  }).catch(function(err) {
+                      // 失败处理
+                      fail(err);
+                  });
+              }
+          }),
+          columns: [{
+              attribute: 'id',
+              label: '序号',
+              value: function(model, attribute, index) {
+                  const value = model[attribute];
+                  return value;
+              }
+          }, {
+              attribute: 'name',
+              label: '姓名',
+              value: function(model, attribute, index) {
+                  const value = model[attribute];
+                  return value;
+              }
+          }]
+        };
+    },
+    created:function(){
+        //由于在example中没有后端，本次做一个小模拟，我们根据page获取不同的data.json来显示
+        this.dp.on(WebDataProvider.EVENT_BEFOREGETDATA,dp => {
+            dp.httpOptions.url = '/data/dp_' + dp.pager.currentPage + ".json";
+        }) ;
+        this.dp.refresh();
+    },
+    methods: {
+        setPrimaryKey: function(){
+            this.dp.primaryKey = "id";
+            this.dp.refresh();
+        }
+    }
+});
+</script>
+</html>

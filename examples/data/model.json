@@ -1,0 +1,111 @@
+{
+    "city": {
+        "label": "城市",
+        "rules": [
+          {
+            "type": "dict",
+            "options": {
+              "list": {
+                "北京": "北京",
+                "上海": "上海",
+                "杭州": "杭州",
+                "成都": "成都",
+                "武汉": "武汉",
+                "南京": "南京",
+                "厦门": "厦门",
+                "其他": "其他"
+              },
+              "multiple": false,
+              "excludes" : [],
+              "message": "城市的值不正确",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "value": "上海"
+      },
+      "stayCity": {
+        "label": "常驻城市",
+        "rules": [
+          {
+            "type": "dict",
+            "options": {
+              "list": {
+                "北京": "北京",
+                "上海": "上海",
+                "杭州": "杭州",
+                "成都": "成都",
+                "武汉": "武汉",
+                "南京": "南京",
+                "厦门": "厦门",
+                "其他": "其他"
+              },
+              "multiple": true,
+              "excludes" : ["武汉"],
+              "max" : 3,
+              "message": "常驻城市的值不正确",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "value": ["成都", "杭州"]
+      },
+      "sex": {
+        "label": "性别",
+        "rules": [
+          {
+            "type": "dict",
+            "options": {
+              "list": {
+                "1": "男",
+                "2": "女"
+              },
+              "multiple": false,
+              "excludes" : [],
+              "message": "性别不正确",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "value": 1
+      },
+
+      "phone": {
+        "label": "手机号",
+        "rules": [
+          {
+            "type": "match",
+            "options": {
+              "pattern": "/^1[3-9]{1}\\d{9}$/",
+              "not": false,
+              "message": "手机号是无效的。",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "hint" : "请输入手机号",
+        "value": ""
+      },
+      "password": {
+        "label": "密码",
+        "rules": [
+          {
+            "type": "match",
+            "options": {
+              "pattern": "/(?=^.{8,16}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
+              "not": false,
+              "message": "密码必须8-16位且包含大小写字母，数字或特殊字符。",
+              "skipOnEmpty": 1
+            }
+          },
+          {
+             "type":"required",
+             "options" : {
+                "message" : "密码必须填写"
+             }
+          }
+        ],
+        "hint" : "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
+        "value": ""
+      }
+}

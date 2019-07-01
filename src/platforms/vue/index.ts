@@ -1,8 +1,18 @@
-import {default as DetailView} from './components/detailview';
-import {default as Grid} from './components/grid';
-import {default as Group} from './components/group';
-import {default as List} from './components/list/list';
-import {default as Pager} from './components/pager';
-import {default as Tab} from './components/tab';
+import {default as CheckBox} from './components/group/checkbox';
+import {default as Group} from './components/group/group';
+import {default as Radio} from './components/group/radio';
+import {default as Tab} from './components/group/tab';
 
-export default {DetailView, Pager, Grid, Group, Tab, List};
+import {default as Grid} from './components/list/grid';
+import {default as List} from './components/list/list';
+import {default as Pager} from './components/list/pager';
+
+import {default as DetailView} from './components/detailview';
+
+import {default as BaseInput} from './components/formItem/baseinput';
+import {default as CheckBoxGroup} from './components/formItem/checkboxgroup';
+import {default as DropDown} from './components/formItem/dropdown';
+import {default as GroupInput} from './components/formItem/groupinput';
+import {default as RadioGroup} from './components/formItem/radiogroup';
+
+export default {DetailView, Pager, Grid, Group, Tab, List, Radio, CheckBox, BaseInput, DropDown, CheckBoxGroup, RadioGroup, GroupInput};
