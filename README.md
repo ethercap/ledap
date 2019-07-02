@@ -1,8 +1,8 @@
-Ether-mvc
+Ledap
 -----
 
 
-## Ether-mvc是什么？
+## Ledap是什么？
 由于vue，angularJs,react的出现，使得前端能够很方便地实现页面上的侦听和dom操作，然而却带来一个新的问题：将后端数据渲染为html。该问题极大地加剧了整个前端开发的复杂度，并且前端带了特别多的问题：
 
 * 业务问题。前端需要跟据业务逻辑来展示不同的页面，而业务逻辑部分在后端实现了一次，而在前端往往需要再实现一次，而且维护起来极为复杂。
@@ -17,17 +17,28 @@ Ether-mvc
 运行如下命令进行安装：
 
 ```bash
-npm i ether-mvc --save
+npm i ledap --save
 ```
 也可以在package.json中,加入如下的行, 然后执行`npm install`：
 
 ```javascript
-"ether-mvc": "^0.0.8"
+"ledap": "^0.1.1"
 ```
 
 ## 使用
 
-## 主要设计分层
+### 代码示例
+本代码中有丰富的代码示例。
+
+1. 首先下载代码或glone至本地。
+2. cd进入工程目录,运行`npm install`下载npm依赖。
+3. 运行`npm run dev`来编译线下测试代码。
+4. 运行`npm run init`来初始化example环境。
+5. 运行`npm run example`来启动http服务器。
+6. 在浏览器中输入 http://localhost:8000 即可访问example中的示例了。
+
+
+### 主要设计分层
 整个框架的具体分层如下所示：
 ![框架概览](docs/img/framework.png)
 
@@ -41,7 +52,7 @@ npm i ether-mvc --save
 
 ### 组件
 
-在ether-mvc中，把组件分为如下两类：
+在ledap中，把组件分为如下两类：
 
 * **逻辑组件**:在本框架中叫widget,跟具体的框架实现无关，可以在多个框架中使用。
 * **展示组件**：在本框架中叫component, 具体的逻辑实现，跟具体的框架有关。
@@ -60,7 +71,7 @@ group是可能是一个按钮组，一个Checkbox Group，或者Radio Group等�
 如下为逻辑组件Group的示例代码，它可以把component加入管理，component必须符合group的接口规范，如果不符合，不会报错，但是group并不管理该组件。
 
 ```javascript
-import { Group } from 'ether-mvc';
+import { Group } from 'ledap';
 
 var group = new Group();
 // 允许选中的最大个数
@@ -82,9 +93,9 @@ group.selected
 如下为vue展示组件的示例, 它本质上就只是将上面的代码写在了vue组件中。这样，我们就能看见正确的的交互了。
 
 ``` javascript
-import {EtherVue} from 'ether-mvc'
-const group = EtherVue.group;
-const tab = EtherVue.tab;
+import {LedapVue} from 'ledap'
+const group = LedapVue.group;
+const tab = LedapVue.tab;
 // 注册group组件
 Vue.component(group.name, group);
 // 注册tab组件
@@ -104,7 +115,7 @@ view页展示如下:
 上面我们来实现一个Jquery中组件逻辑, 它全将对应dom的元素直接交给group管理
 
 ```javascript
-import {Group} from 'ether-mvc'
+import {Group} from 'ledap'
 
 function getComponent(key)
 {
@@ -142,21 +153,11 @@ group.add(component2);
 
 ### 页面分类
 
-ether-mvc把前端常见的页面分为如下三类:
+ledap把前端常见的页面分为如下三类:
 
 * [列表页](docs/ListPage.md)
 * [提交&修改页](docs/UpdatePage.md)
 * 信息展示页
-
-### 代码示例
-本代码中有丰富的代码示例。
-
-1. 首先下载代码或glone至本地。
-2. cd进入工程目录,运行`npm install`下载npm依赖。
-3. 运行`npm run dev`来编译线下测试代码。
-4. 运行`npm run init`来初始化example环境。
-5. 运行`npm run example`来启动http服务器。
-6. 在浏览器中输入 http://localhost:8000即可访问example中的示例了。
 
 ### 代码自动生成
 做了上面的代码分层后，使得后续代码的自动生成变的有可能了，因此，后续会考虑代码自动生成。

@@ -25,7 +25,7 @@ dp主要由如下几部分组成：
 * **dp.models** : 列表页的详细数据
 
 ```javascript
-import { WebDataProvider } from 'ether-mvc';
+import { WebDataProvider } from 'ledap';
 
 var dp = new WebDataProvider({
     httpOptions:{

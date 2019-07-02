@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DetailView示例</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+  </head>
+  <body>
+      <div id="app" class="container">
+          <detail-view class="table table-bordered table-hover" :data-model=model :columns=columns> 
+          </detail-view>
+          <div>
+              通常情况下，我们会发现，Model在不同的页面是有相通性的，而且每次column的书写可能会比较麻烦，如下，我们来引入Model层来解决。
+          </div>
+          <detail-view class="table table-bordered table-hover" :data-model=model1 :columns=columns1> 
+          </detail-view>
+      </div>
+  </body>
+  <script>
+const artful = window["ledap"];
+const DetailView = artful.LedapVue.DetailView;
+const Model = artful.Model;
+Vue.component(DetailView.name, DetailView);
+
+//新的Model实例
+function newModel(){
+    this.attributeLabels = function(){
+        return {
+            "name" : "名称",
+            "comment" : "备注",
+            "jquery" : "jquery示例",
+            "vue" : "vue示例"
+        };
+    } 
+}
+newModel.prototype = new Model();
+
+var app = new Vue({
+  el: '#app',
+  methods : {
+      toggle:function(){
+          alert("ehl");
+      },
+      remove()
+      {
+          this.model = new Model();
+      },
+  },
+  data: function(){
+      return {
+          model: new Model(),
+          columns :[
+            {
+                "attribute":"name",
+                "label" : "名称",
+            },
+            {
+                "attribute":"jquery",
+                "label" : "jquery示例",
+                "value" : function(model, attribute, index){
+                    const value = model[attribute];
+                    if(!value || value.length == 0) {
+                        return "待完善";
+                    }
+                    // 注意，想要调用this的方法，必须写vm.xxx
+                    return '<ul><li v-for="obj in model.jquery"><a :href="obj.href">{{obj.title}}</a></li></ul>';
+                },
+                "format" : "html",
+            },
+            {
+                "attribute":"vue",
+                "label" : "Vue示例",
+                //注意createElement仅在vue中可用, 本处仅为示例写法
+                "value" : function(model, attribute, index, createElement) {
+                    const value = model[attribute];
+                    if(!value || value.length == 0) {
+                        return "待完善";
+                    }
+                    links = [];
+                    Object.keys(value).forEach(index => {
+                        let link = createElement("a", {
+                            'attrs': {
+                                href : value[index].href,
+                                target : "_blank",
+                            }
+                        }, value[index].title);
+                        links.push(createElement('li', [link]))
+                    });
+                    return createElement("ul", links);
+                }
+            },
+            {
+                "attribute":"comment",
+                "label" : "备注",
+            },
+            {
+                "label": "操作",
+                "value" : function(){
+                    return '<a class="btn btn-danger" @click="vm.remove">删除</a>';
+                },
+                "format" : "html",
+            },
+        ],
+        model1 : new newModel(),
+        columns1 : [
+            "name",
+            "comment",
+            "jquery",
+            "vue",
+        ],
+    };
+  },
+  created:function(){
+      //数据可以从任何地方来，也可以是本地的
+      let data = {"name":"Model", "comment":"", "jquery": [], "vue":[]};
+      // 由于Js的问题，Vue无法获取到数据的set，delete事件，如果希望有vue双绑，最好重新new Model
+      let model = new Model();
+      this.model = model.load(data);
+      // model在load数据时，会抛出事件，我们也可以直接传入callback来设置
+      this.model1.on('MODEL_LOAD', function(model, key, val){
+        Vue.set(model, key, val);
+      });
+      this.model1.load(data);
+  }
+});
+  </script>
+</html>

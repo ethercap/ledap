@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>event示例</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <hr/>
+        <p>
+            在正常的vue体系中，我们能够很方便地将view与data进行绑定，本质上是使用了event事件体系。然而，data与data的绑定极为困难，很多时候，我们采用了一些变通的方式如watch,computed，然而一旦跨页面，就会有些力不从心。有Event之后，我们可以让这种操作极为简单和便捷。
+            <p><strong>注：</strong>view与view的绑定很多时候是通过data来处理的。</p>
+        </p>
+        <hr/>
+        <p>
+            如下有三个输入框分别绑定三个变量name, name1, name2(本示例只作了单绑，双绑同样的流程)。在页面created时，我们将name1,name2通过Event绑定name。nameOnce仅会同步一次name，以后再也不会同步。我们来看一下效果:
+        </p>
+        <div class="form col-sm-10" >
+            <div class="form-group row">
+                <label for="name" class="col-sm-1 control-label">name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="name" :value="name" @input="changeName"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-sm-1 control-label">name1</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="name1"  v-model:value="name1"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-sm-1 control-label">name2</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="name2"  v-model:value="name2"/>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" @click="toggleBind">{{isBind ? '解除与name的绑定' : "绑定name"}}</button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-sm-1 control-label">nameOnce</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="nameOnce"  v-model:value="nameOnce"/>
+                </div>
+                <div class="col-sm-7">
+                    仅同步第一次，后面就再也不会同步
+                </div>
+            </div>
+            <button class="btn btn-info" @click="offAllEventName">解绑所有事件</button>
+        </div>
+        <div class="col-sm-12">
+            <hr/>
+        </div>
+        <div class="col-sm-12">
+            对像事件。为了方便大家的操作，本框架最底层的Object上集成了Event，因此，我们可以直接调用对应的事件方法来使用事件。下面，我们用dataProvider来示例。
+            <a class="btn btn-primary" @click="dp.refresh('')">WebDp获取数据</a>
+            <p>通过dp.isLoading指示：{{dp.isLoading? "加载中..." : ""}}</p>
+            <p>通过事件机制显示：{{dpStatus}}</p>
+
+            <p>另外，我们也可以自己给对像加事件(dp.event(xxx))。对像的事件是对像自己的，即使名称一样，只要发出事件的不是该对像，就不会产生回调</p>
+        </div>
+        <div class="col-sm-12" style="height:200px"></div>
+    </div>
+    <script>
+    var artful = window["ledap"];
+    var Event = artful.Event;
+    var WebDataProvider = artful.WebDataProvider;
+    var app = new Vue({
+        el: '#app',
+        data: function(){
+            return {
+                name: "LiLei",
+                name1: "Lily",
+                name2: "lucy",
+                nameOnce:"hanmeimei",
+                isBind : true,
+                dpStatus: "",
+                dp: new WebDataProvider({
+                    httpOptions: {
+                        url: '/data/dp_1.json',
+                    },
+                    httpRequest(opts, suc, fail) {
+                        // 只是示例，sleep 3秒
+                        setTimeout(function(){
+                            suc({});
+                        }, 3000);
+                    }
+                }),
+            };
+        },
+        created:function(){
+            Event.on('event-name', (data) => {
+                this.name1 = data.msg;
+            });
+            // 添加第2个订阅者，后面可以单独取消该订阅者
+            Event.on('event-name', this.fn);
+            Event.once('event-name', (data) => {
+                this.nameOnce = data.msg;
+            });
+
+
+            // ledap中BaseObect中继承了Event对象，因此任意一个对象均能处理事件
+            this.dp.on(artful.WebDataProvider.EVENT_BEFOREGETDATA, (data) => {
+                this.dpStatus = "加载中...";
+            });
+            this.dp.on(artful.WebDataProvider.EVENT_AFTERGETDATA, (data) => {
+                this.dpStatus = "";
+            });
+
+        },
+        methods: {
+            fn: function(data) {
+                this.name2 = data.msg;
+            },
+            toggleBind:function(){
+                if(this.isBind) {
+                    this.isBind = false;
+                    Event.off('event-name', this.fn);
+                    return;
+                }
+                this.isBind = true;
+                Event.on('event-name', this.fn);
+            },
+            changeName: function(event){
+                this.name = event.target.value;
+                Event.emit("event-name", {
+                    msg: this.name
+                });
+            },
+            // 取消全部observer
+            offAllEventName: function() {
+                Event.off('event-name');
+            },
+        },
+
+    });
+    </script>
+</body>
+</html>

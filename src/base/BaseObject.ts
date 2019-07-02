@@ -1,47 +1,63 @@
+import * as lodash from 'lodash';
 import Event from './Event';
 
 export default class BaseObject {
+    private _event = null;
+
+    public getEvent(): Event {
+        if (!this._event) {
+            this._event = new Event();
+        }
+        return this._event;
+    }
+
     public load(data: object = {}) {
         Object.keys(data).forEach(key => {
             this[key] = data[key];
         });
         this.init();
+        return this;
+    }
+
+    public isHideKey(key: string) {
+        if (key.substr(0, 1) === '_') {
+            return true;
+        }
+        if (typeof(this[key]) === 'function') {
+            return true;
+        }
+        return false;
     }
 
     public init() {
-        for (const key in this) {
-            if (key.substr(0, 1) === '_') {
-                Object.defineProperty(this, key, {
-                    enumerable: false,
-                    value: this[key],
-                    configurable: true,
-                    writable: true,
-                });
+        Object.getOwnPropertyNames(this).forEach(key => {
+            if (this.isHideKey(key)) {
+                const property = Object.getOwnPropertyDescriptor(this, key);
+                if (property && property.configurable === false) {
+                    return;
+                }
+                if (!property) {
+                    return;
+                }
+                property['enumerable'] = false;
+                Object.defineProperty(this, key, property);
             }
-            if (typeof(this[key]) === 'function') {
-                Object.defineProperty(this, key, {
-                    enumerable: false,
-                    value: this[key],
-                    configurable: true,
-                    writable: true,
-                });
-            }
-        }
+        });
     }
 
     public on(name: string, callback: Function, context: any = null) {
-        Event.on(name, callback, context);
+        this.getEvent().on(name, callback, context);
     }
 
     public once(name: string, callback: Function, context: any = null) {
-        Event.once(name, callback, context);
+        this.getEvent().once(name, callback, context);
     }
 
     public off(name: string, callback: Function, context: any = null) {
-        return Event.off(name, callback, context);
+        this.getEvent().off(name, callback, context);
     }
 
     public emit(name: string, ...args: any[]) {
-        Event.emit(name, ...args);
+        this.getEvent().emit(name, ...args);
     }
 }

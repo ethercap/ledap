@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ether-mvc示例</title>
+    <title>ledap示例</title>
     <script src="assets/js/vue.js"></script>
     <script src="dist/index.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -17,85 +17,120 @@
       </div>
   </body>
   <script>
-const artful = window["ether-mvc"];
-const Grid = artful.EtherVue.Grid;
+const artful = window["ledap"];
+const Grid = artful.LedapVue.Grid;
 const DataProvider = artful.DataProvider;
 Vue.component(Grid.name, Grid);
 
 var app = new Vue({
   el: '#app',
-  data: {
-      dp:new DataProvider({}),
-      columns :[
-        "name",
-        {
-            "attribute":"jquery",
-            "label" : "jquery示例",
-            "value" : function(model, attribute, index){
-                const value = model[attribute];
-                if(value.length == 0) {
-                    return "待完善";
+  methods : {
+    toggle:function() {
+        this.asc = !this.asc;
+        this.dp.sortModels("name", this.asc);
+    },
+    remove: function(index) {
+        let ret = confirm("你确定要删除？");
+        if(ret) {
+            this.dp.remove(index);
+        }
+    },
+  },
+  data: function(){
+      return {
+          dp: new DataProvider({}),
+          asc : true,
+          columns :[
+            "name",
+            {
+                "attribute":"name",
+                "labelFormat" : "html",
+                "label" : function(model, attribute) {
+                    return '<div @click="vm.toggle">组件名<span>{{vm.asc ? "^" : "v"}}</span></div>';
                 }
-                str = "<ul>";
-                Object.keys(value).forEach(index => {
-                    str += '<li><a href="' + value[index].href + '" target="_blank">' + value[index].title + '</a></li>';
-                })
-                return str + '</ul>';
             },
-            "format" : "html",
-        },
-        {
-            "attribute":"vue",
-            "label" : "Vue示例",
-            //注意createElement仅在vue中可用
-            "value" : function(model, attribute, index, createElement) {
-                const value = model[attribute];
-                if(value.length == 0) {
-                    return "待完善";
+            {
+                "attribute":"jquery",
+                "label" : "jquery示例",
+                "value" : function(model, attribute, index){
+                    const value = model[attribute];
+                    if(value.length == 0) {
+                        return "待完善";
+                    }
+                    // 注意，想要调用this的方法，必须写vm.xxx
+                    // 这里无法使用obj in value？
+                    return '<ul><li v-for="obj in model.jquery"><a :href="obj.href">{{obj.title}}</a></li></ul>';
+                },
+                "format" : "html",
+            },
+            {
+                "attribute":"vue",
+                "label" : "Vue示例",
+                //注意createElement仅在vue中可用, 本处仅为示例写法
+                "value" : function(model, attribute, index, createElement) {
+                    const value = model[attribute];
+                    if(value.length == 0) {
+                        return "待完善";
+                    }
+                    links = [];
+                    Object.keys(value).forEach(index => {
+                        let link = createElement("a", {
+                            'attrs': {
+                                href : value[index].href,
+                                target : "_blank",
+                            }
+                        }, value[index].title);
+                        links.push(createElement('li', [link]))
+                    });
+                    return createElement("ul", links);
                 }
-                links = [];
-                Object.keys(value).forEach(index => {
-                    let link = createElement("a", {
-                        'attrs': {
-                            href : value[index].href,
-                            target : "_blank",
-                        }
-                    }, value[index].title);
-                    links.push(createElement('li', [link]))
-                });
-                return createElement("ul", links);
-            }
-        },
-        {
-            "attribute":"comment",
-            "label" : "备注",
-            "width" : "40%",
-        },
-      ],
+            },
+            {
+                "attribute":"comment",
+                "label" : "备注",
+                "width" : "40%",
+            },
+            {
+                "label": "操作",
+                "value" : function(){
+                    return '<a class="btn btn-danger" @click="vm.remove(index)">删除</a>';
+                },
+                "format" : "html",
+            },
+        ],
+    };
   },
   created:function(){
     let data = {
         "items": [
-            {"name":"Model", "comment":"", "jquery": [], "vue":[]},
-            {"name":"WebDataProvider", "comment":"适用于列表页数据的获取等。WebDataProvider是DataProvider的子类，本页面使用DataProvider示例", 
-                "jquery": [{"href":"/xxx", "title":"jquery"}], 
-                "vue":[]
+            {"name":"Model", "comment":"", "jquery": [], "vue":[{
+                title : "model+form表单",
+                href  : "/vue/model.html",
+            }]},
+            {"name":"WebDataProvider", "comment":"适用于列表页数据的获取等。WebDataProvider是DataProvider的子类，本页面使用DataProvider示例",
+                "jquery": [{"href":"/jquery/dataprovider.html", "title":"jquery WebDataProvider示例"}],
+                "vue":[{"href": "/vue/WebDataProvider.html", "title": "vue WebDataProvider示例"}]
             },
             {"name":"Form", "comment":"表单，有多种form-item", "jquery": [], "vue":[]},
-            {"name":"Group", "comment":"主要应用于单选，多选的各种情况，可以适用于TabBar, checkBoxGroup, radioGroup等，有较多展示组件", 
+            {"name":"Group", "comment":"主要应用于单选，多选的各种情况，可以适用于TabBar, checkBoxGroup, radioGroup等，有较多展示组件",
                 "jquery": [{"title":"Group逻辑组件写法", "href":"/jquery/group.html"}],
                 "vue":[{"title":"Vue组件写法", "href":"/vue/group.html"}]
             },
-            {"name":"Column", "comment":"主要应用于表格，代表表格的一列。有grid,detai两种展示组件", 
+            {"name":"Column", "comment":"主要应用于表格，代表表格的一列。有grid,detai两种展示组件",
                 "jquery": [{"title":"Column逻辑组件写法", "href":""}],
                 "vue":[
                     {"title":"Column+Grid写法", "href":""},
-                    {"title":"Column+Detail写法", "href":""},
+                    {"title":"Column+Detail写法", "href":"/vue/detail.html"},
                 ]
             },
+            {"name": "Event", "comment": "事件的订阅与发布，主要用于页面内、页面之间的通信",
+                "jquery": [{"title": 'Event示例', "href": '/jquery/event.html'}],
+                "vue": [{"title": "Event示例", "href": '/vue/event.html'}]
+            }
         ]
     };
     this.dp.load(data);
+    this.dp.sortModels("name", this.asc);
   }
 });
   </script>

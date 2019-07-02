@@ -93,7 +93,7 @@ export default class Group extends BaseGroup {
             }
             return false;
         }
-        if (this._selected.length + 1 > this.max && this.mode === 'strict') {
+        if (this._selected.length + 1 > this.max && this.max > 1 && this.mode === 'strict') {
             component.close();
             throw new Error('最多只允许选择' + this.max + '项');
         }
@@ -113,6 +113,9 @@ export default class Group extends BaseGroup {
         return this._selected;
     }
     set selected(value: any) {
+        if (value === null) {
+            value = [];
+        }
         if (typeof value === 'string') {
             this._selected = [value];
         }

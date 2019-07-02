@@ -1,7 +1,7 @@
 {
-  "name": "ether-mvc",
-  "version": "0.0.8",
-  "description": "",
+  "name": "ledap",
+  "version": "0.1.1",
+  "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
   "main": "./dist/index.js",
   "scripts": {
     "init" : "cd examples && npm install && ln -s -f ../dist ./",
@@ -11,7 +11,11 @@
     "build": "webpack --env.prod",
     "test": "webpack --config=example/webpack.config.js --mode=development"
   },
-  "author": "",
+  "files" : [
+    "src",
+    "dist"
+  ],
+  "author": "lishipeng <lspbupt@sina.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.6",
