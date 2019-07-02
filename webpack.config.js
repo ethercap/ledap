@@ -25,7 +25,7 @@ module.exports = (env = {}, argv) => {
         output: {
             path: r('dist'),
             filename: '[name].js',
-            library: 'ether-mvc',
+            library: 'ledap',
             libraryTarget: 'umd',
             globalObject: 'this'
         },

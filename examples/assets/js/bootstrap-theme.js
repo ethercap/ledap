@@ -1,6 +1,6 @@
 // 本示例采用了bootstrap, 为了适应界面展示，对默认模板进行变更。如果要求不高，可以直接使用系统默认模板
 // 主题代表一个工程一整个标准的组件的主题设置，一般由UI与前端进行沟通并固化。通过主题，我们能很好地实现某个工程的组件标准化.
-window.Theme1 = window['ether-mvc'].Theme.getInstance({
+window.Theme1 = window['ledap'].Theme.getInstance({
     "baseinput" : {
          inheritAttrs: false,
         template : `<component :is="tag" :class="{'has-error':showError}">

@@ -27,5 +27,5 @@
 - all BaseModel's Event changed to instance Event.
 
 ### Fixed
-- Fix the bug when npm install ether-mvc, show "ether-mvc Appears to be a git repo or submodule"
+- Fix the bug when npm install ledap, show "ledap Appears to be a git repo or submodule"
 
