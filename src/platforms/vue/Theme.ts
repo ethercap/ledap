@@ -1,6 +1,6 @@
 import * as lodash from 'lodash';
 import BaseObject from '../../base/BaseObject';
-import {default as EtherVue} from './index';
+import {default as LedapVue} from './index';
 
 export default class Theme extends BaseObject {
     public static themes = {};
@@ -15,8 +15,8 @@ export default class Theme extends BaseObject {
             theme.key = key;
             Theme.themes[key] = theme;
         }
-        Object.keys(EtherVue).forEach(index => {
-            const obj = EtherVue[index];
+        Object.keys(LedapVue).forEach(index => {
+            const obj = LedapVue[index];
             if (obj.hasOwnProperty('name')) {
                 theme.components[obj['name']] = obj;
             }

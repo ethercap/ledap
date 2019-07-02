@@ -1,5 +1,5 @@
 {
-  "name": "ether-mvc",
+  "name": "ledap",
   "version": "0.1.1",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
   "main": "./dist/index.js",
