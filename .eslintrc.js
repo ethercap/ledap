@@ -61,8 +61,8 @@ module.exports = {
 
         '@typescript-eslint/no-unused-vars': [1, {args: 'none'}],
         '@typescript-eslint/interface-name-prefix': [2, 'always'],
-        '@typescript-eslint/explicit-member-accessibility': 0,
-        '@typescript-eslint/no-explicit-any': 0,
+        '@typescript-eslint/explicit-member-accessibility': [2, {overrides: {accessors: 'off', constructors: 'off'}}],
         '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/no-explicit-any': 0,
     },
 };

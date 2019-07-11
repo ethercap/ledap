@@ -6,7 +6,7 @@ export default {
             default: 'a',
         },
         dataKey: {
-            type: String,
+            type: [String, Number],
             default: null,
         },
         canClose: {
