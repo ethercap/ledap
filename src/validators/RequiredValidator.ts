@@ -14,7 +14,7 @@ export default class RequiredValidator extends Validator {
             if (options.strict && value !== undefined || !options.strict && !BaseHelper.isEmpty(isString ? lodash.trim(value) : value)) {
                 valid = true;
             }
-        // tslint:disable-next-line:triple-equals
+        /* eslint-disable eqeqeq */
         } else if (!options.strict && value == options.requiredValue || options.strict && value === options.requiredValue) {
             valid = true;
         }

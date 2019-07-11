@@ -42,9 +42,12 @@ module.exports = (env = {}, argv) => {
                 }, {
                     loader: 'ts-loader'
                 }, {
-                    loader: 'tslint-loader',
+                    loader: 'eslint-loader',
                     options: {
-                        fix: true
+                        cache: false,
+                        fix: true,
+                        failOnError: true,
+                        ext: '.js,ts',
                     }
                 }]
             }, {

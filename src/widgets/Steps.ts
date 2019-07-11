@@ -1,4 +1,3 @@
-import * as lodash from 'lodash';
 import BaseGroup from './BaseGroup';
 
 // steps是一种特殊组件，只允许顺序选择，栈的模式
@@ -38,7 +37,7 @@ export default class Steps extends BaseGroup {
 
     // 获取当前到component的步数
     public getStep(component: any) {
-        let index: number = -1;
+        let index = -1;
         Object.keys(this._components).forEach(i => {
             if (component === this._components[i]) {
                 index = parseInt(i, 10);
@@ -74,7 +73,7 @@ export default class Steps extends BaseGroup {
     }
 
     // 向后走step步
-    public backward(step: number= 1) {
+    public backward(step: number = 1) {
         if (step <= 0) {
             return this.forward(-1 * step);
         }

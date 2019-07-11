@@ -23,7 +23,7 @@ export default class CompareValidator extends Validator {
             value = parseFloat(value);
             compareValue = parseFloat(compareValue);
         }
-        /* tslint:disable:triple-equals */
+        /* eslint-disable eqeqeq */
         switch (options.operator) {
             case '==':
                 valid = value == compareValue;

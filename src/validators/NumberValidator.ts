@@ -7,7 +7,7 @@ export default class NumberValidator extends Validator {
         const attribute = this.attribute;
         const value = model[attribute];
         const options: any = this.options;
-        if (options.pattern && typeof(options.pattern) === 'string') {
+        if (options.pattern && typeof (options.pattern) === 'string') {
             options.pattern = new RegExp(options.pattern);
         }
         if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {

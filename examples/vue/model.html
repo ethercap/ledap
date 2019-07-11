@@ -11,13 +11,31 @@
     <script src="../assets/js/axios.min.js"></script>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
+    <style>
+    .search-input span {
+        width: 20px;
+        margin-right: 10px;
+        text-align: right;
+    }
+    .search-input a {
+        flex: 1;
+        cursor: pointer;
+    }
+    .search-input li:hover {
+        background-color: #f8f8f8;
+    }
+    </style>
+
   </head>
   <body>
       <div id="app" class="container">
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
-          <hr/>
+          <hr>
           <form class="form-horizontal col-sm-6 col-sm-offset-3">
               <baseinput class="form-group" :label-options="{'id':'label-phone'}" :input-options="{'id':'input-phone'}" :model="model" :attr="'phone'" :validate="['input']" @input="test"></baseinput>
+              <searchinput class="form-group" :model="model" attr="search" :data-provider="dp" @choose="choose" item-name="text">
+              <template v-slot="{model, index}"><div style="display: flex;"><span>{{index + 1}}</span><a :href="'#' + model.text">{{model.text}}</a></div></template>
+              </searchinput>
               <dropdown class="form-group" :model="model" :attr="'city'"></dropdown>
               <buttongroup class="form-group" :model="model" :attr="'stayCity'"></buttongroup>
               <radiogroup class="form-group" :model="model" :attr="'sex'"></radiogroup>
@@ -27,10 +45,11 @@
       </div>
   </body>
   <script>
-const artful = window["ledap"];
-const Model = artful.Model;
+const ledap = window["ledap"];
+const Model = ledap.Model;
+const WebDataProvider = ledap.WebDataProvider;
 //注册本页面所需要的组件
-window.Theme1.register(["dropdown","baseinput", "checkboxgroup", "radiogroup", "buttongroup"], Vue);
+window.Theme1.register(["dropdown", "baseinput", "checkboxgroup", "radiogroup", "buttongroup", 'searchinput'], Vue);
 
 var app = new Vue({
   el: '#app',
@@ -45,11 +64,57 @@ var app = new Vue({
       },
       test : function(event){
             console.log(event);
+      },
+      choose(model, index ,e) {
+          console.log(model, index, e);
       }
   },
   data: function(){
       return {
           model : new Model(),
+          // webDP的httpRequest方法一般写在全局
+          itemTpl(model) {
+              return `
+              <a>hello {{model.name}}</a>
+              `;
+          },
+          dp: new WebDataProvider({
+              httpOptions: {
+                  url: '/data/dp_1.json',
+                  params: {
+                      'per-page': 10
+                  }
+              },
+              primaryKey: "",
+              httpRequest(opts, suc, fail) {
+                  axios.request({
+                      url: opts.url
+                  }).then(function(res) {
+                      // 这里手写了data的格式，项目中后端会返回下面的格式，不用自己构造
+                      var data = {
+                          items : res.data,
+                          sort: [],
+                          meta: {
+                              currentPage: opts.url === "/data/dp_1.json" ?  1 : 2,
+                              pageCount: 2,
+                              perPage: 20,
+                              totalCount : opts.url === "/data/dp_1.json" ?  40 : 50,
+                          }
+                      };
+                      data.items = [];
+                      for (let i = 0; i < Math.floor(Math.random() * 11); i++) {
+                          data.items[i] = {
+                              id: i,
+                              text: Math.floor(Math.random() * 1000000)
+                          };
+                      }
+                      suc(data);
+                  }).catch(function(err) {
+                      // 失败处理
+                      fail(err);
+                  });
+              }
+          }),
     };
   },
   created:function(){

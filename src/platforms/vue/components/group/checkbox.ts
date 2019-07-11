@@ -4,18 +4,18 @@ import Tab from './tab';
 const tab = lodash.cloneDeep(Tab);
 
 export default lodash.merge(tab, {
-    name : 'checkbox',
-    props : {
-        tag : {
+    name: 'checkbox',
+    props: {
+        tag: {
             type: String,
-            default : 'div',
+            default: 'div',
         },
-        canClose : {
+        canClose: {
             type: Boolean,
             default: true,
         },
     },
-    template : `<component :is="tagName" :class="{'active': isOpen()}" @click="click">
+    template: `<component :is="tagName" :class="{'active': isOpen()}" @click="click">
         <input type="checkbox" :checked="isOpen()" :disabled="disabled"/><slot></slot>
     </component>`,
 });

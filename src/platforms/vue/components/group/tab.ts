@@ -1,31 +1,31 @@
 export default {
-    name : 'tab',
+    name: 'tab',
     props: {
-        tag : {
+        tag: {
             type: String,
-            default : 'a',
+            default: 'a',
         },
-        dataKey : {
+        dataKey: {
             type: String,
-            default : null,
+            default: null,
         },
         canClose: {
-            type : Boolean,
+            type: Boolean,
             default: false,
         },
-        disabled : {
-            type : Boolean,
-            default : false,
+        disabled: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
         return {
-            status : false,
-            groupKey : this.dataKey,
-            tagName : this.tag,
+            status: false,
+            groupKey: this.dataKey,
+            tagName: this.tag,
         };
     },
-    methods : {
+    methods: {
         open() {
             this.status = true;
         },
@@ -44,11 +44,11 @@ export default {
             this[type]();
             this.$emit('toggle', {
                 type,
-                vm : this,
+                vm: this,
             });
         },
     },
-    template : `
+    template: `
     <component :is="tagName" :class="{'active': isOpen()}" :disabled="disabled" @click="click">
         <slot></slot>
    </component>`,

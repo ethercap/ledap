@@ -3,13 +3,13 @@ import GroupInput from './groupinput';
 
 const input = lodash.cloneDeep(GroupInput);
 export default lodash.merge(input, {
-    name : 'radiogroup',
+    name: 'radiogroup',
     props: {
-        optionConfig : {
+        optionConfig: {
             type: Object,
             default() {
                 return {
-                    tag : 'radio',
+                    tag: 'radio',
                     canClose: false,
                 };
             },

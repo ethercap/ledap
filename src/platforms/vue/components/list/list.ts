@@ -1,7 +1,7 @@
 
 export default {
-    name : 'list',
-    template : `
+    name: 'list',
+    template: `
 <component :is="tagName">
     <slot name="header"></slot>
     <slot v-for="model in dataProvider.models" :datamodel="model"></slot>
@@ -12,9 +12,9 @@ export default {
         dataProvider: {
             type: Object,
         },
-        tagName : {
+        tagName: {
             type: String,
-            default : 'div',
+            default: 'div',
         },
     },
     methods: {

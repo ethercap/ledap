@@ -69,7 +69,7 @@ export default class Model extends BaseObject {
     public load(data: object) {
         this.emit(Model.EVENT_BEFORELOAD, this);
         Object.keys(data).forEach(key => {
-            if (typeof(data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
+            if (typeof (data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
                 const rules = this.rules();
                 const attrLabels = this.attributeLabels();
                 const attrHints = this.attributeHints();
@@ -91,15 +91,9 @@ export default class Model extends BaseObject {
                 }
                 this.emit(Model.EVENT_LOAD, this, key, obj.value);
                 this[key] = obj.value;
-                this.attributeHints = () => {
-                    return attrHints;
-                };
-                this.attributeLabels = () => {
-                    return attrLabels;
-                };
-                this.rules = () => {
-                    return rules;
-                };
+                this.attributeHints = () => attrHints;
+                this.attributeLabels = () => attrLabels;
+                this.rules = () => rules;
             } else {
                 this.emit(Model.EVENT_LOAD, this, key, data[key]);
                 this[key] = data[key];
@@ -110,7 +104,7 @@ export default class Model extends BaseObject {
         return this;
     }
 
-    /*返回所有的scenarios,格式
+    /* 返回所有的scenarios,格式
      * {
      *    "scenarios1" : {'field1','field2'},
      *    "scenarios2" => {},

@@ -2,7 +2,7 @@ import * as lodash from 'lodash';
 import Column from '../../../../widgets/Column';
 
 export default {
-    name : 'grid',
+    name: 'grid',
     props: {
         /**
          *  [
@@ -30,26 +30,26 @@ export default {
          */
         columns: {
             type: Array,
-            default() {return []; },
+            default() {return [];},
         },
         dataProvider: {
             type: Object,
-            required : true,
+            required: true,
         },
-        labelOptions : {
+        labelOptions: {
             type: Object,
             default() {
                 return {};
             },
         },
-        contentOptions : {
-            type : Object,
+        contentOptions: {
+            type: Object,
             default() {
                 return {};
             },
         },
-        vm : {
-            type : Object,
+        vm: {
+            type: Object,
             default() {
                 return this.$parent;
             },
@@ -60,18 +60,18 @@ export default {
             return Column.normalizeColumns(this.columns, this);
         },
     },
-    methods : {
+    methods: {
         getValue(obj, format, createElement) {
             if (format === 'html') {
                 const _this = this;
                 return createElement({
                     data() {
                         return {
-                            vm : _this.vm,
-                            model : obj.model,
-                            attribute : obj.column.attribute,
-                            value : obj.value,
-                            index : obj.index,
+                            vm: _this.vm,
+                            model: obj.model,
+                            attribute: obj.column.attribute,
+                            value: obj.value,
+                            index: obj.index,
                         };
                     },
                     template: '<div>' + obj.value + '</div>',
@@ -94,7 +94,7 @@ export default {
             const column =  this.nColumns[index];
             if (column.visible) {
                 colgroups.push(createElement('col', {
-                    attrs : {
+                    attrs: {
                         width: column.width,
                     },
                 }));

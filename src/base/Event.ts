@@ -1,4 +1,35 @@
 /**
+ * 观察者
+ */
+class Observer {
+    /** 回调函数 */
+    private callback: Function = null;
+    /** 上下文 */
+    private context: any = null;
+
+    constructor(callback: Function, context: any) {
+        this.callback = callback;
+        this.context = context;
+    }
+
+    /**
+     * 发送通知
+     * @param args 不定参数
+     */
+    public notify(...args: any[]): void {
+        this.callback.apply(this.context, args);
+    }
+
+    /**
+     * 上下文比较
+     * @param context 上下文
+     */
+    public compare(callback: Function, context: any): boolean {
+        return context === this.context && callback === this.callback;
+    }
+}
+
+/**
  * 事件
  */
 export default class Event {
@@ -113,38 +144,5 @@ export default class Event {
         }
 
         this.listeners[name].push(new Observer(callback, context));
-    }
-}
-
-/* tslint:disable:max-classes-per-file */
-
-/**
- * 观察者
- */
-class Observer {
-    /** 回调函数 */
-    private callback: Function = null;
-    /** 上下文 */
-    private context: any = null;
-
-    constructor(callback: Function, context: any) {
-        this.callback = callback;
-        this.context = context;
-    }
-
-    /**
-     * 发送通知
-     * @param args 不定参数
-     */
-    public notify(...args: any[]): void {
-        this.callback.apply(this.context, args);
-    }
-
-    /**
-     * 上下文比较
-     * @param context 上下文
-     */
-    public compare(callback: Function, context: any): boolean {
-        return context === this.context && callback === this.callback;
     }
 }

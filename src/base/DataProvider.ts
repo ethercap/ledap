@@ -23,7 +23,7 @@ export default class DataProvider extends BaseObject {
     }
 
     set sort(sort: string|object) {
-        if (typeof(sort) === 'string') {
+        if (typeof (sort) === 'string') {
             const arr = sort.split(',');
             this._sort = {};
             Object.keys(arr).forEach(i => {
@@ -37,14 +37,14 @@ export default class DataProvider extends BaseObject {
             });
         }
 
-        if (typeof(sort) === 'object') {
+        if (typeof (sort) === 'object') {
             this._sort = sort;
         }
     }
     public static SORT_ASC = 4;
     public static SORT_DESC = 3;
 
-    public static getInstance(data: object, searchModelClass: any = Model, modelClass: any= Model, paginationClass: any = Pagination): DataProvider {
+    public static getInstance(data: object, searchModelClass: any = Model, modelClass: any = Model, paginationClass: any = Pagination): DataProvider {
         const config =  {
             data,
             searchModelClass,
@@ -187,9 +187,7 @@ export default class DataProvider extends BaseObject {
                 return value1 < value2 ? 1 : -1;
             };
         }
-        const compare = (a, b) => {
-            return sortBy(a[attribute], b[attribute], asc);
-        };
+        const compare = (a, b) => sortBy(a[attribute], b[attribute], asc);
         this.models.sort(compare);
     }
 }

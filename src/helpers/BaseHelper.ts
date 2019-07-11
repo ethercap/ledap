@@ -3,7 +3,7 @@ import * as lodash from 'lodash';
 export default class BaseHelper {
 
     public static isEmpty(value: any) {
-        const valueType = typeof(value);
+        const valueType = typeof (value);
         if (valueType === 'boolean' || valueType === 'number') {
             return !value;
         }

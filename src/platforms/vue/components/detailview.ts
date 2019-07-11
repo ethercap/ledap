@@ -2,7 +2,7 @@ import * as lodash from 'lodash';
 import Column from '../../../widgets/Column';
 
 export default {
-    name : 'detail-view',
+    name: 'detail-view',
     props: {
         /**
          *  [
@@ -30,18 +30,18 @@ export default {
          */
         columns: {
             type: Array,
-            default() { return []; },
+            default() {return [];},
         },
         dataModel: {
             type: Object,
             required: true,
         },
-        labelWidth : {
+        labelWidth: {
             type: String,
-            default : '20%',
+            default: '20%',
         },
-        vm : {
-            type : Object,
+        vm: {
+            type: Object,
             default() {
                 return this.$parent;
             },
@@ -52,19 +52,19 @@ export default {
             return Column.normalizeColumns(this.columns, this);
         },
     },
-    methods : {
+    methods: {
         getValue(obj, format, createElement) {
             if (format === 'html') {
                 const _this = this;
                 return createElement({
                     data() {
                         return {
-                            vm : _this.vm,
-                            model : obj.model,
-                            attribute : obj.column.attribute,
-                            value : obj.value,
-                            index : obj.index,
-                            isLabel : obj.isLabel,
+                            vm: _this.vm,
+                            model: obj.model,
+                            attribute: obj.column.attribute,
+                            value: obj.value,
+                            index: obj.index,
+                            isLabel: obj.isLabel,
                         };
                     },
                     template: '<div>' + obj.value + '</div>',
@@ -98,7 +98,7 @@ export default {
                     model: this.dataModel,
                     index: i,
                     column,
-                    isLabel : true,
+                    isLabel: true,
                 }, column.labelFormat, createElement),
             ]));
             tempArr.push(createElement('td', {
@@ -111,7 +111,7 @@ export default {
                     model: this.dataModel,
                     index: i,
                     column,
-                    isLabel : false,
+                    isLabel: false,
                 }, column.format, createElement),
             ]));
 

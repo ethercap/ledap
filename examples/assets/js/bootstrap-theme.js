@@ -2,11 +2,11 @@
 // 主题代表一个工程一整个标准的组件的主题设置，一般由UI与前端进行沟通并固化。通过主题，我们能很好地实现某个工程的组件标准化.
 window.Theme1 = window['ledap'].Theme.getInstance({
     "baseinput" : {
-         inheritAttrs: false,
+        inheritAttrs: false,
         template : `<component :is="tag" :class="{'has-error':showError}">
             <label v-bind="labelOptions" class="col-sm-2 control-label">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
             <div class="col-sm-10">
-                <input v-bind="inputOptions" class="form-control" :name="attr" :value="showValue" :placeholder="showHint" v-on="inputListeners"/>
+                <input v-bind="inputOptions" class="form-control" :name="attr" :value="showValue" :placeholder="showHint" v-on="inputListeners">
                 <span v-show="showError"  class="help-block">{{showError}}</span>
             </div>
         </component>`,
@@ -30,6 +30,24 @@ window.Theme1 = window['ledap'].Theme.getInstance({
     </group>
     <span v-show="showError" class="help-block">{{showError}}</span>
 </component>`,
+    },
+    searchinput: {
+        template:
+` <component :is="tag" class="search-input" :class="{'has-error': showError}">
+    <label v-bind="labelOptions" class="col-sm-2 control-label">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
+    <div class="col-sm-10">
+        <div style="position: relative;">
+            <input class="form-control" :name="attr" :value="showValue" v-bind="inputOptions" :placeholder="showHint" v-on="inputListeners" autocomplete="off">
+            <p v-show="showError">{{showError}}</p>
+            <ul v-show="showList" class="list-unstyled" style="position: absolute; width: 100%; border: 1px solid #f8f8f8; background-color: #fff; z-index: 10;" :style="{opacity: isHide ? 0 : 1}">
+                <li v-for="(model, index) in dataProvider.models" @mousedown="choose(model, index, $event)" style="padding: 6px 12px; cusor: default;">
+                    <slot :model="model" :index="index">{{model[itemName]}}</slot>
+                </li>
+            </ul>
+        </div>
+    </div>
+</component>`,
+
     }
 });
 

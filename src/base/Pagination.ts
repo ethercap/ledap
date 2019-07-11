@@ -1,4 +1,3 @@
-import * as lodash from 'lodash';
 import BaseObject from './BaseObject';
 // 分页器类,主要是来解决分页的问题
 export default class Pagination extends BaseObject {
