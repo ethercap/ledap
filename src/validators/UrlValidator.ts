@@ -7,7 +7,7 @@ export default class UrlValidator extends Validator {
         const attribute = this.attribute;
         const options: any = this.options;
         let value = model[attribute];
-        if (options.pattern && typeof(options.pattern) === 'string') {
+        if (options.pattern && typeof (options.pattern) === 'string') {
             options.pattern = new RegExp(options.pattern);
         }
         if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
@@ -20,7 +20,7 @@ export default class UrlValidator extends Validator {
 
         const valid = true;
 
-        /*if (options["enableIDN"]) {
+        /* if (options["enableIDN"]) {
             let matches = /^([^:]+):\/\/([^\/]+)(.*)$/.exec(value);
             if (matches === null) {
                 valid = false;

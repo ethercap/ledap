@@ -16,7 +16,7 @@ export default class StringValidator extends Validator {
             return;
         }
 
-        // tslint:disable-next-line:triple-equals
+        /* eslint-disable eqeqeq */
         if (options.is !== undefined && value.length != options.is) {
             model.addError(attribute, options.notEqual);
             return;

@@ -20,7 +20,7 @@ export default class EmailValidator extends Validator {
             const localPart = matches[5];
             const domain = matches[6];
 
-            /*if (options["enableIDN"]) {
+            /* if (options["enableIDN"]) {
                 localPart = punycode.toASCII(localPart);
                 domain = punycode.toASCII(domain);
 

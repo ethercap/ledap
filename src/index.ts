@@ -1,3 +1,4 @@
 export * from './base/index';
-export {default as LedapVue} from './platforms/vue/index';
+import * as Vue from './platforms/vue/index';
+export const LedapVue = Vue;
 export {default as Theme} from './platforms/vue/Theme';

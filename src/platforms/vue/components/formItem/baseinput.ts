@@ -1,39 +1,39 @@
-import * as lodash from 'lodash';
 import Model from '../../../../base/Model';
+
 export default {
-    name : 'baseinput',
+    name: 'baseinput',
     props: {
-        tag : {
+        tag: {
             type: String,
-            default : 'div',
+            default: 'div',
         },
-        model : {
+        model: {
             type: Object,
         },
-        attr : {
-            type : String,
-        },
-        label : {
+        attr: {
             type: String,
-            default : null,
         },
-        hint : {
+        label: {
             type: String,
-            default : null,
+            default: null,
         },
-        validate : {
+        hint: {
+            type: String,
+            default: null,
+        },
+        validate: {
             type: Array,
             default() {
                 return ['blur'];
             },
         },
-        labelOptions : {
+        labelOptions: {
             type: Object,
             default() {
                 return {};
             },
         },
-        inputOptions : {
+        inputOptions: {
             type: Object,
             default() {
                 return {};
@@ -42,7 +42,7 @@ export default {
     },
     data() {
         return {
-            showError : this.model.getFirstError(this.attr),
+            showError: this.model.getFirstError(this.attr),
         };
     },
     updated() {
@@ -50,7 +50,7 @@ export default {
             this.model.on(Model.EVENT_AFTER_VALIDATE, this.syncError);
         });
     },
-    methods : {
+    methods: {
         syncError() {
             this.showError = this.model.getFirstError(this.attr);
         },
@@ -85,15 +85,15 @@ export default {
         showHint() {
             return this.hint || this.model.getAttributeHint(this.attr);
         },
-        inputListeners () {
+        inputListeners() {
             return Object.assign({}, this.$listeners,  {
                 input: this.inputValue,
-                focus : this.focus,
-                blur : this.blur,
+                focus: this.focus,
+                blur: this.blur,
             });
         },
     },
-    template : `
+    template: `
     <component :is="tag">
         <label v-bind="labelOptions">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
         <input :name="attr" :value="showValue" v-bind="inputOptions" :placeholder="showHint" v-on="inputListeners" />

@@ -3,8 +3,8 @@ import BaseInput from './baseinput';
 
 const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
-    name : 'dropdown',
-    template : `
+    name: 'dropdown',
+    template: `
 <component :is="tag">
     <label  v-bind="labelOptions">{{showLabel}}</label>
     <select v-bind="inputOptions" v-on="inputListeners">

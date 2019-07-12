@@ -1,6 +1,6 @@
 export default {
-    name : 'pager',
-    template : `
+    name: 'pager',
+    template: `
 <div class="ui-pagination">
     <span class="ui-pagination-total">共{{ dataProvider.pager.totalCount }}条记录</span>
     <span class="ui-pagination-gap"></span>
@@ -18,12 +18,12 @@ export default {
     props: {
         dataProvider: {
             type: Object,
-            required : true,
+            required: true,
         },
     },
     data() {
         return {
-            jumpPage : this.dataProvider.pager.currentPage,
+            jumpPage: this.dataProvider.pager.currentPage,
         };
     },
     methods: {

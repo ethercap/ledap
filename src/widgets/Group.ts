@@ -61,7 +61,7 @@ export default class Group extends BaseGroup {
             return true;
         }
         this._selected.splice(index, 1);
-        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type:'close'});
+        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type: 'close'});
         return true;
     }
 
@@ -105,7 +105,7 @@ export default class Group extends BaseGroup {
                 this._components[closeKey].close();
             }
         }
-        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type:'open'});
+        this.emit(Group.EVENT_DATACHANGED, this, {group: this, type: 'open'});
         return true;
     }
 

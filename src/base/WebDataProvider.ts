@@ -44,7 +44,7 @@ export default class WebDataProvider extends DataProvider {
         }
     }
 
-    public refresh(refreshType: string= 'refresh') {
+    public refresh(refreshType: string = 'refresh') {
         if (refreshType === 'header') {
             this.append = false;
             // 头部下拉刷新会将page置为1

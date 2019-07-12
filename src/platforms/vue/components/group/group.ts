@@ -1,37 +1,37 @@
 import Group from '../../../../widgets/Group';
 
 export default {
-    name : 'group',
+    name: 'group',
     props: {
-        tag : {
+        tag: {
             type: String,
-            default : 'div',
+            default: 'div',
         },
-        multiple : {
-            type : Boolean,
-            default : false,
+        multiple: {
+            type: Boolean,
+            default: false,
         },
-        max : {
+        max: {
             type: Number,
-            default : 1,
+            default: 1,
         },
-        excludes : {
+        excludes: {
             type: Array,
             default() {
                 return [];
             },
         },
-        mode : {
+        mode: {
             type: String,
             default: 'unstrict',
         },
-        initValue : {
-            default : 0,
+        initValue: {
+            default: 0,
         },
     },
     data() {
         return {
-            selected : this.initValue,
+            selected: this.initValue,
         };
     },
     mounted() {
@@ -44,7 +44,7 @@ export default {
             this.init();
         },
     },
-    methods : {
+    methods: {
         init() {
             this.group = new Group(),
             this.group.max = this.multiple ? this.max : 1;
@@ -78,5 +78,5 @@ export default {
             }
         },
     },
-    template : `<component :is="tag"><slot></slot></component>`,
+    template: `<component :is="tag"><slot></slot></component>`,
 };

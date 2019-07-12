@@ -14,7 +14,7 @@ export default abstract class Validator extends BaseObject {
         // 默认所有的带pattern名的参数，且以/开头的字符串都认为是正则表达式
         Object.keys(options).forEach(key => {
             const p = /pattern/i;
-            if (p.test(key) && typeof(options[key]) === 'string' && options[key][0] === '/') {
+            if (p.test(key) && typeof (options[key]) === 'string' && options[key][0] === '/') {
                 options[key] = StringHelper.toRegExp(options[key]);
             }
         });

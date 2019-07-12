@@ -1,4 +1,3 @@
-import * as lodash from 'lodash';
 import Event from './Event';
 
 export default class BaseObject {
@@ -23,7 +22,7 @@ export default class BaseObject {
         if (key.substr(0, 1) === '_') {
             return true;
         }
-        if (typeof(this[key]) === 'function') {
+        if (typeof (this[key]) === 'function') {
             return true;
         }
         return false;

@@ -10,7 +10,7 @@ export default class BooleanValidator extends Validator {
         if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
             return;
         }
-        // tslint:disable-next-line:triple-equals
+        /* eslint-disable eqeqeq */
         const valid = !options.strict && (value == options.trueValue || value == options.falseValue)
             || options.strict && (value === options.trueValue || value === options.falseValue);
 

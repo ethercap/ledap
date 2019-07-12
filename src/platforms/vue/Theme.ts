@@ -1,12 +1,12 @@
 import * as lodash from 'lodash';
 import BaseObject from '../../base/BaseObject';
-import {default as LedapVue} from './index';
+import * as LedapVue from './index';
 
 export default class Theme extends BaseObject {
     public static themes = {};
 
     // 全局的一些配置
-    public static getInstance(config: object = {}, key='default') {
+    public static getInstance(config: object = {}, key = 'default') {
         let  theme =  null;
         if (Theme.themes.hasOwnProperty(key)) {
             theme = Theme.themes[key];
@@ -32,7 +32,7 @@ export default class Theme extends BaseObject {
         return lodash.get(this.components, name, null);
     }
 
-    public addComponent(comp: object, cloneFrom=null) {
+    public addComponent(comp: object, cloneFrom = null) {
         let parentComp = null;
         if (cloneFrom) {
             parentComp = this.getComponentByName(cloneFrom);

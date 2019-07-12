@@ -23,9 +23,9 @@ export default class RangeValidator extends Validator {
             if (lodash.indexOf(options.range, v) === -1) {
                 inArray = false;
                 return false;
-            } else {
-                return true;
-            }
+            } 
+            return true;
+            
         });
 
         if (options.not === undefined) {

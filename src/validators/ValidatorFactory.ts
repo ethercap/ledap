@@ -16,21 +16,21 @@ import Validator from './Validator';
 
 export default class ValidatorFactory {
     public static typeList = {
-        boolean  : BooleanValidator,
-        string   : StringValidator,
-        int      : NumberValidator,
-        double   : NumberValidator,
-        required : RequiredValidator,
-        trim     : TrimValidator,
-        match    : RegexValidator,
-        compare  : CompareValidator,
-        email    : EmailValidator,
-        filter   : TrimValidator,
-        in       : RangeValidator,
-        url      : UrlValidator,
-        ip       : IpValidator,
-        dict     : DictValidator,
-        array    : DictValidator,
+        boolean: BooleanValidator,
+        string: StringValidator,
+        int: NumberValidator,
+        double: NumberValidator,
+        required: RequiredValidator,
+        trim: TrimValidator,
+        match: RegexValidator,
+        compare: CompareValidator,
+        email: EmailValidator,
+        filter: TrimValidator,
+        in: RangeValidator,
+        url: UrlValidator,
+        ip: IpValidator,
+        dict: DictValidator,
+        array: DictValidator,
     };
 
     // 静态方法
