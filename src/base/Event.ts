@@ -3,9 +3,9 @@
  */
 class Observer {
     /** 回调函数 */
-    private callback: Function = null;
+    public callback: Function = null;
     /** 上下文 */
-    private context: any = null;
+    public context: any = null;
 
     constructor(callback: Function, context: any) {
         this.callback = callback;
@@ -59,7 +59,7 @@ export default class Event {
     }
 
     /** 监听数组 */
-    private  listeners = {};
+    public  listeners = {};
 
     public once(name: string, callback: Function, context: any) {
         if (typeof callback !== 'function') return;

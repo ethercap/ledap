@@ -26,7 +26,7 @@ export default class Theme extends BaseObject {
     }
     public key = 'default';
     public components = {};
-    private _registerComps = {};
+    public _registerComps = {};
 
     public getComponentByName(name: string) {
         return lodash.get(this.components, name, null);

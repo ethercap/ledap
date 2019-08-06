@@ -2,7 +2,7 @@ import * as lodash from 'lodash';
 import Column from '../../../widgets/Column';
 
 export default {
-    name: 'detail-view',
+    name: 'detail',
     props: {
         /**
          *  [
@@ -32,7 +32,7 @@ export default {
             type: Array,
             default() {return [];},
         },
-        dataModel: {
+        model: {
             type: Object,
             required: true,
         },
@@ -79,7 +79,6 @@ export default {
         colgroups.push(createElement('col', {attrs: {width: 'auto'}}));
 
         const contents = [];
-        contents.push(createElement('colgroup', colgroups));
         const nColumns = this.nColumns;
         const tbody = [];
         for (const i in nColumns) {
@@ -87,37 +86,62 @@ export default {
             if (!column.visible) {
                 continue;
             }
-            const tempArr = [];
-            tempArr.push(createElement('td', {
-                attrs: lodash.get(column.headerOptions, 'attrs', {}),
-                style: lodash.get(column.headerOptions, 'style', {}),
-                class: lodash.get(column.headerOptions, 'class', {}),
-            }, [
-                this.getValue({
-                    value: column.getLabel(this.dataModel, createElement),
-                    model: this.dataModel,
-                    index: i,
+            const value = this.getValue({
+                value: column.getValue(this.model, i, createElement),
+                model: this.model,
+                index: i,
+                column,
+                isLabel: false,
+            }, column.format, createElement);
+            const label = this.getValue({
+                value: column.getLabel(this.model, createElement),
+                model: this.model,
+                index: i,
+                column,
+                isLabel: true,
+            }, column.labelFormat, createElement);
+            if (this.$scopedSlots.default) {
+                tbody.push(this.$scopedSlots.default({
+                    model: this.model,
                     column,
-                    isLabel: true,
-                }, column.labelFormat, createElement),
-            ]));
-            tempArr.push(createElement('td', {
-                attrs: lodash.get(column.contentOptions, 'attrs', {}),
-                style: lodash.get(column.contentOptions, 'style', {}),
-                class: lodash.get(column.contentOptions, 'class', {}),
-            }, [
-                this.getValue({
-                    value: column.getValue(this.dataModel, i, createElement),
-                    model: this.dataModel,
+                    label,
+                    value,
                     index: i,
-                    column,
-                    isLabel: false,
-                }, column.format, createElement),
-            ]));
-
-            tbody.push(createElement('tr', tempArr));
+                }));
+            } else {
+                const tempArr = []; 
+                tempArr.push(createElement('td', {
+                    attrs: lodash.get(column.headerOptions, 'attrs', {}),
+                    style: lodash.get(column.headerOptions, 'style', {}),
+                    class: lodash.get(column.headerOptions, 'class', {}),
+                }, [label]));
+                tempArr.push(createElement('td', {
+                    attrs: lodash.get(column.contentOptions, 'attrs', {}),
+                    style: lodash.get(column.contentOptions, 'style', {}),
+                    class: lodash.get(column.contentOptions, 'class', {}),
+                }, [value]));
+                tbody.push(createElement('tr', tempArr));
+            }
         }
-        contents.push(createElement('tbody', tbody));
+       
+        const propsObj = {
+            model: this.model,
+            columns: this.columns
+        };
+        if (this.$scopedSlots.header) {
+            contents.push(this.$scopedSlots.header(propsObj));
+        } else {
+            contents.push(createElement('colgroup', colgroups));
+        }
+        if (this.$scopedSlots.tbody) {
+            contents.push(this.$scopedSlots.tbody(propsObj));
+        } else {
+            contents.push(createElement('tbody', tbody));
+        }
+
+        if (this.$scopedSlots.footer) {
+            contents.push(this.$scopedSlots.footer(propsObj));
+        }
         return createElement('table', contents);
     },
 };

@@ -12,20 +12,22 @@
   </head>
   <body>
       <div id="app" class="container">
-          <detail-view class="table table-bordered table-hover" :data-model=model :columns=columns> 
-          </detail-view>
+          <detail class="table table-bordered table-hover" :model=model :columns=columns> 
+          </detail>
           <div>
               通常情况下，我们会发现，Model在不同的页面是有相通性的，而且每次column的书写可能会比较麻烦，如下，我们来引入Model层来解决。
           </div>
-          <detail-view class="table table-bordered table-hover" :data-model=model1 :columns=columns1> 
-          </detail-view>
+          <detail class="table table-bordered table-hover" :model=model1 :columns=columns1> 
+            <template v-slot:default="slotProps">
+                <tr><th class="test">标题:{{slotProps.column.getLabel(slotProps.model)}}</th><td>{{slotProps.column.getValue(slotProps.model, slotProps.index)}}</td></tr>
+            </template>
+          </detail>
       </div>
   </body>
   <script>
-const artful = window["ledap"];
-const DetailView = artful.LedapVue.DetailView;
-const Model = artful.Model;
-Vue.component(DetailView.name, DetailView);
+const ledap = window["ledap"];
+ledap.App.register(["detail"], Vue);
+const Model = ledap.Model;
 
 //新的Model实例
 function newModel(){

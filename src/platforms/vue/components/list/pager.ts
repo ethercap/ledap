@@ -1,18 +1,23 @@
 export default {
     name: 'pager',
-    template: `
-<div class="ui-pagination">
-    <span class="ui-pagination-total">共{{ dataProvider.pager.totalCount }}条记录</span>
-    <span class="ui-pagination-gap"></span>
-    <a class="ui-pagination-num" v-show="dataProvider.pager.hasPrev()" @click="toPrev()">上一页</a>
-    <a class="ui-pagination-num" v-show="dataProvider.pager.hasNext()" @click="toNext()">下一页</a>
-    <span class="ui-pagination-summary">第 {{ dataProvider.pager.currentPage}}/{{ dataProvider.pager.pageCount }} 页</span>
-    <form class="ui-pagination-jumper" @submit.prevent.stop="changePage(jumpPage)">
-        <span class="ui-pagination-text">跳至&nbsp;</span>
-        <input type="text" class="ui-pagination-input" v-model="jumpPage">
-        <span class="ui-pagination-text">&nbsp;页&nbsp;</span>
-        <button type="submit" class="ui-pagination-btn">跳转</button>
-    </form>
+    template: `<div>
+    <slot name="total">
+        <span>共{{ dataProvider.pager.totalCount }}条记录</span>
+        <span>|</span>
+    </slot>
+    <slot :changePage="changePage">
+        <a v-show="dataProvider.pager.hasPrev()" @click="toPrev()">上一页</a>
+        <a v-show="dataProvider.pager.hasNext()" @click="toNext()">下一页</a>
+        <span>第 {{ dataProvider.pager.currentPage}}/{{ dataProvider.pager.pageCount }} 页</span>
+    </slot>
+    <slot name="form" :changePage="changePage">
+        <form @submit.prevent.stop="changePage(jumpPage)">
+            <span>跳至&nbsp;</span>
+            <input type="text" v-model="jumpPage">
+            <span>&nbsp;页&nbsp;</span>
+            <button type="submit">跳转</button>
+        </form>
+    </slot>
 </div>
     `,
     props: {

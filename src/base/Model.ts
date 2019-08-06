@@ -12,11 +12,11 @@ export default class Model extends BaseObject {
     public static EVENT_AFTER_VALIDATE = 'MODEL_AFTER_VALIDATE';
 
     // 当前的错误
-    private _errors: object;
+    public _errors: object = {};
     // 当前的场景
-    private _scenario: string;
+    public _scenario: string = Model.SCENARIO_DEFAULT;
     // 当前的校验器
-    private _validators: Validator[];
+    public _validators: Validator[];
 
     constructor() {
         super();
@@ -136,9 +136,6 @@ export default class Model extends BaseObject {
         if (typeof attributes === 'string') {
             attributes = [attributes];
         }
-        if (clearErrors) {
-            this.clearErrors();
-        }
         if (!this.beforeValidate()) {
             return false;
         }
@@ -152,6 +149,9 @@ export default class Model extends BaseObject {
             attributes = scenarios[scenario];
         }
         attributes = lodash.intersection(attributes, scenarios[scenario]);
+        if (clearErrors) {
+            this.clearErrors(attributes);
+        }
 
         const validators = this.getValidators();
         Object.keys(validators).forEach(index => {
@@ -210,11 +210,17 @@ export default class Model extends BaseObject {
         this._errors[attribute].push(error);
     }
 
-    public clearErrors(attribute: string = ''): void {
+    public clearErrors(attribute: string|object = ''): void {
         if (!attribute) {
             this._errors = {};
         } else {
-            this._errors[attribute] = [];
+            if (typeof (attribute) === 'string') {
+                attribute = [attribute];
+            }
+            Object.keys(attribute).forEach(index => {
+                const key = attribute[index];
+                this._errors[key] = [];
+            });
         }
     }
 

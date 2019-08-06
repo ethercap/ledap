@@ -5,7 +5,7 @@ export default class BaseHelper {
     public static isEmpty(value: any) {
         const valueType = typeof (value);
         if (valueType === 'boolean' || valueType === 'number') {
-            return !value;
+            return false;
         }
         if (valueType === 'function') {
             return true;

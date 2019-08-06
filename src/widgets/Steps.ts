@@ -6,8 +6,8 @@ export default class Steps extends BaseGroup {
     public mode = 'unstrict';
 
     // 组件需要id
-    private _components = [];
-    private _currentIndex = 0;
+    public _components = [];
+    public _currentIndex = 0;
 
     public add(component: any) {
         if (this.isValid(component)) {

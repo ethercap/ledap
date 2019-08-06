@@ -1,4 +1,6 @@
-example/dist/
+examples/dist
+examples/dist/*
 node_modules/
 npm-debug.log
 src/*.js
+src/*.js.map

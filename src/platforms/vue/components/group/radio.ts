@@ -12,6 +12,6 @@ export default lodash.merge(radio, {
         },
     },
     template: `<component :is="tagName" :class="{'active': isOpen()}" @click="click">
-        <input type="radio" :checked="isOpen()" /><slot></slot>
+        <slot name="input" :isOpen="isOpen" :disabled="disabled"><input type="radio" :checked="isOpen()" /></slot><slot></slot>
     </component>`,
 });

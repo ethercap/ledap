@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ledap示例</title>
-    <script src="../assets/js/axios.min.js"></script>
     <script src="../assets/js/vue.js"></script>
     <script src="../dist/index.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.12-pre/lodash.min.js"></script>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
@@ -25,7 +25,13 @@
         <p>
             我们也可以用系统的分页器,自己可以写点css来适配。
         </p>
-        <pager :data-provider=dp > </pager>
+        <pager :data-provider=dp > 
+            <template v-slot:default="slotProps"> 
+                <a @click="slotProps.changePage(dp.pager.currentPage - 1)">上一页</a>
+                <a @click="slotProps.changePage(dp.pager.currentPage + 1)">下一页</a>
+                <span>第 {{ dp.pager.currentPage}}/{{ dp.pager.pageCount }} 页</span>
+            </template>
+        </pager>
         <hr/>
         <p>
             如果不喜欢系统的template，可以自己写template
@@ -39,10 +45,10 @@
     </div>
 </body>
 <script>
-const artful = window["ledap"];
-const WebDataProvider = artful.WebDataProvider;
-const Grid = artful.LedapVue.Grid;
-const Pager = artful.LedapVue.Pager;
+const ledap = window["ledap"];
+const WebDataProvider = ledap.WebDataProvider;
+const Grid = ledap.LedapVue.Grid;
+const Pager = ledap.LedapVue.Pager;
 Vue.component(Grid.name, Grid);
 //自己修改默认的模板,可以写在全局。如果不想两个template共存，可以直接修改而不是cloneDeep，本处只是为了演示需要。
 const newPager = _.cloneDeep(Pager);
@@ -71,40 +77,18 @@ var app = new Vue({
     el: '#app',
     data: function(){
         return {
-          // webDP的httpRequest方法一般写在全局
-          dp: new WebDataProvider({
+          dp: ledap.App.getWebDp({
               httpOptions: {
                   url: '/data/dp_1.json',
-                  params: {
-                      'per-page': 10
-                  }
               },
               primaryKey: "",
-              httpRequest(opts, suc, fail) {
-                  axios.request({
-                      url: opts.url
-                  }).then(function(res) {
-                      // 这里手写了data的格式，项目中后端会返回下面的格式，不用自己构造
-                      var data = {
-                          items : res.data,
-                          sort: [],
-                          meta: {
-                              currentPage: opts.url === "/data/dp_1.json" ?  1 : 2,
-                              pageCount: 2,
-                              perPage: 20,
-                              totalCount : opts.url === "/data/dp_1.json" ?  40 : 50,
-                          }
-                      };
-                      suc(data);
-                  }).catch(function(err) {
-                      // 失败处理
-                      fail(err);
-                  });
-              }
           }),
           columns: [{
               attribute: 'id',
-              label: '序号',
+              label: function(model) {
+                  return '<a @click="sort(\'id\')">ID</a>';
+              },
+              labelFormat:'html',
               value: function(model, attribute, index) {
                   const value = model[attribute];
                   return value;
@@ -112,6 +96,7 @@ var app = new Vue({
           }, {
               attribute: 'name',
               label: '姓名',
+              useSort:true,
               value: function(model, attribute, index) {
                   const value = model[attribute];
                   return value;
