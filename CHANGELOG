@@ -1,5 +1,23 @@
 ##[0.1.1] - 2019-06-21
 ### Added
+- add App for ledap interface, and add axios to ledap
+- add form-item, searchinput, select2
+- add scoped slot for grid, detail, formitems
+- add sort for grid
+- add scripts
+
+### Changed
+- "detail-view"  change to "detail", and params "data-model" changed to "model"
+- because of js extends, change all private to public
+- form validate only validate attribute
+
+### Fixed
+- fixed lodash's empty bug
+
+
+
+##[0.1.1] - 2019-06-21
+### Added
 - add Theme for Vue platform
 - add formItems: baseInput, dropDown, checkboxgroup, radiogroup
 

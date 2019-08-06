@@ -38,7 +38,10 @@ export default class DataProvider extends BaseObject {
                 }
             });
         }
-
+        if (lodash.isEmpty(sort)) {
+            sort = {};    
+        }
+        
         if (typeof (sort) === 'object') {
             this._sort = sort;
         }
@@ -63,7 +66,7 @@ export default class DataProvider extends BaseObject {
     public searchModelClass: any;
     public paginationClass: any;
 
-    public _sort: object;
+    public _sort: object = {};
 
     constructor(config: object) {
         super();

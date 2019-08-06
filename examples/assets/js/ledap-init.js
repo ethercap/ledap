@@ -77,7 +77,7 @@ ledap.App.config({
                 //由于接口格式问题，将其整形为标准格式
                 let tempData = {
                     items : data,
-                    sort: [],
+                    sort: {},
                     meta: {
                         //由于没有后端逻辑，本处采用前端逻辑来模拟后端
                         currentPage: httpOptions.url === "/data/dp_1.json" ?  1 : 2,
