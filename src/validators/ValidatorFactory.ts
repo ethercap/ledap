@@ -13,6 +13,7 @@ import StringValidator from './StringValidator';
 import TrimValidator from './TrimValidator';
 import UrlValidator from './UrlValidator';
 import Validator from './Validator';
+import App from '../App';
 
 export default class ValidatorFactory {
     public static typeList = {
@@ -38,7 +39,8 @@ export default class ValidatorFactory {
         if (BaseHelper.isEmpty(attribute) || BaseHelper.isEmpty(type)) {
             throw  new Error('数据格式错误');
         }
-        const classObj = lodash.get(ValidatorFactory.typeList, type, null);
+        const list = lodash.merge({}, ValidatorFactory.typeList, App.validators);
+        const classObj = lodash.get(list, type, null);
 
         if (classObj === null) {
             return null;

@@ -7,6 +7,7 @@
     <title>ledap示例</title>
     <script src="assets/js/vue.js"></script>
     <script src="dist/index.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
   </head>
@@ -17,10 +18,8 @@
       </div>
   </body>
   <script>
-const artful = window["ledap"];
-const Grid = artful.LedapVue.Grid;
-const DataProvider = artful.DataProvider;
-Vue.component(Grid.name, Grid);
+ledap.App.register(['grid'], Vue);
+const DataProvider = ledap.DataProvider;
 
 var app = new Vue({
   el: '#app',
@@ -32,6 +31,7 @@ var app = new Vue({
     remove: function(index) {
         let ret = confirm("你确定要删除？");
         if(ret) {
+            //正常需要先发http请求给后端，成功返回后再从dp中移除.
             this.dp.remove(index);
         }
     },
@@ -52,6 +52,7 @@ var app = new Vue({
             {
                 "attribute":"jquery",
                 "label" : "jquery示例",
+                "useSort" : true,
                 "value" : function(model, attribute, index){
                     const value = model[attribute];
                     if(value.length == 0) {

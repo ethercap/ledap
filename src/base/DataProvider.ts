@@ -27,12 +27,14 @@ export default class DataProvider extends BaseObject {
             const arr = sort.split(',');
             this._sort = {};
             Object.keys(arr).forEach(i => {
-                const str = arr[i];
+                let str = arr[i];
+                let value = DataProvider.SORT_ASC;
                 if (str.slice(0, 1) === '-') {
-                    const temp = str.slice(1, str.length);
-                    this._sort[temp] = DataProvider.SORT_DESC;
-                } else {
-                    this._sort[str] = DataProvider.SORT_ASC;
+                    str = str.slice(1, str.length);
+                    value = DataProvider.SORT_DESC;
+                }
+                if (str) {
+                    this._sort[str] = value;
                 }
             });
         }
@@ -61,7 +63,7 @@ export default class DataProvider extends BaseObject {
     public searchModelClass: any;
     public paginationClass: any;
 
-    private _sort: object;
+    public _sort: object;
 
     constructor(config: object) {
         super();
@@ -82,16 +84,54 @@ export default class DataProvider extends BaseObject {
         this.load(data);
     }
 
+    public isSortAsc(attribute) {
+        if (this._sort[attribute] === DataProvider.SORT_ASC) {
+            return true;
+        } 
+        return false;
+    }
+
+    public isSortDesc(attribute) {
+        if (this._sort[attribute] === DataProvider.SORT_DESC) {
+            return true;
+        } 
+        return false;
+    }
+
     // 切换排序方式
-    public toggleSort() {
-        Object.keys(this._sort).forEach(key => {
-            const value = this._sort[key];
-            if (value === DataProvider.SORT_DESC) {
-                this._sort[key] = DataProvider.SORT_ASC;
-            } else if (value === DataProvider.SORT_ASC) {
-                this._sort[key] = DataProvider.SORT_DESC;
+    public toggleSort(attributes = [], singleSort: boolean = true) {
+        if (typeof (attributes) === 'string') {
+            attributes = [attributes];
+        }
+        const process = attr => {
+            if (this._sort[attr]) {
+                if (this.isSortAsc(attr)) {
+                    this._sort[attr] = DataProvider.SORT_DESC;
+                } else {
+                    this._sort[attr] = DataProvider.SORT_ASC;
+                }
+            } else {
+                this._sort[attr] = DataProvider.SORT_ASC;
             }
-        });
+        };
+        if (singleSort) {
+            const attribute = attributes[0];
+            if (!attribute) {
+                return this.sort;
+            }
+            Object.keys(this._sort).forEach(key => {
+                if (key !== attribute) {
+                    delete this._sort[key];
+                }
+            });
+            process(attribute);
+        } else {
+            Object.keys(attributes).forEach(index => {
+                const key = attributes[index];
+                process(key);
+            });
+        }
+        return this.sort;
     }
 
     // 如果不传参则获取当前的url, params的传参会优先
@@ -173,6 +213,14 @@ export default class DataProvider extends BaseObject {
             }
         });
         return value;
+    }
+
+    public localSort(sortBy: any = null) {
+        const attribute = Object.keys(this._sort)[0];
+        if (!attribute) {
+            return;
+        }
+        this.sortModels(attribute, this.isSortAsc(attribute), sortBy);
     }
 
     public sortModels(attribute: string, asc: boolean = true, sortBy: any = null) {

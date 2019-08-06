@@ -10,8 +10,8 @@ export {default as Pager} from './components/list/pager';
 export {default as DetailView} from './components/detailview';
 
 export {default as BaseInput} from './components/formItem/baseinput';
-export {default as CheckBoxGroup} from './components/formItem/checkboxgroup';
+export {default as FormItem} from './components/formItem/formitem';
 export {default as DropDown} from './components/formItem/dropdown';
 export {default as GroupInput} from './components/formItem/groupinput';
-export {default as RadioGroup} from './components/formItem/radiogroup';
 export {default as SearchInput} from './components/formItem/searchinput';
+export {default as Select2} from './components/formItem/select2';

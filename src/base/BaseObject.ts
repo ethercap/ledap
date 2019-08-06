@@ -1,7 +1,7 @@
 import Event from './Event';
 
 export default class BaseObject {
-    private _event = null;
+    public _event = null;
 
     public getEvent(): Event {
         if (!this._event) {
@@ -46,17 +46,21 @@ export default class BaseObject {
 
     public on(name: string, callback: Function, context: any = null) {
         this.getEvent().on(name, callback, context);
+        Event.on(name, callback, context);
     }
 
     public once(name: string, callback: Function, context: any = null) {
         this.getEvent().once(name, callback, context);
+        Event.once(name, callback, context);
     }
 
     public off(name: string, callback: Function, context: any = null) {
         this.getEvent().off(name, callback, context);
+        Event.off(name, callback, context);
     }
 
     public emit(name: string, ...args: any[]) {
         this.getEvent().emit(name, ...args);
+        Event.emit(name, ...args);
     }
 }

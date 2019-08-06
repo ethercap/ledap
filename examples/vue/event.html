@@ -67,9 +67,9 @@
         <div class="col-sm-12" style="height:200px"></div>
     </div>
     <script>
-    var artful = window["ledap"];
-    var Event = artful.Event;
-    var WebDataProvider = artful.WebDataProvider;
+    var ledap = window["ledap"];
+    var Event = ledap.Event;
+    var WebDataProvider = ledap.WebDataProvider;
     var app = new Vue({
         el: '#app',
         data: function(){
@@ -105,10 +105,10 @@
 
 
             // ledap中BaseObect中继承了Event对象，因此任意一个对象均能处理事件
-            this.dp.on(artful.WebDataProvider.EVENT_BEFOREGETDATA, (data) => {
+            this.dp.on(ledap.WebDataProvider.EVENT_BEFOREGETDATA, (data) => {
                 this.dpStatus = "加载中...";
             });
-            this.dp.on(artful.WebDataProvider.EVENT_AFTERGETDATA, (data) => {
+            this.dp.on(ledap.WebDataProvider.EVENT_AFTERGETDATA, (data) => {
                 this.dpStatus = "";
             });
 

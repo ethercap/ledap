@@ -24,6 +24,11 @@
         ],
         "value": "上海"
       },
+      "birthDate" : {
+        "label":"生日",
+        "value": "2010-01-01",
+        "rules" : []
+      },
       "stayCity": {
         "label": "常驻城市",
         "rules": [

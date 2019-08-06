@@ -8,8 +8,8 @@ export default class Group extends BaseGroup {
     // 默认模式为unstrict, 出现错误会自己处理，strict模式会throw出错误，交给上层处理
     public mode = 'unstrict';
 
-    private _selected = [];
-    private _components = {};
+    public _selected = [];
+    public _components = {};
 
     public add(component: any): boolean {
         if (!this.isValid(component)) {

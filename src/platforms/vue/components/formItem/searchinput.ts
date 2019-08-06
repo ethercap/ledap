@@ -1,9 +1,8 @@
 import * as lodash from 'lodash';
 import BaseInput from './baseinput';
+import WebDataProvider from '../../../../base/WebDataProvider';
 
 const input = lodash.cloneDeep(BaseInput);
-const DELAY = 300;
-
 export default lodash.merge(input, {
     name: 'searchinput',
     props: {
@@ -11,75 +10,124 @@ export default lodash.merge(input, {
             type: Object,
             required: true,
         },
-        itemName: {
-            type: String,
-            default: 'text',
-        },
         paramName: {
             type: String,
             default: 'keyword',
         },
+        delay: {
+            type: Number,
+            default: 300,
+        },
+        
+        itemName: {
+            type: String,
+            default: 'text',
+        },
+        dataFilter: {
+            type: Function,
+            default: null,
+        },
+    },
+    created() {
+        if (this.filter === null) {
+            this.filter = (model, index, collection) => {
+                if (this.value) {
+                    return model[this.itemName].search(this.value) > -1;
+                }
+                return true;
+                
+            };
+        }
+        this.init();
     },
     data() {
         return {
             showError: this.model.getFirstError(this.attr),
             isFocus: false,
             isHide: false,
+            // input的值
+            value: '',
+            models: this.dataProvider.models || [],
+            filter: this.dataFilter,
         };
     },
     computed: {
         showList() {
-            return this.isFocus && this.model[this.attr] !== '' && this.dataProvider.models.length;
+            return this.isFocus && this.value !== '' && this.dataProvider.models.length;
         },
-        inputListeners() {
+        listeners() {
             return Object.assign({}, this.$listeners,  {
                 input: e => {
-                    this.model[this.attr] = e.target.value;
-                    this.request();
-                    this.inputValue(e);
+                    this.inputChange(e);
                 },
                 focus: e => {
                     this.isFocus = true;
-                    this.focus(e);
+                    this.inputListeners.focus(e);
                 },
                 blur: e => {
                     this.isHide = true;
                     setTimeout(() => {
                         this.isHide = false;
                         this.isFocus = false;
-                    }, DELAY);
-                    this.blur(e);
+                    }, this.delay);
+                    this.inputListeners.blur(e);
                 },
             });
         },
     },
     methods: {
-        request() {
-            if (this.model[this.attr]) {
-                this.dataProvider.setParams({
-                    [this.paramName]: this.model[this.attr],
-                });
+        request(params, callback = key => {}) {
+            if (this.value) {
+                if (this.isWebDp()) {
+                    this.dataProvider.once(WebDataProvider.EVENT_AFTERGETDATA, () => {
+                        this.models = this.dataProvider.models;
+                        callback(this.models);
+                    });
+                    this.dataProvider.setParams(params);
+                } else {
+                    this.models = lodash.filter(this.dataProvider.models, this.filter);
+                    callback(this.models);
+                }
             }
         },
+        isWebDp() {
+            return this.dataProvider.refresh && typeof (this.dataProvider.refresh) === 'function';
+        },
+        // 上层履盖
+        init() {
+            this.value = this.model[this.attr];
+        },
+        // 上层履盖
+        inputChange(e) {
+            this.value = e.target.value;
+            this.request({
+                [this.paramName]: this.value
+            });
+            this.inputListeners.input(e);
+        },
+        // 选择model
         choose(model, index, e) {
             if (typeof model[this.itemName] !== 'undefined') {
-                this.model[this.attr] = model[this.itemName];
+                this.value = model[this.itemName];
                 setTimeout(() => {
-                    this.request();
-                }, DELAY);
+                    this.request({
+                        [this.paramName]: this.value
+                    });
+                }, this.delay);
             }
             this.$emit('choose', model, index, e);
         },
     },
     template:
-` <component :is="tag" style="position: relative;">
-    <label v-bind="labelOptions">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
-    <input :name="attr" :value="showValue" v-bind="inputOptions" :placeholder="showHint" v-on="inputListeners" autocomplete="off">
-    <p v-show="showError">{{showError}}</p>
+`<div style="position: relative;">
+    <span>
+        <input :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off">
+    </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">
-        <li v-for="(model, index) in dataProvider.models" @click="choose(model, index, $event)">
-            <slot :model="model" :index="index">{{model[itemName]}}</slot>
+        <li v-for="(model, index) in models" @click="choose(model, index, $event)">
+            <slot name="tab" :model="model" :index="index">{{model[itemName]}}</slot>
         </li>
     </ul>
-</component>`,
+</div>`,
+    depends: ['form-item'],
 });

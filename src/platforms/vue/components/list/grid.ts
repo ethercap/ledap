@@ -72,7 +72,18 @@ export default {
                             attribute: obj.column.attribute,
                             value: obj.value,
                             index: obj.index,
+                            dataProvider: _this.dataProvider,
                         };
+                    },
+                    methods: {
+                        sort(attr) {
+                            _this.dataProvider.toggleSort(attr);
+                            if (typeof (_this.dataProvider.refresh) === 'function') {
+                                _this.dataProvider.refresh();
+                            } else {
+                                _this.dataProvider.localSort();
+                            }
+                        },
                     },
                     template: '<div>' + obj.value + '</div>',
                 });
@@ -98,47 +109,84 @@ export default {
                         width: column.width,
                     },
                 }));
-                headers.push(createElement('th', {
-                    attrs: lodash.get(column.labelOptions, 'attrs', {}),
-                    style: lodash.get(column.labelOptions, 'style', {}),
-                    class: lodash.get(column.labelOptions, 'class', {}),
-                }, [
-                    this.getValue({
-                        value: column.getLabel(model, createElement),
-                        model: null,
-                        index: null,
-                        column,
-                    }, column.labelFormat, createElement),
-                ]));
+                let label = column.getLabel(model, createElement);
+                if (column.useSort && typeof (column.label) === 'string' && column.attribute) {
+                    column.labelFormat = 'html';
+                    let arrow = '';
+                    if (this.dataProvider.isSortAsc(column.attribute)) {
+                        arrow = '&#8679;';
+                    } else if (this.dataProvider.isSortDesc(column.attribute)) {
+                        arrow = '&#8681;';
+                    }
+                    label = '<a @click="sort(\'' + column.attribute + '\')">' + label + arrow + '</a>';
+                }
+                const obj = {
+                    value: label,
+                    model,
+                    index: null,
+                    column,
+                };
+                if (this.$scopedSlots.label) {
+                    headers.push(this.$scopedSlots.label(obj));
+                } else {
+                    headers.push(createElement('th', {
+                        attrs: lodash.get(column.labelOptions, 'attrs', {}),
+                        style: lodash.get(column.labelOptions, 'style', {}),
+                        class: lodash.get(column.labelOptions, 'class', {}),
+                    }, [
+                        this.getValue(obj, column.labelFormat, createElement),
+                    ]));
+                }
             }
         }
         const contents = [];
-        contents.push(createElement('colgroup', colgroups));
-        contents.push(createElement('thead', [createElement('tr', headers)]));
-        const tbodys = [];
+        const tbody = [];
         for (const i in this.dataProvider.models) {
             model = this.dataProvider.models[i];
             const tempArr = [];
             for (const j in this.nColumns) {
                 const column = this.nColumns[j];
                 if (column.visible) {
-                    tempArr.push(createElement('td', {
-                        attrs: lodash.get(column.contentOptions, 'attrs', {}),
-                        style: lodash.get(column.contentOptions, 'style', {}),
-                        class: lodash.get(column.contentOptions, 'class', {}),
-                    }, [
-                        this.getValue({
-                            value: column.getValue(model, i, createElement),
-                            model,
-                            index: i,
-                            column,
-                        }, column.format, createElement),
-                    ]));
+                    const obj = {
+                        value: column.getValue(model, i, createElement),
+                        model,
+                        index: i,
+                        column,
+                    };
+                    if (this.$scopedSlots.default) {
+                        tempArr.push(this.$scopedSlots.default(obj)); 
+                    } else {
+                        tempArr.push(createElement('td', {
+                            attrs: lodash.get(column.contentOptions, 'attrs', {}),
+                            style: lodash.get(column.contentOptions, 'style', {}),
+                            class: lodash.get(column.contentOptions, 'class', {}),
+                        }, [
+                            this.getValue(obj, column.format, createElement),
+                        ]));
+                    }
                 }
             }
-            tbodys.push(createElement('tr', tempArr));
+            tbody.push(createElement('tr', tempArr));
         }
-        contents.push(createElement('tbody', tbodys));
+
+        const propsObj = {
+            dataProvider: this.dataProvider,
+            columns: this.columns,
+        };
+        if (this.$scopedSlots.header) {
+            contents.push(this.$scopedSlots.header(propsObj));
+        } else {
+            contents.push(createElement('colgroup', colgroups));
+            contents.push(createElement('thead', [createElement('tr', headers)]));
+        }
+        if (this.$scopedSlots.tbody) {
+            contents.push(this.$scopedSlots.tbody(propsObj));
+        } else {
+            contents.push(createElement('tbody', tbody));
+        }
+        if (this.$scopedSlots.footer) {
+            contents.push(this.$scopedSlots.footer(propsObj));
+        }
         return createElement('table', contents);
     },
 };

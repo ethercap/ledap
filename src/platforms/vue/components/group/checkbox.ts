@@ -16,6 +16,9 @@ export default lodash.merge(tab, {
         },
     },
     template: `<component :is="tagName" :class="{'active': isOpen()}" @click="click">
-        <input type="checkbox" :checked="isOpen()" :disabled="disabled"/><slot></slot>
+        <slot name="input" :isOpen="isOpen" :disabled="disabled">
+            <input type="checkbox" :checked="isOpen()" :disabled="disabled"/>
+        </slot>
+        <slot></slot>
     </component>`,
 });

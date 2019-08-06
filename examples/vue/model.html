@@ -7,8 +7,9 @@
     <title>DetailView示例</title>
     <script src="../assets/js/vue.js"></script>
     <script src="../dist/index.js"></script>
-    <script src="../assets/js/bootstrap-theme.js"></script>
-    <script src="../assets/js/axios.min.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
+    <script src="../assets/js/localmodel.js"></script>
+    <script src="https://unpkg.com/vue2-datepicker@2.12.0/lib/index.js"></script>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
     <style>
@@ -22,7 +23,7 @@
         cursor: pointer;
     }
     .search-input li:hover {
-        background-color: #f8f8f8;
+        background-color: #d9edf7;
     }
     </style>
 
@@ -32,16 +33,72 @@
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
           <hr>
           <form class="form-horizontal col-sm-6 col-sm-offset-3">
-              <baseinput class="form-group" :label-options="{'id':'label-phone'}" :input-options="{'id':'input-phone'}" :model="model" :attr="'phone'" :validate="['input']" @input="test"></baseinput>
-              <searchinput class="form-group" :model="model" attr="search" :data-provider="dp" @choose="choose" item-name="text">
-              <template v-slot="{model, index}"><div style="display: flex;"><span>{{index + 1}}</span><a :href="'#' + model.text">{{model.text}}</a></div></template>
-              </searchinput>
-              <dropdown class="form-group" :model="model" :attr="'city'"></dropdown>
-              <buttongroup class="form-group" :model="model" :attr="'stayCity'"></buttongroup>
-              <radiogroup class="form-group" :model="model" :attr="'sex'"></radiogroup>
-              <baseinput class="form-group" :input-options="{type:'password'}"  :model="model" :attr="'password'"  :validate="['input']"></baseinput>
+              <form-item class="form-group" :model="model" :attr="'phone'">
+                  <template v-slot="p">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon2">+86</span>
+                        <baseinput v-bind="p"></baseinput>
+                    </div>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="phone" :validate="['input']" @input="test">
+              </form-item>
+              <form-item1 class="form-group" :model="model" attr="phone" :validate="['input']" @input="test">
+              </form-item1>
+              <form-item class="form-group" :model="model" attr="search" >
+                  <template v-slot="p">
+                      <select2 v-bind="p"  :data-provider="dp" @choose="choose" :multiple="true" item-name="name">
+                      </select2>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="city">
+                  <template v-slot="p">
+                      <dropdown v-bind="p"></dropdown>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="stayCity">
+                  <template v-slot="p">
+                      <groupinput v-bind="p"></groupinput>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="sex">
+                  <template v-slot="slotProps">
+                      <groupinput v-bind="slotProps">
+                          <template v-slot:default="p">
+                              <radio :disabled="p.disabled" :data-key="p.dataKey" :key="p.dataKey">{{p.value}}</radio>
+                          </template>
+                      </groupinput>
+                  </template>
+              </form-item>
+              <form-item class="form-group"  :model="model" :attr="'password'" >
+                  <template v-slot="p">
+                     <baseinput type="password" v-bind="p"></baseinput>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" :attr="'birthDate'">
+                  <template v-slot:default="p">
+                    <date-picker v-model="p.model[p.attr]" :value-type="'format'"></date-picker>
+                  </template>
+              </form-item>
               <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
           </form>
+         
+          <div class="col-sm-12">
+              <hr/>
+              然而，在现实中，后端可能并不会返回本框架所要求的带rule的标准格式，此时有两种办法：
+                 <ul>
+                    <li>在http请求返回后，将数据整形为我们需要的格式，如Model</li>
+                    <li>将rules等规则配置在本地, 如LocalModel</li>
+                 </ul>
+              <hr/>
+              <a class="btn btn-default" @click="changeModel('remote')">后端Model</a>
+              <a class="btn btn-warning" @click="changeModel('local')">本地Model</a>
+          </div>
+          <div class="col-sm-12">
+              <hr/>
+              从上面可以看到，我们可以拿到两个几乎一样的form。Model不仅代表了数据的值，也代表了数据的逻辑和规则，两个model的区别在于，一个是前后端一致的逻辑，后端不仅给前端当前值，同时给规则，双方通过接口就可以对齐逻辑和规则。另一个是规则是前端的，但是需要跟后端通过其它方式对齐。
+              <hr/>
+          </div>
       </div>
   </body>
   <script>
@@ -49,7 +106,8 @@ const ledap = window["ledap"];
 const Model = ledap.Model;
 const WebDataProvider = ledap.WebDataProvider;
 //注册本页面所需要的组件
-window.Theme1.register(["dropdown", "baseinput", "checkboxgroup", "radiogroup", "buttongroup", 'searchinput'], Vue);
+ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio'], Vue);
+
 
 var app = new Vue({
   el: '#app',
@@ -63,68 +121,50 @@ var app = new Vue({
           event.preventDefault();
       },
       test : function(event){
-            console.log(event);
+          console.log(event);
       },
       choose(model, index ,e) {
           console.log(model, index, e);
+      },
+      changeModel(type){
+          if(type === 'local') {
+             this.model = this.model2;   
+          }else {
+             this.model = this.model1;
+          }
       }
   },
   data: function(){
       return {
-          model : new Model(),
-          // webDP的httpRequest方法一般写在全局
-          itemTpl(model) {
-              return `
-              <a>hello {{model.name}}</a>
-              `;
-          },
-          dp: new WebDataProvider({
+          dp: ledap.App.getWebDp({
               httpOptions: {
                   url: '/data/dp_1.json',
                   params: {
                       'per-page': 10
                   }
               },
-              primaryKey: "",
-              httpRequest(opts, suc, fail) {
-                  axios.request({
-                      url: opts.url
-                  }).then(function(res) {
-                      // 这里手写了data的格式，项目中后端会返回下面的格式，不用自己构造
-                      var data = {
-                          items : res.data,
-                          sort: [],
-                          meta: {
-                              currentPage: opts.url === "/data/dp_1.json" ?  1 : 2,
-                              pageCount: 2,
-                              perPage: 20,
-                              totalCount : opts.url === "/data/dp_1.json" ?  40 : 50,
-                          }
-                      };
-                      data.items = [];
-                      for (let i = 0; i < Math.floor(Math.random() * 11); i++) {
-                          data.items[i] = {
-                              id: i,
-                              text: Math.floor(Math.random() * 1000000)
-                          };
-                      }
-                      suc(data);
-                  }).catch(function(err) {
-                      // 失败处理
-                      fail(err);
-                  });
-              }
           }),
+          model :  new Model(),
+          model1 : new Model(),
+          model2 : new LocalModel()
     };
   },
   created:function(){
      //数据可以从任何地方来，也可以是本地的
-    axios.request({
-      url: "/data/model.json"
-    }).then((res) => {
-        let model = new Model();
-        this.model = model.load(res.data);
+    ledap.App.request({
+        url: "/data/model.json"
+    },(data) =>{
+        this.model1 = ledap.App.getModel(data);
+        this.model = this.model1;
+    }, (error) => {});
+    //假设后端返回正常的key, value数据
+    this.model2.load({
+        city: "成都",
     });
+  },
+  components: {
+      //使用第三方组件DatePicker
+      DatePicker:DatePicker.default,
   }
 });
   </script>

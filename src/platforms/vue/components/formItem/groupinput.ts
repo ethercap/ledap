@@ -4,28 +4,33 @@ import BaseInput from './baseinput';
 const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
     name: 'groupinput',
-    props: {
-        optionConfig: {
-            type: Object,
-            default() {
-                return {
-                    tag: 'a',
-                    canClose: true,
-                };
-            },
-        },
-    },
-    template: `<component :is="tag">
-    <label v-bind="labelOptions">{{showLabel}}{{model.isRequired(attr) ? '*' : ''}}</label>
-    <group v-bind="inputOptions" :max="dictOption.max" :excludes="dictOption.excludes" :init-value="model[attr]" :multiple="dictOption.multiple" @change="groupChange">
-        <tab :is="optionConfig.tag" :canClose="optionConfig.canClose" :class="optionConfig.class"  v-for="(val,key) in dictOption.list" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false" :data-key="key" :key="key"> {{val}}</tab>
-    </group>
-    <span v-show="showError">{{showError}}</span>
-</component>`,
+    template: `<group :max="dictOption.max" :excludes="dictOption.excludes" :init-value="model[attr]" :multiple="dictOption.multiple" @change="groupChange" v-on="inputListeners">
+    <slot name="default" v-for="(val,key) in dictOption.list" :data-key="key" :value="val" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false">
+        <tab :canClose="true" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false" :data-key="key" :key="key"> {{val}}</tab>
+    </slot>
+</group>`,
     methods: {
         groupChange(data, event) {
             this.model[this.attr] = data;
-            this.inputValue(null);
+            if (typeof (this.inputListeners.input) === 'function') {
+                this.inputListeners.input(null);
+            }
+        },
+        initGroup(vm) {
+            if (!vm) {
+                return;
+            }
+            Object.keys(vm.$children).forEach( index => {
+                const groupComp = vm.$children[index];
+                if (groupComp['group'] && groupComp['init']) {
+                    this.$nextTick(() => {
+                        groupComp['init']();
+                    });
+                } else {
+                    this.initGroup(groupComp);
+                }
+            });
+            return;
         },
     },
     computed: {
@@ -35,15 +40,8 @@ export default lodash.merge(input, {
     },
     watch: {
         model() {
-            Object.keys(this.$children).forEach( index => {
-                const groupComp = this.$children[index];
-                if (groupComp['group'] && groupComp['init']) {
-                    this.$nextTick(() => {
-                        groupComp['init']();
-                    });
-                }
-            });
+            this.initGroup(this);
         },
     },
-    depends: ['group', 'tab'],
+    depends: ['group', 'tab', 'form-item'],
 });

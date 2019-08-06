@@ -49,7 +49,7 @@ export default class Column extends BaseObject {
     public contentOptions: object = {};
 
     // 上层容器，可能是vm或者其它组件
-    private container: any;
+    public container: any;
 
     public getValue(model: Model, index: string, createElement: any = null): any {
         if (typeof (this.value) === 'function') {

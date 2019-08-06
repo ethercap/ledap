@@ -1,6 +1,6 @@
 import * as lodash from 'lodash';
 import DataProvider from './DataProvider';
-
+import App from '../App';
 // 数据提供器
 export default class WebDataProvider extends DataProvider {
 
@@ -35,6 +35,7 @@ export default class WebDataProvider extends DataProvider {
 
     constructor(config: object) {
         super(config);
+        config = lodash.merge({}, App.webDpConfig, config);
         this.httpRequest = lodash.get(config, 'httpRequest', null);
         this.httpOptions = lodash.get(config, 'httpOptions', null);
         this.primaryKey = lodash.get(config, 'primaryKey', 'id');
