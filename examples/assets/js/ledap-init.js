@@ -46,7 +46,7 @@ var themeConfig = {
         template:
 `<div style="position: relative;">
     <div class="form-control" style="height:auto">
-        <span v-for="model,key in selected" :key="key">
+        <span v-if="multiple" v-for="model,key in selected" :key="key">
             <a class="btn btn-xs btn-default" @click="choose(model, key, $event)">{{model[itemName]}}{{'  x'}}</a>&nbsp;
         </span>
         <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" style="border-width: 0px;outline-color:white">

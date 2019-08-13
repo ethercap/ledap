@@ -47,7 +47,7 @@
               </form-item1>
               <form-item class="form-group" :model="model" attr="search" >
                   <template v-slot="p">
-                      <select2 v-bind="p"  :data-provider="dp" @choose="choose" :multiple="true" item-name="name">
+                      <select2 v-bind="p"  :data-provider="dp" @choose="choose" item-name="name">
                       </select2>
                   </template>
               </form-item>

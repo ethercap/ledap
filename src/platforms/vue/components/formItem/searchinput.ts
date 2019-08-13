@@ -1,6 +1,5 @@
 import * as lodash from 'lodash';
 import BaseInput from './baseinput';
-import WebDataProvider from '../../../../base/WebDataProvider';
 
 const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
@@ -62,7 +61,7 @@ export default lodash.merge(input, {
                 },
                 focus: e => {
                     this.isFocus = true;
-                    this.inputListeners.focus(e);
+                    this.focusChange(e);
                 },
                 blur: e => {
                     this.isHide = true;
@@ -70,24 +69,22 @@ export default lodash.merge(input, {
                         this.isHide = false;
                         this.isFocus = false;
                     }, this.delay);
-                    this.inputListeners.blur(e);
+                    this.blurChange(e);
                 },
             });
         },
     },
     methods: {
         request(params, callback = key => {}) {
-            if (this.value) {
-                if (this.isWebDp()) {
-                    this.dataProvider.once(WebDataProvider.EVENT_AFTERGETDATA, () => {
-                        this.models = this.dataProvider.models;
-                        callback(this.models);
-                    });
-                    this.dataProvider.setParams(params);
-                } else {
-                    this.models = lodash.filter(this.dataProvider.models, this.filter);
+            if (this.isWebDp()) {
+                this.dataProvider.callback = data => {
+                    this.models = this.dataProvider.models;
                     callback(this.models);
-                }
+                };
+                this.dataProvider.setParams(params);
+            } else {
+                this.models = lodash.filter(this.dataProvider.models, this.filter);
+                callback(this.models);
             }
         },
         isWebDp() {
@@ -100,10 +97,18 @@ export default lodash.merge(input, {
         // 上层履盖
         inputChange(e) {
             this.value = e.target.value;
-            this.request({
-                [this.paramName]: this.value
-            });
+            if (this.value) {
+                this.request({
+                    [this.paramName]: this.value
+                });
+            }
             this.inputListeners.input(e);
+        },
+        focusChange(e) {
+            this.inputListeners.focus(e);
+        },
+        blurChange(e) {
+            this.inputListeners.blur(e);
         },
         // 选择model
         choose(model, index, e) {

@@ -33,6 +33,11 @@ export default class WebDataProvider extends DataProvider {
     // 默认为id
     public primaryKey = 'id';
 
+    public callback; 
+    // 不允许请求同时进行，在ajax搜索时很有用
+    public timeWait;
+    public _timer;
+
     constructor(config: object) {
         super(config);
         config = lodash.merge({}, App.webDpConfig, config);
@@ -40,6 +45,8 @@ export default class WebDataProvider extends DataProvider {
         this.httpOptions = lodash.get(config, 'httpOptions', null);
         this.primaryKey = lodash.get(config, 'primaryKey', 'id');
         this.configName = lodash.get(config, 'configName', 'withConfig');
+        this.callback = lodash.get(config, 'callback', null);
+        this.timeWait = lodash.get(config, 'timeWait', 600);
         if (!this.httpRequest) {
             throw new Error('httpRequest必须配置');
         }
@@ -92,25 +99,33 @@ export default class WebDataProvider extends DataProvider {
 
     // 发起请求
     public loadData() {
-        if (!this.beforeGetData()) {
-            return;
+        const _this = this;
+        const getData = () => {
+            if (!_this.beforeGetData()) {
+                return;
+            }
+            _this.httpRequest(_this.httpOptions, data => {
+                _this.processData(data);
+                _this.afterGetData(true, data);
+            }, error => {
+                _this.afterGetData(false, error);
+            });
+        };
+        if (this.timeWait) {
+            if (this._timer) {
+                clearTimeout(this._timer); 
+            }
+            this._timer = setTimeout(getData, this.timeWait);
+        } else {
+            getData();
         }
-        this.httpRequest(this.httpOptions, data => {
-            this.processData(data);
-            this.afterGetData(true, data);
-        }, error => {
-            this.afterGetData(false, error);
-        });
     }
 
     // 获取数据之前
     public beforeGetData() {
         this.isLoading = true;
         let reqData = lodash.get(this.httpOptions, 'params', {});
-        // 已经load过了，数据用searchModel的数据, 仅第一次用用户传过来的参数
-        if (this.isLoad) {
-            reqData = this.getParams({});
-        }
+        reqData = this.getParams(reqData);
         reqData[this.configName] = !this.isLoad;
         this.httpOptions['params'] = reqData;
         this.emit(WebDataProvider.EVENT_BEFOREGETDATA, this, {dp: this});
@@ -124,11 +139,18 @@ export default class WebDataProvider extends DataProvider {
 
     // 获取数据之后
     public afterGetData(success: boolean, data: object) {
+        if (this._timer) {
+            clearTimeout(this._timer); 
+        }
         if (success) {
             this.isLoad = true;
         }
         this.isLoading = false;
         this.append = false;
+        this.httpOptions['params'] = {};
         this.emit(WebDataProvider.EVENT_AFTERGETDATA, this, {dp: this, success, data});
+        if (this.callback) {
+            this.callback(data, success, this);
+        }
     }
 }

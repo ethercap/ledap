@@ -219,7 +219,7 @@ export default class Model extends BaseObject {
             }
             Object.keys(attribute).forEach(index => {
                 const key = attribute[index];
-                this._errors[key] = [];
+                delete this._errors[key];
             });
         }
     }
