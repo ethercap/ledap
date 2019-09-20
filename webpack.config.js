@@ -17,10 +17,7 @@ module.exports = (env = {}, argv) => {
     const commonConfig = {
         context: r('.'),
         entry: {
-            index: './src/index.ts',
-            base: './src/base/index.ts',
-            widgets: './src/widgets/index.ts',
-            'platforms/vue': './src/platforms/vue/index.ts',
+            index: './src/index.ts'
         },
         output: {
             path: r('dist'),
@@ -59,7 +56,6 @@ module.exports = (env = {}, argv) => {
             }]
         },
         plugins: [
-            new Clean(),
             new Lodash({
                 'caching': true,
                 'paths': true
@@ -69,11 +65,22 @@ module.exports = (env = {}, argv) => {
 
     const devConfig = merge(commonConfig, {
         mode: 'development',
+        entry: {
+            'ledap': './src/index.ts',
+            'ledap.core': './src/index.core.ts'
+        },
         devtool: 'cheap-module-eval-source-map',
+        plugins: [
+            new Clean()
+        ]
     });
 
     const prodConfig = merge(commonConfig, {
         mode: 'production',
+        entry: {
+            'ledap.min': './src/index.ts',
+            'ledap.core.min': './src/index.core.ts'
+        },
         optimization: {
             minimizer: [
                 new Terser({

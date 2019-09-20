@@ -7,8 +7,8 @@
     "init": "bash scripts/init.sh",
     "example": "cd examples/ && npm run start",
     "dev": "webpack --display-modules",
-    "watch": "webpack  --watch",
-    "build": "webpack --env.prod",
+    "watch": "webpack --watch",
+    "build": "webpack --display-modules && webpack --env.prod",
     "test": "webpack --config=example/webpack.config.js --mode=development"
   },
   "files": [
