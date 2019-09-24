@@ -45,9 +45,9 @@
               </form-item>
               <form-item1 class="form-group" :model="model" attr="phone" :validate="['input']" @input="test">
               </form-item1>
-              <form-item class="form-group" :model="model" attr="search" >
+              <form-item class="form-group" :model="model" attr="search">
                   <template v-slot="p">
-                      <select2 v-bind="p"  :data-provider="dp" @choose="choose" item-name="name">
+                      <select2 v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
                       </select2>
                   </template>
               </form-item>
@@ -82,7 +82,7 @@
               </form-item>
               <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
           </form>
-         
+
           <div class="col-sm-12">
               <hr/>
               然而，在现实中，后端可能并不会返回本框架所要求的带rule的标准格式，此时有两种办法：
@@ -128,7 +128,7 @@ var app = new Vue({
       },
       changeModel(type){
           if(type === 'local') {
-             this.model = this.model2;   
+             this.model = this.model2;
           }else {
              this.model = this.model1;
           }
