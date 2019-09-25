@@ -17,7 +17,7 @@ export default lodash.merge(input, {
             type: Number,
             default: 300,
         },
-        
+
         itemName: {
             type: String,
             default: 'text',
@@ -34,7 +34,7 @@ export default lodash.merge(input, {
                     return model[this.itemName].search(this.value) > -1;
                 }
                 return true;
-                
+
             };
         }
         this.init();
@@ -52,7 +52,7 @@ export default lodash.merge(input, {
     },
     computed: {
         showList() {
-            return this.isFocus && this.value !== '' && this.dataProvider.models.length;
+            return this.isFocus && this.value !== '';
         },
         listeners() {
             return Object.assign({}, this.$listeners,  {
