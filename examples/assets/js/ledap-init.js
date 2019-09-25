@@ -51,9 +51,15 @@ var themeConfig = {
         <span v-if="!multiple && value" @click="clear" style="cursor: pointer;">X</span>
     </div>
     <ul v-show="showList" class="list-unstyled" style="position: absolute; width: 100%; border:1px solid rgb(221, 221, 221); background-color:rgb(245, 245, 245); z-index: 10;" :style="{opacity: isHide ? 0 : 1}">
-        <li v-for="(model, index) in models" @mousedown="choose(model, index, $event)" style="padding: 6px 12px; cusor: default;" :class='{"bg-success": selected.hasOwnProperty(model[keyName])}'>
-            <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
-        </li>
+        <div v-if="dataProvider.isLoading" style="text-align: center; padding: 6px 0">加载中</div>
+        <template v-else>
+            <template v-if="models.length">
+                <li v-for="(model, index) in models" @mousedown="choose(model, index, $event)" style="padding: 6px 12px; cursor: pointer;" :class='{"bg-success": selected.hasOwnProperty(model[keyName])}'>
+                    <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
+                </li>
+            </template>
+            <div v-else style="text-align: center; padding: 6px 0">无数据</div>
+        </template>
     </ul>
 </div>`,
     },

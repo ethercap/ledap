@@ -118,6 +118,7 @@ export default lodash.merge(input, {
         clear() {
             this.selected = {};
             this.value = '';
+            this.models = [];
             this.$emit('clear');
         }
     },
@@ -129,9 +130,15 @@ export default lodash.merge(input, {
         <span v-if="!multiple && value" @click="clear">X</span>
     </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">
-        <li v-for="(model, index) in models" @click="choose(model, index, $event)">
-            <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
-        </li>
+        <div v-if="dataProvider.isLoading">加载中</div>
+        <template v-else>
+            <template v-if="models.length">
+                <li v-for="(model, index) in models" @click="choose(model, index, $event)">
+                    <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
+                </li>
+            </template>
+            <div v-else>无数据</div>
+        </template>
     </ul>
 </div>`,
 });
