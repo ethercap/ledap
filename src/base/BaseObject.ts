@@ -46,17 +46,14 @@ export default class BaseObject {
 
     public on(name: string, callback: Function, context: any = null) {
         this.getEvent().on(name, callback, context);
-        Event.on(name, callback, context);
     }
 
     public once(name: string, callback: Function, context: any = null) {
         this.getEvent().once(name, callback, context);
-        Event.once(name, callback, context);
     }
 
     public off(name: string, callback: Function, context: any = null) {
         this.getEvent().off(name, callback, context);
-        Event.off(name, callback, context);
     }
 
     public emit(name: string, ...args: any[]) {

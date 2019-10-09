@@ -139,9 +139,6 @@ export default class WebDataProvider extends DataProvider {
 
     // 获取数据之后
     public afterGetData(success: boolean, data: object) {
-        if (this._timer) {
-            clearTimeout(this._timer); 
-        }
         if (success) {
             this.isLoad = true;
         }
@@ -151,6 +148,9 @@ export default class WebDataProvider extends DataProvider {
         this.emit(WebDataProvider.EVENT_AFTERGETDATA, this, {dp: this, success, data});
         if (this.callback) {
             this.callback(data, success, this);
+        }
+        if (this._timer) {
+            clearTimeout(this._timer); 
         }
     }
 }

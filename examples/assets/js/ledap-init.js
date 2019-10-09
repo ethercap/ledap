@@ -16,8 +16,8 @@ var themeConfig = {
             </div>
         </component>`,
     },
-    "baseinput": {
-        template: `<input class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" />`,
+    "baseinput" : {
+        template : `<component :is="tag" class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners"></component>`,
     },
     "dropdown": {
         template: `<select class="form-control" v-on="inputListeners">

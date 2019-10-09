@@ -1,6 +1,10 @@
 export default {
     name: 'baseinput',
     props: {
+        tag: {
+            type: String,
+            default: 'input',
+        },
         model: {
             type: Object,
         },
@@ -19,6 +23,6 @@ export default {
         },
    
     },
-    template: `<input :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" />
+    template: `<component :is="tag" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" ></component>
     `,
 };
