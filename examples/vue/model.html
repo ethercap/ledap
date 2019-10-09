@@ -10,6 +10,8 @@
     <script src="../assets/js/ledap-init.js"></script>
     <script src="../assets/js/localmodel.js"></script>
     <script src="https://unpkg.com/vue2-datepicker@2.12.0/lib/index.js"></script>
+    <script src="https://unpkg.com/vue-upload-component"></script>
+    <script src="../assets/js/upload.js"></script>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
     <style>
@@ -32,7 +34,7 @@
       <div id="app" class="container">
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
           <hr>
-          <form class="form-horizontal col-sm-6 col-sm-offset-3">
+          <form class="form-horizontal col-sm-8 col-sm-offset-3">
               <form-item class="form-group" :model="model" :attr="'phone'">
                   <template v-slot="p">
                     <div class="input-group">
@@ -80,7 +82,13 @@
                     <date-picker v-model="p.model[p.attr]" :value-type="'format'"></date-picker>
                   </template>
               </form-item>
-              <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
+              <form-item class="form-group" :model="model" :attr="'upload'">
+                  <template v-slot:default="p">
+                      <uploader :post-action="'http://lsp-dee-admin.dev.ethercap.com/test/upload'" v-model="p.model[p.attr]"></uploader>
+                  </template>
+              </form-item>
+	    <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
+        <div>{{ model }}</div>
           </form>
 
           <div class="col-sm-12">
