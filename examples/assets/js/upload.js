@@ -38,19 +38,15 @@ ledap.App.getTheme().addComponent({
             directory: false,
             addIndex: false,
             minSize: 1024,
-            initialFlag: false,
-            initialValue: []
+            initialValue: this.value || [],
+            initialFlag: this.value ? true : false
         }
-    },
-    mounted: function() {
-        window.x = this;
     },
     watch: {
         value: function(newValue) {
-            if (!this.initialFlag) {
-                this.initialValue = newValue;
-                this.initialFlag = true;
-            }
+            if (this.initialFlag) return;
+            this.initialValue = newValue;
+            this.initialFlag = true;
         }
     },
     methods: {
@@ -70,18 +66,24 @@ ledap.App.getTheme().addComponent({
         inputFilter(newFile, oldFile, prevent) {
             if (newFile && !oldFile) {
                 // 等待初始化
-                if (!this.initialFlag) return prevent();
+                if (!this.initialFlag) {
+                    alert('initial failed');
+                    return prevent();
+                }
                 // 过滤系统文件 和隐藏文件
                 if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                    alert('Unsupported file type');
                     return prevent();
                 }
                 // 过滤 php html js 文件
                 if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                    alert('Unsupported file type');
                     return prevent();
                 }
                 // 去重
                 this.files.forEach(file => {
                     if (file.name === newFile.name && this.multiple) {
+                        alert('Duplicate file');
                         return prevent();
                     }
                 });
