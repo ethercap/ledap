@@ -18,7 +18,7 @@ ledap.App.getTheme().addComponent({
         data: Object,
         accept: {
             type: String,
-            default: 'image/*'
+            default: 'image/*,application/pdf'
         },
         size: {
             type: Number,
@@ -38,6 +38,19 @@ ledap.App.getTheme().addComponent({
             directory: false,
             addIndex: false,
             minSize: 1024,
+            initialFlag: false,
+            initialValue: []
+        }
+    },
+    mounted: function() {
+        window.x = this;
+    },
+    watch: {
+        value: function(newValue) {
+            if (!this.initialFlag) {
+                this.initialValue = newValue;
+                this.initialFlag = true;
+            }
         }
     },
     methods: {
@@ -56,6 +69,8 @@ ledap.App.getTheme().addComponent({
         },
         inputFilter(newFile, oldFile, prevent) {
             if (newFile && !oldFile) {
+                // 等待初始化
+                if (!this.initialFlag) return prevent();
                 // 过滤系统文件 和隐藏文件
                 if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
                     return prevent();
@@ -115,11 +130,20 @@ ledap.App.getTheme().addComponent({
                 var data = item.response.data;
                 // 模拟了请求结果
                 return {
-                    name: 'name' + index,
-                    url: 'url' + index
+                    name: 'name-' + index,
+                    url: 'url-' + index
                 };
             });
+            if (this.multiple) {
+                files = [].concat(this.initialValue, files);
+            } else {
+                this.initialValue = [];
+            }
             this.$emit('input', files);
+        },
+        deleteInitialValue(index) {
+            this.initialValue.splice(index, 1);
+            this.updateValue();
         }
     },
 
@@ -130,15 +154,31 @@ ledap.App.getTheme().addComponent({
             <div class="panel-body">
                 <div class="text-center p-5">
                     <div class="row">
-                        <div class="col-sm-4 col-md-4" v-for="file, index in files">
+                        <div class="col-sm-4 col-md-4" v-for="item, index in initialValue" :key="index">
                             <div class="thumbnail" style="height:200px;overflow-y:auto">
-                                <img v-if="file.thumb" :src="file.thumb" :alt="file.name" style="height: 50px;">
-                                <span v-else>No Image</span>
+                                <div style="height: 50px;display:flex;align-items: center;justify-content: center;">
+                                    <img v-if="item.thumb" :src="item.thumb" :alt="item.name" style="height: 100%">
+                                    <span v-else >No Image</span>
+                                </div>
+                                <div style="overflow-x: auto;height: 95px;margin-top:62px">
+                                    <p>{{item.name}}</p>
+                                    <div class="actions">
+                                        <span class="glyphicon glyphicon-trash" @click="deleteInitialValue(index)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4" v-for="file, index in files" :key="file.id">
+                            <div class="thumbnail" style="height:200px;overflow-y:auto">
+                                <div style="height: 50px;display:flex;align-items: center;justify-content: center;">
+                                    <img v-if="file.thumb" :src="file.thumb" :alt="file.name" style="height: 100%;">
+                                    <span v-else>No Image</span>
+                                </div>
                                 <div class="caption">
                                     <div class="progress" style="height:3px;" v-if="file.active || file.success">
                                         <div :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}" role="progressbar" :style="{width: file.progress + '%'}">{{file.progress}}%</div>
                                     </div>
-                                    <div style="overflow-x: auto;height: 100px">
+                                    <div style="overflow-x: auto;height: 95px">
                                         <p>{{file.name}}</p>
                                         <p>{{formatSize(file.progress*file.size/100)}}b/{{formatSize(file.size)}}b</p>
                                         <div class="actions">

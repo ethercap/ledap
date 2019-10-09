@@ -117,8 +117,8 @@
           "label": "上传",
           "value": [
               {
-                  "name": "namexx",
-                  "url": "urlxx"
+                  "name": "name-initial",
+                  "url": "url-initial"
               }
           ]
       },
