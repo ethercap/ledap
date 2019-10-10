@@ -23,6 +23,10 @@ ledap.App.getTheme().addComponent({
         size: {
             type: Number,
             default: 1024 * 1024 * 10
+        },
+        minSize: {
+            type: Number,
+            default: 0
         }
     },
     data() {
@@ -37,7 +41,6 @@ ledap.App.getTheme().addComponent({
             uploadAuto: true,
             directory: false,
             addIndex: false,
-            minSize: 1024,
             initialValue: this.value || [],
             initialFlag: this.value ? true : false
         }
@@ -104,8 +107,8 @@ ledap.App.getTheme().addComponent({
         },
         // add, update, remove File Event
         inputFile(newFile, oldFile) {
+            // update
             if (newFile && oldFile) {
-                // update
                 if (newFile.active && !oldFile.active) {
                     // beforeSend
                     // min size
@@ -113,10 +116,12 @@ ledap.App.getTheme().addComponent({
                         this.$refs.upload.update(newFile, { error: 'size' });
                     }
                 }
+                // success
                 if (newFile.success !== oldFile.success) {
                     this.updateValue();
                 }
             }
+            // remove file
             if (!newFile && oldFile) {
                 this.updateValue();
             }
@@ -130,10 +135,9 @@ ledap.App.getTheme().addComponent({
         updateValue() {
             var files = this.files.map(function(item, index) {
                 var data = item.response.data;
-                // 模拟了请求结果
                 return {
-                    name: 'name-' + index,
-                    url: 'url-' + index
+                    name: data.name,
+                    url: data.url
                 };
             });
             if (this.multiple) {
@@ -162,7 +166,7 @@ ledap.App.getTheme().addComponent({
                                     <img v-if="item.thumb" :src="item.thumb" :alt="item.name" style="height: 100%">
                                     <span v-else >No Image</span>
                                 </div>
-                                <div style="overflow-x: auto;height: 95px;margin-top:62px">
+                                <div style="overflow-x: auto;height: 88px;margin-top:52px;white-space:nowrap">
                                     <p>{{item.name}}</p>
                                     <div class="actions">
                                         <span class="glyphicon glyphicon-trash" @click="deleteInitialValue(index)"></span>
@@ -177,17 +181,19 @@ ledap.App.getTheme().addComponent({
                                     <span v-else>No Image</span>
                                 </div>
                                 <div class="caption">
-                                    <div class="progress" style="height:3px;" v-if="file.active || file.success">
-                                        <div :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}" role="progressbar" :style="{width: file.progress + '%'}">{{file.progress}}%</div>
+                                    <div class="progress" style="margin-bottom:5px;">
+                                        <div class="progress-bar progress-bar-success" :class="{'progress-bar-animated': file.active}" role="progressbar" :style="{width: file.progress + '%'}" style="min-width:1.5em">{{parseInt(file.progress)}}%</div>
                                     </div>
-                                    <div style="overflow-x: auto;height: 95px">
-                                        <p>{{file.name}}</p>
-                                        <p>{{formatSize(file.progress*file.size/100)}}b/{{formatSize(file.size)}}b</p>
-                                        <div class="actions">
+                                    <div style="overflow-x: auto;height: 95px;white-space:nowrap">
+                                        <div style="margin-top:3px">{{file.name}}</div>
+                                        <div style="margin-top:3px">{{formatSize(file.progress*file.size/100)}}
+                                        b/{{formatSize(file.size)}}b</div>
+                                        <div class="actions" style="margin-top: 3px">
                                             <span class="glyphicon glyphicon-off" v-if="file.active" @click.prevent="$refs.upload.update(file, {active: false, error:'cancel'})"></span>
                                             <span class="glyphicon glyphicon-refresh" v-if="file.error && file.error !== 'compressing' && $refs.upload.features.html5" @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})"></span>
                                             <span class="glyphicon glyphicon-trash"  @click.prevent="$refs.upload.remove(file)"></span>
                                         </div>
+                                        <div v-if="file.error" class="text-danger" style="margin-top:3px">Error: {{file.error}}</div>
                                     </div>
                                 </div>
                             </div>
