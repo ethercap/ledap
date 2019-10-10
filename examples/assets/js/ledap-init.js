@@ -47,8 +47,8 @@ var themeConfig = {
         <span v-if="multiple" v-for="model,key in selected" :key="key">
             <a class="btn btn-xs btn-default" @click="choose(model, key, $event)">{{model[itemName]}}{{'  x'}}</a>&nbsp;
         </span>
-        <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" style="border-width: 0px;outline-color:white;flex:1">
-        <span v-if="!multiple && value" @click="clear" style="cursor: pointer;">X</span>
+        <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" style="border-width: 0px;outline-color:white;flex:1;max-width:100%;min-width:0">
+        <span v-if="!multiple && value" @click="clear" style="cursor: pointer;margin-left:0.5em">X</span>
     </div>
     <ul v-show="showList" class="list-unstyled" style="position: absolute; width: 100%; border:1px solid rgb(221, 221, 221); background-color:rgb(245, 245, 245); z-index: 10;" :style="{opacity: isHide ? 0 : 1}">
         <div v-if="dataProvider.isLoading" style="text-align: center; padding: 6px 0">加载中</div>
