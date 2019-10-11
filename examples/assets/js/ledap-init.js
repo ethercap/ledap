@@ -63,6 +63,28 @@ var themeConfig = {
     </ul>
 </div>`,
     },
+    pager: {
+        template: `<div style="display:flex;align-items: center;">
+        <slot name="total">
+            <span>共{{ dataProvider.pager.totalCount }}条记录</span>
+            <span style="flex:1"></span>
+        </slot>
+        <slot :changePage="changePage">
+            <a v-show="dataProvider.pager.hasPrev()" @click="toPrev()">上一页</a>
+            <a v-show="dataProvider.pager.hasNext()" @click="toNext()" style="margin-left: 10px">下一页</a>
+            <span style="margin: 0 15px">第 {{ dataProvider.pager.currentPage}}/{{ dataProvider.pager.pageCount }} 页</span>
+        </slot>
+        <slot name="form" :changePage="changePage">
+            <form @submit.prevent.stop="changePage(jumpPage)" style="display:flex;align-items:center">
+                <span>跳至&nbsp;</span>
+                <input type="text" v-model="jumpPage" style="width:45px;outline:0">
+                <span>&nbsp;页&nbsp;</span>
+                <button type="submit" class="btn btn-success" style="padding:2px 8px;border-radius: 0">跳转</button>
+            </form>
+        </slot>
+    </div>
+        `
+    }
 };
 var request = function(httpOptions, suc, fail) {
     ledap.App.axios.request(httpOptions).then(function(res) {

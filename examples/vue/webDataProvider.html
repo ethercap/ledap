@@ -25,11 +25,11 @@
         <p>
             我们也可以用系统的分页器,自己可以写点css来适配。
         </p>
-        <pager :data-provider=dp > 
-            <template v-slot:default="slotProps"> 
+        <pager :data-provider=dp >
+            <template v-slot:default="slotProps">
                 <a @click="slotProps.changePage(dp.pager.currentPage - 1)">上一页</a>
-                <a @click="slotProps.changePage(dp.pager.currentPage + 1)">下一页</a>
-                <span>第 {{ dp.pager.currentPage}}/{{ dp.pager.pageCount }} 页</span>
+                <a @click="slotProps.changePage(dp.pager.currentPage + 1)" style="margin-left:10px">下一页</a>
+                <span style="margin:0 15px;">第 {{ dp.pager.currentPage}}/{{ dp.pager.pageCount }} 页</span>
             </template>
         </pager>
         <hr/>
