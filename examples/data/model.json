@@ -113,6 +113,15 @@
         "hint" : "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
         "value": ""
       },
+      "upload": {
+          "label": "上传",
+          "value": [
+              {
+                  "name": "name-initial",
+                  "url": "url-initial"
+              }
+          ]
+      },
       "search": {
         "label": "搜索",
         "hint" : "关键词",

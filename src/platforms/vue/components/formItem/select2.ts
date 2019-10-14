@@ -44,7 +44,7 @@ export default lodash.merge(input, {
                 this.request({
                     [this.keyName]: this.model[this.attr],
                     [this.paramName]: this.value,
-                }, this.syncSelected); 
+                }, this.syncSelected);
             }
         },
         syncSelected() {
@@ -115,17 +115,30 @@ export default lodash.merge(input, {
             }
             this.$emit('choose', model, index, e);
         },
+        clear() {
+            this.selected = {};
+            this.value = '';
+            this.models = [];
+            this.$emit('clear');
+        }
     },
     template:
 `<div style="position: relative;">
     <span>
         <span v-if="multiple" v-for="model,key in selected" :key="key" @click="choose(model, key, $event)">{{model[itemName]}}</span>
         <input ref="input" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off">
+        <span v-if="!multiple && value" @click="clear">X</span>
     </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">
-        <li v-for="(model, index) in models" @click="choose(model, index, $event)">
-            <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
-        </li>
+        <div v-if="dataProvider.isLoading">加载中</div>
+        <template v-else>
+            <template v-if="models.length">
+                <li v-for="(model, index) in models" @click="choose(model, index, $event)">
+                    <slot name="tab" :model="model" :index="index" :isActive="selected.hasOwnProperty(model[keyName])">{{model[itemName]}}</slot>
+                </li>
+            </template>
+            <div v-else>无数据</div>
+        </template>
     </ul>
 </div>`,
 });
