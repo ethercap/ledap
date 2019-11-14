@@ -35,7 +35,7 @@ export default class DictValidator extends Validator {
         }
 
         if (options.multiple) {
-            model[attribute] = [value];
+            model[attribute] = value;
         } else {
             model[attribute] = value[0];
         }
