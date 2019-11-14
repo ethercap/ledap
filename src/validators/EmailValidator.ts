@@ -1,15 +1,34 @@
 import Model from '../base/Model';
-import BaseHelper from '../helpers/BaseHelper';
 import Validator from './Validator';
+import  * as punycode from 'punycode';
+/*
+ * options = {
+ *     pattern: /^$/,  //邮箱的正则表达式， 形如:john@example.com
+ *     fullPattern : /^$/, //邮箱全称的正则表达式，形如: john <john@example.com>
+ *     allowName : false, //是否使用带名字的邮箱，为true时，会使用fullPattern
+ *     enableIDN: false, //是否支持IDN(internationalized domain names)
+ * },
+ *
+ * */
 
 export default class EmailValidator extends Validator {
-    public validateAttribute(model: Model): void {
+    public static defaultOptions: object = {
+        skipOnEmpty: true,
+        // 默认的email正则
+        pattern: /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,
+        fullPattern: /^[^@]*<[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,
+    };
+    public template = '不是一个合法的邮箱格式';
+    public allowTypes = ['string'];
+    
+    public validateAttribute(model: Model): boolean {
+        const ret = super.validateAttribute(model);
+        if (!ret) {
+            return ret;
+        }
         const attribute = this.attribute;
         const options: any = this.options;
-        const value = model[attribute];
-        if (options.skipOnEmpty && BaseHelper.isEmpty(value)) {
-            return;
-        }
+        let value = model[attribute];
         let valid = true;
         const regexp = /^((?:"?([^"]*)"?\s)?)(?:\s+)?(?:(<?)((.+)@([^>]+))(>?))$/;
         const matches = regexp.exec(value);
@@ -17,15 +36,15 @@ export default class EmailValidator extends Validator {
         if (matches === null) {
             valid = false;
         } else {
-            const localPart = matches[5];
-            const domain = matches[6];
+            let localPart = matches[5];
+            let domain = matches[6];
 
-            /* if (options["enableIDN"]) {
+            if (options['enableIDN']) {
                 localPart = punycode.toASCII(localPart);
                 domain = punycode.toASCII(domain);
 
                 value = matches[1] + matches[3] + localPart + '@' + domain + matches[7];
-            }*/
+            }
 
             if (localPart.length > 64) {
                 valid = false;
@@ -39,6 +58,6 @@ export default class EmailValidator extends Validator {
         if (!valid) {
             model.addError(attribute, options.message);
         }
-
+        return valid;
     }
 }

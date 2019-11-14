@@ -56,13 +56,27 @@ export default class Model extends BaseObject {
         const rules = this.rules();
         Object.keys(rules).forEach(attribute => {
             Object.keys(rules[attribute]).forEach(type => {
-                const validator = ValidatorFactory.getInstance(attribute, type, rules[attribute][type]);
+                const validator = this.createValidator(attribute, type, rules[attribute][type]);
                 if (validator) {
                     this._validators.push(validator);
                 }
             });
         });
         return this._validators;
+    }
+    
+    public addValidator(attribute: string, ruleType: any, options: object = {}) {
+        const validator = this.createValidator(attribute, ruleType, options);
+        if (validator) {
+            this.getValidators().push(validator);
+        }
+    }
+
+    public createValidator(attribute: string, ruleType: any, options: object = {}) {
+        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType)) {
+            ruleType = this[ruleType]; 
+        }
+        return ValidatorFactory.getInstance(attribute, ruleType, options);
     }
 
     // 只load数据
