@@ -1,5 +1,4 @@
 import * as lodash from 'lodash';
-import BaseHelper from '../helpers/BaseHelper';
 import BooleanValidator from './BooleanValidator';
 import CompareValidator from './CompareValidator';
 import DictValidator from './DictValidator';
@@ -12,6 +11,7 @@ import RequiredValidator from './RequiredValidator';
 import StringValidator from './StringValidator';
 import TrimValidator from './TrimValidator';
 import UrlValidator from './UrlValidator';
+import FnValidator from './FnValidator';
 import Validator from './Validator';
 import App from '../App';
 
@@ -21,13 +21,16 @@ export default class ValidatorFactory {
         string: StringValidator,
         int: NumberValidator,
         double: NumberValidator,
+        number: NumberValidator,
         required: RequiredValidator,
         trim: TrimValidator,
         match: RegexValidator,
+        regex: RegexValidator,
         compare: CompareValidator,
         email: EmailValidator,
         filter: TrimValidator,
         in: RangeValidator,
+        range: RangeValidator,
         url: UrlValidator,
         ip: IpValidator,
         dict: DictValidator,
@@ -35,17 +38,21 @@ export default class ValidatorFactory {
     };
 
     // 静态方法
-    public static getInstance(attribute: string, type: string, options: object): Validator {
-        if (BaseHelper.isEmpty(attribute) || BaseHelper.isEmpty(type)) {
+    public static getInstance(attribute: string, type: any, options: object): Validator {
+        if (!attribute || !type) {
             throw  new Error('数据格式错误');
         }
-        const list = lodash.merge({}, ValidatorFactory.typeList, App.validators);
-        const classObj = lodash.get(list, type, null);
-
-        if (classObj === null) {
-            return null;
+        let validator = null;
+        if (typeof type === 'string') {
+            const list = lodash.merge({}, ValidatorFactory.typeList, App.validators);
+            const classObj = lodash.get(list, type, null);
+            if (classObj) {
+                validator = new classObj(attribute, type, options);
+            }
+        } else if (typeof type === 'function') {
+            // 说明是函数，因此创建函数调用
+            validator = new FnValidator(attribute, type, options);
         }
-        const validator = new classObj(attribute, type, options);
         return validator;
     }
 }

@@ -1,15 +1,14 @@
 import * as lodash from 'lodash';
-
 export default class BaseHelper {
 
+    // 用来判断输入是否为空
     public static isEmpty(value: any) {
-        const valueType = typeof (value);
-        if (valueType === 'boolean' || valueType === 'number') {
-            return false;
+        if (value === '' || value === null || value === undefined) {
+            return true; 
         }
-        if (valueType === 'function') {
+        if (lodash.isArray(value) && value.length === 0) {
             return true;
         }
-        return lodash.isEmpty(value);
+        return false;
     }
 }

@@ -24,6 +24,9 @@ export default {
             showError: this.model.getFirstError(this.attr),
         };
     },
+    created() {
+        this.model.on(Model.EVENT_AFTER_VALIDATE, this.syncError);
+    },
     updated() {
         this.$nextTick(() => {
             this.model.on(Model.EVENT_AFTER_VALIDATE, this.syncError);

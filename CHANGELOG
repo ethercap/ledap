@@ -1,5 +1,16 @@
 ##[0.1.4] - 2019-10-11
 ### Added
+- add FnValidator
+- add default options for validators
+
+### Changed
+- change the validators
+
+### Fixed
+- fixed formitem can't update bug
+
+##[0.1.4] - 2019-10-11
+### Added
 - add uploader for bootstrap example
 
 ### Changed
