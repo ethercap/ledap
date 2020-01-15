@@ -12,7 +12,7 @@ export default class RequiredValidator extends Validator {
     public static defaultOptions: object = {};
     public template = '不能为空';
     public allowTypes = ['number', 'string', 'object'];
-    
+
     constructor(attribute: string, type: string, options: object) {
         super(attribute, type, options);
         options['skipOnEmpty'] = false;
@@ -28,8 +28,7 @@ export default class RequiredValidator extends Validator {
         const value = model[attribute];
         let valid = false;
         if (options.requiredValue === undefined) {
-            const isString = typeof value === 'string' || value instanceof String;
-            if ((options.strict && value !== undefined) || (!options.strict && !lodash.isEmpty(isString ? lodash.trim(value) : value))) {
+            if ((options.strict && value !== undefined) || (!options.strict && !this.isEmpty(value))) {
                 valid = true;
             }
         /* eslint-disable eqeqeq */
@@ -41,5 +40,12 @@ export default class RequiredValidator extends Validator {
             model.addError(attribute, options.message);
         }
         return valid;
+    }
+
+    public isEmpty(value): boolean {
+        if (lodash.isObject(value)) {
+            return lodash.isEmpty(value);
+        }
+        return !value;
     }
 }
