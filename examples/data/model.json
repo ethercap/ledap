@@ -1,4 +1,34 @@
 {
+    "name": {
+        "label": "姓名",
+        "hint": "请输入姓名",
+        "rules": [{
+            "type": "required",
+            "options": { "message": "姓名不能为空" }
+        }, {
+            "type": "string",
+            "options": { "message": "必须是字符串", "max": 5 }
+        }],
+        "value": null
+    },
+    "introduce": {
+        "label": "简介",
+        "hint": "请输入简介",
+        "rules": [{
+            "type": "required",
+            "options": { "message": "不能为空" }
+        }],
+        "value": ""
+    },
+    "age": {
+        "label": "年龄",
+        "hint": "请输入年龄",
+        "rules": [{
+            "type": "number",
+            "options": { "message": "xxx", "max": 200, "min": 18 }
+        }],
+        "value": ""
+    },
     "city": {
         "label": "城市",
         "rules": [
@@ -63,10 +93,11 @@
             "options": {
               "list": {
                 "1": "男",
-                "2": "女"
+                "2": "女",
+                "3": "不可用"
               },
               "multiple": false,
-              "excludes" : [],
+              "excludes" : ["3"],
               "message": "性别不正确",
               "skipOnEmpty": 1
             }
@@ -125,6 +156,6 @@
       "search": {
         "label": "搜索",
         "hint" : "关键词",
-        "value": ""
+        "value": 1
       }
 }

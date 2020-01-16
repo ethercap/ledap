@@ -5,11 +5,11 @@ import WebDataProvider from './base/WebDataProvider';
 import Theme from './platforms/vue/Theme';
 import axios from 'axios';
 export default class App extends BaseObject {
-    
+
     // 将包提供出去供外部使用
     public static axios = axios;
     public static lodash = lodash;
-    
+
     // webDp的http请求
     public static webDpConfig;
     // 常规的http请求
@@ -22,7 +22,7 @@ export default class App extends BaseObject {
     // 全局的validators
     public static validators = {
     };
-    
+
     // 全局的一些配置
     public static config(config = {}) {
         App.themeConfig  = lodash.get(config, 'themeConfig', {});
@@ -37,7 +37,7 @@ export default class App extends BaseObject {
             };
         }
         App.webDpConfig = lodash.get(config, 'webDpConfig', {});
-        if (App.webDpConfig.httpRequest === 'undefined') {
+        if (App.webDpConfig.httpRequest === undefined) {
             App.webDpConfig.httpRequest = App.request;
         }
         App.validators = lodash.get(config, 'validators', {});
@@ -46,7 +46,7 @@ export default class App extends BaseObject {
     public static getModel(data: object = {}, modelClass: any = null) {
         if (modelClass === null) {
             modelClass = Model;
-        } 
+        }
         const model = new modelClass();
         return model.load(data);
     }
@@ -60,7 +60,7 @@ export default class App extends BaseObject {
     public static register(name, vue) {
         App.getTheme().register(name, vue);
     }
- 
+
     public static getTheme() {
         if (App._theme) {
             return App._theme;
@@ -77,4 +77,3 @@ export default class App extends BaseObject {
         return lodash.extend(a, b);
     }
 }
- 

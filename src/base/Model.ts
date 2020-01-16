@@ -16,13 +16,22 @@ export default class Model extends BaseObject {
     // 当前的场景
     public _scenario: string = Model.SCENARIO_DEFAULT;
     // 当前的校验器
-    public _validators: Validator[];
+    public _validators: Validator[] = [];
 
     constructor() {
         super();
         this._errors = {};
         this._scenario = '';
         this._validators = [];
+    }
+
+    public init() {
+        super.init();
+        // 手动触发触发双绑
+        this.isRequired = this.isRequired.bind(this);
+        this.getAttributeLabel = this.getAttributeLabel.bind(this);
+        this.getAttributeHint = this.getAttributeHint.bind(this);
+        this.getValidatorData = this.getValidatorData.bind(this);
     }
 
     /* 规则, 规则的格式为
@@ -38,45 +47,13 @@ export default class Model extends BaseObject {
         return {};
     }
 
-    // 返回相应的规则数据
-    public getValidatorData(attribute: string, type: string, key: string, defaultVal = ''): any {
-        const rules = this.rules();
-        return lodash.get(rules, [attribute, type, key], defaultVal);
+    // model的所有的字段的意义,需要上层覆盖
+    public attributeLabels() {
+        return {};
     }
-
-    public getValidators() {
-        if (lodash.isEmpty(this._validators)) {
-            this._validators = this.createValidators();
-        }
-        return this._validators;
-    }
-
-    public createValidators() {
-        this._validators = [];
-        const rules = this.rules();
-        Object.keys(rules).forEach(attribute => {
-            Object.keys(rules[attribute]).forEach(type => {
-                const validator = this.createValidator(attribute, type, rules[attribute][type]);
-                if (validator) {
-                    this._validators.push(validator);
-                }
-            });
-        });
-        return this._validators;
-    }
-    
-    public addValidator(attribute: string, ruleType: any, options: object = {}) {
-        const validator = this.createValidator(attribute, ruleType, options);
-        if (validator) {
-            this.getValidators().push(validator);
-        }
-    }
-
-    public createValidator(attribute: string, ruleType: any, options: object = {}) {
-        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType)) {
-            ruleType = this[ruleType]; 
-        }
-        return ValidatorFactory.getInstance(attribute, ruleType, options);
+    // model的所有的字段的hint,需要上层覆盖
+    public attributeHints() {
+        return {};
     }
 
     // 只load数据
@@ -105,9 +82,9 @@ export default class Model extends BaseObject {
                 }
                 this.emit(Model.EVENT_LOAD, this, key, obj.value);
                 this[key] = obj.value;
-                this.attributeHints = () => attrHints;
-                this.attributeLabels = () => attrLabels;
                 this.rules = () => rules;
+                this.attributeLabels = () => attrLabels;
+                this.attributeHints = () => attrHints;
             } else {
                 this.emit(Model.EVENT_LOAD, this, key, data[key]);
                 this[key] = data[key];
@@ -116,6 +93,27 @@ export default class Model extends BaseObject {
         this.init();
         this.emit(Model.EVENT_AFTERLOAD, this);
         return this;
+    }
+
+    public beforeValidate() {
+        this.emit(Model.EVENT_BEFORE_VALIDATE, this);
+        return true;
+    }
+
+    public afterValidate(): void {
+        // TODO: emit events
+        this.emit(Model.EVENT_AFTER_VALIDATE, this);
+        return;
+    }
+
+    get scenario(): string {
+        if (!this._scenario) {
+            this._scenario = Model.SCENARIO_DEFAULT;
+        }
+        return this._scenario;
+    }
+    set scenario(value: string) {
+        this._scenario = value;
     }
 
     /* 返回所有的scenarios,格式
@@ -134,15 +132,32 @@ export default class Model extends BaseObject {
         return scenarios;
     }
 
-    public beforeValidate() {
-        this.emit(Model.EVENT_BEFORE_VALIDATE, this);
-        return true;
+    public getValidators() {
+        if (lodash.isEmpty(this._validators)) {
+            this._validators = this.createValidators();
+        }
+        return this._validators;
     }
 
-    public afterValidate(): void {
-        // TODO: emit events
-        this.emit(Model.EVENT_AFTER_VALIDATE, this);
-        return;
+    public createValidators() {
+        this._validators = [];
+        const rules = this.rules();
+        Object.keys(rules).forEach(attribute => {
+            Object.keys(rules[attribute]).forEach(type => {
+                const validator = this.createValidator(attribute, type, rules[attribute][type]);
+                if (validator) {
+                    this._validators.push(validator);
+                }
+            });
+        });
+        return this._validators;
+    }
+
+    public createValidator(attribute: string, ruleType: any, options: object = {}) {
+        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType)) {
+            ruleType = this[ruleType];
+        }
+        return ValidatorFactory.getInstance(attribute, ruleType, options);
     }
 
     // validate方法，判断model的数据是否合法,如果返回false代表不合法
@@ -177,6 +192,19 @@ export default class Model extends BaseObject {
 
         this.afterValidate();
         return !this.hasErrors();
+    }
+
+    // 返回相应的规则数据
+    public getValidatorData(attribute: string, type: string, key: string, defaultVal = ''): any {
+        const rules = this.rules();
+        return lodash.get(rules, [attribute, type, key], defaultVal);
+    }
+
+    public addValidator(attribute: string, ruleType: any, options: object = {}) {
+        const validator = this.createValidator(attribute, ruleType, options);
+        if (validator) {
+            this.getValidators().push(validator);
+        }
     }
 
     // 判断是否为required
@@ -238,10 +266,6 @@ export default class Model extends BaseObject {
         }
     }
 
-    // model的所有的字段的hint,需要上层覆盖
-    public attributeHints() {
-        return {};
-    }
     public getAttributeHint(attribute) {
         const hints = this.attributeHints();
         if (hints.hasOwnProperty(attribute)) {
@@ -250,10 +274,6 @@ export default class Model extends BaseObject {
         return '';
     }
 
-    // model的所有的字段的意义,需要上层覆盖
-    public attributeLabels() {
-        return {};
-    }
     // 根据attribute获取label
     public getAttributeLabel(attribute) {
         const attrLabels = this.attributeLabels();
@@ -261,15 +281,5 @@ export default class Model extends BaseObject {
             return attrLabels[attribute];
         }
         return attribute;
-    }
-
-    get scenario(): string {
-        if (!this._scenario) {
-            this._scenario = Model.SCENARIO_DEFAULT;
-        }
-        return this._scenario;
-    }
-    set scenario(value: string) {
-        this._scenario = value;
     }
 }

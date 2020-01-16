@@ -49,7 +49,7 @@ export default lodash.merge(input, {
         },
         syncSelected() {
             if (this.multiple && typeof (this.model[this.attr]) != 'object') {
-                this.model[this.attr] = [String(this.model[this.attr])];
+                this.model[this.attr] = [this.model[this.attr]];
             }
             const selected = {};
             const _this = this;
@@ -126,7 +126,7 @@ export default lodash.merge(input, {
 `<div style="position: relative;">
     <span>
         <span v-if="multiple" v-for="model,key in selected" :key="key" @click="choose(model, key, $event)">{{model[itemName]}}</span>
-        <input ref="input" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off">
+        <input ref="input" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" v-bind="$attrs">
         <span v-if="!multiple && value" @click="clear">X</span>
     </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">
