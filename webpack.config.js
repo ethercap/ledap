@@ -29,6 +29,9 @@ module.exports = (env = {}, argv) => {
         resolve: {
             modules: [r('node_modules'), r('src')],
             extensions: ['.ts', '.js', '.vue', '.json'],
+            alias: {
+                '@': path.resolve('./src')
+            }
         },
         module: {
             rules: [{

@@ -27,7 +27,7 @@ export default lodash.merge(input, {
             default: null,
         },
     },
-    created() {
+    updated() {
         if (this.filter === null) {
             this.filter = (model, index, collection) => {
                 if (this.value) {
@@ -38,6 +38,8 @@ export default lodash.merge(input, {
             };
         }
         this.init();
+        // 因为数据的获取是异步的，要在这个钩子里才行，执行一次后清空该钩子
+        this.$options.updated = null;
     },
     data() {
         return {
@@ -126,7 +128,7 @@ export default lodash.merge(input, {
     template:
 `<div style="position: relative;">
     <span>
-        <input :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off">
+        <input :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" v-bind="$attrs">
     </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">
         <li v-for="(model, index) in models" @click="choose(model, index, $event)">
