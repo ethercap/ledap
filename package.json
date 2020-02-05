@@ -1,6 +1,6 @@
 {
   "name": "ledap",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
   "main": "./dist/index.js",
   "scripts": {
