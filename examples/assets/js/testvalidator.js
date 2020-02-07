@@ -159,14 +159,20 @@ model._validators = [];
 model.addValidator("a", "required");
 testCases = [
     { value: "", ret: false },
-    { value: 0, ret: false },
-    { value: 1, ret: true },
-    { value: "dsds", ret: true },
-    { value: "0", ret: true },
     { value: null, ret: false },
     { value: undefined, ret: false },
     { value: [], ret: false },
-    { value: [1], ret: true }
+    { value: {}, ret: false },
+    { value: " ", ret: true },
+    { value: 0, ret: true },
+    { value: "0", ret: true },
+    { value: 1, ret: true },
+    { value: "1", ret: true },
+    { value: NaN, ret: true },
+    { value: Infinity, ret: true },
+    { value: "dsds", ret: true },
+    { value: [1], ret: true },
+    { value: { a: 'aaa' }, ret: true },
 ];
 processTestCase(testCases);
 

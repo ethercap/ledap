@@ -16,12 +16,14 @@ export default lodash.merge(input, {
         };
     },
     created() {
-        this.model.on(Model.EVENT_AFTERLOAD, () => {
-            this.dictOption = this.getDictOption();
-            this.initGroup(this);
-        });
+        this.init();
+        this.model.on(Model.EVENT_AFTERLOAD, this.init.bind(this));
     },
     methods: {
+        init() {
+            this.dictOption = this.getDictOption();
+            this.initGroup(this);
+        },
         groupChange(data, event) {
             this.model[this.attr] = data;
             if (typeof (this.inputListeners.input) === 'function') {
@@ -53,8 +55,7 @@ export default lodash.merge(input, {
     },
     watch: {
         model() {
-            this.dictOption = this.getDictOption();
-            this.initGroup(this);
+            this.init();
         },
     },
     depends: ['group', 'tab', 'form-item'],
