@@ -43,9 +43,11 @@ export default class RequiredValidator extends Validator {
     }
 
     public isEmpty(value): boolean {
+        // 包含对象和数组
         if (lodash.isObject(value)) {
             return lodash.isEmpty(value);
         }
-        return !value;
+        if (value === undefined || value === '' || value === null) return true;
+        return false;
     }
 }
