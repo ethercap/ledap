@@ -27,7 +27,7 @@ var themeConfig = {
     },
     "dropdown": {
         template: `<select class="form-control" v-on="inputListeners">
-            <option v-for="(val,key) in model.getValidatorData(attr, 'dict', 'list', {})" :value="key" :selected="key === model[attr]">{{val}}</option>
+            <option v-for="key in dictOption.order" :value="key" :selected="key === model[attr]">{{dictOption.list[key]}}</option>
         </select>`,
     },
     "groupinput": {
