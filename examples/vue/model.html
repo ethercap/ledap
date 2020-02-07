@@ -36,16 +36,48 @@
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
           <hr>
           <form class="form-horizontal col-sm-8 col-sm-offset-3">
+              <form-item :model="model" attr="name" class="form-group"></form-item>
+              <form-item :model="model" attr="age" class="form-group" type="number"></form-item>
+              <form-item class="form-group" :model="model" attr="introduce">
+                  <template v-slot="p">
+                      <baseinput v-bind="p" tag="textarea" rows="8" maxlength="100"></baseinput>
+                  </template>
+              </form-item>
               <form-item class="form-group" :model="model" :attr="'phone'">
                   <template v-slot="p">
                     <div class="input-group">
                       <span class="input-group-addon" id="basic-addon2">+86</span>
-                        <baseinput v-bind="p"></baseinput>
+                        <baseinput v-bind="p" maxlength="11" type="tel"></baseinput>
                     </div>
                   </template>
               </form-item>
               <form-item1 class="form-group" :model="model" attr="phone" :validate="['input']" @input="test">
               </form-item1>
+              <form-item class="form-group" :model="model" attr="sex">
+                  <template v-slot="slotProps">
+                      <groupinput v-bind="slotProps">
+                          <template v-slot:default="p">
+                              <radio v-bind="p" :key="p.dataKey">{{p.value}}</radio>
+                          </template>
+                      </groupinput>
+                  </template>
+              </form-item>
+              <!-- 默认是Tab组件 -->
+              <form-item class="form-group" :model="model" attr="stayCity">
+                  <template v-slot="p">
+                      <groupinput v-bind="p"></groupinput>
+                  </template>
+              </form-item>
+              <!-- 改成checkbox组件 -->
+              <form-item class="form-group" :model="model" attr="stayCity">
+                  <template v-slot="slotProps">
+                      <groupinput v-bind="slotProps">
+                          <template v-slot:default="p">
+                              <checkbox v-bind="p" :key="p.dataKey">{{p.value}}</checkbox>
+                          </template>
+                      </groupinput>
+                  </template>
+              </form-item>
               <form-item class="form-group" :model="model" attr="search">
                   <template v-slot="p">
                       <select2 v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
@@ -55,20 +87,6 @@
               <form-item class="form-group" :model="model" attr="city">
                   <template v-slot="p">
                       <dropdown v-bind="p"></dropdown>
-                  </template>
-              </form-item>
-              <form-item class="form-group" :model="model" attr="stayCity">
-                  <template v-slot="p">
-                      <groupinput v-bind="p"></groupinput>
-                  </template>
-              </form-item>
-              <form-item class="form-group" :model="model" attr="sex">
-                  <template v-slot="slotProps">
-                      <groupinput v-bind="slotProps">
-                          <template v-slot:default="p">
-                              <radio :disabled="p.disabled" :data-key="p.dataKey" :key="p.dataKey">{{p.value}}</radio>
-                          </template>
-                      </groupinput>
                   </template>
               </form-item>
               <form-item class="form-group"  :model="model" :attr="'password'" >
@@ -112,7 +130,7 @@ const ledap = window["ledap"];
 const Model = ledap.Model;
 const WebDataProvider = ledap.WebDataProvider;
 //注册本页面所需要的组件
-ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio'], Vue);
+ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio', 'checkbox'], Vue);
 
 
 var app = new Vue({
@@ -150,18 +168,24 @@ var app = new Vue({
                   }
               },
           }),
-          model :  new Model(),
+          model :  ledap.App.getModel({
+              phone: '',
+              introduce: ''
+          }),
           model1 : new Model(),
           model2 : new LocalModel()
     };
   },
   created:function(){
+    window.x = this;
      //数据可以从任何地方来，也可以是本地的
     ledap.App.request({
         url: "/data/model.json"
     },(data) =>{
         this.model1 = ledap.App.getModel(data);
-        this.model = this.model1;
+        // load data要提前列出各个字段 或者直接重新赋值为另一个model
+        this.model.load(data);
+        // this.model = this.model1;
     }, (error) => {});
     //假设后端返回正常的key, value数据
     this.model2.load({
