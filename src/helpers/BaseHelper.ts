@@ -3,12 +3,11 @@ export default class BaseHelper {
 
     // 用来判断输入是否为空
     public static isEmpty(value: any) {
-        if (value === '' || value === null || value === undefined) {
-            return true; 
+        // 包含对象和数组
+        if (lodash.isObject(value)) {
+            return lodash.isEmpty(value);
         }
-        if (lodash.isArray(value) && value.length === 0) {
-            return true;
-        }
+        if (value === undefined || value === '' || value === null) return true;
         return false;
     }
 }

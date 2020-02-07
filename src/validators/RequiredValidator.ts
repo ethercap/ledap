@@ -1,6 +1,6 @@
-import * as lodash from 'lodash';
 import Model from '../base/Model';
 import Validator from './Validator';
+import BaseHelper from '../helpers/BaseHelper';
 
 /* 该值必须存在。如果设置了requiredValue，则值应该==requiredValue.如果为strict模式，则代表===
  * options = {
@@ -28,7 +28,7 @@ export default class RequiredValidator extends Validator {
         const value = model[attribute];
         let valid = false;
         if (options.requiredValue === undefined) {
-            if ((options.strict && value !== undefined) || (!options.strict && !this.isEmpty(value))) {
+            if ((options.strict && value !== undefined) || (!options.strict && !BaseHelper.isEmpty(value))) {
                 valid = true;
             }
         /* eslint-disable eqeqeq */
@@ -40,12 +40,5 @@ export default class RequiredValidator extends Validator {
             model.addError(attribute, options.message);
         }
         return valid;
-    }
-
-    public isEmpty(value): boolean {
-        if (lodash.isObject(value)) {
-            return lodash.isEmpty(value);
-        }
-        return !value;
     }
 }
