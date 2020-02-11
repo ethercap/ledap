@@ -1,3 +1,15 @@
+##[0.1.6] - 2020-2-11
+### Added
+
+### Changed
+
+### Fixed
+- fixed required validator
+- fixed the order of groupinput and dropinput
+- fixed the data-banding 
+
+
+
 ##[0.1.4] - 2019-10-11
 ### Added
 - add FnValidator
