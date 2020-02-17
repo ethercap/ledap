@@ -27,7 +27,7 @@
             <button maxNum="1">单选</button>
             <button maxNum="3">多选(最多3个)</button>
         </div>
-        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/lib/jquery.min.js"></script>
         <script src="../dist/index.js"></script>
         <script src="../dist/widgets.js"></script>
         <script>
@@ -45,13 +45,14 @@
                 };
             }
 
-            var mvc = window["ledap"];
-            var group = new mvc.Group();
+            var ledap = window["ledap"];
+            var Group = ledap.widgets.Group;
+            var group = new Group();
             group.max = 1;
             // 第三个元素disable掉
             group.excludes = ["2"];
             // group改变事件侦听
-            group.on(mvc.Group.EVENT_DATACHANGED, function(obj, data){
+            group.on(Group.EVENT_DATACHANGED, function(obj, data){
                 $("#groupValue").html(obj.selected);
             });
             var doms = $("li");
@@ -73,8 +74,8 @@
                 group.max = max;
                 group.init();
             });
-            var group1 = new mvc.Group();
-            group1.on(mvc.Group.EVENT_DATACHANGED, function(obj, data){
+            var group1 = new Group();
+            group1.on(Group.EVENT_DATACHANGED, function(obj, data){
                 console.log("group1");
             });
         </script>

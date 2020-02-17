@@ -26,12 +26,12 @@ export default class Model extends BaseObject {
     }
 
     public init() {
-        super.init();
         // 手动触发触发双绑
         this.isRequired = this.isRequired.bind(this);
         this.getAttributeLabel = this.getAttributeLabel.bind(this);
         this.getAttributeHint = this.getAttributeHint.bind(this);
         this.getValidatorData = this.getValidatorData.bind(this);
+        super.init();
     }
 
     /* 规则, 规则的格式为

@@ -5,17 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ledap示例</title>
-    <script src="assets/js/vue.js"></script>
-    <script src="dist/index.js"></script>
-    <script src="../assets/js/ledap-init.js"></script>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-theme.css">
   </head>
   <body>
       <div id="app" class="container">
           <grid class="table table-bordered table-striped table-hover" :data-provider=dp :columns=columns>
           </grid>
       </div>
+      <script src="assets/lib/vue/vue.js"></script>
+      <script src="dist/index.js"></script>
+      <script src="assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="../assets/js/bootstrap-theme.js"></script>
+      <script src="../assets/js/ledap-init.js"></script>
   </body>
   <script>
 ledap.App.register(['grid'], Vue);
@@ -94,8 +97,9 @@ var app = new Vue({
             {
                 "label": "操作",
                 "value" : function(){
-                    return '<a class="btn btn-danger" @click="vm.remove(index)">删除</a>';
+                    return '<button class="btn btn-danger" @click="vm.remove(index)">删除</button>';
                 },
+                "width": "10%",
                 "format" : "html",
             },
         ],

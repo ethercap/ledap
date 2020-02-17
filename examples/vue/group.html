@@ -5,12 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vue-group示例</title>
-    <script src="../assets/js/vue.js"></script>
-    <script src="../dist/index.js"></script>
-    <script src="../assets/js/ledap-init.js"></script>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
 
   </head>
   <body>
@@ -19,24 +16,23 @@
             如下为采用系统默认的组件书写好的group,单选，不允许选第3项。group的选中值为:{{group1}}
         </div>
         <group :tag="'div'" class="btn-group" :max=1 :excludes="['2']" :init-value="group1" @change="group1Changed">
-            <tab class="btn btn-default">tab1</tab>
-            <tab class="btn btn-default">tab2</tab>
-            <tab class="btn btn-default">tab3(我在excludes中)</tab>
-            <tab class="btn btn-default">tab4</tab>
-            <a class="ui-tab btn btn-default">我不被Group接受</a>
+            <tab class="btn btn-outline-primary">tab1</tab>
+            <tab class="btn btn-outline-primary">tab2</tab>
+            <tab class="btn btn-outline-primary">tab3(我在excludes中)</tab>
+            <tab class="btn btn-outline-primary">tab4</tab>
+            <a class="ui-tab btn btn-outline-primary">我不被Group接受</a>
         </group>
         <div>
             如下为多选,最多选2个，不允许选tab3选项。 group的选中值为:{{group2}}
         </div>
         <group :init-value="group2" class="btn-group" :max=2 :multiple=true :excludes="['tab3']" @change="group2Changed">
-            <tab class="btn btn-default" :data-key="'tab1'">tab1</tab>
-            <tab class="btn btn-default" :data-key="'tab2'">tab2</tab>
-            <tab class="btn btn-default" :data-key="'tab3'">tab3(我在excludes中)</tab>
-            <tab class="btn btn-default" :data-key="'tab4'">tab4</tab>
-            <a class="ui-tab btn btn-default" :data-key="'tab5'">我不被Group接受</a>
-            <br/><br/>
-            <radio class="radio" :data-key="'radio'">radio</radio>
-            <checkbox class="checkbox" :data-key="'checkbox'">checkbox</checkbox>
+            <tab class="btn btn-outline-primary" :data-key="'tab1'">tab1</tab>
+            <tab class="btn btn-outline-primary" :data-key="'tab2'">tab2</tab>
+            <tab class="btn btn-outline-primary" :data-key="'tab3'">tab3(我在excludes中)</tab>
+            <tab class="btn btn-outline-primary" :data-key="'tab4'">tab4</tab>
+            <a class="ui-tab btn btn-outline-primary" :data-key="'tab5'">我不被Group接受</a>
+            <radio class="radio ml-1 mt-1" :data-key="'radio'">radio</radio>
+            <checkbox class="checkbox ml-1 mt-1" :data-key="'checkbox'">checkbox</checkbox>
         </group>
 
         <div class="row">
@@ -44,6 +40,11 @@
             当然，现实中一般不会有这样的需求，上面只是一个示例。如果用户需要写自己的group子组件，可以参照代码中tab，checkbox的写法。
         </div>
       </div>
+      <script src="../assets/lib/vue/vue.js"></script>
+      <script src="../dist/index.js"></script>
+      <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="../assets/js/bootstrap-theme.js"></script>
+      <script src="../assets/js/ledap-init.js"></script>
   </body>
   <script>
 const ledap = window["ledap"];
