@@ -10,7 +10,7 @@ export default class Steps extends BaseGroup {
     public _currentIndex = 0;
 
     public add(component: any) {
-        if (this.isValid(component)) {
+        if (!this.isValid(component)) {
             return false;
         }
         this._components.push(component);
@@ -51,18 +51,24 @@ export default class Steps extends BaseGroup {
         return index - this.currentIndex;
     }
 
+    // 判断步骤是否有效
+    public _validateIndex(index) {
+        if (index >= this._components.length || index < 0) return false;
+        return true;
+    }
+
     // 向前走step步
     public forward(step: number = 1) {
         if (step < 0) {
             return this.backward(-1 * step);
         }
         const index = this._currentIndex + step;
-        if (index > this._components.length) {
-            if (this.mode === 'strict') {
-                throw new Error('不能走到该步');
-            }
-            return false;
-        }
+        // if (index > this._components.length) {
+        //     if (this.mode === 'strict') {
+        //         throw new Error('不能走到该步');
+        //     }
+        //     return false;
+        // }
         let i;
         for (i = this._currentIndex; i <= index; i++) {
             const component = this._components[i];
@@ -78,12 +84,12 @@ export default class Steps extends BaseGroup {
             return this.forward(-1 * step);
         }
         const index = this._currentIndex - step;
-        if (index < 0) {
-            if (this.mode === 'strict') {
-                throw new Error('不能走到该步');
-            }
-            return false;
-        }
+        // if (index < 0) {
+        //     if (this.mode === 'strict') {
+        //         throw new Error('不能走到该步');
+        //     }
+        //     return false;
+        // }
         let i;
         for (i = this._currentIndex; i > index; i--) {
             const component = this._components[i];
@@ -96,8 +102,14 @@ export default class Steps extends BaseGroup {
         return this._currentIndex;
     }
 
-    set currentIndex(value: number) {
-        this._currentIndex = value;
+    set currentIndex(index: number) {
+        if (!this._validateIndex(index)) {
+            if (this.mode === 'strict') {
+                throw new Error('不能走到该步');
+            }
+            return;
+        }
+        this._currentIndex = index;
         this.init();
     }
 }

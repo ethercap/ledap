@@ -30,6 +30,15 @@
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
           <hr>
           <form class="form-horizontal col-10 offset-1">
+              <steps :lists="steps" :current-index="currentIndex" style="display: flex">
+                  <!-- 可以自定义内容每一个step的内容 -->
+                  <!-- <template v-slot="p">
+                      <div>
+                          <div>{{ p.dataKey }}</div>
+                          <step>{{ p.step.name }}</step>
+                      </div>
+                  </template> -->
+              </steps>
               <form-item :model="model" attr="name" class="form-group"></form-item>
               <form-item :model="model" attr="age" class="form-group" type="number"></form-item>
               <form-item class="form-group" :model="model" attr="introduce">
@@ -129,15 +138,14 @@
       <script src="../assets/lib/vue-datepicker/vue-upload-component.js"></script>
       <script src="../assets/lib/vue-datepicker/vue2-datepicker.js"></script>
       <script src="../assets/js/upload.js"></script>
-      <!-- <script src="../assets/js/testvalidator.js"></script> -->
-
+      <script src="../assets/js/testvalidator.js"></script>
   </body>
   <script>
 const ledap = window["ledap"];
 const Model = ledap.Model;
 const WebDataProvider = ledap.WebDataProvider;
 ledap.App.getTheme().addComponent({
-    name : 'form-item1', 
+    name : 'form-item1',
     template:`<component :is="tag" class="form-group row">
         <slot name="label" :model="model" :attr="attr">
             <label class="col-sm-3 col-form-label text-right text-warning"> {{model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
@@ -156,7 +164,7 @@ ledap.App.getTheme().addComponent({
 }, 'form-item')
 
 //注册本页面所需要的组件
-ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio', 'checkbox'], Vue);
+ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio', 'checkbox', 'steps', 'step'], Vue);
 
 
 var app = new Vue({
@@ -199,7 +207,25 @@ var app = new Vue({
               introduce: ''
           }),
           model1 : new Model(),
-          model2 : new LocalModel()
+          model2 : new LocalModel(),
+          steps: [{
+              name: '开冰箱0'
+          }, {
+              name: '装大象1'
+          }, {
+              name: '关冰箱2'
+          }, {
+              name: '关冰箱3'
+          }, {
+              name: '关冰箱4'
+          }, {
+              name: '关冰箱5'
+          }, {
+              name: '关冰箱6'
+          }, {
+              name: '关冰箱7'
+          }],
+          currentIndex: 1
     };
   },
   created:function(){

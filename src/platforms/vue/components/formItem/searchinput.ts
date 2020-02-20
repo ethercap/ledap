@@ -57,7 +57,7 @@ export default lodash.merge(input, {
             return this.isFocus && this.value !== '';
         },
         listeners() {
-            return Object.assign({}, this.$listeners,  {
+            return lodash.assign({}, this.$listeners,  {
                 input: e => {
                     this.inputChange(e);
                 },

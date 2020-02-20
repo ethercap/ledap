@@ -1,3 +1,4 @@
+import * as lodash from 'lodash';
 import Model from '../../../../base/Model';
 export default {
     name: 'form-item',
@@ -60,7 +61,7 @@ export default {
     },
     computed: {
         inputListeners() {
-            return Object.assign({}, this.$listeners,  {
+            return lodash.assign({}, this.$listeners,  {
                 input: this.inputValue,
                 focus: this.focus,
                 blur: this.blur,

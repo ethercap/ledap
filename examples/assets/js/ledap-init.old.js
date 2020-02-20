@@ -90,6 +90,12 @@ var themeConfig = {
         </slot>
     </div>
         `
+    },
+    step: {
+        template: `
+        <component :is="tagName" :class="{'active': isOpen()}" :style="{color: isOpen() ? 'red' : ''}">
+            <slot></slot>
+        </component>`,
     }
 };
 var request = function(httpOptions, suc, fail) {
