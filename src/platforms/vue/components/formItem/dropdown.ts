@@ -5,7 +5,7 @@ import BaseInput from './baseinput';
 const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
     name: 'dropdown',
-    template: `<select v-on="inputListeners" v-bind="$attrs">
+    template: `<select v-on="inputListeners" v-bind="$attrs" :name="attr">
         <option v-for="key in dictOption.order" :value="key" :selected="key === model[attr]">{{dictOption.list[key]}}</option>
     </select>`,
     data() {

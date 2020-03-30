@@ -8,7 +8,7 @@ var themeConfig = {
             </slot>
             <div class="col-sm-9">
                 <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
-                    <input class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" />
+                    <baseinput :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></baseinput>
                 </slot>
                 <slot name="error" :model="model" :attr="attr" :showError="showError">
                     <b-form-invalid-feedback :state="!Boolean(showError)">
@@ -19,23 +19,29 @@ var themeConfig = {
         </component>`,
     },
     "baseinput": {
-        template: `<component :is="tag" class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners"></component>`,
+        template: `<div><template v-if="tag !== 'textarea'">
+            <input class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" v-bind="$attrs" :maxlength="cMaxlength">
+        </template>
+        <template v-else>
+            <textarea class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" v-bind="$attrs" :maxlength="cMaxlength">
+            </textarea>
+        </template></div>`,
     },
     "dropdown": {
-        template: `<select class="form-control" v-on="inputListeners">
+        template: `<select class="form-control" :name="attr" v-on="inputListeners" v-bind="$attrs">
             <option v-for="key in dictOption.order" :value="key" :selected="key === model[attr]">{{dictOption.list[key]}}</option>
         </select>`,
     },
     "groupinput": {
         template: `<group class="btn-group" :max="dictOption.max" :excludes="dictOption.excludes" :init-value="model[attr]" :multiple="dictOption.multiple" @change="groupChange">
-            <slot name="default" v-for="key in dictOption.order" :data-key="key" :value="dictOption.list[key]" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false">
+            <slot name="default" v-for="key in dictOption.order" :attr="attr" :data-key="key" :value="dictOption.list[key]" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false">
                 <tab class="btn btn-outline-primary" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false" :data-key="key" :key="key"> {{dictOption.list[key]}}</tab>
             </slot>
         </group>`,
     },
     searchinput: {
         template: `<div style="position: relative;">
-        <input class="form-control" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off">
+        <input class="form-control" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" v-bind="$attrs">
         <ul v-show="showList" class="list-unstyled" style="position: absolute; width: 100%; border:1px solid rgb(221, 221, 221); background-color:rgb(245, 245, 245); z-index: 10;" :style="{opacity: isHide ? 0 : 1}">
             <li v-for="(model, index) in models" @mousedown="choose(model, index, $event)" style="padding: 6px 12px; cusor: default;">
                 <slot :model="model" :index="index">{{model[itemName]}}</slot>
@@ -49,7 +55,7 @@ var themeConfig = {
         <span v-if="multiple" v-for="model,key in selected" :key="key">
             <button class="btn btn-sm btn-light" @click="choose(model, key, $event)">{{model[itemName]}}{{'  x'}}</button>&nbsp;
         </span>
-        <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" style="border-width: 0px;outline-color:white;flex:1;max-width：100%;min-width:0;">
+        <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" v-bind="$attrs" autocomplete="off" style="border-width: 0px;outline-color:white;flex:1;max-width：100%;min-width:0;">
         <span v-if="!multiple && value" @click="clear" style="cursor: pointer;padding-top:3px;" class="glyphicon glyphicon-remove"></span>
     </div>
     <ul v-show="showList" class="list-unstyled" style="position: absolute; width: 100%; border:1px solid rgb(221, 221, 221); background-color:rgb(245, 245, 245); z-index: 10;" :style="{opacity: isHide ? 0 : 1}">
