@@ -63,12 +63,6 @@ export default class Steps extends BaseGroup {
             return this.backward(-1 * step);
         }
         const index = this._currentIndex + step;
-        // if (index > this._components.length) {
-        //     if (this.mode === 'strict') {
-        //         throw new Error('不能走到该步');
-        //     }
-        //     return false;
-        // }
         let i;
         for (i = this._currentIndex; i <= index; i++) {
             const component = this._components[i];
@@ -84,12 +78,6 @@ export default class Steps extends BaseGroup {
             return this.forward(-1 * step);
         }
         const index = this._currentIndex - step;
-        // if (index < 0) {
-        //     if (this.mode === 'strict') {
-        //         throw new Error('不能走到该步');
-        //     }
-        //     return false;
-        // }
         let i;
         for (i = this._currentIndex; i > index; i--) {
             const component = this._components[i];

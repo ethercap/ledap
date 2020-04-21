@@ -94,7 +94,7 @@ var app = new Vue({
                       const value = model[attribute];
                       return value;
                   }
-              }, 
+              },
               {
                   attribute: 'name',
                   label: '姓名',
@@ -108,6 +108,7 @@ var app = new Vue({
         };
     },
     created:function(){
+        window.x = this;
         //由于在example中没有后端，本次做一个小模拟，我们根据page获取不同的data.json来显示
         this.dp.on(WebDataProvider.EVENT_BEFOREGETDATA,dp => {
             dp.httpOptions.url = '/data/dp_' + dp.pager.currentPage + ".json";

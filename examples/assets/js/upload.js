@@ -14,11 +14,20 @@ ledap.App.getTheme().addComponent({
             type: Boolean,
             default: true
         },
+        name: {
+            type: String,
+            default: 'file_data'
+        },
         headers: Object,
         data: Object,
+        // accept和extensions要配合使用 accept指定选择文件时的类型 extensions指定允许上传的类型
         accept: {
             type: String,
             default: 'image/*,application/pdf'
+        },
+        extensions: {
+            type: [String, Array, RegExp],
+            default: () => ['jpg', 'jepg', 'png', 'gif', 'pdf']
         },
         size: {
             type: Number,
@@ -32,7 +41,6 @@ ledap.App.getTheme().addComponent({
     data() {
         return {
             files: [],
-            name: 'upload',
             timeout: 1000 * 15,
             maximum: 10,
             thread: 3,
@@ -50,6 +58,18 @@ ledap.App.getTheme().addComponent({
             if (this.initialFlag) return;
             this.initialValue = newValue;
             this.initialFlag = true;
+        }
+    },
+    computed: {
+        hasFile() {
+            return this.initialValue.length + this.files.length > 0;
+        },
+        active() {
+            let active = false;
+            this.files.forEach(item => {
+                item.active && (active = true);
+            });
+            return active;
         }
     },
     methods: {
@@ -206,9 +226,11 @@ ledap.App.getTheme().addComponent({
           v-model="files"
           :post-action="postAction"
           :multiple="multiple"
+          :name="name"
           :headers="headers"
           :data="data"
           :accept="accept"
+          :extensions="extensions"
           :directory="directory"
           :size="size"
           :thread="thread"
