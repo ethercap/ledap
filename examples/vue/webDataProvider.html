@@ -5,11 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ledap示例</title>
-    <script src="../assets/js/vue.js"></script>
-    <script src="../dist/index.js"></script>
-    <script src="../assets/js/ledap-init.js"></script>
-    <script src="https://cdn.bootcss.com/lodash.js/4.17.12-pre/lodash.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
 </head>
 <body>
     <div id="app" class="container">
@@ -27,8 +25,8 @@
         </p>
         <pager :data-provider=dp >
             <template v-slot:default="slotProps">
-                <a @click="slotProps.changePage(dp.pager.currentPage - 1)">上一页</a>
-                <a @click="slotProps.changePage(dp.pager.currentPage + 1)" style="margin-left:10px">下一页</a>
+                <a @click="slotProps.changePage(dp.pager.currentPage - 1)" class="text-primary">上一页</a>
+                <a @click="slotProps.changePage(dp.pager.currentPage + 1)" class="text-primary ml-1">下一页</a>
                 <span style="margin:0 15px;">第 {{ dp.pager.currentPage}}/{{ dp.pager.pageCount }} 页</span>
             </template>
         </pager>
@@ -36,42 +34,43 @@
         <p>
             如果不喜欢系统的template，可以自己写template
         </p>
-        <newpager :data-provider=dp> dsd</newpager>
+        <newpager :data-provider=dp> </newpager>
         <hr/>
-        <p>在上面的表格点击上拉后，我们会发现页面上有重复id的数据，这在实际中也很常见，由于用户页面翻页之前，后端的数据有变动，就会产生这样的情况。我们可以通过<a class="btn btn-info" @click="setPrimaryKey()">设置primaryKey</a>来去重。</p>
+        <p>在上面的表格点击上拉后，我们会发现页面上有重复id的数据，这在实际中也很常见，由于用户页面翻页之前，后端的数据有变动，就会产生这样的情况。我们可以通过<button class="btn btn-info" @click="setPrimaryKey()">设置primaryKey</button>来去重。</p>
         <p>
         去重后，我们可以看见，相同id的数据会被新数据覆盖，这样页面上不会产生重复的数据。
         </p>
     </div>
+    <script src="../assets/lib/vue/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+    <script src="../assets/js/bootstrap-theme.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.12-pre/lodash.min.js"></script>
 </body>
 <script>
-const ledap = window["ledap"];
 const WebDataProvider = ledap.WebDataProvider;
-const Grid = ledap.LedapVue.Grid;
-const Pager = ledap.LedapVue.Pager;
-Vue.component(Grid.name, Grid);
-//自己修改默认的模板,可以写在全局。如果不想两个template共存，可以直接修改而不是cloneDeep，本处只是为了演示需要。
-const newPager = _.cloneDeep(Pager);
-newPager.name = "newpager";
-newPager.template = `<nav>
+//自己修改默认的模板,可以写在全局。
+ledap.App.getTheme().addComponent({
+    name: 'newpager',
+    template: `<nav>
   <ul class="pagination">
-    <li>
-      <a  @click="toPrev()" :disabled="!dataProvider.pager.hasPrev()">
+    <li class="page-item">
+      <a class="page-link"  @click="toPrev()" :disabled="!dataProvider.pager.hasPrev()">
         <span>&laquo;</span>
       </a>
     </li>
-    <li><a @click="changePage(1)">1</a></li>
-    <li><a @click="changePage(2)">2</a></li>
-    <li>
-      <a :disabled="!dataProvider.pager.hasNext()" @click="toNext()">
+    <li class="page-item"><a class="page-link" @click="changePage(1)">1</a></li>
+    <li class="page-item"><a class="page-link" @click="changePage(2)">2</a></li>
+    <li class="page-item">
+      <a class="page-link" :disabled="!dataProvider.pager.hasNext()" @click="toNext()">
         <span>&raquo;</span>
       </a>
     </li>
   </ul>
-</nav>`;
-Vue.component(newPager.name, newPager);
-Vue.component(Pager.name, Pager);
-
+</nav>`,
+}, 'pager');
+ledap.App.register(['grid', 'pager', 'newpager'], Vue);
 
 var app = new Vue({
     el: '#app',
@@ -81,30 +80,35 @@ var app = new Vue({
               httpOptions: {
                   url: '/data/dp_1.json',
               },
+              params: {},
               primaryKey: "",
           }),
-          columns: [{
-              attribute: 'id',
-              label: function(model) {
-                  return '<a @click="sort(\'id\')">ID</a>';
+          columns: [
+              {
+                  attribute: 'id',
+                  label: function(model) {
+                      return '<a @click="sort(\'id\')">ID</a>';
+                  },
+                  labelFormat:'html',
+                  value: function(model, attribute, index) {
+                      const value = model[attribute];
+                      return value;
+                  }
               },
-              labelFormat:'html',
-              value: function(model, attribute, index) {
-                  const value = model[attribute];
-                  return value;
+              {
+                  attribute: 'name',
+                  label: '姓名',
+                  useSort:true,
+                  value: function(model, attribute, index) {
+                      const value = model[attribute];
+                      return value;
+                  }
               }
-          }, {
-              attribute: 'name',
-              label: '姓名',
-              useSort:true,
-              value: function(model, attribute, index) {
-                  const value = model[attribute];
-                  return value;
-              }
-          }]
+          ]
         };
     },
     created:function(){
+        window.x = this;
         //由于在example中没有后端，本次做一个小模拟，我们根据page获取不同的data.json来显示
         this.dp.on(WebDataProvider.EVENT_BEFOREGETDATA,dp => {
             dp.httpOptions.url = '/data/dp_' + dp.pager.currentPage + ".json";

@@ -5,15 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DetailView示例</title>
-    <script src="../assets/js/vue.js"></script>
-    <script src="../dist/index.js"></script>
-    <script src="../assets/js/ledap-init.js"></script>
-    <script src="../assets/js/localmodel.js"></script>
-    <script src="https://unpkg.com/vue2-datepicker@2.12.0/lib/index.js"></script>
-    <script src="https://unpkg.com/vue-upload-component"></script>
-    <script src="../assets/js/upload.js"></script>
-    <!-- <script src="../assets/js/testvalidator.js"></script> -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
 
     <style>
     .search-input span {
@@ -35,7 +29,16 @@
       <div id="app" class="container">
           <p>下面我们来看一下model来结合表单的书写，这个页面的代码极为简单：</p>
           <hr>
-          <form class="form-horizontal col-sm-8 col-sm-offset-3">
+          <form class="form-horizontal col-10 offset-1">
+              <steps :lists="steps" :current-index="currentIndex" style="display: flex">
+                  <!-- 可以自定义内容每一个step的内容 -->
+                  <!-- <template v-slot="p">
+                      <div>
+                          <div>{{ p.dataKey }}</div>
+                          <step>{{ p.step.name }}</step>
+                      </div>
+                  </template> -->
+              </steps>
               <form-item :model="model" attr="name" class="form-group"></form-item>
               <form-item :model="model" attr="age" class="form-group" type="number"></form-item>
               <form-item class="form-group" :model="model" attr="introduce">
@@ -46,7 +49,9 @@
               <form-item class="form-group" :model="model" :attr="'phone'">
                   <template v-slot="p">
                     <div class="input-group">
-                      <span class="input-group-addon" id="basic-addon2">+86</span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">+86</span>
+                        </div>
                         <baseinput v-bind="p" maxlength="11" type="tel"></baseinput>
                     </div>
                   </template>
@@ -104,7 +109,7 @@
                       <uploader :post-action="'http://lsp-dee-admin.dev.ethercap.com/test/upload'" v-model="p.model[p.attr]"></uploader>
                   </template>
               </form-item>
-	    <button class="btn btn-default col-sm-2 col-sm-offset-5" @click="submit">提交</button>
+	    <button class="btn btn-primary col-sm-2 col-sm-offset-5" @click="submit">提交</button>
           </form>
 
           <div class="col-sm-12">
@@ -124,13 +129,42 @@
               <hr/>
           </div>
       </div>
+      <script src="../assets/lib/vue/vue.js"></script>
+      <script src="../dist/index.js"></script>
+      <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="../assets/js/bootstrap-theme.js"></script>
+      <script src="../assets/js/ledap-init.js"></script>
+      <script src="../assets/js/localmodel.js"></script>
+      <script src="../assets/lib/vue-datepicker/vue-upload-component.js"></script>
+      <script src="../assets/lib/vue-datepicker/vue2-datepicker.js"></script>
+      <script src="../assets/js/upload.js"></script>
+      <script src="../assets/js/testvalidator.js"></script>
   </body>
   <script>
 const ledap = window["ledap"];
 const Model = ledap.Model;
 const WebDataProvider = ledap.WebDataProvider;
+ledap.App.getTheme().addComponent({
+    name : 'form-item1',
+    template:`<component :is="tag" class="form-group row">
+        <slot name="label" :model="model" :attr="attr">
+            <label class="col-sm-3 col-form-label text-right text-warning"> {{model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
+        </slot>
+        <div class="col-sm-9">
+            <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
+                <input class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" />
+            </slot>
+            <slot name="error" :model="model" :attr="attr" :showError="showError">
+                <b-form-invalid-feedback :state="!Boolean(showError)">
+                {{showError}}
+                </b-form-invalid-feedback>
+            </slot>
+        </div>
+    </component>`,
+}, 'form-item')
+
 //注册本页面所需要的组件
-ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio', 'checkbox'], Vue);
+ledap.App.register(["dropdown", "select2","form-item1", "baseinput", "form-item", "groupinput", 'searchinput', 'radio', 'checkbox', 'steps', 'step'], Vue);
 
 
 var app = new Vue({
@@ -173,7 +207,25 @@ var app = new Vue({
               introduce: ''
           }),
           model1 : new Model(),
-          model2 : new LocalModel()
+          model2 : new LocalModel(),
+          steps: [{
+              name: '开冰箱0'
+          }, {
+              name: '装大象1'
+          }, {
+              name: '关冰箱2'
+          }, {
+              name: '关冰箱3'
+          }, {
+              name: '关冰箱4'
+          }, {
+              name: '关冰箱5'
+          }, {
+              name: '关冰箱6'
+          }, {
+              name: '关冰箱7'
+          }],
+          currentIndex: 1
     };
   },
   created:function(){
@@ -182,10 +234,10 @@ var app = new Vue({
     ledap.App.request({
         url: "/data/model.json"
     },(data) =>{
-        this.model1 = ledap.App.getModel(data);
+        this.model1 = ledap.App.getModel(data.data);
         // load data要提前列出各个字段 或者直接重新赋值为另一个model
-        this.model.load(data);
-        // this.model = this.model1;
+        //this.model.load(data.data);
+        this.model = this.model1;
     }, (error) => {});
     //假设后端返回正常的key, value数据
     this.model2.load({

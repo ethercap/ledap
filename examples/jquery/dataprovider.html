@@ -3,26 +3,25 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>DataProvider示例</title>
-        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script src="../dist/index.js"></script>
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
+        <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
             <div>jquery模式下并不是特别适合使用dataProvider,本网页只是示例，讲述整个过程</div>
             <div class="row">
-                <a class="btn btn-default" id="header">上拉刷新</a>仅为示例，dp.refresh("header")时，会请求第一页数据，并将当前数据清空
+                <a class="btn btn-outline-primary" id="header">上拉刷新</a>仅为示例，dp.refresh("header")时，会请求第一页数据，并将当前数据清空
             </div>
             <div id="table">
             </div>
             <div class="row">
-                <a class="btn btn-default" id="footer">下拉刷新</a>仅为示例，dp.refresh("footer")时，会append数据
+                <a class="btn btn-outline-primary" id="footer">下拉刷新</a>仅为示例，dp.refresh("footer")时，会append数据
             </div>
             <p class="row">
-                在正常的业务中，由于各种原因，导致后端会返回一些重复的数据，如上面下拉刷新所示，这样会给用户带来不好的体验，因此，可以考虑给webDp配上primaryKey作为判重的依据。<a class="btn btn-default" id="primaryKey">设置判重</a>后，我们会发现再点下拉刷新，页面会发出ajax请求，但是id相同的数据会被过滤掉而不会在页面上展示。
+                在正常的业务中，由于各种原因，导致后端会返回一些重复的数据，如上面下拉刷新所示，这样会给用户带来不好的体验，因此，可以考虑给webDp配上primaryKey作为判重的依据。<a class="btn btn-outline-primary" id="primaryKey">设置判重</a>后，我们会发现再点下拉刷新，页面会发出ajax请求，但是id相同的数据会被过滤掉而不会在页面上展示。
             </p>
         </div>
+        <script src="../../assets/lib/jquery.min.js"></script>
+        <script src="../../dist/index.js"></script>
         <script>
             function createTable(dp, dom)
             {
@@ -47,36 +46,35 @@
                 table += '</tbody></table>';
                 return table;
             }
-            var mvc = window["ledap"];
-            const WebDataProvider = mvc.WebDataProvider;
-            var webDp = new WebDataProvider({
-                httpOptions : {url:"/data/dp_1.json"},
-                primaryKey: null,
-                //这一段可以放在每个工程的全局
-                httpRequest : function(httpOptions, suc, fail) {
-                    $.ajax({
-                        url: httpOptions.url,
-                        success: function(result){
-                            var data = {
-                                items : result,
-                                sort: [],
-                                meta: {
-                                    currentPage: httpOptions.url === "/data/dp_1.json" ?  1 : 2,
-                                    pageCount: 2,
-                                    perPage: 20,
-                                }
-                            };
-                            suc(data);
+            var webDp =  ledap.App.getWebDp({
+                httpOptions: {
+                    url: '/data/dp_1.json',
+                },
+                params: {},
+                primaryKey: "",
+                httpRequest: function(httpOptions, suc, fail = function(data){app.$alert(data.message);}){
+                    httpOptions = Object.assign({
+                        headers: {'X-Requested-With': 'XMLHttpRequest'},
+                    }, httpOptions);
+                    ledap.App.axios.request(httpOptions).then(function(response){
+                        var result = response.data; 
+                        if(result.code === 0) {
+                            suc(result.data);
                             $("#table").html(createTable(webDp));
-                        },
-                        error: function(xhr, status, err){
-                            fail(err);
+                        }else {
+                            fail(result);
                         }
+                    }).catch(function(error){
+                        fail({
+                            code:1,
+                            message: error.message,
+                            data:error,
+                        }); 
                     });
                 }
             });
             //由于在example中没有后端，本次做一个小模拟，我们根据page获取不同的data.json来显示
-            webDp.on(WebDataProvider.EVENT_BEFOREGETDATA,dp => {
+            webDp.on(ledap.WebDataProvider.EVENT_BEFOREGETDATA,dp => {
                 dp.httpOptions.url = '/data/dp_' + dp.pager.currentPage + ".json";
             }) ;
             //在获取dp后，我们可以直接获取数据
@@ -97,7 +95,5 @@
                 webDp.refresh("");
             });
         </script>
-        <script src="../../assets/js/jquery.min.js"></script>
-        <script src="../../dist/index.js"></script>
     </body>
 </html>

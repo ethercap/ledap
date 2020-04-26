@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>event示例</title>
-    <script src="../assets/js/vue.js"></script>
-    <script src="../dist/index.js"></script>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
 </head>
 <body>
     <div id="app" class="container">
@@ -22,28 +22,28 @@
         </p>
         <div class="form col-sm-10" >
             <div class="form-group row">
-                <label for="name" class="col-sm-1 control-label">name</label>
+                <label for="name" class="col-sm-2 control-label text-right">name</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="name" :value="name" @input="changeName"/>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="name" class="col-sm-1 control-label">name1</label>
+                <label for="name" class="col-sm-2 control-label text-right">name1</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="name1"  v-model:value="name1"/>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="name" class="col-sm-1 control-label">name2</label>
+                <label for="name" class="col-sm-2 control-label text-right">name2</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="name2"  v-model:value="name2"/>
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-4">
                     <button class="btn btn-info" @click="toggleBind">{{isBind ? '解除与name的绑定' : "绑定name"}}</button>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="name" class="col-sm-1 control-label">nameOnce</label>
+                <label for="name" class="col-sm-2 control-label text-right">nameOnce</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="nameOnce"  v-model:value="nameOnce"/>
                 </div>
@@ -58,7 +58,7 @@
         </div>
         <div class="col-sm-12">
             对像事件。为了方便大家的操作，本框架最底层的Object上集成了Event，因此，我们可以直接调用对应的事件方法来使用事件。下面，我们用dataProvider来示例。
-            <a class="btn btn-primary" @click="dp.refresh('')">WebDp获取数据</a>
+            <button class="btn btn-primary" @click="dp.refresh('')">WebDp获取数据</button>
             <p>通过dp.isLoading指示：{{dp.isLoading? "加载中..." : ""}}</p>
             <p>通过事件机制显示：{{dpStatus}}</p>
 
@@ -66,6 +66,11 @@
         </div>
         <div class="col-sm-12" style="height:200px"></div>
     </div>
+    <script src="../assets/lib/vue/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+    <script src="../assets/js/bootstrap-theme.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
     <script>
     var ledap = window["ledap"];
     var Event = ledap.Event;

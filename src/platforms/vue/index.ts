@@ -15,3 +15,6 @@ export {default as DropDown} from './components/formItem/dropdown';
 export {default as GroupInput} from './components/formItem/groupinput';
 export {default as SearchInput} from './components/formItem/searchinput';
 export {default as Select2} from './components/formItem/select2';
+
+export {default as Steps} from './components/step/steps';
+export {default as Step} from './components/step/step';

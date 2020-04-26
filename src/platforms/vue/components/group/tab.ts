@@ -9,6 +9,9 @@ export default {
             type: [String, Number],
             default: null,
         },
+        attr: {
+            type: String
+        },
         canClose: {
             type: Boolean,
             default: false,
