@@ -1,6 +1,6 @@
 {
   "name": "ledap",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,7 +13,8 @@
   },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "examples"
   ],
   "author": "lishipeng <lspbupt@sina.com>",
   "license": "ISC",
