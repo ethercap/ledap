@@ -27,13 +27,13 @@ export default lodash.merge(input, {
         };
     },
     watch: {
-        selected() {
-            const keys = Object.keys(this.selected);
+        selected(value) {
+            const keys = Object.keys(value);
             if (this.multiple) {
                 this.model[this.attr] = keys;
             } else {
                 this.model[this.attr] = keys.length > 0 ? keys[0] : '';
-                this.value = keys.length > 0 ? this.selected[keys[0]][this.itemName] : '';
+                this.value = keys.length > 0 ? value[keys[0]][this.itemName] : '';
             }
         }
     },
@@ -44,7 +44,13 @@ export default lodash.merge(input, {
                 this.request({
                     [this.keyName]: this.model[this.attr],
                     [this.paramName]: this.value,
-                }, this.syncSelected);
+                }, () => {
+                    this.syncSelected();
+                    // 解决手动改变model.attr后的双绑问题
+                    this.$watch(() => this.model[this.attr], () => {
+                        this.syncSelected();
+                    });
+                });
             }
         },
         syncSelected() {
