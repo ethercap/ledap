@@ -4,7 +4,7 @@ var themeConfig = {
     "form-item": {
         template: `<component :is="tag" class="form-group row">
             <slot name="label" :model="model" :attr="attr">
-                <label class="col-sm-3 col-form-label text-right"> {{model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
+                <label class="col-sm-3 col-form-label text-right"> {{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
             </slot>
             <div class="col-sm-9">
                 <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
