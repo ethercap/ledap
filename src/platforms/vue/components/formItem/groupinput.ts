@@ -10,6 +10,11 @@ export default lodash.merge(input, {
         <tab :canClose="true" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false" :data-key="key" :key="key">{{dictOption.list[key]}}</tab>
     </slot>
 </group>`,
+    props: {
+        option: {
+            type: Object
+        }
+    },
     data() {
         return {
             dictOption: {}
@@ -47,7 +52,7 @@ export default lodash.merge(input, {
             return;
         },
         getDictOption() {
-            const dictOption: any = lodash.get(this.model.rules(), [this.attr, 'dict'], {});
+            const dictOption: any = this.option || lodash.get(this.model.rules(), [this.attr, 'dict'], {});
             dictOption.list = dictOption.list || {};
             dictOption.order = dictOption.order || Object.keys(dictOption.list);
             return dictOption;

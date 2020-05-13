@@ -60,7 +60,7 @@
               </form-item1>
               <form-item class="form-group" :model="model" attr="sex">
                   <template v-slot="slotProps">
-                      <groupinput v-bind="slotProps">
+                      <groupinput v-bind="slotProps" :option="appointedOption">
                           <template v-slot:default="p">
                               <radio v-bind="p" :key="p.dataKey">{{p.value}}</radio>
                           </template>
@@ -81,6 +81,12 @@
                               <checkbox v-bind="p" :key="p.dataKey">{{p.value}}</checkbox>
                           </template>
                       </groupinput>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="search">
+                  <template v-slot="p">
+                      <searchinput v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
+                      </searchinput>
                   </template>
               </form-item>
               <form-item class="form-group" :model="model" attr="search">
@@ -208,6 +214,14 @@ var app = new Vue({
           }),
           model1 : new Model(),
           model2 : new LocalModel(),
+          // groupinput手动传入option
+          appointedOption: {
+              list: {
+                  1: 'male',
+                  2: 'female'
+              },
+              excludes: []
+          },
           steps: [{
               name: '开冰箱0'
           }, {
