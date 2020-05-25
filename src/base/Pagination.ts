@@ -2,6 +2,12 @@ import BaseObject from './BaseObject';
 // 分页器类,主要是来解决分页的问题
 export default class Pagination extends BaseObject {
 
+    public static EVENT_SETPAGE = 'page_setpage';
+    public totalCount: number = 0;
+    public pageCount: number = 0;
+    public perPage: number = 20;
+    public page: number = 1;
+
     get currentPage() {
         return this.page;
     }
@@ -16,12 +22,6 @@ export default class Pagination extends BaseObject {
         this.emit(Pagination.EVENT_SETPAGE, value, this.page, this);
         this.page = value;
     }
-
-    public static EVENT_SETPAGE = 'page_setpage';
-    public totalCount: number = 0;
-    public pageCount: number = 0;
-    public perPage: number = 20;
-    public page: number = 1;
 
     public hasPrev() {
         return this.currentPage > 1;

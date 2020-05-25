@@ -5,6 +5,37 @@ import Pagination from './Pagination';
 
 // 分页器类,主要是来解决分页的问题
 export default class DataProvider extends BaseObject {
+    public searchModelClass: any;
+    public modelClass: any;
+    public paginationClass: any;
+    public searchModel: Model;
+    public pager: Pagination;
+    public isLoad: boolean = false;
+    public models: Model[];
+
+    public _sort: object = {};
+
+    public static SORT_ASC = 4;
+    public static SORT_DESC = 3;
+
+    constructor(config: object) {
+        super();
+        this.searchModelClass = lodash.get(config, 'searchModelClass', Model);
+        this.modelClass = lodash.get(config, 'modelClass', Model);
+        this.paginationClass = lodash.get(config, 'paginationClass', Pagination);
+
+        this.searchModel = lodash.get(config, 'searchModel', '');
+        if (lodash.isEmpty(this.searchModel)) {
+            this.searchModel = new this['searchModelClass']();
+        }
+        this.pager = lodash.get(config, 'pager', '');
+        if (lodash.isEmpty(this.pager)) {
+            this.pager = new this['paginationClass']();
+        }
+        this.sort = lodash.get(config, 'sort', '');
+        const data = lodash.get(config, 'data', {});
+        this.load(data);
+    }
 
     get sort(): string|object {
         const arr = [];
@@ -39,15 +70,13 @@ export default class DataProvider extends BaseObject {
             });
         }
         if (lodash.isEmpty(sort)) {
-            sort = {};    
+            sort = {};
         }
-        
+
         if (typeof (sort) === 'object') {
             this._sort = sort;
         }
     }
-    public static SORT_ASC = 4;
-    public static SORT_DESC = 3;
 
     public static getInstance(data: object, searchModelClass: any = Model, modelClass: any = Model, paginationClass: any = Pagination): DataProvider {
         const config =  {
@@ -58,46 +87,18 @@ export default class DataProvider extends BaseObject {
         };
         return new DataProvider(config);
     }
-    public searchModel: Model;
-    public pager: Pagination;
-    public models: Model[];
-    public isLoad: boolean = false;
-    public modelClass: any;
-    public searchModelClass: any;
-    public paginationClass: any;
-
-    public _sort: object = {};
-
-    constructor(config: object) {
-        super();
-        this.searchModelClass = lodash.get(config, 'searchModelClass', Model);
-        this.modelClass = lodash.get(config, 'modelClass', Model);
-        this.paginationClass = lodash.get(config, 'paginationClass', Pagination);
-
-        this.searchModel = lodash.get(config, 'searchModel', '');
-        if (lodash.isEmpty(this.searchModel)) {
-            this.searchModel = new this['searchModelClass']();
-        }
-        this.pager = lodash.get(config, 'pager', '');
-        if (lodash.isEmpty(this.pager)) {
-            this.pager = new this['paginationClass']();
-        }
-        this.sort = lodash.get(config, 'sort', '');
-        const data = lodash.get(config, 'data', {});
-        this.load(data);
-    }
 
     public isSortAsc(attribute) {
         if (this._sort[attribute] === DataProvider.SORT_ASC) {
             return true;
-        } 
+        }
         return false;
     }
 
     public isSortDesc(attribute) {
         if (this._sort[attribute] === DataProvider.SORT_DESC) {
             return true;
-        } 
+        }
         return false;
     }
 
@@ -229,13 +230,10 @@ export default class DataProvider extends BaseObject {
     public sortModels(attribute: string, asc: boolean = true, sortBy: any = null) {
         if (sortBy === null) {
             sortBy =  (value1, value2, sortType) => {
-                if (value1 === value2) {
-                    return 0;
-                }
                 if (sortType)  {
-                    return value1 > value2 ? 1 : -1;
+                    return value1 - value2;
                 }
-                return value1 < value2 ? 1 : -1;
+                return value2 - value1;
             };
         }
         const compare = (a, b) => sortBy(a[attribute], b[attribute], asc);

@@ -33,7 +33,7 @@ export default class WebDataProvider extends DataProvider {
     // 默认为id
     public primaryKey = 'id';
 
-    public callback; 
+    public callback;
     // 不允许请求同时进行，在ajax搜索时很有用
     public timeWait;
     public _timer;
@@ -89,11 +89,11 @@ export default class WebDataProvider extends DataProvider {
         }
     }
 
-    public nextPage(page: number, reload: boolean = true) {
+    public nextPage(reload: boolean = true) {
         return this.changePage(this.pager.currentPage + 1, reload);
     }
 
-    public prePage(page: number, reload: boolean = true) {
+    public prePage(reload: boolean = true) {
         return this.changePage(this.pager.currentPage - 1, reload);
     }
 
@@ -113,7 +113,7 @@ export default class WebDataProvider extends DataProvider {
         };
         if (this.timeWait) {
             if (this._timer) {
-                clearTimeout(this._timer); 
+                clearTimeout(this._timer);
             }
             this._timer = setTimeout(getData, this.timeWait);
         } else {
@@ -150,7 +150,7 @@ export default class WebDataProvider extends DataProvider {
             this.callback(data, success, this);
         }
         if (this._timer) {
-            clearTimeout(this._timer); 
+            clearTimeout(this._timer);
         }
     }
 }
