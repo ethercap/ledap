@@ -113,7 +113,7 @@ export default {
                         width: column.width,
                     },
                 }));
-                let label = !this.isWebDp(this.dataProvider) ? this.dataProvider.searchModel.getAttributeLabel(column.attribute) : column.getLabel(model, createElement);
+                let label = this.isWebDp(this.dataProvider) ? this.dataProvider.searchModel.getAttributeLabel(column.attribute) : column.getLabel(model, createElement);
                 if (column.useSort && typeof (column.label) === 'string' && column.attribute) {
                     column.labelFormat = 'html';
                     let arrow = '';

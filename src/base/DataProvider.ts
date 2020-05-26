@@ -230,10 +230,13 @@ export default class DataProvider extends BaseObject {
     public sortModels(attribute: string, asc: boolean = true, sortBy: any = null) {
         if (sortBy === null) {
             sortBy =  (value1, value2, sortType) => {
-                if (sortType)  {
-                    return value1 - value2;
+                if (value1 === value2) {
+                    return 0;
                 }
-                return value2 - value1;
+                if (sortType)  {
+                    return value1 > value2 ? 1 : -1;
+                }
+                return value1 < value2 ? 1 : -1;
             };
         }
         const compare = (a, b) => sortBy(a[attribute], b[attribute], asc);
