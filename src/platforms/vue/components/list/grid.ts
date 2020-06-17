@@ -61,6 +61,10 @@ export default {
         },
     },
     methods: {
+        isWebDp(dp) {
+            if (dp.httpOption) return true;
+            return false;
+        },
         getValue(obj, format, createElement) {
             if (format === 'html') {
                 const _this = this;
@@ -109,7 +113,7 @@ export default {
                         width: column.width,
                     },
                 }));
-                let label = column.getLabel(model, createElement);
+                let label = this.isWebDp(this.dataProvider) ? this.dataProvider.searchModel.getAttributeLabel(column.attribute) : column.getLabel(model, createElement);
                 if (column.useSort && typeof (column.label) === 'string' && column.attribute) {
                     column.labelFormat = 'html';
                     let arrow = '';
@@ -154,7 +158,7 @@ export default {
                         column,
                     };
                     if (this.$scopedSlots.default) {
-                        tempArr.push(this.$scopedSlots.default(obj)); 
+                        tempArr.push(this.$scopedSlots.default(obj));
                     } else {
                         tempArr.push(createElement('td', {
                             attrs: lodash.get(column.contentOptions, 'attrs', {}),
