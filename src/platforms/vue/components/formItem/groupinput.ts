@@ -6,8 +6,8 @@ const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
     name: 'groupinput',
     template: `<group :max="dictOption.max" :excludes="dictOption.excludes" :init-value="model[attr]" :multiple="dictOption.multiple" @change="groupChange" v-on="inputListeners">
-    <slot name="default" v-for="key in dictOption.order" :data-key="key" :value="dictOption.list[key]" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false">
-        <tab :canClose="true" :disabled="dictOption.excludes.indexOf(key) > -1 ? true : false" :data-key="key" :key="key">{{dictOption.list[key]}}</tab>
+    <slot name="default" v-for="key in dictOption.order" :data-key="key" :value="dictOption.list[key]" :disabled="hasKey(dictOption.excludes, key) ? true : false">
+        <tab :canClose="true" :disabled="hasKey(dictOption.excludes, key) ? true : false" :data-key="key" :key="key">{{dictOption.list[key]}}</tab>
     </slot>
 </group>`,
     props: {
@@ -56,7 +56,20 @@ export default lodash.merge(input, {
             dictOption.list = dictOption.list || {};
             dictOption.order = dictOption.order || Object.keys(dictOption.list);
             return dictOption;
-        }
+        },
+        // 对象的key会自动转为字符串，要实现数字格式的key和字符串格式的key是等价的，如exclude中的判断
+        hasKey(arr, key) {
+            const numberKey = Number(key);
+            const stringKey = String(key);
+            let flag = false;
+            for (let i = 0, l = arr.length; i < l; i++) {
+                if (arr[i] === numberKey || arr[i] === stringKey) {
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
+        },
     },
     watch: {
         model() {

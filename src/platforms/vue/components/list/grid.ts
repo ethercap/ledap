@@ -114,7 +114,7 @@ export default {
                     },
                 }));
                 let label = this.isWebDp(this.dataProvider) ? this.dataProvider.searchModel.getAttributeLabel(column.attribute) : column.getLabel(model, createElement);
-                if (column.useSort && typeof (column.label) === 'string' && column.attribute) {
+                if (column.useSort && typeof (column.label) !== 'function' && column.attribute) {
                     column.labelFormat = 'html';
                     let arrow = '';
                     if (this.dataProvider.isSortAsc(column.attribute)) {
@@ -122,6 +122,7 @@ export default {
                     } else if (this.dataProvider.isSortDesc(column.attribute)) {
                         arrow = '&#8681;';
                     }
+                    console.log(column.attribute, arrow);
                     label = '<a @click="sort(\'' + column.attribute + '\')">' + label + arrow + '</a>';
                 }
                 const obj = {
