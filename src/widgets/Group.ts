@@ -1,5 +1,7 @@
 import * as lodash from 'lodash';
 import BaseGroup from './BaseGroup';
+import ArrayHelper from '../helpers/ArrayHelper';
+
 // group组件组
 export default class Group extends BaseGroup {
     public static EVENT_DATACHANGED = 'GROUP_CHANGED';
@@ -86,7 +88,7 @@ export default class Group extends BaseGroup {
         if (this._selected.indexOf(key) > -1) {
             return true;
         }
-        if (this.excludes.indexOf(key) > -1) {
+        if (ArrayHelper.hasKey(this.excludes, key)) {
             component.close();
             if (this.mode === 'strict') {
                 throw new Error('该选项不可选');

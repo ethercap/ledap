@@ -1,6 +1,7 @@
 import * as lodash from 'lodash';
 import Model from '@/base/Model';
 import BaseInput from './baseinput';
+import ArrayHelper from '@/helpers/ArrayHelper';
 
 const input = lodash.cloneDeep(BaseInput);
 export default lodash.merge(input, {
@@ -58,18 +59,7 @@ export default lodash.merge(input, {
             return dictOption;
         },
         // 对象的key会自动转为字符串，要实现数字格式的key和字符串格式的key是等价的，如exclude中的判断
-        hasKey(arr, key) {
-            const numberKey = Number(key);
-            const stringKey = String(key);
-            let flag = false;
-            for (let i = 0, l = arr.length; i < l; i++) {
-                if (arr[i] === numberKey || arr[i] === stringKey) {
-                    flag = true;
-                    break;
-                }
-            }
-            return flag;
-        },
+        hasKey: ArrayHelper.hasKey
     },
     watch: {
         model() {

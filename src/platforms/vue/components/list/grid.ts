@@ -122,7 +122,6 @@ export default {
                     } else if (this.dataProvider.isSortDesc(column.attribute)) {
                         arrow = '&#8681;';
                     }
-                    console.log(column.attribute, arrow);
                     label = '<a @click="sort(\'' + column.attribute + '\')">' + label + arrow + '</a>';
                 }
                 const obj = {
