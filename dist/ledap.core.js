@@ -2160,7 +2160,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Bas
 /*!***************************!*\
   !*** ./src/index.core.ts ***!
   \***************************/
-/*! exports provided: Event, BaseObject, Model, Pagination, DataProvider, WebDataProvider, ValidatorFactory, widgets, helpers */
+/*! exports provided: ValidatorFactory, widgets, helpers, Event, BaseObject, Model, Pagination, DataProvider, WebDataProvider */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
