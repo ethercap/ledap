@@ -1,7 +1,7 @@
 // 本示例采用了bootstrap, 为了适应界面展示，对默认模板进行变更。如果要求不高，可以直接使用系统默认模板
 // 主题代表一个工程一整个标准的组件的主题设置，一般由UI与前端进行沟通并固化。通过主题，我们能很好地实现某个工程的组件标准化.
 var themeConfig = {
-    "form-item": {
+    'form-item': {
         template: `<component :is="tag" class="form-group row">
             <slot name="label" :model="model" :attr="attr">
                 <label class="col-sm-3 col-form-label text-right"> {{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
@@ -18,7 +18,7 @@ var themeConfig = {
             </div>
         </component>`,
     },
-    "baseinput": {
+    baseinput: {
         template: `<div><template v-if="tag !== 'textarea'">
             <input class="form-control" :name="attr" :value="model[attr]" :placeholder="model.getAttributeHint(attr)" v-on="inputListeners" v-bind="$attrs" :maxlength="cMaxlength">
         </template>
@@ -27,12 +27,12 @@ var themeConfig = {
             </textarea>
         </template></div>`,
     },
-    "dropdown": {
+    dropdown: {
         template: `<select class="form-control" :name="attr" v-on="inputListeners" v-bind="$attrs">
             <option v-for="key in dictOption.order" :value="key" :selected="key === model[attr]">{{dictOption.list[key]}}</option>
         </select>`,
     },
-    "groupinput": {
+    groupinput: {
         template: `<group class="btn-group" :max="dictOption.max" :excludes="dictOption.excludes" :init-value="model[attr]" :multiple="dictOption.multiple" @change="groupChange">
             <slot name="default" v-for="key in dictOption.order" :attr="attr" :data-key="key" :value="dictOption.list[key]" :disabled="hasKey(dictOption.excludes, key) ? true : false">
                 <tab class="btn btn-outline-primary" :disabled="hasKey(dictOption.excludes, key) ? true : false" :data-key="key" :key="key"> {{dictOption.list[key]}}</tab>
@@ -97,5 +97,26 @@ var themeConfig = {
         <component :is="tagName" :class="{'active text-success': isOpen()}">
             <slot></slot>
         </component>`,
+    },
+    checkbox: {
+        template: `<component :is="tagName" class="custom-control custom-checkbox" :class="{'active': isOpen()}" @click="click">
+            <slot name="input" :isOpen="isOpen" :disabled="disabled">
+                <input class="custom-control-input" type="checkbox" :name="attr" :checked="isOpen()" :disabled="disabled" v-bind="$attrs"/>
+            </slot>
+            <label class="custom-control-label">
+                <slot></slot>
+            </label>
+        </component>`
+    },
+    radio: {
+        template: `
+        <component :is="tagName" class="custom-control custom-radio" :class="{'active': isOpen()}" @click="click">
+            <slot name="input" :isOpen="isOpen" :disabled="disabled">
+                <input type="radio" class="custom-control-input" :disabled="disabled" :checked="isOpen()" :name="attr" v-bind="$attrs"/>
+            </slot>
+            <label class="custom-control-label">
+                <slot></slot>
+            </label>
+        </component>`
     }
 };
