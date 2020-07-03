@@ -83,15 +83,15 @@
                       </groupinput>
                   </template>
               </form-item>
-              <form-item class="form-group" :model="model" attr="search">
+              <form-item class="form-group" :model="model" attr="search1">
                   <template v-slot="p">
                       <searchinput v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
                       </searchinput>
                   </template>
               </form-item>
-              <form-item class="form-group" :model="model" attr="search">
+              <form-item class="form-group" :model="model" attr="search2">
                   <template v-slot="p">
-                      <select2 v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
+                      <select2 v-bind="p" :data-provider="dp" @choose="choose" :multiple="true" item-name="name">
                       </select2>
                   </template>
               </form-item>
