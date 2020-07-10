@@ -1,6 +1,6 @@
 {
   "name": "ledap",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
   "main": "./dist/index.js",
   "scripts": {
@@ -16,6 +16,11 @@
     "dist",
     "examples"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethercap/ledap.git"
+  },
+  "homepage": "https://github.com/ethercap/ledap",
   "author": "lishipeng <lspbupt@sina.com>",
   "license": "ISC",
   "devDependencies": {
