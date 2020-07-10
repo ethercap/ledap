@@ -50,6 +50,11 @@ var app = new Vue({
                 "labelFormat" : "html",
                 "label" : function(model, attribute) {
                     return '<div @click="vm.toggle">组件名<span>{{vm.asc ? "^" : "v"}}</span></div>';
+                },
+                labelOptions: {
+                    attrs: { t: 'test' },
+                    class: ['ca', 'cb'],
+                    style: { color: 'green' }
                 }
             },
             {
@@ -91,7 +96,8 @@ var app = new Vue({
             },
             {
                 "attribute":"comment",
-                "label" : "备注",
+                // "label" : "备注",
+                "useSort": true,
                 "width" : "40%",
             },
             {

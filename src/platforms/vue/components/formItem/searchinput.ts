@@ -27,19 +27,15 @@ export default lodash.merge(input, {
             default: null,
         },
     },
-    updated() {
+    mounted() {
         if (this.filter === null) {
             this.filter = (model, index, collection) => {
                 if (this.value) {
                     return model[this.itemName].search(this.value) > -1;
                 }
                 return true;
-
             };
         }
-        this.init();
-        // 因为数据的获取是异步的，要在这个钩子里才行，执行一次后清空该钩子
-        this.$options.updated = null;
     },
     data() {
         return {
@@ -75,6 +71,15 @@ export default lodash.merge(input, {
                 },
             });
         },
+        // 这里的formValue是表单里提交给后端的值
+        formValue() {
+            return this.model[this.attr];
+        }
+    },
+    watch: {
+        formValue(newValue: any, oldValue: any) {
+            this.init();
+        }
     },
     methods: {
         request(params, callback = key => {}) {
@@ -115,7 +120,7 @@ export default lodash.merge(input, {
         // 选择model
         choose(model, index, e) {
             if (typeof model[this.itemName] !== 'undefined') {
-                this.value = model[this.itemName];
+                this.model[this.attr] = this.value = model[this.itemName];
                 setTimeout(() => {
                     this.request({
                         [this.paramName]: this.value

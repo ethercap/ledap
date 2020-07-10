@@ -14,6 +14,9 @@ export default {
         attr: {
             type: String,
         },
+        label: {
+            type: [String, Number],
+        },
         validate: {
             type: Array,
             default() {
@@ -71,7 +74,7 @@ export default {
     template: `
     <component :is="tag">
         <slot name="label" :model="model" :attr="attr">
-            <label> {{model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
+            <label>{{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
         </slot>
         <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
             <baseinput :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></baseinput>

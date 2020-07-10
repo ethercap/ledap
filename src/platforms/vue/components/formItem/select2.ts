@@ -1,5 +1,6 @@
 import * as lodash from 'lodash';
 import SearchInput from './searchinput';
+import ArrayHelper from '@/helpers/ArrayHelper';
 
 const input = lodash.cloneDeep(SearchInput);
 export default lodash.merge(input, {
@@ -27,13 +28,14 @@ export default lodash.merge(input, {
         };
     },
     watch: {
-        selected() {
-            const keys = Object.keys(this.selected);
+        selected(value) {
+            const keys = Object.keys(value);
             if (this.multiple) {
-                this.model[this.attr] = keys;
+                // 为了防止死循环，只有当值不同的时候才进行赋值
+                if (!lodash.isEqual(this.model[this.attr], keys)) this.model[this.attr] = keys;
             } else {
                 this.model[this.attr] = keys.length > 0 ? keys[0] : '';
-                this.value = keys.length > 0 ? this.selected[keys[0]][this.itemName] : '';
+                this.value = keys.length > 0 ? value[keys[0]][this.itemName] : '';
             }
         }
     },
@@ -41,29 +43,30 @@ export default lodash.merge(input, {
         init() {
             // 如果没有selected,先请求
             if (this.model[this.attr] && lodash.isEmpty(this.selected)) {
-                this.request({
+                return this.request({
                     [this.keyName]: this.model[this.attr],
                     [this.paramName]: this.value,
                 }, this.syncSelected);
             }
+            this.syncSelected();
         },
         syncSelected() {
             if (this.multiple && typeof (this.model[this.attr]) != 'object') {
-                this.model[this.attr] = [this.model[this.attr]];
+                return this.model[this.attr] = [this.model[this.attr]];
             }
             const selected = {};
             const _this = this;
             Object.keys(this.models).forEach(index => {
                 const model = _this.models[index];
                 if (_this.multiple) {
-                    if (_this.model[_this.attr].indexOf(model[_this.keyName]) > -1) {
+                    if (ArrayHelper.hasKey(_this.model[_this.attr], model[_this.keyName])) {
                         selected[model[_this.keyName]] = model;
                     }
                 } else if (String(model[_this.keyName]) === String(_this.model[_this.attr])) {
                     selected[model[_this.keyName]] = model;
                 }
             });
-            this.selected = selected;
+            return this.selected = selected;
         },
         inputChange(e) {
             this.value = e.target.value;
