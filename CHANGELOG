@@ -1,4 +1,19 @@
-##[0.1.6] - 2020-4-21
+##[0.1.8] - 2020-7-10
+### Added
+- Improve documents, you can visit the document websites now.
+- Add the 'label' property for 'form-item' component
+- Add the 'option' property for 'dropdown' componet
+
+### Changed
+
+### Fixed
+- Fix the reactive bug of 'searchinput' and 'select2' component
+- Fix the ineffectiveness of exclude of 'groupinput' component
+- Fix the ineffectiveness of usesort in some situation of 'grid' component
+
+
+
+##[0.1.7] - 2020-4-21
 ### Added
 - vue component -- step
 
