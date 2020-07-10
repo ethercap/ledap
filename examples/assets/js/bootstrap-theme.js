@@ -51,7 +51,7 @@ var themeConfig = {
     },
     select2: {
         template: `<div class="position-relative">
-    <div class="form-control d-flex align-items-center" style="height:auto">
+    <div class="form-control d-flex flex-wrap align-items-center" style="height:auto">
         <span v-if="multiple" v-for="model,key in selected" :key="key">
             <button class="btn btn-sm btn-light" @click="choose(model, key, $event)">{{model[itemName]}}{{'  x'}}</button>&nbsp;
         </span>
