@@ -8,6 +8,11 @@ export default lodash.merge(input, {
     template: `<select v-on="inputListeners" v-bind="$attrs" :name="attr">
         <option v-for="key in dictOption.order" :value="key" :selected="key === model[attr]">{{dictOption.list[key]}}</option>
     </select>`,
+    props: {
+        option: {
+            type: Object
+        }
+    },
     data() {
         return {
             dictOption: {}
@@ -27,7 +32,7 @@ export default lodash.merge(input, {
             this.dictOption = this.getDictOption();
         },
         getDictOption() {
-            const dictOption: any = lodash.get(this.model.rules(), [this.attr, 'dict'], {});
+            const dictOption: any = this.option || lodash.get(this.model.rules(), [this.attr, 'dict'], {});
             dictOption.list = dictOption.list || {};
             dictOption.order = dictOption.order || Object.keys(dictOption.list);
             return dictOption;

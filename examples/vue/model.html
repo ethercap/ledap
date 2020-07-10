@@ -39,7 +39,7 @@
                       </div>
                   </template> -->
               </steps>
-              <form-item :model="model" attr="name" class="form-group"></form-item>
+              <form-item :model="model" attr="name" class="form-group" label="自定义"></form-item>
               <form-item :model="model" attr="age" class="form-group" type="number"></form-item>
               <form-item class="form-group" :model="model" attr="introduce">
                   <template v-slot="p">
@@ -60,7 +60,7 @@
               </form-item1>
               <form-item class="form-group" :model="model" attr="sex">
                   <template v-slot="slotProps">
-                      <groupinput v-bind="slotProps">
+                      <groupinput v-bind="slotProps" :option="appointedOption">
                           <template v-slot:default="p">
                               <radio v-bind="p" :key="p.dataKey">{{p.value}}</radio>
                           </template>
@@ -83,9 +83,15 @@
                       </groupinput>
                   </template>
               </form-item>
-              <form-item class="form-group" :model="model" attr="search">
+              <form-item class="form-group" :model="model" attr="search1">
                   <template v-slot="p">
-                      <select2 v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
+                      <searchinput v-bind="p" :data-provider="dp" @choose="choose" item-name="name">
+                      </searchinput>
+                  </template>
+              </form-item>
+              <form-item class="form-group" :model="model" attr="search2">
+                  <template v-slot="p">
+                      <select2 v-bind="p" :data-provider="dp" @choose="choose" :multiple="true" item-name="name">
                       </select2>
                   </template>
               </form-item>
@@ -132,6 +138,7 @@
       <script src="../assets/lib/vue/vue.js"></script>
       <script src="../dist/index.js"></script>
       <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
       <script src="../assets/js/bootstrap-theme.js"></script>
       <script src="../assets/js/ledap-init.js"></script>
       <script src="../assets/js/localmodel.js"></script>
@@ -208,6 +215,14 @@ var app = new Vue({
           }),
           model1 : new Model(),
           model2 : new LocalModel(),
+          // groupinput手动传入option
+          appointedOption: {
+              list: {
+                  1: 'male',
+                  2: 'female'
+              },
+              excludes: []
+          },
           steps: [{
               name: '开冰箱0'
           }, {
