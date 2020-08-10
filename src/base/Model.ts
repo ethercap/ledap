@@ -154,7 +154,7 @@ export default class Model extends BaseObject {
     }
 
     public createValidator(attribute: string, ruleType: any, options: object = {}) {
-        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType)) {
+        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType) && typeof this[ruleType] === 'function') {
             ruleType = this[ruleType];
         }
         return ValidatorFactory.getInstance(attribute, ruleType, options);

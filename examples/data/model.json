@@ -32,6 +32,22 @@
             }],
             "value": ""
         },
+        "email": {
+            "label": "邮箱",
+            "value": "",
+            "hint": "请输入邮箱",
+            "rules": [{
+                "type": "email",
+                "options": {
+                    "message": "邮箱格式不正确"
+                }
+            }, {
+                "type": "required",
+                "options": {
+                    "message": "邮箱不能为空"
+                }
+            }]
+        },
         "city": {
             "label": "城市",
             "rules": [
