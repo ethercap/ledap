@@ -75,7 +75,7 @@ export default class Model extends BaseObject {
                     // 依次将rule规则存入到model中
                     Object.keys(obj.rules).forEach(i => {
                         const rule = obj.rules[i];
-                        if (rule.hasOwnProperty('type') && rule.hasOwnProperty('options')) {
+                        if (rule.hasOwnProperty('type')) {
                             lodash.set(rules, [key, rule.type], rule.options);
                         }
                     });
@@ -154,7 +154,7 @@ export default class Model extends BaseObject {
     }
 
     public createValidator(attribute: string, ruleType: any, options: object = {}) {
-        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType)) {
+        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType) && typeof this[ruleType] === 'function') {
             ruleType = this[ruleType];
         }
         return ValidatorFactory.getInstance(attribute, ruleType, options);
@@ -219,7 +219,7 @@ export default class Model extends BaseObject {
         if (!attribute) {
             return !lodash.isEmpty(this._errors);
         }
-        return !lodash.isEmpty(this._errors.hasOwnProperty(attribute));
+        return !lodash.isEmpty(this._errors[attribute]);
     }
 
     // 获取所有的错误
