@@ -15,7 +15,7 @@ export default class RequiredValidator extends Validator {
 
     constructor(attribute: string, type: string, options: object) {
         super(attribute, type, options);
-        options['skipOnEmpty'] = false;
+        this.options['skipOnEmpty'] = false;
     }
 
     public validateAttribute(model: Model): boolean {

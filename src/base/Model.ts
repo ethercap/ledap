@@ -219,7 +219,7 @@ export default class Model extends BaseObject {
         if (!attribute) {
             return !lodash.isEmpty(this._errors);
         }
-        return !lodash.isEmpty(this._errors.hasOwnProperty(attribute));
+        return !lodash.isEmpty(this._errors[attribute]);
     }
 
     // 获取所有的错误
