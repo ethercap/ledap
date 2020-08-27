@@ -58,6 +58,7 @@
               </form-item>
               <form-item1 class="form-group" :model="model" attr="phone" :validate="['input']" @input="test">
               </form-item1>
+              <form-item class="form-group" :model="model" attr="email"></form-item>
               <form-item class="form-group" :model="model" attr="sex">
                   <template v-slot="slotProps">
                       <groupinput v-bind="slotProps" :option="appointedOption">

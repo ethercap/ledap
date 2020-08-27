@@ -12,14 +12,13 @@
                 "type": "string",
                 "options": { "message": "必须是字符串", "max": 5 }
             }],
-            "value": null
+            "value": ""
         },
         "introduce": {
             "label": "简介",
             "hint": "请输入简介",
             "rules": [{
-                "type": "required",
-                "options": { "message": "不能为空" }
+                "type": "required"
             }],
             "value": ""
         },
@@ -31,6 +30,22 @@
                 "options": { "message": "xxx", "max": 200, "min": 18 }
             }],
             "value": ""
+        },
+        "email": {
+            "label": "邮箱",
+            "value": "",
+            "hint": "请输入邮箱",
+            "rules": [{
+                "type": "email",
+                "options": {
+                    "message": "邮箱格式不正确"
+                }
+            }, {
+                "type": "required",
+                "options": {
+                    "message": "邮箱不能为空"
+                }
+            }]
         },
         "city": {
             "label": "城市",
