@@ -13,7 +13,7 @@ export default class RegexValidator extends Validator {
         const options: any = this.options;
         const value = model[attribute];
 
-        if (!options.not && !options.pattern.test(value) || options.not && options.pattern.test(value)) {
+        if ((!options.not && !options.pattern.test(value)) || (options.not && options.pattern.test(value))) {
             model.addError(attribute, options.message);
             return false;
         }

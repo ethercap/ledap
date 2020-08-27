@@ -16,7 +16,7 @@ export default class StringValidator extends Validator {
         skipOnEmpty: true,
         notEqual: '文本内容长度不匹配',
         tooShort: '文本内容过短',
-        tooMax: '文本内容过长',
+        tooLong: '文本内容过长',
     };
     public allowTypes = ['string'];
     public validateAttribute(model: Model): boolean {
