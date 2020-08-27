@@ -1,3 +1,14 @@
+##[0.1.9] - 2020-8-27
+### Added
+
+### Changed
+
+### Fixed
+- Fix the bug of model.hasErrors
+- Fix the bug of validate when the model has an attribute equals to the name of validator
+- Fix the bug of RegexValidator, StringValidator
+
+
 ##[0.1.8] - 2020-7-10
 ### Added
 - Improve documents, you can visit the document websites now.
