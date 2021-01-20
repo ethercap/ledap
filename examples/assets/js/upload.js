@@ -10,6 +10,11 @@ ledap.App.getTheme().addComponent({
         },
         value: Array,
         // 下面为可选属性
+        // 注意：当页面有多个 upload 组件的时候，一定要指定id
+        id: {
+            type: String,
+            default: 'file-upload'
+        },
         multiple: {
             type: Boolean,
             default: true
@@ -44,7 +49,6 @@ ledap.App.getTheme().addComponent({
             timeout: 1000 * 15,
             maximum: 10,
             thread: 3,
-            drop: '.upload',
             dropDirectory: true,
             uploadAuto: true,
             directory: false,
@@ -61,6 +65,9 @@ ledap.App.getTheme().addComponent({
         }
     },
     computed: {
+        drop() {
+            return 'drop-' + this.id;
+        },
         hasFile() {
             return this.initialValue.length + this.files.length > 0;
         },
@@ -176,7 +183,7 @@ ledap.App.getTheme().addComponent({
     template: `
 <div>
     <div class="upload">
-        <div class="card" :class="[($refs.upload && $refs.upload.dropActive) ? 'border-primary' : '']">
+        <div class="card" :class="[drop, ($refs.upload && $refs.upload.dropActive) ? 'border-primary' : '']">
             <div class="card-body" style="min-height:100px;">
                 <div class="text-center">
                     <div class="row">
@@ -224,6 +231,7 @@ ledap.App.getTheme().addComponent({
         <file-upload
           class="btn btn-primary dropdown-toggle"
           v-model="files"
+          :input-id="id"
           :post-action="postAction"
           :multiple="multiple"
           :name="name"
@@ -234,7 +242,7 @@ ledap.App.getTheme().addComponent({
           :directory="directory"
           :size="size"
           :thread="thread"
-          :drop="drop"
+          :drop="'.' + drop"
           :drop-directory="dropDirectory"
           :add-index="addIndex"
           @input-filter="inputFilter"
