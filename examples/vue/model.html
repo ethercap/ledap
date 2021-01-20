@@ -113,7 +113,8 @@
               </form-item>
               <form-item class="form-group" :model="model" :attr="'upload'">
                   <template v-slot:default="p">
-                      <uploader :post-action="'http://lsp-dee-admin.dev.ethercap.com/test/upload'" v-model="p.model[p.attr]"></uploader>
+                      <!-- 注意：当页面有多个 upload 组件的时候，一定要指定id -->
+                      <uploader id="upload-1" :post-action="'http://lsp-dee-admin.dev.ethercap.com/test/upload'" v-model="p.model[p.attr]"></uploader>
                   </template>
               </form-item>
 	    <button class="btn btn-primary col-sm-2 col-sm-offset-5" @click="submit">提交</button>

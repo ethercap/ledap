@@ -76,7 +76,7 @@ export default class Model extends BaseObject {
                     Object.keys(obj.rules).forEach(i => {
                         const rule = obj.rules[i];
                         if (rule.hasOwnProperty('type')) {
-                            lodash.set(rules, [key, rule.type], rule.options);
+                            lodash.set(rules, [key, rule.type], rule.options || {});
                         }
                     });
                 }
