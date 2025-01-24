@@ -18,6 +18,14 @@ export default class Model extends BaseObject {
     // 当前的校验器
     public _validators: Validator[] = [];
 
+    // 标签的Map
+    private _attrLabels: object = {};
+    private _attrHints: object = {};
+    private _attrRules: object = {};
+
+    // 两个变量用于记录数据的变化情况
+    public _old = {}
+
     constructor() {
         super();
         this._errors = {};
@@ -44,16 +52,16 @@ export default class Model extends BaseObject {
      *  }
      */
     public rules(): object {
-        return {};
+        return this._attrRules;
     }
-
-    // model的所有的字段的意义,需要上层覆盖
+    
+    // model的所有的字段的意义,可以上层覆盖
     public attributeLabels() {
-        return {};
+        return this._attrLabels;
     }
-    // model的所有的字段的hint,需要上层覆盖
+    // model的所有的字段的hint,可以上层覆盖
     public attributeHints() {
-        return {};
+        return this._attrHints;
     }
 
     // 只load数据
@@ -62,14 +70,14 @@ export default class Model extends BaseObject {
         Object.keys(data).forEach(key => {
             if (typeof (data[key]) === 'object' && data[key] !== null && data[key].hasOwnProperty('value')) {
                 const rules = this.rules();
-                const attrLabels = this.attributeLabels();
-                const attrHints = this.attributeHints();
+                const _attrLabels = this.attributeLabels();
+                const _attrHints = this.attributeHints();
                 const obj = data[key];
                 if (obj.hasOwnProperty('label')) {
-                    attrLabels[key] = obj.label;
+                    _attrLabels[key] = obj.label;
                 }
                 if (obj.hasOwnProperty('hint')) {
-                    attrHints[key] = obj.hint;
+                    _attrHints[key] = obj.hint;
                 }
                 if (obj.hasOwnProperty('rules')) {
                     // 依次将rule规则存入到model中
@@ -82,9 +90,9 @@ export default class Model extends BaseObject {
                 }
                 this.emit(Model.EVENT_LOAD, this, key, obj.value);
                 this[key] = obj.value;
-                this.rules = () => rules;
-                this.attributeLabels = () => attrLabels;
-                this.attributeHints = () => attrHints;
+                this._attrRules = rules;
+                this._attrLabels = _attrLabels;
+                this._attrHints = _attrHints;
             } else {
                 this.emit(Model.EVENT_LOAD, this, key, data[key]);
                 this[key] = data[key];
@@ -213,6 +221,22 @@ export default class Model extends BaseObject {
         return lodash.get(rules, [attribute, 'required'], false);
     }
 
+    // 获取属性值的列表
+    public getValidator(attribute: string, type: string) {
+        const rules = this.rules();
+        return lodash.get(rules, [attribute, type], null);
+    }
+
+    // 获取属性值的
+    public getAttributeDesc(attribute) {
+        const dict = this.getValidator(attribute,  'dict');
+        if (dict) {
+            const list = dict.list;
+            return list[this.attribute] || this[attribute];
+        }
+        return this[attribute];
+    }
+
     // 判断当前attribute是否有错误
     public hasErrors(attribute = null) {
         // 如果没有传attribute
@@ -252,6 +276,15 @@ export default class Model extends BaseObject {
         this._errors[attribute].push(error);
     }
 
+    public addRule(attribute, rule) {
+        if (!attribute) {
+            return;
+        }
+        if (rule.hasOwnProperty('type')) {
+            lodash.set(this._attrRules, [key, rule.type], rule.options || {});
+        }
+    }
+
     public clearErrors(attribute: string|object = ''): void {
         if (!attribute) {
             this._errors = {};
@@ -266,20 +299,36 @@ export default class Model extends BaseObject {
         }
     }
 
-    public getAttributeHint(attribute) {
+    public getAttributeHint(attribute, defaultValue = ''): string {
         const hints = this.attributeHints();
-        if (hints.hasOwnProperty(attribute)) {
-            return hints[attribute];
-        }
-        return '';
+        return hints[attribute] || defaultValue; 
+    }
+
+    public setAttributeHint(attribute, hint) {
+        this._attrHints[attribute] = hint;
+    }
+
+    public setAttributeLabel(attribute, label) {
+        this._attrLabels[attribute] = label;
     }
 
     // 根据attribute获取label
-    public getAttributeLabel(attribute) {
-        const attrLabels = this.attributeLabels();
-        if (attrLabels.hasOwnProperty(attribute)) {
-            return attrLabels[attribute];
-        }
-        return attribute;
+    public getAttributeLabel(attribute, defaultValue = ''): string {
+        const _attrLabels = this.attributeLabels();
+        return _attrLabels[attribute] || defaultValue || attribute;
     }
+    
+    public clone(data = null) {
+        const model = new this.constructor();
+        model._attrRules = lodash.cloneDeep(this._attrRules);
+        model._attrLabels = lodash.cloneDeep(this._attrLabels);
+        model._attrHints = lodash.cloneDeep(this._attrHints);
+        model._errors = lodash.cloneDeep(this._errors);
+        if (!data) {
+            data = json_parse(JSON.stringify(this));
+        }
+        model.load(data);
+        return model;
+    }
+
 }

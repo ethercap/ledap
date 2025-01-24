@@ -76,4 +76,5 @@ export default class App extends BaseObject {
     public static extend(a, b) {
         return lodash.extend(a, b);
     }
+
 }

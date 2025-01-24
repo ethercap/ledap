@@ -56,14 +56,14 @@ export default class WebDataProvider extends DataProvider {
         if (refreshType === 'header') {
             this.append = false;
             // 头部下拉刷新会将page置为1
-            this.changePage(1, true);
-        } else if (refreshType === 'footer') {
+            return this.changePage(1, true);
+        } if (refreshType === 'footer') {
             this.append = true;
-            this.changePage(this.pager.currentPage + 1, true);
-        } else {
-            this.append = false;
-            this.changePage(this.pager.currentPage, true);
-        }
+            return this.changePage(this.pager.currentPage + 1, true);
+        } 
+        this.append = false;
+        return this.changePage(this.pager.currentPage, true);
+        
     }
 
     // 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
@@ -71,21 +71,21 @@ export default class WebDataProvider extends DataProvider {
         // 设置参数
         this.searchModel.load(params);
         const page = changePage ? 1 : this.pager.currentPage;
-        this.changePage(page, reload);
+        return this.changePage(page, reload);
     }
 
     public setSort(sort: string|object = '', reload: boolean = true, changePage: boolean = false) {
         // 设置参数
         this.sort = sort;
         const page = changePage ? 1 : this.pager.currentPage;
-        this.changePage(page, reload);
+        return this.changePage(page, reload);
     }
 
     // 用于网页的页码点击中
     public changePage(page: number, reload: boolean = true) {
         this.pager.currentPage = page;
         if (reload) {
-            this.loadData();
+            return this.loadData();
         }
     }
 
@@ -100,25 +100,39 @@ export default class WebDataProvider extends DataProvider {
     // 发起请求
     public loadData() {
         const _this = this;
-        const getData = () => {
-            if (!_this.beforeGetData()) {
+        const getData = (resolve, reject) => {
+            const ret = _this.beforeGetData();
+            if (!ret) {
+                if (reject) {
+                    reject(new Error('数据核验失败'));
+                }
                 return;
             }
             _this.httpRequest(_this.httpOptions, data => {
                 _this.processData(data);
                 _this.afterGetData(true, data);
+                if (resolve) {
+                    resolve(data);
+                }
             }, error => {
                 _this.afterGetData(false, error);
+                if (reject) {
+                    reject(error);
+                }
             });
         };
-        if (this.timeWait) {
-            if (this._timer) {
-                clearTimeout(this._timer);
+        return new Promise((resolve, reject) => {
+            if (this.timeWait) {
+                if (this._timer) {
+                    clearTimeout(this._timer);
+                }
+                this._timer = setTimeout(() => {
+                    getData(resolve, reject);
+                }, this.timeWait);
+            } else {
+                getData(resolve, reject);
             }
-            this._timer = setTimeout(getData, this.timeWait);
-        } else {
-            getData();
-        }
+        });
     }
 
     // 获取数据之前
