@@ -8,7 +8,13 @@
         "noImplicitThis": false,
         "module": "ES6",
         "target": "ES5",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
     },
     "include": [
         "./src/**/*"
