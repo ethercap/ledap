@@ -1,0 +1,195 @@
+{
+    "code" : 0,
+    "msg" : "操作成功",
+    "data" : {
+        "name": {
+            "label": "姓名",
+            "hint": "请输入姓名",
+            "rules": [{
+                "type": "required",
+                "options": { "message": "姓名不能为空",  "skipOnEmpty": 1 }
+            }, {
+                "type": "string",
+                "options": { "message": "必须是字符串", "max": 5 }
+            }],
+            "value": ""
+        },
+        "introduce": {
+            "label": "简介",
+            "hint": "请输入简介",
+            "rules": [{
+                "type": "required"
+            }],
+            "value": ""
+        },
+        "age": {
+            "label": "年龄",
+            "hint": "请输入年龄",
+            "rules": [{
+                "type": "number",
+                "options": { "message": "xxx", "max": 200, "min": 18 }
+            }],
+            "value": ""
+        },
+        "email": {
+            "label": "邮箱",
+            "value": "",
+            "hint": "请输入邮箱",
+            "rules": [{
+                "type": "email",
+                "options": {
+                    "message": "邮箱格式不正确"
+                }
+            }, {
+                "type": "required",
+                "options": {
+                    "message": "邮箱不能为空"
+                }
+            }]
+        },
+        "city": {
+            "label": "城市",
+            "rules": [
+              {
+                "type": "dict",
+                "options": {
+                  "list": {
+                    "北京": "北京",
+                    "上海": "上海",
+                    "杭州": "杭州",
+                    "成都": "成都",
+                    "武汉": "武汉",
+                    "南京": "南京",
+                    "厦门": "厦门",
+                    "其他": "其他",
+                    "a": "a",
+                    "3": "3"
+                  },
+                  "order": ["北京", "上海","杭州","成都","武汉","南京","3","厦门","a","其他"],
+                  "multiple": false,
+                  "excludes" : [],
+                  "message": "城市的值不正确",
+                  "skipOnEmpty": 1
+                }
+              }
+            ],
+            "value": "上海"
+          },
+          "birthDate" : {
+            "label":"生日",
+            "value": "2010-01-01",
+            "rules" : []
+          },
+          "stayCity": {
+            "label": "常驻城市",
+            "rules": [
+              {
+                "type": "dict",
+                "options": {
+                  "list": {
+                    "a": "a",
+                    "北京": "北京",
+                    "上海": "上海",
+                    "3": "3",
+                    "杭州": "杭州",
+                    "成都": "成都",
+                    "武汉": "武汉",
+                    "南京": "南京",
+                    "厦门": "厦门",
+                    "其他": "其他",
+                    "a": "a",
+                    "3": "3",
+                    "4": "4",
+                    "-1": "-1"
+                  },
+                  "order": ["北京", "a", "上海", "3", "杭州", "成都", -1, "武汉", "南京", "厦门", "4", "其他"],
+                  "multiple": true,
+                  "excludes" : ["武汉", 4],
+                  "max" : 3,
+                  "message": "常驻城市的值不正确",
+                  "skipOnEmpty": 1
+                }
+              }
+            ],
+            "value": ["成都", "杭州"]
+          },
+          "sex": {
+            "label": "性别",
+            "rules": [
+          {
+            "type": "dict",
+            "options": {
+              "list": {
+                "1": "男",
+                "2": "女",
+                "3": "不可用"
+              },
+              "multiple": false,
+              "excludes" : [],
+              "message": "性别不正确",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "value": 1
+      },
+
+      "phone": {
+        "label": "手机号",
+        "rules": [
+          {
+            "type": "match",
+            "options": {
+              "pattern": "/^1[3-9]{1}\\d{9}$/",
+              "not": false,
+              "message": "手机号是无效的。",
+              "skipOnEmpty": 1
+            }
+          }
+        ],
+        "hint" : "请输入手机号",
+        "value": ""
+      },
+      "password": {
+        "label": "密码",
+        "rules": [
+          {
+            "type": "match",
+            "options": {
+              "pattern": "/(?=^.{8,16}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
+              "not": false,
+              "message": "密码必须8-16位且包含大小写字母，数字或特殊字符。",
+              "skipOnEmpty": 1
+            }
+          },
+          {
+             "type":"required",
+             "options" : {
+                "message" : "密码必须填写"
+             }
+          }
+        ],
+        "hint" : "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
+        "value": ""
+      },
+      "upload": {
+          "label": "上传",
+          "value": [
+              {
+                  "name": "name-initial",
+                  "url": "url-initial"
+              }
+          ]
+      },
+      "search1": {
+        "label": "搜索1",
+        "hint" : "关键词",
+        "value": "key"
+      },
+      "search2": {
+        "label": "搜索2",
+        "hint" : "关键词",
+        "value": 1
+      }
+    }
+}

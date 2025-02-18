@@ -1,0 +1,24 @@
+{
+    "code" : 0,
+    "msg" : "操作成功",
+    "data" : {
+        "items" : [
+            {
+                "id" : 4,
+                "name" : "Jim Green"
+            },
+            {
+                "id" : 5,
+                "name" : "Tom"
+            }
+        ],
+        "meta":{
+            "currentPage":2,
+            "pageCount":2,
+            "perPage":5,
+            "totalCount":6
+        },
+        "sort":[]
+    }
+}
+

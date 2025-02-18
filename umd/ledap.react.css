@@ -1,0 +1,18 @@
+body p {
+  margin-bottom: 14px;
+}
+
+label {
+    cursor: pointer;
+    background-color: antiquewhite;
+}
+._formitem_wNmvp {
+  background-color: red;
+}
+._formitem_wNmvp input {
+  border: 1px solid blue;
+}
+
+._formitem2_KlGz2 {
+    border: 2px solid yellow
+}

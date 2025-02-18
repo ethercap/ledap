@@ -1,8 +1,6 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
         "sourceMap": true,
         "strict": false,
         "noImplicitAny": false,
@@ -21,12 +19,6 @@
         }
     },
     "include": [
-        "./src/**/*",
-        "global.d.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "typings/main",
-        "typings/main.d.ts"
+        "src"
     ]
 }

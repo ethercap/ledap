@@ -37,9 +37,9 @@ npm run build
 
 ## 开发 & demo 调试
 
-```
-npm run dev
-```
+> umd 调试: `npm run dev`
+
+> react 热更新调试: `npm run dev:react`
 
 ## 文档
 

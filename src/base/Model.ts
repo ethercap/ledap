@@ -7,6 +7,7 @@ export default class Model extends BaseObject {
     public static SCENARIO_DEFAULT = 'default';
     public static EVENT_BEFORELOAD = 'MODEL_BEFORE_LOAD';
     public static EVENT_LOAD = 'MODEL_LOAD';
+    public static EVENT_CHANGED = 'MODEL_CHANGED'
     public static EVENT_AFTERLOAD = 'MODEL_AFTER_LOAD';
     public static EVENT_BEFORE_VALIDATE = 'MODEL_BEFORE_VALIDATE';
     public static EVENT_AFTER_VALIDATE = 'MODEL_AFTER_VALIDATE';
