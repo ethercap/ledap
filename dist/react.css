@@ -1,0 +1,18 @@
+body p {
+  margin-bottom: 14px;
+}
+
+label {
+    /* cursor: pointer;
+    background-color: antiquewhite; */
+}
+._module_formitem_m6q_j.required .ant-form-item-label label::before {
+  content: "*";
+  color: #ff4d4f;
+}
+
+._form_kRBRi.inline {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
