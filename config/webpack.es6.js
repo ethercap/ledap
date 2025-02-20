@@ -23,14 +23,15 @@ module.exports = (env) => {
             'ledap': './src/index.ts'
         },
         externals: {
-            "react": 'React',
+            "react": 'react',
             "jquery": 'jquery',
-            'react-dom': 'ReactDOM'
+            'react-dom': 'react-dom',
+            'antd': 'antd'
         },
         output: {
             path: path.resolve(__dirname, '../dist'),
             filename: '[name].js',
-            libraryTarget: 'module', // ES6 模块
+            libraryTarget: 'umd', // ES6 模块
             module: true,
         },
         experiments: {
