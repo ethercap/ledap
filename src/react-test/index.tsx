@@ -6,8 +6,7 @@ import { ConfigProvider } from "@/platforms/react";
 import "./ledap-init";
 import "./style.less";
 import ModelTestComponent from "./ModelTest";
-
-console.log("react-test", ledap, core);
+import TableTest from "./TableTest";
 
 function App() {
   return (
@@ -16,6 +15,7 @@ function App() {
         this is app
         <div className="react-form">
           <ModelTestComponent />
+          <TableTest />
         </div>
       </div>
     </ConfigProvider>

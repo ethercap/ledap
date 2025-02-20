@@ -29,7 +29,13 @@ module.exports = () => {
             open: true,
             devMiddleware: {
                 writeToDisk: false,
-            }
+            },
+            proxy: [{
+                context: ['/mis-api'],
+                target: 'http://mis.dev.chuanyuapp.com',
+                pathRewrite: { '^/mis-api': '' },
+                // secure: false
+            }]
         },
         plugins: [
             new HtmlWebpackPlugin({

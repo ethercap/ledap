@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import FormContext from "../../contexts/FormContext";
-// import { Form as AntForm } from "antd";
+import { Form as AntForm, FormProps as AntFormProps } from "antd";
 import { _form } from "./form.module.less";
 import classnames from "classnames";
 
-interface FormProps {
+interface FormProps extends AntFormProps {
   model: any;
   children?: any;
   className?: string;
-  tag?: string;
   inline?: boolean;
 }
 
 export default function Form(props: FormProps) {
-  const { model, tag: Tag = "div", className, inline, ...reset } = props;
+  const { model, className, inline, ...reset } = props;
   const [bool, setBool] = useState(false);
   function getValue(attr) {
     return model[attr];
@@ -27,12 +26,12 @@ export default function Form(props: FormProps) {
   }
   return (
     <FormContext.Provider value={{ getValue, setValue, updateView, model }}>
-      <Tag
+      <AntForm
         className={classnames(_form, className, inline && "inline")}
         {...reset}
       >
         {props.children}
-      </Tag>
+      </AntForm>
     </FormContext.Provider>
   );
 }

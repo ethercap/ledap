@@ -3,16 +3,16 @@ body p {
 }
 
 label {
-    cursor: pointer;
-    background-color: antiquewhite;
+    /* cursor: pointer;
+    background-color: antiquewhite; */
 }
-._formitem_wNmvp {
-  background-color: red;
-}
-._formitem_wNmvp input {
-  border: 1px solid blue;
+._module_formitem_m6q_j.required .ant-form-item-label label::before {
+  content: "*";
+  color: #ff4d4f;
 }
 
-._formitem2_KlGz2 {
-    border: 2px solid yellow
+._form_kRBRi.inline {
+  display: flex;
+  flex-wrap: nowrap;
 }
+

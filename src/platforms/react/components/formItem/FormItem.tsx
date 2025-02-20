@@ -32,49 +32,49 @@ function FormItem(props: FormItemProp) {
     antProps = {},
     dp,
     FormComponentProps,
+    ...reset
   } = props;
-  const { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = antProps;
+  const { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
   const { setValue, getValue, updateView, model } = propModel
     ? useLedapModel(propModel)
     : useContext(FormContext);
 
   const _setValue = (val) => {
-    console.log("form item set val:", val);
     setValue(attr, val);
   };
 
   const required = model?.isRequired(attr);
 
-  console.log("render formItem:", {
-    value: model[attr],
-    hasError: model.hasErrors(attr),
-    error: model.getFirstError(attr),
-  });
+  // console.log("render formItem:", {
+  //   attr,
+  //   value: model[attr],
+  //   hasError: model.hasErrors(attr),
+  //   error: model.getFirstError(attr),
+  // });
 
   return (
     <FormItemContext.Provider value={{ getValue, setValue }}>
-      <div className={classnames(_module_formitem, { required })}>
-        <Form.Item
-          label={label || model?.getAttributeLabel(attr)}
-          labelCol={labelCol}
-          wrapperCol={wrapperCol}
-          validateStatus={model.hasErrors(attr) ? "error" : null}
-          help={model.getFirstError(attr)}
-          {...antProps}
-        >
-          <FormComponent
-            model={model}
-            attr={attr}
-            validate={validate}
-            onSetValue={_setValue}
-            value={model[attr]}
-            onBlur={updateView}
-            dp={dp}
-            {...FormComponentProps}
-          />
-          {children}
-        </Form.Item>
-      </div>
+      <Form.Item
+        className={classnames(_module_formitem, { required })}
+        label={label || model?.getAttributeLabel(attr)}
+        labelCol={labelCol}
+        wrapperCol={wrapperCol}
+        validateStatus={model.hasErrors(attr) ? "error" : null}
+        help={model.getFirstError(attr)}
+        {...reset}
+      >
+        <FormComponent
+          model={model}
+          attr={attr}
+          validate={validate}
+          onSetValue={_setValue}
+          value={model[attr]}
+          onBlur={updateView}
+          dp={dp}
+          {...FormComponentProps}
+        />
+        {children}
+      </Form.Item>
     </FormItemContext.Provider>
   );
 }

@@ -34,7 +34,6 @@ export default function CheckboxGroup(props: CheckboxGroupProps) {
 
   const _changeCheckbox = ({ target }, value) => {
     const { checked } = target;
-    console.log("_changeCheckbox", checked, value);
     if (checked) {
       open(value);
     } else {

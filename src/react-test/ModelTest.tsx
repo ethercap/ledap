@@ -8,73 +8,90 @@ import {
   RadioGroup,
   CheckboxGroup,
   Select,
+  SearchInput,
+  DatePicker,
+  Table,
 } from "@/platforms/react";
 
 export default function ModelTestComponent() {
-  const [model1, setModel1] = useState(null);
-  const [search1Dp, setSearch1Dp] = useState(null);
-  useEffect(() => {
-    // 表单model
-    ledap.App.request(
-      {
-        url: "/data/model.json",
+  const model1 = ledap.App.useModel({
+    url: "/data/model.json",
+  });
+  const search1Dp = ledap.App.useWebDp({
+    httpOptions: {
+      url: "/data/dp_1.json",
+      params: {
+        "per-page": 10,
       },
-      (data) => {
-        const model1 = ledap.App.getModel(data.data);
-        setModel1(model1);
+    },
+  });
+  const search2Dp = ledap.App.useWebDp({
+    httpOptions: {
+      url: "/data/dp_2.json",
+      params: {
+        "per-page": 10,
       },
-      (error) => {}
-    );
-    // 搜索框1的dp数据
-  }, []);
+    },
+  });
 
   if (!model1) {
     return "loading...";
   }
 
   return (
-    <Form model={model1}>
+    <Form model={model1} layout="horizontal">
       {/*使用默认input*/}
       <FormItem attr="name" />
-      {/* 使用Number类型Input */}
       <FormItem attr="age" FormComponentProps={{ type: "number" }} />
-      {/* textarea */}
+      <FormItem attr="password" FormComponentProps={{ type: "password" }} />
       <FormItem
         attr="introduce"
-        FormComponentProps={{ type: "textarea", antProps: { rows: 8 } }}
+        FormComponentProps={{ type: "textarea", rows: 8 }}
       />
-      {/* 手机号 (增加前置标签) */}
-      <FormItem
-        attr="phone"
-        FormComponentProps={{ antProps: { addonBefore: "+86" } }}
-      />
-      {/* 手机号 (实时校验+[todo]地区选择) */}
+      <FormItem attr="phone" FormComponentProps={{ addonBefore: "+86" }} />
       <FormItem
         attr="phone"
         validate={[FormValidateEvent.input]}
-        FormComponentProps={{ antProps: { addonBefore: "+86" } }}
-      />
-      {/* 邮箱 */}
+        FormComponentProps={{ addonBefore: "+86", style: { width: 200 } }}
+      >
+        实时校验
+      </FormItem>
       <FormItem attr="email" />
-      {/* 单选框 */}
       <FormItem attr="sex" FormComponent={RadioGroup} />
-      {/* 按钮单选框 */}
       <FormItem
         attr="sex"
         FormComponent={RadioGroup}
-        FormComponentProps={{ antProps: { optionType: "button" } }}
+        FormComponentProps={{ optionType: "button" }}
       />
-      {/* 多选框 */}
       <FormItem attr="city" FormComponent={CheckboxGroup} />
-      {/* 多选框 */}
       <FormItem attr="stayCity" FormComponent={CheckboxGroup} />
-
-      {/* 选择框（单选） */}
       <FormItem attr="city" FormComponent={Select} />
-      {/* 选择框（多选） */}
       <FormItem attr="stayCity" FormComponent={Select} />
-
-      <Button>123</Button>
+      <FormItem
+        attr="search1"
+        FormComponent={SearchInput}
+        dp={search1Dp}
+        FormComponentProps={{
+          fieldNames: { label: "name", value: "id" },
+        }}
+      />
+      <FormItem
+        attr="search2"
+        FormComponent={SearchInput}
+        dp={search2Dp}
+        FormComponentProps={{
+          mode: "multiple",
+          fieldNames: { label: "name", value: "id" },
+        }}
+      />
+      <FormItem attr="birthDate" FormComponent={DatePicker} />
+      <Table
+        columns={[
+          { attribute: "id", label: "ID", useSort: true },
+          { attribute: "name", label: "名字" },
+        ]}
+        dp={search1Dp}
+      />
     </Form>
   );
 }

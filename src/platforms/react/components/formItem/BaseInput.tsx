@@ -23,8 +23,6 @@ interface BaseInputProps {
   onInput?: Function;
   onSetValue?: Function;
   value?: string;
-  className?: string;
-  antProps?: any; // ANTD穿透属性
 }
 
 const getControlConponent = (tag, type) => {
@@ -56,15 +54,14 @@ export default function BaseInput(props: BaseInputProps) {
     onInput,
     onSetValue,
     value = "",
-    className,
-    antProps = {},
+    ...reset
   } = props;
 
   function _checkValue(eventType) {
     if (validate.indexOf(eventType) > -1) {
       const validateRes = model.validate(attr, true);
       const error = model.getFirstError(attr);
-      console.log("call validate", { model, attr, validateRes, error });
+      // console.log("call validate", { model, attr, validateRes, error });
     }
   }
   function _onInput(e) {
@@ -93,8 +90,7 @@ export default function BaseInput(props: BaseInputProps) {
       onChange={_onInput}
       onFocus={_onFocus}
       onBlur={_onBlur}
-      {...antProps}
-      classNames={classnames(className, antProps.classNames)}
+      {...reset}
     />
   );
 }
