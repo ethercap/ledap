@@ -1267,6 +1267,20 @@ var _default = exports["default"] = locale;
 
 /***/ }),
 
+/***/ 5338:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(9514);
+if (true) {
+  exports.createRoot = m.createRoot;
+  exports.hydrateRoot = m.hydrateRoot;
+} else { var i; }
+
+
+/***/ }),
+
 /***/ 2059:
 /***/ ((module) => {
 
@@ -1946,11 +1960,10 @@ antdColumn.key="action";}// 排序
 if(attribute&&useSort){antdColumn.showSorterTooltip={target:"sorter-icon"};var sortOrder=getSortDir(dp,attribute);antdColumn.sortOrder=sortOrder;antdColumn.sortDirections=["ascend","descend","ascend"];antdColumn.defaultSortOrder=sortOrder;antdColumn.sorter=true;}if(typeof value=="function"){antdColumn.render=function(val,item,index){return value(item,val,index);};}targetColumns.push(antdColumn);};for(var i=0;i<ledapColumns.length;i++){_loop();}return targetColumns;}function getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/external_react_default().createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}function getSortDir(dp,attribute){return dp.isSortAsc(attribute)?"ascend":dp.isSortDesc(attribute)?"descend":null;}
 ;// ./src/platforms/react/components/button/ButtonGroup.tsx
 function ButtonGroup(props){return/*#__PURE__*/external_react_default().createElement(external_antd_.Button.Group,props);}
-// EXTERNAL MODULE: external "react-dom"
-var external_react_dom_ = __webpack_require__(9514);
-var external_react_dom_default = /*#__PURE__*/__webpack_require__.n(external_react_dom_);
+// EXTERNAL MODULE: ./node_modules/react-dom/client.js
+var client = __webpack_require__(5338);
 ;// ./src/platforms/react/components/modal/Modal.tsx
-var Modal_excluded=["onClose","root","children"],_excluded2=["Modal","onClose","container"];var ModalContext=/*#__PURE__*/(0,external_react_.createContext)({closeModal:null});function Modal(props){var onClose=props.onClose,root=props.root,children=props.children,reset=_objectWithoutProperties(props,Modal_excluded);var _useContext=(0,external_react_.useContext)(ModalContext),open=_useContext.open,closeModal=_useContext.closeModal;var _close=function _close(){closeModal();};function _afterClose(e){onClose&&onClose(e);}(0,external_react_.useEffect)(function(){return function(){var _root$unmount;root===null||root===void 0||(_root$unmount=root.unmount)===null||_root$unmount===void 0||_root$unmount.call(root);};},[]);function _onCancel(){_close();}return/*#__PURE__*/external_react_default().createElement(external_antd_.Modal,_extends({destroyOnClose:true,open:open,afterClose:_afterClose,onCancel:_onCancel},reset),children);}Modal.create=function(props){var ModalComponent=props.Modal,onClose=props.onClose,container=props.container,reset=_objectWithoutProperties(props,_excluded2);var _container=container||document.body;var div=document.createElement("div");_container.append(div);var root=external_react_dom_default().createRoot(div);var _onClose=function _onClose(){var _div;// dom清理
+var Modal_excluded=["onClose","root","children"],_excluded2=["Modal","onClose","container"];var ModalContext=/*#__PURE__*/(0,external_react_.createContext)({closeModal:null});function Modal(props){var onClose=props.onClose,root=props.root,children=props.children,reset=_objectWithoutProperties(props,Modal_excluded);var _useContext=(0,external_react_.useContext)(ModalContext),open=_useContext.open,closeModal=_useContext.closeModal;var _close=function _close(){closeModal();};function _afterClose(e){onClose&&onClose(e);}(0,external_react_.useEffect)(function(){return function(){var _root$unmount;root===null||root===void 0||(_root$unmount=root.unmount)===null||_root$unmount===void 0||_root$unmount.call(root);};},[]);function _onCancel(){_close();}return/*#__PURE__*/external_react_default().createElement(external_antd_.Modal,_extends({destroyOnClose:true,open:open,afterClose:_afterClose,onCancel:_onCancel},reset),children);}Modal.create=function(props){var ModalComponent=props.Modal,onClose=props.onClose,container=props.container,reset=_objectWithoutProperties(props,_excluded2);var _container=container||document.body;var div=document.createElement("div");_container.append(div);var root=client.createRoot(div);var _onClose=function _onClose(){var _div;// dom清理
 onClose&&(onClose===null||onClose===void 0?void 0:onClose());// 在组件内部unmount
 // root.unmount();
 (_div=div)===null||_div===void 0||(_div=_div.parentNode)===null||_div===void 0||_div.removeChild(div);div=null;};root.render(/*#__PURE__*/external_react_default().createElement(ModalProvidr,null,/*#__PURE__*/external_react_default().createElement(ModalComponent,_extends({root:root},reset,{onClose:_onClose}))));};function ModalProvidr(props){var _useState=(0,external_react_.useState)(true),_useState2=_slicedToArray(_useState,2),open=_useState2[0],setOpen=_useState2[1];function _closeModal(){setOpen(false);}return/*#__PURE__*/external_react_default().createElement(ModalContext.Provider,{value:{closeModal:_closeModal,open:open}},props.children);}Modal.context=ModalContext;Modal.useModalContext=function(){return (0,external_react_.useContext)(ModalContext);};Modal.info=external_antd_.Modal.info;Modal.success=external_antd_.Modal.success;Modal.error=external_antd_.Modal.error;Modal.warning=external_antd_.Modal.warning;Modal.confirm=external_antd_.Modal.confirm;/* harmony default export */ const modal_Modal = (Modal);

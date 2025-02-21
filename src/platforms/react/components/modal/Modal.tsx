@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Modal as AntModal, ModalProps as AntModalProps } from "antd";
 
 const ModalContext = createContext({ closeModal: null });
