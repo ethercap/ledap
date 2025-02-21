@@ -5,9 +5,16 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
     "./react": {
       "import": "./dist/react.js",
       "require": "./dist/react.js"
+    },
+    "./react.css": {
+      "import": "./dist/react.css"
     },
     "./core": {
       "import": "./dist/core.js",
