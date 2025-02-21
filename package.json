@@ -2,7 +2,22 @@
   "name": "ledap",
   "version": "0.1.13",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
-  "main": "dist/",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "exports": {
+    "react": {
+      "import": "./dist/react.js",
+      "require": "./dist/react.js"
+    },
+    "core": {
+      "import": "./dist/core.js",
+      "require": "./dist/core.js"
+    },
+    "app": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "dev": "webpack-dev-server --config=./config/webpack.devServer.js",
     "dev:react": "webpack-dev-server --config=./config/webpack.react.devServer.js",

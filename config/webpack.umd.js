@@ -60,14 +60,14 @@ module.exports = (env = {}, argv) => {
             minimize: true,
         },
         plugins: [
-            new CopyWebpackPlugin({
-                patterns: [{
-                    context: './',
-                    from: 'umd',
-                    to: '../examples/dist'
-                }]
+            // new CopyWebpackPlugin({
+            //     patterns: [{
+            //         context: './',
+            //         from: 'umd',
+            //         to: '../examples/dist'
+            //     }]
 
-            })
+            // })
         ]
     })
 };

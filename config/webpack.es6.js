@@ -20,11 +20,10 @@ module.exports = (env) => {
         entry: {
             'react': './src/platforms/react/index.ts',
             'core': './src/index.core.ts',
-            'ledap': './src/index.ts'
+            'index': './src/index.ts'
         },
         externals: {
             "react": 'react',
-            "jquery": 'jquery',
             'react-dom': 'react-dom',
             'antd': 'antd'
         },
