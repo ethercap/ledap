@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as ledap from "./lib/ledap";
 import {
   Form,
@@ -11,12 +11,15 @@ import {
   SearchInput,
   DatePicker,
   Table,
+  Uploader,
 } from "@/platforms/react";
 
 export default function ModelTestComponent() {
   const model1 = ledap.App.useModel({
     url: "/data/model.json",
   });
+  const fileModelRef = useRef(new ledap.Model({ file1: null, files2: [] }));
+  const fileModel = fileModelRef.current;
   const search1Dp = ledap.App.useWebDp({
     httpOptions: {
       url: "/data/dp_1.json",
@@ -37,7 +40,7 @@ export default function ModelTestComponent() {
   if (!model1) {
     return "loading...";
   }
-
+  console.log({ fileModel });
   return (
     <Form model={model1} layout="horizontal">
       {/*使用默认input*/}
@@ -85,6 +88,30 @@ export default function ModelTestComponent() {
         }}
       />
       <FormItem attr="birthDate" FormComponent={DatePicker} />
+      <FormItem
+        attr="file1"
+        model={fileModel}
+        FormComponent={Uploader}
+        FormComponentProps={{
+          multiple: false,
+          dragger: true,
+          hint: "PNG格式 512x512 不超过1M",
+          text: "点击或拖拽到此处上传file1",
+          mimeTypes: ["image/png"],
+          maxFileKBSize: 1024,
+          maxPxSize: { width: 512, height: 512 },
+        }}
+      />
+      <FormItem
+        attr="files2"
+        model={fileModel}
+        FormComponent={Uploader}
+        FormComponentProps={{
+          multiple: true,
+          children: <Button>点击上传多文件</Button>,
+          mimeTypes: ["image/png", "image/webp", "image/jpg", "image/jpeg"],
+        }}
+      />
       <Table
         columns={[
           { attribute: "id", label: "ID", useSort: true },

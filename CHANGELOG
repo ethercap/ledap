@@ -180,3 +180,9 @@
 - 文件打包修改
   - 支持同时输出 umd 文件和 esm 模块
   - webpack 打包修改，支持引入 css/less/cssModule/图片资源等
+
+## [0.1.13]
+
+### Added
+
+- 增加Uploader组件

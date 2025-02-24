@@ -1,0 +1,197 @@
+import React, { useState, useEffect } from "react";
+import type { UploadProps } from "antd";
+import { message, Upload } from "antd";
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+
+interface Size {
+  width: number;
+  height: number;
+}
+
+interface UploaderDraggerProps extends UploadProps {
+  model: any;
+  attr: string;
+  value?: any;
+  onSetValue?: Function;
+  children?: any;
+  dragger?: boolean;
+  icon?: any;
+  text?: any;
+  hint?: any;
+  maxPxSize?: Size;
+  maxFileKBSize?: number;
+  mimeTypes?: string[];
+}
+
+function Uploader(props: UploaderDraggerProps) {
+  const {
+    icon,
+    attr,
+    model,
+    value,
+    onSetValue,
+    text,
+    hint,
+    dragger = false,
+    children,
+    defaultFileList,
+    beforeUpload, // 业务代码可返回false或promise<reject>不进行记录
+    maxPxSize,
+    maxFileKBSize,
+    mimeTypes,
+    ...reset
+  } = props;
+  const { multiple = true, onChange } = reset;
+  const _hint = hint || model?.getAttributeLabel?.(attr);
+  const { fileList, removeFile, addFile, clear } = useFileList(defaultFileList);
+
+  function _addFile(file) {
+    _localCheck(file)
+      .then(() => {
+        const clear = reset.multiple === false ? true : false;
+        addFile(file, clear);
+      })
+      .catch((e) => {
+        console.warn(`文件校验未通过：`, e);
+      });
+  }
+
+  const _localCheck = async (file) => {
+    try {
+      // 文件格式校验
+      if (!checkFileType(file, mimeTypes)) {
+        throw "file type failed";
+      }
+      // 文件大小校验
+      const fileKb = file.size / 1024;
+      if (maxFileKBSize && fileKb > maxFileKBSize) {
+        throw "file size failed";
+      }
+      // 图像大小校验
+      if (maxPxSize) {
+        return await checkFilePxSize(file, maxPxSize.width, maxPxSize.height);
+      }
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
+  function _beforeUpload(file) {
+    if (typeof beforeUpload === "function") {
+      // 业务校验
+      const res = beforeUpload?.(file, fileList);
+
+      if (res?.then && typeof res.then == "function") {
+        res
+          .then((promiseResule) => {
+            if (promiseResule !== false) {
+              console.log("call _addFile", promiseResule);
+              _addFile(file);
+            }
+          })
+          .catch?.(() => {});
+      } else if (res === false) {
+        // 值类型
+        return false;
+      } else {
+        console.log("call _addFile res", res);
+        _addFile(file);
+      }
+    } else {
+      _addFile(file);
+    }
+
+    // 自定义上传
+    return false;
+  }
+
+  function _onRemove(file) {
+    removeFile(file);
+  }
+  console.log(attr, "files:", fileList);
+
+  useEffect(() => {
+    const val = multiple ? [...fileList] : fileList[0];
+    onChange?.(val);
+    onSetValue?.(val);
+  }, [fileList]);
+  const Fragment = dragger ? Upload.Dragger : Upload;
+  const content = dragger ? (
+    <>
+      <p className="ant-upload-drag-icon">{icon || <InboxOutlined />}</p>
+      <p className="ant-upload-text">{text || "点击或将文件拖拽到这里上传"}</p>
+      {_hint && <p className="ant-upload-hint">{_hint}</p>}
+    </>
+  ) : typeof children == "function" ? (
+    children(fileList)
+  ) : (
+    children
+  );
+  return (
+    <Fragment
+      fileList={fileList}
+      onRemove={_onRemove}
+      beforeUpload={_beforeUpload}
+      {...reset}
+    >
+      {content}
+    </Fragment>
+  );
+}
+
+function useFileList(initFileList = []) {
+  const [fileList, setFileList] = useState(initFileList);
+
+  function addFile(file, clear = false) {
+    const _olfFiles = clear ? [] : fileList;
+    setFileList([..._olfFiles, file]);
+  }
+  function removeFile(file) {
+    console.log("call removefile:", file);
+    const index = fileList.indexOf(file);
+    const newFileList = fileList.slice();
+    newFileList.splice(index, 1);
+    setFileList(newFileList);
+  }
+  function clear() {
+    setFileList([]);
+  }
+  return {
+    fileList,
+    addFile,
+    removeFile,
+    clear,
+  };
+}
+
+function checkFileType(file, mimeTypes) {
+  console.log({ file, mimeTypes });
+  if (mimeTypes && mimeTypes.length > 0) {
+    return mimeTypes.indexOf(file.type) > -1;
+  }
+  return true;
+}
+function checkFilePxSize(file, width, height) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = function () {
+      if (img.width > width || img.height > height) {
+        console.warn("文件尺寸过大", {
+          imgWidth: img.width,
+          imgHeight: img.height,
+        });
+        reject(false);
+      } else {
+        resolve(true);
+      }
+    };
+    img.onerror = function (e) {
+      console.warn("load img error", e);
+      reject(null);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+export default Uploader;
