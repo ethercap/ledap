@@ -53,7 +53,7 @@ export default function Form(props: FormProps) {
       }
     }
     // console.log("form on filish json:", data, json);
-    onFinish?.(data, json);
+    onFinish?.(data, model.getFirstError());
   }
   return (
     <FormContext.Provider value={{ getValue, setValue, updateView, model }}>

@@ -113,7 +113,7 @@ function Uploader(props: UploaderDraggerProps) {
         res
           .then((promiseResule) => {
             if (promiseResule !== false) {
-              console.log("call _addFile", promiseResule);
+              // console.log("call _addFile", promiseResule);
               _addFile(file);
             }
           })
@@ -122,7 +122,7 @@ function Uploader(props: UploaderDraggerProps) {
         // 值类型
         return false;
       } else {
-        console.log("call _addFile res", res);
+        // console.log("call _addFile res", res);
         _addFile(file);
       }
     } else {
@@ -184,7 +184,7 @@ function useFileList(
     action && uploadFile(file);
   }
   function removeFile(file) {
-    console.log("call removefile:", file);
+    // console.log("call removefile:", file);
     const index = fileList.indexOf(file);
     const newFileList = fileList.slice();
     newFileList.splice(index, 1);

@@ -41,6 +41,7 @@ export default function CheckboxGroup(props: CheckboxGroupProps) {
     }
     const valueList = getValue();
     onSetValue?.(valueList);
+    model?.validate?.(attr);
   };
   const targetValue = _getModelValue();
   return (

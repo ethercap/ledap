@@ -24,6 +24,7 @@ export default function Select(props: SelectProps) {
 
   function _onChange(e) {
     onSetValue?.(e);
+    model?.validate?.(attr);
   }
   const dictOptions = lodash.get(model.rules(), [attr, "dict"], {});
   const maxCount = dictOptions?.multiple ? dictOptions.max : undefined;

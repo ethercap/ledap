@@ -112,7 +112,6 @@ export default function ModelTestComponent() {
 
         <FormItem
           attr="upload"
-          // model={fileModel}
           FormComponent={Uploader}
           FormComponentProps={{
             multiple: true,
@@ -121,7 +120,7 @@ export default function ModelTestComponent() {
             actionHeaders: {},
             urlPath: "data.url[0]",
             children: <Button>点击上传多文件</Button>,
-            mimeTypes: ["image/png", "image/webp", "image/jpg", "image/jpeg"],
+            mimeTypes: ["image/png"],
           }}
         />
         <Button type="primary" htmlType="submit">

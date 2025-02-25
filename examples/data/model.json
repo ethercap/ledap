@@ -71,6 +71,14 @@
       "label": "城市",
       "rules": [
         {
+          "type": "required",
+          "options": {
+            "message": "城市不能为空。"
+          },
+          "skipOnError": true,
+          "skipOnEmpty": false
+        },
+        {
           "type": "dict",
           "options": {
             "list": {
@@ -104,7 +112,7 @@
           }
         }
       ],
-      "value": "上海"
+      "value": ""
     },
     "birthDate": {
       "label": "生日",
