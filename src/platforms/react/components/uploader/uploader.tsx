@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { get } from "lodash";
 
 interface Size {
   width: number;
   height: number;
+}
+interface FileInfo {
+  name: string;
+  url?: string;
 }
 
 interface UploaderDraggerProps extends UploadProps {
@@ -20,7 +25,13 @@ interface UploaderDraggerProps extends UploadProps {
   hint?: any;
   maxPxSize?: Size;
   maxFileKBSize?: number;
+  action?: string;
+  data?: any;
+  actionHeaders?: any;
+  urlPath?: string;
   mimeTypes?: string[];
+  onError?: (msg: string) => void;
+  onFileChanged?: Function;
 }
 
 function Uploader(props: UploaderDraggerProps) {
@@ -34,16 +45,28 @@ function Uploader(props: UploaderDraggerProps) {
     hint,
     dragger = false,
     children,
-    defaultFileList,
     beforeUpload, // 业务代码可返回false或promise<reject>不进行记录
     maxPxSize,
     maxFileKBSize,
     mimeTypes,
+    action,
+    data: actionParams,
+    actionHeaders,
+    urlPath,
+    onError,
     ...reset
   } = props;
-  const { multiple = true, onChange } = reset;
+  const { multiple = true, onFileChanged } = reset;
   const _hint = hint || model?.getAttributeLabel?.(attr);
-  const { fileList, removeFile, addFile, clear } = useFileList(defaultFileList);
+  const propValue = model[attr];
+  const _defaultFileList = getDefaultFiles(propValue);
+  const { fileList, removeFile, addFile, clear } = useFileList(
+    _defaultFileList,
+    action,
+    actionParams,
+    actionHeaders,
+    urlPath
+  );
 
   function _addFile(file) {
     _localCheck(file)
@@ -51,8 +74,8 @@ function Uploader(props: UploaderDraggerProps) {
         const clear = reset.multiple === false ? true : false;
         addFile(file, clear);
       })
-      .catch((e) => {
-        console.warn(`文件校验未通过：`, e);
+      .catch((errmsg) => {
+        onError?.(errmsg);
       });
   }
 
@@ -60,16 +83,20 @@ function Uploader(props: UploaderDraggerProps) {
     try {
       // 文件格式校验
       if (!checkFileType(file, mimeTypes)) {
-        throw "file type failed";
+        throw "文件格式错误";
       }
       // 文件大小校验
       const fileKb = file.size / 1024;
       if (maxFileKBSize && fileKb > maxFileKBSize) {
-        throw "file size failed";
+        throw "文件过大";
       }
       // 图像大小校验
       if (maxPxSize) {
-        return await checkFilePxSize(file, maxPxSize.width, maxPxSize.height);
+        try {
+          await checkFilePxSize(file, maxPxSize.width, maxPxSize.height);
+        } catch (e) {
+          throw e;
+        }
       }
       return Promise.resolve(true);
     } catch (e) {
@@ -109,12 +136,14 @@ function Uploader(props: UploaderDraggerProps) {
   function _onRemove(file) {
     removeFile(file);
   }
-  console.log(attr, "files:", fileList);
+  // console.log(attr, "files:", fileList);
 
   useEffect(() => {
-    const val = multiple ? [...fileList] : fileList[0];
-    onChange?.(val);
-    onSetValue?.(val);
+    // console.log("file list changed:", fileList);
+    const _fileList = action ? fileList.map((f) => f.url) : fileList;
+    const targetFile = multiple ? [..._fileList] : _fileList[0];
+    onFileChanged?.(targetFile);
+    onSetValue?.(targetFile);
   }, [fileList]);
   const Fragment = dragger ? Upload.Dragger : Upload;
   const content = dragger ? (
@@ -140,12 +169,19 @@ function Uploader(props: UploaderDraggerProps) {
   );
 }
 
-function useFileList(initFileList = []) {
+function useFileList(
+  initFileList = [],
+  action,
+  actionParams = {},
+  actionHeaders = {},
+  urlPath = ""
+) {
   const [fileList, setFileList] = useState(initFileList);
 
   function addFile(file, clear = false) {
     const _olfFiles = clear ? [] : fileList;
     setFileList([..._olfFiles, file]);
+    action && uploadFile(file);
   }
   function removeFile(file) {
     console.log("call removefile:", file);
@@ -157,16 +193,51 @@ function useFileList(initFileList = []) {
   function clear() {
     setFileList([]);
   }
+  function updateFile(fileInfo) {
+    setFileList((fileList) => {
+      return fileList.map((file) => {
+        const { uid, ...reset } = fileInfo;
+        if (file.uid == uid) {
+          Object.assign(file, reset);
+          return file;
+        } else {
+          return file;
+        }
+      });
+    });
+  }
+  function uploadFile(file) {
+    var formData = new FormData();
+    formData.append(file.name, file);
+    for (let key in actionParams) {
+      formData.append(key, actionParams[key]);
+    }
+    fetch(action, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+      headers: {
+        "x-requested-with": "XMLHttpRequest",
+        ...actionHeaders,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((res) => {
+        const url = get(res, urlPath || "data.url[0]", "");
+        url && updateFile({ uid: file.uid, url, status: "success" });
+      });
+  }
   return {
     fileList,
     addFile,
     removeFile,
     clear,
+    uploadFile,
   };
 }
 
 function checkFileType(file, mimeTypes) {
-  console.log({ file, mimeTypes });
+  // console.log({ file, mimeTypes });
   if (mimeTypes && mimeTypes.length > 0) {
     return mimeTypes.indexOf(file.type) > -1;
   }
@@ -177,21 +248,30 @@ function checkFilePxSize(file, width, height) {
     const img = new Image();
     img.onload = function () {
       if (img.width > width || img.height > height) {
-        console.warn("文件尺寸过大", {
-          imgWidth: img.width,
-          imgHeight: img.height,
-        });
-        reject(false);
+        reject("图像尺寸过大");
       } else {
         resolve(true);
       }
     };
     img.onerror = function (e) {
-      console.warn("load img error", e);
-      reject(null);
+      reject("图像加载失败");
     };
     img.src = URL.createObjectURL(file);
   });
+}
+
+function getDefaultFiles(value) {
+  if (!value) {
+    return [];
+  }
+  if (typeof value == "string" && value.length > 0) {
+    return [{ url: value, name: value }];
+  }
+  // array
+  if (value.length > 0 && value[0].url) {
+    return value;
+  }
+  return [];
 }
 
 export default Uploader;

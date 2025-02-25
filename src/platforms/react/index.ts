@@ -13,6 +13,7 @@ export { default as Table } from './components/table/Table'
 export { default as ButtonGroup } from './components/button/ButtonGroup'
 export { default as Modal } from './components/modal/Modal'
 export { default as Uploader } from './components/uploader/uploader'
+export { default as Segmented } from './components/segmented/Segmented'
 
 export * from './contexts/'
 

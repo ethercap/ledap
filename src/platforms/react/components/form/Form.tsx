@@ -9,10 +9,19 @@ interface FormProps extends AntFormProps {
   children?: any;
   className?: string;
   inline?: boolean;
+  onFinish?: (data: any, json: any) => void;
+  enctype?: string;
 }
 
 export default function Form(props: FormProps) {
-  const { model, className, inline, ...reset } = props;
+  const {
+    model,
+    className,
+    inline,
+    onFinish,
+    enctype = "application/json",
+    ...reset
+  } = props;
   const [bool, setBool] = useState(false);
   function getValue(attr) {
     return model[attr];
@@ -24,10 +33,33 @@ export default function Form(props: FormProps) {
   function updateView() {
     setBool((bool) => !bool);
   }
+  function _onFinish(e) {
+    const json = { ...model };
+    let data = json;
+    switch (enctype.toLocaleLowerCase()) {
+      case "multipart/form-data": {
+        var formData = new FormData();
+        Object.keys(json).forEach((key) => {
+          if (json[key] === null) {
+            return;
+          }
+          formData.append(key, json[key]);
+        });
+        data = formData;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    // console.log("form on filish json:", data, json);
+    onFinish?.(data, json);
+  }
   return (
     <FormContext.Provider value={{ getValue, setValue, updateView, model }}>
       <AntForm
         className={classnames(_form, className, inline && "inline")}
+        onFinish={_onFinish}
         {...reset}
       >
         {props.children}
