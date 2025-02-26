@@ -122,6 +122,32 @@ export default function ModelTestComponent() {
             mimeTypes: ["image/png"],
           }}
         />
+        <FormItem
+          attr="upload2"
+          FormComponent={Uploader}
+          FormComponentProps={{
+            multiple: true,
+            action: "/mis-api/file/upload-resources",
+            data: {},
+            actionHeaders: {},
+            urlPath: "data.url[0]",
+            children: <Button>点击上传多文件</Button>,
+            mimeTypes: ["image/png"],
+          }}
+        />
+        <FormItem
+          attr="upload3"
+          FormComponent={Uploader}
+          FormComponentProps={{
+            multiple: false,
+            action: "/mis-api/file/upload-resources",
+            data: {},
+            actionHeaders: {},
+            urlPath: "data.url[0]",
+            children: <Button>点击上传文件</Button>,
+            mimeTypes: ["image/png"],
+          }}
+        />
         <Button type="primary" htmlType="submit">
           提交JSON表单
         </Button>

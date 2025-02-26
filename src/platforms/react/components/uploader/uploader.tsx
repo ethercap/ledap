@@ -267,9 +267,15 @@ function getDefaultFiles(value) {
   if (typeof value == "string" && value.length > 0) {
     return [{ url: value, name: value }];
   }
+  if (value.length == 0) {
+    return [];
+  }
   // array
-  if (value.length > 0 && value[0].url) {
+  if (value[0]?.url) {
     return value;
+  }
+  if (typeof value[0] == "string") {
+    return value.map((item) => ({ name: item, url: item }));
   }
   return [];
 }

@@ -238,6 +238,16 @@
         }
       ]
     },
+    "upload2": {
+      "label": "上传2(url-list)",
+      "value": [
+        "url-initial2"
+      ]
+    },
+    "upload3": {
+      "label": "上传3(string值)",
+      "value": "url-initial3"
+    },
     "search1": {
       "label": "搜索1",
       "hint": "关键词",
@@ -267,17 +277,6 @@
             "message": "道具图标必须是一条字符串。",
             "max": 255,
             "tooLong": "道具图标只能包含至多255个字符。",
-            "skipOnEmpty": 1
-          },
-          "skipOnError": true,
-          "skipOnEmpty": true
-        },
-        {
-          "type": "match",
-          "options": {
-            "pattern": {},
-            "not": true,
-            "message": "道具图标是无效的。",
             "skipOnEmpty": 1
           },
           "skipOnError": true,

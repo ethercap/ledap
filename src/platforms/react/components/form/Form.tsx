@@ -55,6 +55,7 @@ export default function Form(props: FormProps) {
     // console.log("form on filish json:", data, json);
     model?.validate?.();
     onSubmit?.(data, model.getFirstError());
+    updateView();
   }
   return (
     <FormContext.Provider value={{ getValue, setValue, updateView, model }}>
