@@ -9,7 +9,7 @@ interface FormProps extends AntFormProps {
   children?: any;
   className?: string;
   inline?: boolean;
-  onFinish?: (data: any, json: any) => void;
+  onSubmit?: (data: any, json: any) => void;
   enctype?: string;
 }
 
@@ -18,7 +18,7 @@ export default function Form(props: FormProps) {
     model,
     className,
     inline,
-    onFinish,
+    onSubmit,
     enctype = "application/json",
     ...reset
   } = props;
@@ -53,7 +53,8 @@ export default function Form(props: FormProps) {
       }
     }
     // console.log("form on filish json:", data, json);
-    onFinish?.(data, model.getFirstError());
+    model?.validate?.();
+    onSubmit?.(data, model.getFirstError());
   }
   return (
     <FormContext.Provider value={{ getValue, setValue, updateView, model }}>

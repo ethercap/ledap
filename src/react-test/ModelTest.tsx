@@ -48,7 +48,7 @@ export default function ModelTestComponent() {
   console.log({ fileModel });
   return (
     <div>
-      <Form model={model1} layout="horizontal" onFinish={_onFilish}>
+      <Form model={model1} layout="horizontal" onSubmit={_onFilish}>
         {/*使用默认input*/}
         <FormItem attr="name" />
         <FormItem attr="age" FormComponentProps={{ type: "number" }} />
@@ -130,7 +130,7 @@ export default function ModelTestComponent() {
       <Form
         model={fileModel}
         enctype="multipart/form-data"
-        onFinish={_onFilish}
+        onSubmit={_onFilish}
       >
         <FormItem
           attr="file1"
