@@ -18,6 +18,8 @@ interface FormItemProp extends AntFormItemProps {
   children?: any;
   FormComponentProps?: any;
   dp?: any;
+  inline?: boolean;
+  show?: boolean;
 }
 
 function FormItem(props: FormItemProp) {
@@ -29,10 +31,12 @@ function FormItem(props: FormItemProp) {
     validate,
     children,
     dp,
+    inline,
+    show,
     FormComponentProps,
     ...reset
   } = props;
-  const { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
+  let { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
   const { setValue, getValue, updateView, model } = propModel
     ? useLedapModel(propModel)
     : useContext(FormContext);
@@ -40,6 +44,10 @@ function FormItem(props: FormItemProp) {
   const _setValue = (val) => {
     setValue(attr, val);
   };
+  if (inline) {
+    labelCol = null;
+    wrapperCol = null;
+  }
 
   const required = model?.isRequired(attr);
 
@@ -49,6 +57,9 @@ function FormItem(props: FormItemProp) {
   //   hasError: model.hasErrors(attr),
   //   error: model.getFirstError(attr),
   // });
+  if (show === false) {
+    return null;
+  }
 
   return (
     <FormItemContext.Provider value={{ getValue, setValue }}>
