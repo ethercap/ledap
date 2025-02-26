@@ -244,9 +244,11 @@
       "value": "key"
     },
     "search2": {
-      "label": "搜索2",
+      "label": "搜索2（多个值）",
       "hint": "关键词",
-      "value": 1
+      "value": [
+        1
+      ]
     },
     "icon": {
       "label": "道具图标(URL地址)",

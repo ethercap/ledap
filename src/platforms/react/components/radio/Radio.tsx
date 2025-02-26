@@ -1,12 +1,10 @@
 import React from "react";
-import { Radio as AntRadio } from "antd";
+import { Radio as AntRadio, RadioProps as AntRadioProps } from "antd";
 
-interface RadioProps {
+interface RadioProps extends AntRadioProps {
   children?: any;
   checked?: boolean;
   disabled?: boolean;
-  antProps?: any;
-  onChange?: Function;
 }
 function Radio(props: RadioProps) {
   const {
@@ -14,18 +12,17 @@ function Radio(props: RadioProps) {
     disabled = false,
     onChange,
     children,
-    antProps = {},
+    ...reset
   } = props;
   const _onChange = (e) => {
     onChange?.(e);
-    antProps?.onChange?.(e);
   };
   return (
     <AntRadio
       checked={checked}
       disabled={disabled}
       onChange={_onChange}
-      {...antProps}
+      {...reset}
     >
       {children}
     </AntRadio>

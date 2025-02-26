@@ -9,14 +9,13 @@ import { _module_formitem } from "./form-item.module.less";
 import { Row, Col, Form, FormItemProps as AntFormItemProps } from "antd";
 import FormContext from "../../contexts/FormContext";
 
-interface FormItemProp {
+interface FormItemProp extends AntFormItemProps {
   model?: any;
   attr: string;
   label?: string | number;
   FormComponent?: any;
   validate?: Array<string>;
   children?: any;
-  antProps?: AntFormItemProps;
   FormComponentProps?: any;
   dp?: any;
 }
@@ -29,7 +28,6 @@ function FormItem(props: FormItemProp) {
     label,
     validate,
     children,
-    antProps = {},
     dp,
     FormComponentProps,
     ...reset

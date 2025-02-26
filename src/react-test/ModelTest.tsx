@@ -59,12 +59,11 @@ export default function ModelTestComponent() {
         />
         <FormItem attr="phone" FormComponentProps={{ addonBefore: "+86" }} />
         <FormItem
+          tooltip="实时校验"
           attr="phone"
           validate={[FormValidateEvent.input]}
           FormComponentProps={{ addonBefore: "+86", style: { width: 200 } }}
-        >
-          实时校验
-        </FormItem>
+        ></FormItem>
         <FormItem attr="email" />
         <FormItem attr="sex" FormComponent={RadioGroup} />
         <FormItem
