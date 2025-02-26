@@ -53,8 +53,15 @@ export default function Form(props: FormProps) {
       }
     }
     // console.log("form on filish json:", data, json);
-    model?.validate?.();
-    onSubmit?.(data, model.getFirstError());
+    let firstErr = "";
+    try {
+      model?.validate?.();
+      firstErr = model.getFirstError();
+    } catch (e) {
+      console.error(e);
+    }
+
+    onSubmit?.(data, firstErr);
     updateView();
   }
   return (
