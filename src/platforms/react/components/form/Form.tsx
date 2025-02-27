@@ -4,7 +4,7 @@ import { Form as AntForm, FormProps as AntFormProps } from "antd";
 import { _form } from "./form.module.less";
 import classnames from "classnames";
 
-interface FormProps extends AntFormProps {
+export interface FormProps extends AntFormProps {
   model: any;
   children?: any;
   className?: string;

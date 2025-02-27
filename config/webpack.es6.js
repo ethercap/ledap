@@ -30,7 +30,7 @@ module.exports = (env) => {
         output: {
             path: path.resolve(__dirname, '../dist'),
             filename: '[name].js',
-            libraryTarget: 'umd', // ES6 模块
+            libraryTarget: 'module', // ES6 模块
             module: true,
         },
         experiments: {
