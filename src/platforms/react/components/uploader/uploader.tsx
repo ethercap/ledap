@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { get } from "lodash";
+import { LedapAppContext } from "../configProvider/LedapAppContext";
 
 interface Size {
   width: number;
@@ -25,6 +26,7 @@ interface UploaderDraggerProps extends UploadProps {
   hint?: any;
   maxPxSize?: Size;
   maxFileKBSize?: number;
+  upload?: boolean;
   action?: string;
   data?: any;
   actionHeaders?: any;
@@ -49,6 +51,7 @@ function Uploader(props: UploaderDraggerProps) {
     maxPxSize,
     maxFileKBSize,
     mimeTypes,
+    upload,
     action,
     data: actionParams,
     actionHeaders,
@@ -57,12 +60,21 @@ function Uploader(props: UploaderDraggerProps) {
     ...reset
   } = props;
   const { multiple = true, onFileChanged } = reset;
-  const _hint = hint || model?.getAttributeLabel?.(attr);
+  const _hint = hint || model?.getAttributeHint?.(attr);
   const propValue = model[attr];
   const _defaultFileList = getDefaultFiles(propValue);
+  // const ledapContext = useContext(LedapAppContext);
+  // const { uploadUrl: globalUploadUrl } = ledapContext;
+  // console.log("globalUploadUrl:", globalUploadUrl, ledapContext);
+  const uploadUrl = !upload
+    ? ""
+    : action
+    ? action
+    : useContext(LedapAppContext).uploadUrl;
   const { fileList, removeFile, addFile, clear } = useFileList(
     _defaultFileList,
-    action,
+    upload,
+    uploadUrl,
     actionParams,
     actionHeaders,
     urlPath
@@ -75,6 +87,7 @@ function Uploader(props: UploaderDraggerProps) {
         addFile(file, clear);
       })
       .catch((errmsg) => {
+        message.error({ content: errmsg });
         onError?.(errmsg);
       });
   }
@@ -113,7 +126,6 @@ function Uploader(props: UploaderDraggerProps) {
         res
           .then((promiseResule) => {
             if (promiseResule !== false) {
-              // console.log("call _addFile", promiseResule);
               _addFile(file);
             }
           })
@@ -122,7 +134,6 @@ function Uploader(props: UploaderDraggerProps) {
         // 值类型
         return false;
       } else {
-        // console.log("call _addFile res", res);
         _addFile(file);
       }
     } else {
@@ -140,7 +151,7 @@ function Uploader(props: UploaderDraggerProps) {
 
   useEffect(() => {
     // console.log("file list changed:", fileList);
-    const _fileList = action ? fileList.map((f) => f.url) : fileList;
+    const _fileList = upload ? fileList.map((f) => f.url) : fileList;
     const targetFile = multiple ? [..._fileList] : _fileList[0];
     onFileChanged?.(targetFile);
     onSetValue?.(targetFile);
@@ -171,7 +182,8 @@ function Uploader(props: UploaderDraggerProps) {
 
 function useFileList(
   initFileList = [],
-  action,
+  upload,
+  uploadUrl,
   actionParams = {},
   actionHeaders = {},
   urlPath = ""
@@ -181,7 +193,7 @@ function useFileList(
   function addFile(file, clear = false) {
     const _olfFiles = clear ? [] : fileList;
     setFileList([..._olfFiles, file]);
-    action && uploadFile(file);
+    upload && uploadFile(file);
   }
   function removeFile(file) {
     // console.log("call removefile:", file);
@@ -212,7 +224,7 @@ function useFileList(
     for (let key in actionParams) {
       formData.append(key, actionParams[key]);
     }
-    fetch(action, {
+    fetch(uploadUrl, {
       method: "POST",
       body: formData,
       credentials: "include",
@@ -224,7 +236,14 @@ function useFileList(
       .then((resp) => resp.json())
       .then((res) => {
         const url = get(res, urlPath || "data.url[0]", "");
-        url && updateFile({ uid: file.uid, url, status: "success" });
+        if (url) {
+          updateFile({ uid: file.uid, url, status: "success" });
+        } else {
+          throw res;
+        }
+      })
+      .catch(() => {
+        message.error("文件上传失败");
       });
   }
   return {

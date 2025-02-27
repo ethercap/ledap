@@ -100,11 +100,11 @@ export default function ModelTestComponent() {
           FormComponent={Uploader}
           FormComponentProps={{
             multiple: false,
-            action: "/mis-api/file/upload-resources",
+            upload: true,
             data: {},
             actionHeaders: {},
             urlPath: "data.url[0]",
-            children: <Button>点击上传图标</Button>,
+            children: <Button>点击上传图标1</Button>,
             mimeTypes: ["image/png", "image/webp", "image/jpg", "image/jpeg"],
           }}
         />
@@ -114,7 +114,7 @@ export default function ModelTestComponent() {
           FormComponent={Uploader}
           FormComponentProps={{
             multiple: true,
-            action: "/mis-api/file/upload-resources",
+            upload: true,
             data: {},
             actionHeaders: {},
             urlPath: "data.url[0]",
@@ -127,7 +127,7 @@ export default function ModelTestComponent() {
           FormComponent={Uploader}
           FormComponentProps={{
             multiple: true,
-            action: "/mis-api/file/upload-resources",
+            upload: true,
             data: {},
             actionHeaders: {},
             urlPath: "data.url[0]",
@@ -140,7 +140,7 @@ export default function ModelTestComponent() {
           FormComponent={Uploader}
           FormComponentProps={{
             multiple: false,
-            action: "/mis-api/file/upload-resources",
+            upload: true,
             data: {},
             actionHeaders: {},
             urlPath: "data.url[0]",
@@ -168,9 +168,6 @@ export default function ModelTestComponent() {
             text: "点击或拖拽到此处上传file1",
             mimeTypes: ["image/png"],
             maxFileKBSize: 1024,
-            onError: (errMsg) => {
-              console.log(errMsg);
-            },
             maxPxSize: { width: 512, height: 512 },
           }}
         />

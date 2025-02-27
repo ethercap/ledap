@@ -10,9 +10,9 @@ import TableTest from "./TableTest";
 
 function App() {
   return (
-    <ConfigProvider>
+    <ConfigProvider ledapConfig={{ uploadUrl: "/mis/file/upload-resources" }}>
       <div className="app">
-        this is app
+        this is react app
         <div className="react-form">
           <ModelTestComponent />
           {/* <TableTest /> */}
