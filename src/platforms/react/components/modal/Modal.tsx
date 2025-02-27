@@ -6,9 +6,10 @@ const ModalContext = createContext({ closeModal: null });
 
 interface ModalProps extends AntModalProps {
   root?: any;
+  container?: any;
 }
 function Modal(props: ModalProps) {
-  const { onClose, root, children, ...reset } = props;
+  const { onClose, root, children, container, ...reset } = props;
   const { open, closeModal } = useContext(ModalContext);
 
   const _close = () => {
@@ -33,6 +34,7 @@ function Modal(props: ModalProps) {
       open={open}
       afterClose={_afterClose}
       onCancel={_onCancel}
+      getContainer={() => container}
       {...reset}
     >
       {children}
@@ -41,7 +43,8 @@ function Modal(props: ModalProps) {
 }
 Modal.create = (props) => {
   const { Modal: ModalComponent, onClose, container, ...reset } = props;
-  const _container = container || document.body;
+  const _container =
+    container || document.getElementById("ledap-modal-root") || document.body;
   let div = document.createElement("div");
   _container.append(div);
   const root = ReactDOM.createRoot(div);
@@ -55,7 +58,12 @@ Modal.create = (props) => {
   };
   root.render(
     <ModalProvidr>
-      <ModalComponent root={root} {...reset} onClose={_onClose} />
+      <ModalComponent
+        root={root}
+        container={_container}
+        {...reset}
+        onClose={_onClose}
+      />
     </ModalProvidr>
   );
 };

@@ -24,6 +24,7 @@ function ConfigProvider(props: any = {}) {
         {...reset}
       >
         {children}
+        <div id="ledap-modal-root"></div>
       </AntConfigProvider>
     </LedapAppContext.Provider>
   );

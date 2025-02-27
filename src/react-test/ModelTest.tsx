@@ -53,10 +53,7 @@ export default function ModelTestComponent() {
         <FormItem attr="name" />
         <FormItem attr="age" FormComponentProps={{ type: "number" }} />
         <FormItem attr="password" FormComponentProps={{ type: "password" }} />
-        <FormItem
-          attr="introduce"
-          FormComponentProps={{ type: "textarea", rows: 8 }}
-        />
+        <FormItem attr="introduce" FormComponentProps={{ type: "textarea" }} />
         <FormItem attr="phone" FormComponentProps={{ addonBefore: "+86" }} />
         <FormItem
           tooltip="实时校验"

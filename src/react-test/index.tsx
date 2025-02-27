@@ -15,7 +15,7 @@ function App() {
         this is react app
         <div className="react-form">
           <ModelTestComponent />
-          {/* <TableTest /> */}
+          <TableTest />
         </div>
       </div>
     </ConfigProvider>
