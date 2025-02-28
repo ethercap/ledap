@@ -1,8 +1,11 @@
 import React from "react";
-import { DatePicker as AntDatePicker } from "antd";
+import {
+  DatePicker as AntDatePicker,
+  DatePickerProps as AntDatePickerProps,
+} from "antd";
 import dayjs from "dayjs";
 
-interface DatePickerProps {
+interface DatePickerProps extends AntDatePickerProps {
   value: any;
   onSetValue: Function;
   model: any;
@@ -24,14 +27,22 @@ export default function DatePicker(props: DatePickerProps) {
     onSetValue?.(val);
   }
   const placeholder = model.getAttributeHint(attr);
+  const _value = getValue(value);
   return (
     <AntDatePicker
       format={format}
       defaultValue={value}
       placeholder={placeholder}
       onChange={_onChange}
-      value={dayjs(value)}
+      value={_value}
       {...reset}
     />
   );
+}
+
+function getValue(val) {
+  if (!val) {
+    return "";
+  }
+  return dayjs(val);
 }
