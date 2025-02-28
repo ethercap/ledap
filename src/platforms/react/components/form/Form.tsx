@@ -10,6 +10,7 @@ export interface FormProps extends AntFormProps {
   className?: string;
   inline?: boolean;
   onSubmit?: (data: any, json: any) => void;
+  onSetValue?: Function;
   enctype?: string;
 }
 
@@ -19,6 +20,7 @@ export default function Form(props: FormProps) {
     className,
     inline,
     onSubmit,
+    onSetValue,
     enctype = "application/json",
     ...reset
   } = props;
@@ -29,6 +31,7 @@ export default function Form(props: FormProps) {
   function setValue(attr, val) {
     model[attr] = val;
     setBool((bool) => !bool);
+    onSetValue?.();
   }
   function updateView() {
     setBool((bool) => !bool);

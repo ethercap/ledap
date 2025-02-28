@@ -19,6 +19,7 @@ export default function ModelTestComponent() {
   const model1 = ledap.App.useModel({
     url: "/data/model.json",
   });
+  const [, updateView] = useState(false);
   const fileModelRef = useRef(new ledap.Model({ file1: null, files2: [] }));
   const fileModel = fileModelRef.current;
   const search1Dp = ledap.App.useWebDp({
@@ -48,7 +49,14 @@ export default function ModelTestComponent() {
   console.log({ fileModel });
   return (
     <div>
-      <Form model={model1} layout="horizontal" onSubmit={_onFilish}>
+      <Form
+        model={model1}
+        layout="horizontal"
+        onSubmit={_onFilish}
+        onSetValue={() => {
+          updateView({});
+        }}
+      >
         {/*使用默认input*/}
         <FormItem attr="name" />
         <FormItem attr="age" FormComponentProps={{ type: "number" }} />
@@ -70,7 +78,11 @@ export default function ModelTestComponent() {
         />
         <FormItem attr="sex" FormComponent={Segmented} />
         <FormItem attr="city" FormComponent={CheckboxGroup} />
-        <FormItem attr="stayCity" FormComponent={CheckboxGroup} />
+        <FormItem
+          show={model1?.sex == "2"}
+          attr="stayCity"
+          FormComponent={CheckboxGroup}
+        />
         <FormItem attr="city" FormComponent={Select} />
         <FormItem attr="stayCity" FormComponent={Select} />
         <FormItem
