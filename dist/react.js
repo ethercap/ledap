@@ -2265,7 +2265,7 @@ var Select_excluded=["model","attr","value","onSetValue","formatOptions"];functi
 ;// ./src/platforms/react/components/searchinput/SearchInput.tsx
 var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,fieldNames=props.fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var data=dp.models,isLoading=dp.isLoading;var _handleChange=function _handleChange(value){onSetValue===null||onSetValue===void 0||onSetValue(value);};var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({showSearch:true,allowClear:true,value:value,placeholder:model.getAttributeHint(attr)||"",defaultActiveFirstOption:false,suffixIcon:null,filterOption:false,onSearch:_handleSearch,onChange:_handleChange,notFoundContent:isLoading?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Spin,{size:"small"}):null,fieldNames:fieldNames,options:data,loading:isLoading},resetProps));}
 ;// ./src/platforms/react/components/datepicker/DatePicker.tsx
-var DatePicker_excluded=["model","attr","value","onSetValue","format"];function DatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$format=props.format,format=_props$format===void 0?"YYYY-MM-DD":_props$format,reset=_objectWithoutProperties(props,DatePicker_excluded);function _onChange(dayObj){var val=dayObj.format(format);onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.DatePicker,_extends({format:format,defaultValue:value,placeholder:placeholder,onChange:_onChange,value:dayjs_min_default()(value)},reset));}
+var DatePicker_excluded=["model","attr","value","onSetValue","format"];function DatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$format=props.format,format=_props$format===void 0?"YYYY-MM-DD":_props$format,reset=_objectWithoutProperties(props,DatePicker_excluded);function _onChange(dayObj){var val=dayObj.format(format);onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr);var _value=getValue(value);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.DatePicker,_extends({format:format,defaultValue:value,placeholder:placeholder,onChange:_onChange,value:_value},reset));}function getValue(val){if(!val){return"";}return dayjs_min_default()(val);}
 // EXTERNAL MODULE: ./node_modules/lodash/isEmpty.js
 var isEmpty = __webpack_require__(2193);
 var isEmpty_default = /*#__PURE__*/__webpack_require__.n(isEmpty);
@@ -2977,7 +2977,7 @@ function getSaturation(hsv, i, light) {
   }
   return Math.round(saturation * 100) / 100;
 }
-function getValue(hsv, i, light) {
+function generate_getValue(hsv, i, light) {
   var value;
   if (light) {
     value = hsv.v + brightnessStep1 * i;
@@ -2997,7 +2997,7 @@ function generate(color) {
     var c = new FastColor({
       h: getHue(hsv, i, true),
       s: getSaturation(hsv, i, true),
-      v: getValue(hsv, i, true)
+      v: generate_getValue(hsv, i, true)
     });
     patterns.push(c);
   }
@@ -3006,7 +3006,7 @@ function generate(color) {
     var _c = new FastColor({
       h: getHue(hsv, _i),
       s: getSaturation(hsv, _i),
-      v: getValue(hsv, _i)
+      v: generate_getValue(hsv, _i)
     });
     patterns.push(_c);
   }
