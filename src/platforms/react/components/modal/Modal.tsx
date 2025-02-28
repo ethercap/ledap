@@ -9,14 +9,16 @@ interface ModalProps extends AntModalProps {
   container?: any;
 }
 function Modal(props: ModalProps) {
-  const { onClose, root, children, container, ...reset } = props;
-  const { open, closeModal } = useContext(ModalContext);
+  const { onClose, children, ...reset } = props;
+  const { open, closeModal, root, container, _onClose } =
+    useContext(ModalContext);
 
   const _close = () => {
     closeModal();
   };
 
   function _afterClose(e) {
+    _onClose && _onClose();
     onClose && onClose(e);
   }
   useEffect(() => {
@@ -43,6 +45,7 @@ function Modal(props: ModalProps) {
 }
 Modal.create = (props) => {
   const { Modal: ModalComponent, onClose, container, ...reset } = props;
+
   const _container =
     container || document.getElementById("ledap-modal-root") || document.body;
   let div = document.createElement("div");
@@ -57,24 +60,22 @@ Modal.create = (props) => {
     div = null;
   };
   root.render(
-    <ModalProvidr>
-      <ModalComponent
-        root={root}
-        container={_container}
-        {...reset}
-        onClose={_onClose}
-      />
+    <ModalProvidr root={root} container={_container} _onClose={_onClose}>
+      <ModalComponent {...reset} />
     </ModalProvidr>
   );
 };
 
 function ModalProvidr(props) {
+  const { root, container, _onClose } = props;
   const [open, setOpen] = useState(true);
   function _closeModal() {
     setOpen(false);
   }
   return (
-    <ModalContext.Provider value={{ closeModal: _closeModal, open }}>
+    <ModalContext.Provider
+      value={{ closeModal: _closeModal, open, root, container, _onClose }}
+    >
       {props.children}
     </ModalContext.Provider>
   );
