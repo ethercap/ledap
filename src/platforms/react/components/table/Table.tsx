@@ -63,9 +63,24 @@ export default function Table(props: TableProps) {
     showSizeChanger: false,
     ...paginationProp,
   };
+
+  const onRowSelectionChanged = (selectedRowKeys, selectedRows) => {
+    for (let i = 0; i < data.length; i++) {
+      const model = data[i];
+      if (selectedRowKeys.indexOf(model[rowKey]) > -1) {
+        model.is_checked = true;
+      } else {
+        if (model.is_checked === true) {
+          model.is_checked = undefined;
+          delete model.is_checked;
+        }
+      }
+    }
+    onSelectionChanged && onSelectionChanged(selectedRowKeys, selectedRows);
+  };
   const rowSelection = useSelection
     ? {
-        onChange: onSelectionChanged,
+        onChange: onRowSelectionChanged,
         ...(rowSelectionProps || {}),
       }
     : rowSelectionProps;
