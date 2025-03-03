@@ -16,3 +16,11 @@ label {
   flex-wrap: nowrap;
 }
 
+._module_dropdown_X2jF9.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+._module_dropdown_X2jF9:not(.disabled) {
+  cursor: pointer;
+}
+

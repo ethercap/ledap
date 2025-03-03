@@ -8,6 +8,7 @@ export { default as ConfigProvider } from './components/configProvider/ConfigPro
 export { default as RadioGroup } from './components/radio/RadioGroup';
 export { default as CheckboxGroup } from './components/checkbox/CheckboxGroup';
 export { default as Select } from './components/select/Select';
+export { default as Dropdown } from './components/select/DropDown';
 export { default as SearchInput } from './components/searchinput/SearchInput'
 export { default as DatePicker } from './components/datepicker/DatePicker'
 export { default as Table } from './components/table/Table'

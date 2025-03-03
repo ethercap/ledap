@@ -12,6 +12,7 @@ import {
   SearchInput,
   DatePicker,
   Table,
+  Dropdown,
   Uploader,
 } from "@/platforms/react";
 
@@ -84,6 +85,7 @@ export default function ModelTestComponent() {
           FormComponent={CheckboxGroup}
         />
         <FormItem attr="city" FormComponent={Select} />
+        <FormItem attr="city" FormComponent={Dropdown} />
         <FormItem attr="stayCity" FormComponent={Select} />
         <FormItem
           attr="search1"
