@@ -58,6 +58,13 @@ export default function TableTest() {
     dp.refresh();
   }
 
+  function _previewSelected() {
+    const selectedIds = dp?.models
+      ?.filter((m) => m.is_checked === true)
+      .map((m) => m.id);
+    console.log(selectedIds);
+  }
+
   function _writeCode() {
     Modal.create({
       Modal: WriteMobileCodeModal,
@@ -129,6 +136,7 @@ export default function TableTest() {
           <Col span={8} offset={4}>
             <Button onClick={_writeCode}>写验证码</Button>
             <Button onClick={_handleSearch}>查询</Button>
+            <Button onClick={_previewSelected}>查看选中</Button>
           </Col>
         </Row>
       </Form>
@@ -136,9 +144,9 @@ export default function TableTest() {
         columns={columns}
         dp={dp}
         useSelection
-        onSelectionChanged={(selectedRowKeys, selectedRows) => {
-          setSelectedIds(selectedRowKeys);
-        }}
+        // onSelectionChanged={(selectedRowKeys, selectedRows) => {
+        //   setSelectedIds(selectedRowKeys);
+        // }}
       />
     </>
   );

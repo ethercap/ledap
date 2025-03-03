@@ -28,6 +28,10 @@ export default function Table(props: TableProps) {
   const [ledapColumns, setLedapColumns] = useState(
     Column.normalizeColumns(columns)
   );
+  const [, setBool] = useState(false);
+  const _updateView = () => {
+    setBool((b) => !b);
+  };
 
   useEffect(() => {
     setLedapColumns(Column.normalizeColumns(columns));
@@ -76,14 +80,21 @@ export default function Table(props: TableProps) {
         }
       }
     }
+    _updateView();
     onSelectionChanged && onSelectionChanged(selectedRowKeys, selectedRows);
   };
-  const rowSelection = useSelection
-    ? {
-        onChange: onRowSelectionChanged,
-        ...(rowSelectionProps || {}),
-      }
-    : rowSelectionProps;
+  let rowSelection = rowSelectionProps;
+  if (useSelection) {
+    const selectedRowKeys = dp?.models
+      ?.filter((m) => m.is_checked === true)
+      .map((m) => m[rowKey]);
+    rowSelection = {
+      onChange: onRowSelectionChanged,
+      selectedRowKeys, // 受控选中状态
+      ...(rowSelectionProps || {}),
+    };
+  }
+
   return (
     <AntTable
       rowKey={rowKey}
