@@ -90,5 +90,6 @@ Modal.success = AntModal.success;
 Modal.error = AntModal.error;
 Modal.warning = AntModal.warning;
 Modal.confirm = AntModal.confirm;
+Modal.Provider = ModalProvidr;
 
 export default Modal;
