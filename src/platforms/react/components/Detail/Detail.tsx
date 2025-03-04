@@ -41,7 +41,7 @@ function getAntColumns(ledapColumns, model) {
     }
 
     if (typeof value == "function") {
-      antdColumn.children = (model) => value(model);
+      antdColumn.children = value(model);
     } else {
       antdColumn.children = `${model[attribute]}`;
     }

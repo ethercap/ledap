@@ -59,7 +59,7 @@ function Uploader(props: UploaderDraggerProps) {
     onError,
     ...reset
   } = props;
-  const { multiple = true, onFileChanged } = reset;
+  const { multiple = false, onFileChanged } = reset;
   const _hint = hint || model?.getAttributeHint?.(attr);
   const propValue = model[attr];
   const _defaultFileList = getDefaultFiles(propValue);
