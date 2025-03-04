@@ -14,6 +14,7 @@ import {
   Table,
   Dropdown,
   Uploader,
+  Detail,
 } from "@/platforms/react";
 
 export default function ModelTestComponent() {
@@ -187,6 +188,10 @@ export default function ModelTestComponent() {
           提交formData表单
         </Button>
       </Form>
+      <Detail
+        columns={["name", "sex", { attribute: "upload" }]}
+        model={model1}
+      />
     </div>
   );
 }
