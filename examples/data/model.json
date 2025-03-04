@@ -283,6 +283,27 @@
         }
       ],
       "value": ""
+    },
+    "batch_id": {
+      "label": "批次",
+      "rules": [],
+      "value": 0
+    },
+    "batch_id2": {
+      "label": "批次",
+      "rules": [
+        {
+          "type": "double",
+          "options": {
+            "pattern": "/^\\s*[+-]?\\d+\\s*$/",
+            "message": "批次必须是整数。",
+            "skipOnEmpty": 1
+          },
+          "skipOnError": true,
+          "skipOnEmpty": true
+        }
+      ],
+      "value": ""
     }
   }
 }

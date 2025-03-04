@@ -78,6 +78,7 @@ export default function ModelTestComponent() {
           FormComponentProps={{ optionType: "button" }}
         />
         <FormItem attr="sex" FormComponent={Segmented} />
+        <FormItem attr="batch_id" FormComponent={Select} />
         <FormItem attr="city" FormComponent={CheckboxGroup} />
         <FormItem
           show={model1?.sex == "2"}

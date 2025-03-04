@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import type { UploadProps } from "antd";
-import { message, Upload } from "antd";
+import { message, Upload, Button } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { get } from "lodash";
 import { LedapAppContext } from "../configProvider/LedapAppContext";
@@ -165,8 +165,10 @@ function Uploader(props: UploaderDraggerProps) {
     </>
   ) : typeof children == "function" ? (
     children(fileList)
-  ) : (
+  ) : children ? (
     children
+  ) : (
+    <Button>点击上传文件</Button>
   );
   return (
     <Fragment
