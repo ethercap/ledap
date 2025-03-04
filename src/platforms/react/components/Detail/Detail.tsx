@@ -6,9 +6,18 @@ interface DetailProps {
   model: any;
   columns: any;
   title?: any;
+  column?: number;
+  colon?: boolean;
 }
 export default function Detail(props: DetailProps) {
-  const { model, columns, title = null } = props;
+  const {
+    model,
+    columns,
+    title = null,
+    column = 1,
+    colon = true,
+    ...reset
+  } = props;
   const [ledapColumns, setLedapColumns] = useState(
     Column.normalizeColumns(columns)
   );
@@ -21,7 +30,16 @@ export default function Detail(props: DetailProps) {
     setLedapColumns(Column.normalizeColumns(columns));
   }, [columns]);
   const antColumns = getAntColumns(ledapColumns, model);
-  return <Descriptions title={title} items={antColumns} />;
+  return (
+    <Descriptions
+      column={column}
+      colon={colon}
+      bordered
+      title={title}
+      items={antColumns}
+      {...reset}
+    />
+  );
 }
 
 function getAntColumns(ledapColumns, model) {
@@ -34,6 +52,7 @@ function getAntColumns(ledapColumns, model) {
       continue;
     }
     const antdColumn: any = {
+      ...column,
       label: getTableTitle(column),
     };
     if (attribute) {
