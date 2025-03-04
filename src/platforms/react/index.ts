@@ -5,7 +5,9 @@ export { default as Button } from './components/button/Button'
 export { default as Form } from './components/form/Form';
 export type { FormProps } from './components/form';
 export { default as ConfigProvider } from './components/configProvider/ConfigProvider';
+export { default as Radio } from './components/radio/Radio';
 export { default as RadioGroup } from './components/radio/RadioGroup';
+export { default as Checkbox } from './components/checkbox/Checkbox';
 export { default as CheckboxGroup } from './components/checkbox/CheckboxGroup';
 export { default as Select } from './components/select/Select';
 export { default as Dropdown } from './components/select/DropDown';

@@ -1,6 +1,6 @@
 import React from "react";
 import useInputGroup from "../../hooks/useInputGroup";
-import Checkbox from "./Checkbox";
+import { Checkbox } from "antd";
 
 interface CheckboxGroupProps {
   tag?: any;

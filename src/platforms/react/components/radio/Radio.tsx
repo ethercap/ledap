@@ -2,28 +2,16 @@ import React from "react";
 import { Radio as AntRadio, RadioProps as AntRadioProps } from "antd";
 
 interface RadioProps extends AntRadioProps {
+  model?: any;
+  value?: any;
+  attr: string;
   children?: any;
-  checked?: boolean;
-  disabled?: boolean;
 }
 function Radio(props: RadioProps) {
-  const {
-    checked = false,
-    disabled = false,
-    onChange,
-    children,
-    ...reset
-  } = props;
-  const _onChange = (e) => {
-    onChange?.(e);
-  };
+  const { value, model, attr, children, ...reset } = props;
+
   return (
-    <AntRadio
-      checked={checked}
-      disabled={disabled}
-      onChange={_onChange}
-      {...reset}
-    >
+    <AntRadio checked={!!value} {...reset}>
       {children}
     </AntRadio>
   );
