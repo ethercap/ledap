@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ledap-react-umd index</title>
+    <link rel="stylesheet" href="../dist/ledap.react.css">
+    <script src="../assets/lib/react/react.development.js"></script>
+    <script src="../assets/lib/react/react-dom.development.js"></script>
+    <script src="../assets/lib/babel.min.js"></script>
+  </head>
+
+  <body>
+      <div id="root" class="container"></div>
+
+      <script src="../dist/ledap.min.js"></script>
+      <script src="../dist/ledap.react.min.js"></script>
+      <script src="./ledap-init.js"></script>
+  </body>
+
+  <script type="text/babel">
+    const { Model,WebDataProvider } = ledap;
+    const { useState,useEffect } = React
+    const { BaseInput,Form,Table,FormItem,FormValidateEvent,RadioGroup,CheckboxGroup,Select,SearchInput,DatePicker } = ledapReact
+    function ModelTestComponent() {
+        const model1 = ledap.App.useModel({
+        url: "/data/model.json",
+    });
+    const search1Dp = ledap.App.useWebDp({
+        httpOptions: {
+        url: "/data/dp_1.json",
+        params: {
+            "per-page": 10,
+        },
+        },
+    });
+    const search2Dp = ledap.App.useWebDp({
+        httpOptions: {
+        url: "/data/dp_2.json",
+        params: {
+            "per-page": 10,
+        },
+        },
+    });
+
+  if (!model1) {
+    return "loading...";
+  }
+
+  return (
+    <Form model={model1} layout="horizontal">
+      {/*使用默认input*/}
+      <FormItem attr="name" />
+      <FormItem attr="age" FormComponentProps={{ type: "number" }} />
+      <FormItem attr="password" FormComponentProps={{ type: "password" }} />
+      <FormItem
+        attr="introduce"
+        FormComponentProps={{ type: "textarea", rows: 8 }}
+      />
+      <FormItem attr="phone" FormComponentProps={{ addonBefore: "+86" }} />
+      <FormItem
+        attr="phone"
+        validate={[FormValidateEvent.input]}
+        FormComponentProps={{ addonBefore: "+86", style: { width: 200 } }}
+      >
+        实时校验
+      </FormItem>
+      <FormItem attr="email" />
+      <FormItem attr="sex" FormComponent={RadioGroup} />
+      <FormItem
+        attr="sex"
+        FormComponent={RadioGroup}
+        FormComponentProps={{ optionType: "button" }}
+      />
+      <FormItem attr="city" FormComponent={CheckboxGroup} />
+      <FormItem attr="stayCity" FormComponent={CheckboxGroup} />
+      <FormItem attr="city" FormComponent={Select} />
+      <FormItem attr="stayCity" FormComponent={Select} />
+      <FormItem
+        attr="search1"
+        FormComponent={SearchInput}
+        dp={search1Dp}
+        FormComponentProps={{
+          fieldNames: { label: "name", value: "id" },
+        }}
+      />
+      <FormItem
+        attr="search2"
+        FormComponent={SearchInput}
+        dp={search2Dp}
+        FormComponentProps={{
+          mode: "multiple",
+          fieldNames: { label: "name", value: "id" },
+        }}
+      />
+      <FormItem attr="birthDate" FormComponent={DatePicker} />
+      <Table
+        columns={[
+          { attribute: "id", label: "ID", useSort: true },
+          { attribute: "name", label: "名字" },
+        ]}
+        dp={search1Dp}
+      />
+    </Form>
+  );
+    }
+
+    function TestApp() {
+        return (
+            <div className="app">
+                <ModelTestComponent />
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<TestApp />);
+
+  </script>
+ 
+</html>

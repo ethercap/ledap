@@ -4,3 +4,5 @@ node_modules/
 npm-debug.log
 src/*.js
 src/*.js.map
+examples/react/node_modules/
+examples/react-esm/node_modules/

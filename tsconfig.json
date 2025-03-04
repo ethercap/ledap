@@ -1,15 +1,21 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "./dist/types",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
         "sourceMap": true,
         "strict": false,
         "noImplicitAny": false,
         "noImplicitReturns": true,
         "noImplicitThis": false,
-        "module": "ES6",
-        "target": "ES5",
+        "module": "ESNext",
+        "target": "ESNext",
+        "jsx": "preserve",
         "moduleResolution": "node",
         "baseUrl": "./",
+        "rootDir": "./src",
         "paths": {
             "@/*": [
                 "src/*"
@@ -17,7 +23,8 @@
         }
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*",
+        "global.d.ts"
     ],
     "exclude": [
         "node_modules",

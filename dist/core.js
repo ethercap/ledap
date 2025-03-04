@@ -5075,14 +5075,11 @@ var __webpack_exports__ = {};
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  qw: () => (/* binding */ src_App),
   bI: () => (/* reexport */ BaseObject),
   M9: () => (/* reexport */ DataProvider),
   Jh: () => (/* reexport */ Event),
-  j3: () => (/* binding */ LedapVue),
   Kx: () => (/* reexport */ Model),
   dK: () => (/* reexport */ Pagination),
-  Sx: () => (/* reexport */ Theme),
   BW: () => (/* reexport */ ValidatorFactory),
   aC: () => (/* reexport */ WebDataProvider),
   _$: () => (/* binding */ helpers),
@@ -10127,18 +10124,15 @@ if(!attribute){return!isEmpty_default()(this._errors);}return!isEmpty_default()(
 
 ;// ./src/helpers/index.ts
 
-;// ./src/index.ts
-var widgets=widgets_namespaceObject;var helpers=helpers_namespaceObject;var LedapVue=vue_namespaceObject;var src_App=App;
-var __webpack_exports__App = __webpack_exports__.qw;
+;// ./src/index.core.ts
+var widgets=widgets_namespaceObject;var helpers=helpers_namespaceObject;
 var __webpack_exports__BaseObject = __webpack_exports__.bI;
 var __webpack_exports__DataProvider = __webpack_exports__.M9;
 var __webpack_exports__Event = __webpack_exports__.Jh;
-var __webpack_exports__LedapVue = __webpack_exports__.j3;
 var __webpack_exports__Model = __webpack_exports__.Kx;
 var __webpack_exports__Pagination = __webpack_exports__.dK;
-var __webpack_exports__Theme = __webpack_exports__.Sx;
 var __webpack_exports__ValidatorFactory = __webpack_exports__.BW;
 var __webpack_exports__WebDataProvider = __webpack_exports__.aC;
 var __webpack_exports__helpers = __webpack_exports__._$;
 var __webpack_exports__widgets = __webpack_exports__.Qs;
-export { __webpack_exports__App as App, __webpack_exports__BaseObject as BaseObject, __webpack_exports__DataProvider as DataProvider, __webpack_exports__Event as Event, __webpack_exports__LedapVue as LedapVue, __webpack_exports__Model as Model, __webpack_exports__Pagination as Pagination, __webpack_exports__Theme as Theme, __webpack_exports__ValidatorFactory as ValidatorFactory, __webpack_exports__WebDataProvider as WebDataProvider, __webpack_exports__helpers as helpers, __webpack_exports__widgets as widgets };
+export { __webpack_exports__BaseObject as BaseObject, __webpack_exports__DataProvider as DataProvider, __webpack_exports__Event as Event, __webpack_exports__Model as Model, __webpack_exports__Pagination as Pagination, __webpack_exports__ValidatorFactory as ValidatorFactory, __webpack_exports__WebDataProvider as WebDataProvider, __webpack_exports__helpers as helpers, __webpack_exports__widgets as widgets };

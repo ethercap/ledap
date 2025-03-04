@@ -29,16 +29,22 @@ model.load({
 });
 ```
 
-## 编译
+## 编译 （支持同时输出 umd 和 esm 模块）
 
 ```
 npm run build
 ```
 
-## 开发 & demo 调试
+## 调试(umd)
 
-```
+```bash
 npm run dev
+```
+
+## react 组件调试
+
+```bash
+npm run dev:react
 ```
 
 ## 文档

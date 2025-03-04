@@ -1,0 +1,26 @@
+body p {
+  margin-bottom: 14px;
+}
+
+label {
+    /* cursor: pointer;
+    background-color: antiquewhite; */
+}
+._module_formitem_m6q_j.required .ant-form-item-label label::before {
+  content: "*";
+  color: #ff4d4f;
+}
+
+._form_kRBRi.inline {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+._module_dropdown_X2jF9.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+._module_dropdown_X2jF9:not(.disabled) {
+  cursor: pointer;
+}
+
