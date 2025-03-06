@@ -250,7 +250,7 @@
     "search1": {
       "label": "搜索1",
       "hint": "关键词",
-      "value": "key"
+      "value": "3"
     },
     "search2": {
       "label": "搜索2（多个值）",
