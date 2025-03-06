@@ -14,8 +14,6 @@ dayjs.extend(localeData);
 
 function ConfigProvider(props: any = {}) {
   const { theme = {}, ledapConfig, children, ...reset } = props;
-  console.log("ledapConfig:", ledapConfig);
-  // return null;
   return (
     <LedapAppContext.Provider value={{ ...ledapConfig }}>
       <AntConfigProvider

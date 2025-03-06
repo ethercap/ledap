@@ -7,10 +7,29 @@ import "./ledap-init";
 import "./style.less";
 import ModelTestComponent from "./ModelTest";
 import TableTest from "./TableTest";
+import Uploader from "./uploader";
+
+function LedapUploader(file) {
+  return new Promise((resolve, reject) => {
+    Uploader({
+      url: "/mis-api/file/upload-resources",
+      data: {
+        [file.name]: file,
+      },
+      onSuccess: ({ data }) => {
+        const [url] = data.url;
+        url && resolve(url);
+      },
+      onError: (e) => {
+        reject(e);
+      },
+    });
+  });
+}
 
 function App() {
   return (
-    <ConfigProvider ledapConfig={{ uploadUrl: "/mis/file/upload-resources" }}>
+    <ConfigProvider ledapConfig={{ uploader: LedapUploader }}>
       <div className="app">
         this is react app
         <div className="react-form">

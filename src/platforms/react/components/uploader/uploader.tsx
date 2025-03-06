@@ -27,10 +27,6 @@ interface UploaderDraggerProps extends UploadProps {
   maxPxSize?: Size;
   maxFileKBSize?: number;
   upload?: boolean;
-  action?: string;
-  data?: any;
-  actionHeaders?: any;
-  urlPath?: string;
   mimeTypes?: string[];
   onError?: (msg: string) => void;
   onFileChanged?: Function;
@@ -52,10 +48,6 @@ function Uploader(props: UploaderDraggerProps) {
     maxFileKBSize,
     mimeTypes,
     upload,
-    action,
-    data: actionParams,
-    actionHeaders,
-    urlPath,
     onError,
     ...reset
   } = props;
@@ -63,21 +55,9 @@ function Uploader(props: UploaderDraggerProps) {
   const _hint = hint || model?.getAttributeHint?.(attr);
   const propValue = model[attr];
   const _defaultFileList = getDefaultFiles(propValue);
-  // const ledapContext = useContext(LedapAppContext);
-  // const { uploadUrl: globalUploadUrl } = ledapContext;
-  // console.log("globalUploadUrl:", globalUploadUrl, ledapContext);
-  const uploadUrl = !upload
-    ? ""
-    : action
-    ? action
-    : useContext(LedapAppContext).uploadUrl;
   const { fileList, removeFile, addFile, clear } = useFileList(
     _defaultFileList,
-    upload,
-    uploadUrl,
-    actionParams,
-    actionHeaders,
-    urlPath
+    upload
   );
 
   function _addFile(file) {
@@ -182,14 +162,8 @@ function Uploader(props: UploaderDraggerProps) {
   );
 }
 
-function useFileList(
-  initFileList = [],
-  upload,
-  uploadUrl,
-  actionParams = {},
-  actionHeaders = {},
-  urlPath = ""
-) {
+function useFileList(initFileList = [], upload) {
+  const { uploader } = useContext(LedapAppContext);
   const [fileList, setFileList] = useState(initFileList);
 
   function addFile(file, clear = false) {
@@ -198,7 +172,6 @@ function useFileList(
     upload && uploadFile(file);
   }
   function removeFile(file) {
-    // console.log("call removefile:", file);
     const index = fileList.indexOf(file);
     const newFileList = fileList.slice();
     newFileList.splice(index, 1);
@@ -221,32 +194,16 @@ function useFileList(
     });
   }
   function uploadFile(file) {
-    var formData = new FormData();
-    formData.append(file.name, file);
-    for (let key in actionParams) {
-      formData.append(key, actionParams[key]);
+    if (!uploader) {
+      console.error("尚未配置 uploader");
+      return;
     }
-    fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-      headers: {
-        "x-requested-with": "XMLHttpRequest",
-        ...actionHeaders,
-      },
-    })
-      .then((resp) => resp.json())
-      .then((res) => {
-        const url = get(res, urlPath || "data.url[0]", "");
-        if (url) {
-          updateFile({ uid: file.uid, url, status: "success" });
-        } else {
-          throw res;
-        }
+
+    uploader(file)
+      .then((url) => {
+        updateFile({ uid: file.uid, url, status: "success" });
       })
-      .catch(() => {
-        message.error("文件上传失败");
-      });
+      .catch(() => {});
   }
   return {
     fileList,
@@ -258,7 +215,6 @@ function useFileList(
 }
 
 function checkFileType(file, mimeTypes) {
-  // console.log({ file, mimeTypes });
   if (mimeTypes && mimeTypes.length > 0) {
     return mimeTypes.indexOf(file.type) > -1;
   }
