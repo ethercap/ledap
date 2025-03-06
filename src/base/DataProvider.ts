@@ -25,11 +25,11 @@ export default class DataProvider extends BaseObject {
         this.modelClass = lodash.get(config, 'modelClass', Model);
         this.paginationClass = lodash.get(config, 'paginationClass', Pagination);
 
-        this.searchModel = lodash.get(config, 'searchModel', '');
+        this.searchModel = lodash.get(config, 'searchModel');
         if (lodash.isEmpty(this.searchModel)) {
             this.searchModel = new this['searchModelClass']();
         }
-        this.pager = lodash.get(config, 'pager', '');
+        this.pager = lodash.get(config, 'pager');
         if (lodash.isEmpty(this.pager)) {
             this.pager = new this['paginationClass']();
         }

@@ -87,6 +87,9 @@ export default class WebDataProvider extends DataProvider {
         if (reload) {
             return this.loadData();
         }
+        return new Promise((resolve, reject) => {
+            resolve({});  
+        });
     }
 
     public nextPage(reload: boolean = true) {

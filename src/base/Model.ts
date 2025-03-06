@@ -90,12 +90,14 @@ export default class Model extends BaseObject {
                 }
                 this.emit(Model.EVENT_LOAD, this, key, obj.value);
                 this[key] = obj.value;
+                this._old[key] = obj.value;
                 this._attrRules = rules;
                 this._attrLabels = _attrLabels;
                 this._attrHints = _attrHints;
             } else {
                 this.emit(Model.EVENT_LOAD, this, key, data[key]);
                 this[key] = data[key];
+                this._old[key] = data[key];
             }
         });
         this.init();
@@ -232,7 +234,7 @@ export default class Model extends BaseObject {
         const dict = this.getValidator(attribute,  'dict');
         if (dict) {
             const list = dict.list;
-            return list[this.attribute] || this[attribute];
+            return list[attribute] || this[attribute];
         }
         return this[attribute];
     }
@@ -281,7 +283,7 @@ export default class Model extends BaseObject {
             return;
         }
         if (rule.hasOwnProperty('type')) {
-            lodash.set(this._attrRules, [key, rule.type], rule.options || {});
+            lodash.set(this._attrRules, [attribute, rule.type], rule.options || {});
         }
     }
 
@@ -319,16 +321,45 @@ export default class Model extends BaseObject {
     }
     
     public clone(data = null) {
-        const model = new this.constructor();
+        const model = new Model();
         model._attrRules = lodash.cloneDeep(this._attrRules);
         model._attrLabels = lodash.cloneDeep(this._attrLabels);
         model._attrHints = lodash.cloneDeep(this._attrHints);
         model._errors = lodash.cloneDeep(this._errors);
         if (!data) {
-            data = json_parse(JSON.stringify(this));
+            data = JSON.parse(JSON.stringify(this));
         }
         model.load(data);
         return model;
+    }
+
+    // reset
+    public reset() {
+        Object.keys(this._old).forEach(key => {
+            this[key] = this._old[key]; 
+        });
+    }
+
+    public sync() {
+        Object.keys(this._old).forEach(key => {
+            this._old[key] = this[key];
+        });
+    }
+
+    public getChangeData() {
+        const dirtyObject = {};
+        Object.keys(this._old).forEach(key => {
+            if (this[key] !== this._old[key]) {
+                dirtyObject[key] = this[key];
+            } else {
+                // 如果引用类型，直接强行赋值
+                const valueType = typeof (this[key]);
+                if (['object'].indexOf(valueType) > -1) {
+                    dirtyObject[key] = this[key];
+                }
+            }
+        });
+        return dirtyObject;
     }
 
 }

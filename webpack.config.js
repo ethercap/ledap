@@ -1,11 +1,9 @@
 const path = require('path');
-
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-
-const Clean = require('clean-webpack-plugin');
-const Terser = require('terser-webpack-plugin');
-const Lodash = require('lodash-webpack-plugin');
+const { merge } = require('webpack-merge');
+const { ProgressPlugin } = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const LodashWebpackPlugin = require('lodash-webpack-plugin');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 function r(...args) {
     return path.resolve(...args);
@@ -13,7 +11,6 @@ function r(...args) {
 
 module.exports = (env = {}, argv) => {
     const prod = env.prod || env === 'prod';
-
     const commonConfig = {
         context: r('.'),
         entry: {
@@ -38,30 +35,43 @@ module.exports = (env = {}, argv) => {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
                 use: [{
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: ['lodash'],
+                    }
                 }, {
                     loader: 'ts-loader'
-                }, {
-                    loader: 'eslint-loader',
-                    options: {
-                        cache: false,
-                        fix: true,
-                        failOnError: true,
-                        ext: '.js,ts',
-                    }
                 }]
             }, {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: [{
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: ['lodash'],
+                    }
                 }]
             }]
         },
         plugins: [
-            new Lodash({
-                'caching': true,
-                'paths': true
+            new ProgressPlugin({
+                activeModules: true,
+                entries: true,
+                modules: true,
+                modulesCount: 1,
+                profile: false,
+                dependencies: true,
+                dependenciesCount: 1,
+            }),
+            new ESLintWebpackPlugin({
+                cache: false,
+                fix: true,
+                failOnError: true,
+                extensions: '.js,ts',
+            }),
+            new LodashWebpackPlugin({
+                caching: true,
+                paths: true
             })
         ]
     };
@@ -72,9 +82,28 @@ module.exports = (env = {}, argv) => {
             'ledap': './src/index.ts',
             'ledap.core': './src/index.core.ts'
         },
-        devtool: 'cheap-module-eval-source-map',
+        devtool: 'eval-source-map',
+        devServer: {
+            client: {
+                progress: true,
+            },
+            static: {
+                directory: path.join(__dirname, 'examples')
+            },
+            watchFiles: ['src/**/*', 'examples/**/*'],
+            port: 8011,
+            server: 'http',
+            hot: false,
+            open: true,
+            devMiddleware: {
+                writeToDisk: true,
+            }
+        },
+        output: {
+            path: r('examples/dist')
+        },
         plugins: [
-            new Clean()
+            new CleanWebpackPlugin()
         ]
     });
 
@@ -85,12 +114,7 @@ module.exports = (env = {}, argv) => {
             'ledap.core.min': './src/index.core.ts'
         },
         optimization: {
-            minimizer: [
-                new Terser({
-                    cache: true,
-                    parallel: true,
-                }),
-            ]
+            minimize: true
         }
     });
 

@@ -1,7 +1,5 @@
 import * as lodash from 'lodash';
-import BaseObject from './base/BaseObject';
-import Model from './base/Model';
-import WebDataProvider from './base/WebDataProvider';
+import {BaseObject, Model, WebDataProvider, HttpModel} from './base/index';
 import Theme from './platforms/vue/Theme';
 import axios from 'axios';
 export default class App extends BaseObject {
@@ -55,6 +53,13 @@ export default class App extends BaseObject {
         config = lodash.merge({}, App.webDpConfig, config);
         const webDp = new WebDataProvider(config);
         return webDp;
+    }
+
+    public static getHttpModel(config: object = {}, params: object = {}) {
+        if (!config['httpRequest']) {
+            config['httpRequest'] = App.request;
+        }
+        return HttpModel.find(config, params);
     }
 
     public static register(name, vue) {
