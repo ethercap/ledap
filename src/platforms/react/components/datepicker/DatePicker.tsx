@@ -22,8 +22,8 @@ export default function DatePicker(props: DatePickerProps) {
     format = "YYYY-MM-DD",
     ...reset
   } = props;
-  function _onChange(dayObj) {
-    const val = dayObj.format(format);
+  function _onChange(_val) {
+    const val = _val ? _val.format(format) : undefined;
     onSetValue?.(val);
   }
   const placeholder = model.getAttributeHint(attr);

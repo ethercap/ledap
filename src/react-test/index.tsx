@@ -33,7 +33,7 @@ function App() {
       <div className="app">
         this is react app
         <div className="react-form">
-          <ModelTestComponent />
+          {/* <ModelTestComponent /> */}
           <TableTest />
         </div>
       </div>

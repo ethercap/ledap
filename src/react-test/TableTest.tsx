@@ -15,6 +15,7 @@ import {
 } from "@/platforms/react";
 import { Flex, Row, Col } from "antd";
 import WriteMobileCodeModal from "./WriteMobileCodeModal";
+import { GetParams } from "./utils.js";
 
 export default function TableTest() {
   const [selectedIds, setSelectedIds] = useState([]);
@@ -22,7 +23,7 @@ export default function TableTest() {
   const dp = ledap.App.useWebDp({
     httpOptions: {
       url: "/mis-api/user/index",
-      params: {},
+      params: GetParams(),
     },
   });
 
