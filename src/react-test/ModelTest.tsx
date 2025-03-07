@@ -16,6 +16,7 @@ import {
   Uploader,
   Detail,
 } from "@/platforms/react";
+import { message } from 'antd'
 
 export default function ModelTestComponent() {
   const model1 = ledap.App.useModel({
@@ -42,6 +43,7 @@ export default function ModelTestComponent() {
   });
 
   function _onFilish(data, json) {
+    message.error({content:'错误提示'})
     console.log("_onFilish data,json:", data, json);
   }
 
