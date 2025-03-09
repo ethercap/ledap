@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Select as AntSelect, Spin } from "antd";
 import { useDpEvent } from "../../hooks/useLedapDataProvider";
-import GetParams from '../../utils/GetParams'
+import { useModelEvent } from "../../hooks/useLedapModel";
 
 interface SearchInputProps {
   value: any;
@@ -35,19 +35,25 @@ export default function SearchInput(props: SearchInputProps) {
   };
 
   const { loading,isLoad,models: data } = useDpEvent(dp)
+  const { loaded:ModelLoaded } = useModelEvent(model, attr)
 
   useEffect(() => {
     if(!dp || isLoad) {
       return
     }
+    // console.log('ModelLoaded:',{model, ModelLoaded})
+    // if(!ModelLoaded) {
+    //   return
+    // }
     if (!loading) {
-      const locationAttrParams = GetParams()?.[attr]
-      if(locationAttrParams) {
-        dp.setParams({[paramName]: locationAttrParams})
+      console.log('model attr:', model?.[attr])
+      const ModelValue = model?.[attr]
+      if(ModelValue) {
+        dp?.setParams({[paramName]: ModelValue})
       }
       dp.refresh()
     }
-  }, [isLoad, loading]);
+  }, [isLoad, loading,ModelLoaded]);
 
   const _handleSearch = (value) => {
     const searchParams = { [paramName]: value };

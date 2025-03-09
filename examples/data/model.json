@@ -120,6 +120,18 @@
       "rules": [],
       "hint": "请选择"
     },
+    "color": {
+      "label": "颜色",
+      "value": "",
+      "rules": [],
+      "hint": "请选择颜色"
+    },
+    "color1": {
+      "label": "颜色1",
+      "value": "#ff0000",
+      "rules": [],
+      "hint": "请选择颜色1"
+    },
     "stayCity": {
       "label": "常驻城市",
       "rules": [

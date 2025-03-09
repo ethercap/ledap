@@ -362,7 +362,7 @@ module.exports = equalObjects;
 /***/ 741:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var isArrayLikeObject = __webpack_require__(6074);
+var isArrayLikeObject = __webpack_require__(3693);
 
 /**
  * Casts `value` to an empty array if it's not an array like object.
@@ -1481,7 +1481,7 @@ var assignMergeValue = __webpack_require__(7805),
     initCloneObject = __webpack_require__(5529),
     isArguments = __webpack_require__(2428),
     isArray = __webpack_require__(6449),
-    isArrayLikeObject = __webpack_require__(6074),
+    isArrayLikeObject = __webpack_require__(3693),
     isBuffer = __webpack_require__(3656),
     isFunction = __webpack_require__(1882),
     isObject = __webpack_require__(3805),
@@ -2114,6 +2114,46 @@ MapCache.prototype.has = mapCacheHas;
 MapCache.prototype.set = mapCacheSet;
 
 module.exports = MapCache;
+
+
+/***/ }),
+
+/***/ 3693:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArrayLike = __webpack_require__(4894),
+    isObjectLike = __webpack_require__(346);
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+module.exports = isArrayLikeObject;
 
 
 /***/ }),
@@ -3246,46 +3286,6 @@ function assocIndexOf(array, key) {
 }
 
 module.exports = assocIndexOf;
-
-
-/***/ }),
-
-/***/ 6074:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var isArrayLike = __webpack_require__(4894),
-    isObjectLike = __webpack_require__(346);
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-module.exports = isArrayLikeObject;
 
 
 /***/ }),

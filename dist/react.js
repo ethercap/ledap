@@ -365,7 +365,7 @@ module.exports = equalObjects;
 /***/ 741:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var isArrayLikeObject = __webpack_require__(6074);
+var isArrayLikeObject = __webpack_require__(3693);
 
 /**
  * Casts `value` to an empty array if it's not an array like object.
@@ -1684,7 +1684,7 @@ var assignMergeValue = __webpack_require__(7805),
     initCloneObject = __webpack_require__(5529),
     isArguments = __webpack_require__(2428),
     isArray = __webpack_require__(6449),
-    isArrayLikeObject = __webpack_require__(6074),
+    isArrayLikeObject = __webpack_require__(3693),
     isBuffer = __webpack_require__(3656),
     isFunction = __webpack_require__(1882),
     isObject = __webpack_require__(3805),
@@ -1806,7 +1806,7 @@ module.exports = identity;
 /***/ 2897:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var defineProperty = __webpack_require__(3693);
+var defineProperty = __webpack_require__(6074);
 function ownKeys(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
@@ -2389,16 +2389,40 @@ module.exports = MapCache;
 /***/ 3693:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var toPropertyKey = __webpack_require__(7736);
-function _defineProperty(e, r, t) {
-  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
+var isArrayLike = __webpack_require__(4894),
+    isObjectLike = __webpack_require__(346);
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
 }
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+module.exports = isArrayLikeObject;
+
 
 /***/ }),
 
@@ -3925,40 +3949,16 @@ module.exports = assocIndexOf;
 /***/ 6074:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var isArrayLike = __webpack_require__(4894),
-    isObjectLike = __webpack_require__(346);
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
+var toPropertyKey = __webpack_require__(7736);
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
 }
-
-module.exports = isArrayLikeObject;
-
+module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
@@ -5970,6 +5970,7 @@ __webpack_require__.d(__webpack_exports__, {
   e2: () => (/* reexport */ ButtonGroup),
   Sc: () => (/* reexport */ Checkbox),
   $Q: () => (/* reexport */ CheckboxGroup),
+  sk: () => (/* reexport */ colorpicker_ColorPicker),
   sG: () => (/* reexport */ configProvider_ConfigProvider),
   lr: () => (/* reexport */ DatePicker),
   kZ: () => (/* reexport */ Detail),
@@ -6072,7 +6073,7 @@ var external_antd_x = (y) => {
 	var x = {}; __webpack_require__.d(x, y); return x
 } 
 var external_antd_y = (x) => (() => (x))
-const external_antd_namespaceObject = external_antd_x({ ["Button"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Button), ["Checkbox"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Checkbox), ["ConfigProvider"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.ConfigProvider), ["DatePicker"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.DatePicker), ["Descriptions"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Descriptions), ["Dropdown"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Dropdown), ["Form"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Form), ["Input"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Input), ["InputNumber"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.InputNumber), ["Modal"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Modal), ["Radio"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Radio), ["Segmented"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Segmented), ["Select"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Select), ["Space"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Space), ["Spin"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Spin), ["Table"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Table), ["Upload"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Upload), ["message"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.message) });
+const external_antd_namespaceObject = external_antd_x({ ["Button"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Button), ["Checkbox"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Checkbox), ["ColorPicker"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.ColorPicker), ["ConfigProvider"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.ConfigProvider), ["DatePicker"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.DatePicker), ["Descriptions"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Descriptions), ["Dropdown"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Dropdown), ["Form"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Form), ["Input"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Input), ["InputNumber"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.InputNumber), ["Modal"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Modal), ["Radio"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Radio), ["Segmented"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Segmented), ["Select"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Select), ["Space"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Space), ["Spin"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Spin), ["Table"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Table), ["Upload"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Upload), ["message"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.message) });
 ;// ./src/platforms/react/components/formItem/BaseInput.tsx
 var _excluded=["tag","attr","model","type","validate","onFocus","onBlur","onInput","onSetValue","value"];var InputEvents={blur:"blur",focus:"focus",input:"input"};var getControlComponent=function getControlComponent(tag,type){if(tag=="textarea"){return external_antd_namespaceObject.Input.TextArea;}if(type=="text"){return external_antd_namespaceObject.Input;}if(type=="password"){return external_antd_namespaceObject.Input.Password;}if(type=="number"){return external_antd_namespaceObject.InputNumber;}if(type=="textarea"){return external_antd_namespaceObject.Input.TextArea;}};function BaseInput(props){var tag=props.tag,attr=props.attr,model=props.model,_props$type=props.type,type=_props$type===void 0?"text":_props$type,_props$validate=props.validate,validate=_props$validate===void 0?[InputEvents.blur]:_props$validate,onFocus=props.onFocus,onBlur=props.onBlur,onInput=props.onInput,onSetValue=props.onSetValue,_props$value=props.value,value=_props$value===void 0?"":_props$value,reset=_objectWithoutProperties(props,_excluded);function _checkValue(eventType){if(validate.indexOf(eventType)>-1){var validateRes=model.validate(attr,true);var error=model.getFirstError(attr);// console.log("call validate", { model, attr, validateRes, error });
 }}function _onInput(e){var _e$target;var value=typeof e=="number"||typeof e=="string"?e:e===null||e===void 0||(_e$target=e.target)===null||_e$target===void 0?void 0:_e$target.value;onSetValue===null||onSetValue===void 0||onSetValue(value);_checkValue(InputEvents.input);onInput===null||onInput===void 0||onInput(e);}function _onFocus(e){_checkValue(InputEvents.focus);onFocus===null||onFocus===void 0||onFocus(e);}function _onBlur(e){_checkValue(InputEvents.blur);onBlur===null||onBlur===void 0||onBlur(e);}var ControlComponent=getControlComponent(tag,type);var ControlProps=ControlComponent==external_antd_namespaceObject.Input.TextArea?{rows:8}:{};var maxLength=model.getValidatorData(attr,"string","max");return/*#__PURE__*/external_react_namespaceObject["default"].createElement(ControlComponent,_extends({value:value,placeholder:model.getAttributeHint(attr),maxLength:maxLength,onChange:_onInput,onFocus:_onFocus,onBlur:_onBlur},ControlProps,reset));}
@@ -6146,32 +6147,6 @@ function _slicedToArray(r, e) {
   return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
 }
 
-;// ./src/platforms/react/hooks/useLedapModel.js
-/**
- * 实现 react 数据的双向绑定
- * 组件调用 setValue() 触发组件重新渲染和修改model值
- * @param {*} model ledap框架load返回的model对象
- * @returns 
- */function useLedapModel(model){var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setbool=_useState2[1];function _setValue(attr,val){model[attr]=val;setbool(function(bool){return!bool;});}function getValue(attr){return model[attr];}function updateView(){setbool(function(bool){return!bool;});}return{setValue:_setValue,getValue:getValue,updateView:updateView,model:model};}
-;// ./src/platforms/react/components/formItem/form-item.module.less
-// extracted by mini-css-extract-plugin
-var _1 = "_module_formitem_m6q_j";
-
-
-;// ./src/platforms/react/contexts/FormContext.js
-var FormContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({});/* harmony default export */ const contexts_FormContext = (FormContext);
-;// ./src/platforms/react/components/formItem/FormItem.tsx
-var FormItem_excluded=["FormComponent","model","attr","label","validate","children","dp","inline","show","FormComponentProps"];function FormItem(props){var _props$FormComponent=props.FormComponent,FormComponent=_props$FormComponent===void 0?BaseInput:_props$FormComponent,propModel=props.model,attr=props.attr,label=props.label,validate=props.validate,children=props.children,dp=props.dp,inline=props.inline,show=props.show,FormComponentProps=props.FormComponentProps,reset=_objectWithoutProperties(props,FormItem_excluded);var _reset$labelCol=reset.labelCol,labelCol=_reset$labelCol===void 0?{span:8}:_reset$labelCol,_reset$wrapperCol=reset.wrapperCol,wrapperCol=_reset$wrapperCol===void 0?{span:16}:_reset$wrapperCol;var _ref=propModel?useLedapModel(propModel):(0,external_react_namespaceObject.useContext)(contexts_FormContext),setValue=_ref.setValue,getValue=_ref.getValue,updateView=_ref.updateView,model=_ref.model;var _setValue=function _setValue(val){setValue(attr,val);};if(inline){labelCol=null;wrapperCol=null;}var required=model===null||model===void 0?void 0:model.isRequired(attr);// console.log("render formItem:", {
-//   attr,
-//   value: model[attr],
-//   hasError: model.hasErrors(attr),
-//   error: model.getFirstError(attr),
-// });
-if(show===false){return null;}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormItemContext.Provider,{value:{getValue:getValue,setValue:setValue}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form.Item,_extends({className:classnames_default()(_1,{required:required}),label:label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),labelCol:labelCol,wrapperCol:wrapperCol,validateStatus:model.hasErrors(attr)?"error":null,help:model.getFirstError(attr)},reset),/*#__PURE__*/external_react_namespaceObject["default"].createElement(FormComponent,_extends({model:model,attr:attr,validate:validate,onSetValue:_setValue,value:model[attr],onBlur:updateView,dp:dp},FormComponentProps)),children));}/* harmony default export */ const formItem_FormItem = (FormItem);
-;// ./src/platforms/react/components/formItem/FormItemLabel.tsx
-function FormItemLabel(props){var _props$labelComponent=props.labelComponent,labelComponent=_props$labelComponent===void 0?null:_props$labelComponent,_props$model=props.model,model=_props$model===void 0?null:_props$model,_props$attr=props.attr,attr=_props$attr===void 0?"":_props$attr,_props$label=props.label,label=_props$label===void 0?"":_props$label,className=props.className;return labelComponent?labelComponent:/*#__PURE__*/external_react_namespaceObject["default"].createElement("label",{className:classnames_default()(className)},label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),model!==null&&model!==void 0&&model.isRequired(attr)?"*":"");}/* harmony default export */ const formItem_FormItemLabel = (FormItemLabel);
-;// ./src/platforms/react/components/button/Button.tsx
-function Button(props){return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Button,props);}Button.Group=external_antd_namespaceObject.Button.Group;/* harmony default export */ const button_Button = (Button);
 ;// ./node_modules/@babel/runtime/helpers/esm/typeof.js
 function _typeof(o) {
   "@babel/helpers - typeof";
@@ -6181,6 +6156,11 @@ function _typeof(o) {
   } : function (o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
   }, _typeof(o);
+}
+
+;// ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+function _classCallCheck(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
 
 ;// ./node_modules/@babel/runtime/helpers/esm/toPrimitive.js
@@ -6204,44 +6184,6 @@ function toPropertyKey(t) {
   return "symbol" == _typeof(i) ? i : i + "";
 }
 
-;// ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-
-function _defineProperty(e, r, t) {
-  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
-}
-
-;// ./src/platforms/react/components/form/form.module.less
-// extracted by mini-css-extract-plugin
-var form_module_1 = "_form_kRBRi";
-
-
-;// ./src/platforms/react/components/form/Form.tsx
-var Form_excluded=["model","className","inline","onSubmit","onSetValue","enctype"];function ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function _objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Form(props){var model=props.model,className=props.className,inline=props.inline,onSubmit=props.onSubmit,onSetValue=props.onSetValue,_props$enctype=props.enctype,enctype=_props$enctype===void 0?"application/json":_props$enctype,reset=_objectWithoutProperties(props,Form_excluded);var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];function getValue(attr){return model[attr];}function setValue(attr,val){model[attr]=val;setBool(function(bool){return!bool;});onSetValue===null||onSetValue===void 0||onSetValue();}function updateView(){setBool(function(bool){return!bool;});}function _onFinish(e){var json=_objectSpread({},model);var data=json;switch(enctype.toLocaleLowerCase()){case"multipart/form-data":{var formData=new FormData();Object.keys(json).forEach(function(key){if(json[key]===null){return;}formData.append(key,json[key]);});data=formData;break;}default:{break;}}// console.log("form on filish json:", data, json);
-var firstErr="";try{var _model$validate;model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model);firstErr=model.getFirstError();}catch(e){console.error(e);}onSubmit===null||onSubmit===void 0||onSubmit(data,firstErr);updateView();}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormContext.Provider,{value:{getValue:getValue,setValue:setValue,updateView:updateView,model:model}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form,_extends({className:classnames_default()(form_module_1,className,inline&&"inline"),onFinish:_onFinish},reset),props.children));}
-// EXTERNAL MODULE: ./node_modules/antd/lib/locale/zh_CN.js
-var zh_CN = __webpack_require__(2187);
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(4353);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
-// EXTERNAL MODULE: ./node_modules/dayjs/locale/zh-cn.js
-var zh_cn = __webpack_require__(6033);
-// EXTERNAL MODULE: ./node_modules/dayjs/plugin/weekday.js
-var weekday = __webpack_require__(6986);
-var weekday_default = /*#__PURE__*/__webpack_require__.n(weekday);
-// EXTERNAL MODULE: ./node_modules/dayjs/plugin/localeData.js
-var localeData = __webpack_require__(1840);
-var localeData_default = /*#__PURE__*/__webpack_require__.n(localeData);
-;// ./src/platforms/react/components/configProvider/LedapAppContext.js
-var LedapAppContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({uploadUrl:''});
-;// ./src/platforms/react/components/configProvider/ConfigProvider.tsx
-var ConfigProvider_excluded=["theme","ledapConfig","children"];function ConfigProvider_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function ConfigProvider_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ConfigProvider_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ConfigProvider_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}dayjs_min_default().locale("zh-cn");dayjs_min_default().extend((weekday_default()));dayjs_min_default().extend((localeData_default()));function ConfigProvider(){var props=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var _props$theme=props.theme,theme=_props$theme===void 0?{}:_props$theme,ledapConfig=props.ledapConfig,children=props.children,reset=_objectWithoutProperties(props,ConfigProvider_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(LedapAppContext.Provider,{value:ConfigProvider_objectSpread({},ledapConfig)},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.ConfigProvider,_extends({locale:zh_CN/* default */.A,theme:ConfigProvider_objectSpread({cssVar:true},theme)},reset),children,/*#__PURE__*/external_react_namespaceObject["default"].createElement("div",{id:"ledap-modal-root"})));}/* harmony default export */ const configProvider_ConfigProvider = (ConfigProvider);
-;// ./src/platforms/react/components/radio/Radio.tsx
-var Radio_excluded=["value","model","attr","children"];function Radio(props){var value=props.value,model=props.model,attr=props.attr,children=props.children,reset=_objectWithoutProperties(props,Radio_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio,_extends({checked:!!value},reset),children);}/* harmony default export */ const radio_Radio = (Radio);
 ;// ./node_modules/@babel/runtime/helpers/esm/createClass.js
 
 function _defineProperties(e, r) {
@@ -6254,11 +6196,6 @@ function _createClass(e, r, t) {
   return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
     writable: !1
   }), e;
-}
-
-;// ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-function _classCallCheck(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
 
 ;// ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
@@ -6283,6 +6220,25 @@ function _getPrototypeOf(t) {
   }, _getPrototypeOf(t);
 }
 
+;// ./node_modules/@babel/runtime/helpers/esm/superPropBase.js
+
+function _superPropBase(t, o) {
+  for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t)););
+  return t;
+}
+
+;// ./node_modules/@babel/runtime/helpers/esm/get.js
+
+function _get() {
+  return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) {
+    var p = _superPropBase(e, t);
+    if (p) {
+      var n = Object.getOwnPropertyDescriptor(p, t);
+      return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value;
+    }
+  }, _get.apply(null, arguments);
+}
+
 ;// ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
 function _setPrototypeOf(t, e) {
   return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
@@ -6305,15 +6261,32 @@ function _inherits(t, e) {
   }), e && _setPrototypeOf(t, e);
 }
 
-// EXTERNAL MODULE: ./node_modules/lodash/ceil.js
-var ceil = __webpack_require__(3551);
-var ceil_default = /*#__PURE__*/__webpack_require__.n(ceil);
-// EXTERNAL MODULE: ./node_modules/lodash/isArray.js
-var isArray = __webpack_require__(6449);
-var isArray_default = /*#__PURE__*/__webpack_require__.n(isArray);
-// EXTERNAL MODULE: ./node_modules/lodash/keys.js
-var lodash_keys = __webpack_require__(5950);
-var keys_default = /*#__PURE__*/__webpack_require__.n(lodash_keys);
+;// ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+
+// EXTERNAL MODULE: ./node_modules/lodash/get.js
+var get = __webpack_require__(8156);
+var get_default = /*#__PURE__*/__webpack_require__.n(get);
+// EXTERNAL MODULE: ./node_modules/lodash/intersection.js
+var intersection = __webpack_require__(5287);
+var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
+// EXTERNAL MODULE: ./node_modules/lodash/isEmpty.js
+var lodash_isEmpty = __webpack_require__(2193);
+var isEmpty_default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty);
+// EXTERNAL MODULE: ./node_modules/lodash/set.js
+var set = __webpack_require__(3560);
+var set_default = /*#__PURE__*/__webpack_require__.n(set);
+// EXTERNAL MODULE: ./node_modules/lodash/merge.js
+var merge = __webpack_require__(5364);
+var merge_default = /*#__PURE__*/__webpack_require__.n(merge);
 ;// ./src/base/Event.ts
 /**
  * 观察者
@@ -6343,1397 +6316,6 @@ if(typeof callback!=='function'){this.listeners[name]=[];}else{var length=observ
      */},{key:"on",value:function on(name,callback,context){if(typeof callback!=='function')return;var observers=this.listeners[name];if(!observers){this.listeners[name]=observers=[];}var length=observers.length;for(var i=0;i<length;i++){var observer=observers[i];if(observer.compare(callback,context))return;}this.listeners[name].push(new Observer(callback,context));}}],[{key:"getInstance",value:function getInstance(){if(Event.instance){return Event.instance;}Event.instance=new Event();return Event.instance;}},{key:"once",value:function once(name,callback,context){Event.getInstance().once(name,callback,context);}},{key:"off",value:function off(name,callback,context){Event.getInstance().off(name,callback,context);}},{key:"emit",value:function emit(name){var _Event$getInstance;for(var _len4=arguments.length,args=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){args[_key4-1]=arguments[_key4];}(_Event$getInstance=Event.getInstance()).emit.apply(_Event$getInstance,[name].concat(args));}},{key:"on",value:function on(name,callback,context){Event.getInstance().on(name,callback,context);}}]);}();_defineProperty(Event,"instance",null);
 ;// ./src/base/BaseObject.ts
 var BaseObject=/*#__PURE__*/function(){function BaseObject(){_classCallCheck(this,BaseObject);_defineProperty(this,"_event",null);}return _createClass(BaseObject,[{key:"getEvent",value:function getEvent(){if(!this._event){this._event=new Event();}return this._event;}},{key:"load",value:function load(){var _this=this;var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};Object.keys(data).forEach(function(key){_this[key]=data[key];});this.init();return this;}},{key:"isHideKey",value:function isHideKey(key){if(key.substr(0,1)==='_'){return true;}if(typeof this[key]==='function'){return true;}return false;}},{key:"init",value:function init(){var _this2=this;Object.getOwnPropertyNames(this).forEach(function(key){if(_this2.isHideKey(key)){var property=Object.getOwnPropertyDescriptor(_this2,key);if(property&&property.configurable===false){return;}if(!property){return;}property['enumerable']=false;Object.defineProperty(_this2,key,property);}});}},{key:"on",value:function on(name,callback){var context=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;this.getEvent().on(name,callback,context);}},{key:"once",value:function once(name,callback){var context=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;this.getEvent().once(name,callback,context);}},{key:"off",value:function off(name,callback){var context=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;this.getEvent().off(name,callback,context);}},{key:"emit",value:function emit(name){var _this$getEvent;for(var _len=arguments.length,args=new Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}(_this$getEvent=this.getEvent()).emit.apply(_this$getEvent,[name].concat(args));Event.emit.apply(Event,[name].concat(args));}}]);}();
-;// ./src/widgets/BaseGroup.ts
-function _callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function _isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var BaseGroup=/*#__PURE__*/function(_BaseObject){function BaseGroup(){_classCallCheck(this,BaseGroup);return _callSuper(this,BaseGroup,arguments);}_inherits(BaseGroup,_BaseObject);return _createClass(BaseGroup,[{key:"addList",value:function addList(components){var _this=this;Object.keys(components).forEach(function(i){var component=components[i];_this.add(component);});this.init();}},{key:"isValid",value:function isValid(component){// component必须存在方法 open, close，本处接口由代码来实现。
-if(!component.hasOwnProperty('open')&&!component.hasOwnProperty('close')&&!component.hasOwnProperty('isOpen')){return false;}if(typeof component.open!=='function'){return false;}if(typeof component.close!=='function'){return false;}if(typeof component.isOpen!=='function'){return false;}return true;}}]);}(BaseObject);
-;// ./src/helpers/ArrayHelper.ts
-var ArrayHelper=/*#__PURE__*/function(){function ArrayHelper(){_classCallCheck(this,ArrayHelper);}return _createClass(ArrayHelper,null,[{key:"hasKey",value:// 对象的key会自动转为字符串，要实现数字格式的key和字符串格式的key是等价的，如groupinput 的 exclude中的判断
-function hasKey(arr,key){var numberKey=Number(key);var stringKey=String(key);var flag=false;for(var i=0,l=arr.length;i<l;i++){if(arr[i]===numberKey||arr[i]===stringKey){flag=true;break;}}return flag;}}]);}();
-;// ./src/widgets/Group.ts
-function Group_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Group_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Group_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Group_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// group组件组
-var Group=/*#__PURE__*/function(_BaseGroup){function Group(){var _this;_classCallCheck(this,Group);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Group_callSuper(this,Group,[].concat(args));_defineProperty(_this,"_max",1);_defineProperty(_this,"excludes",[]);// 默认模式为unstrict, 出现错误会自己处理，strict模式会throw出错误，交给上层处理
-_defineProperty(_this,"mode",'unstrict');_defineProperty(_this,"_selected",[]);_defineProperty(_this,"_components",{});return _this;}_inherits(Group,_BaseGroup);return _createClass(Group,[{key:"add",value:function add(component){if(!this.isValid(component)){return false;}var key;if(component.hasOwnProperty('groupKey')&&component.groupKey!==null){key=component.groupKey;}else{var keys=keys_default()(this._components);key=keys.length+'';}this._components[key]=component;return true;}// 初始化,将所有的参数都归位
-},{key:"init",value:function init(){var _this2=this;Object.keys(this._components).forEach(function(i){var component=_this2._components[i];var key=_this2.getKey(component);if(component.isOpen()&&_this2._selected.indexOf(key)<0){// 如果组件是打开的，但是要求关闭，则将其关闭
-component.close();_this2.toggle('close',component);}if(!component.isOpen()&&_this2._selected.indexOf(key)>-1){component.open();_this2.toggle('open',component);}});}},{key:"toggle",value:function toggle(type,component){var key=this.getKey(component);if(key===null){return false;}if(type==='open'){return this.select(key);}return this.unSelect(key);}},{key:"unSelect",value:function unSelect(key){// 如果已经是未选中了，直接返回
-var index=this._selected.indexOf(key);if(index<0){return true;}this._selected.splice(index,1);this.emit(Group.EVENT_DATACHANGED,this,{group:this,type:'close'});return true;}},{key:"getKey",value:function getKey(component){var _this3=this;var index=null;Object.keys(this._components).forEach(function(i){if(_this3._components[i]===component){index=i;return;}});return index;}// 选中某个组件
-},{key:"select",value:function select(key){if(!this._components.hasOwnProperty(key)){return false;}var component=this._components[key];// 若已经被选中，则直接返回
-if(this._selected.indexOf(key)>-1){return true;}if(ArrayHelper.hasKey(this.excludes,key)){component.close();if(this.mode==='strict'){throw new Error('该选项不可选');}return false;}if(this._selected.length+1>this.max&&this.max>1&&this.mode==='strict'){component.close();throw new Error('最多只允许选择'+this.max+'项');}// 选中时,把当前的组件push，然后根据情况pop
-this._selected.push(key);if(this._selected.length>this.max){var closeKey=this._selected.shift();if(this._components.hasOwnProperty(closeKey)){this._components[closeKey].close();}}this.emit(Group.EVENT_DATACHANGED,this,{group:this,type:'open'});return true;}},{key:"selected",get:function get(){return this._selected;},set:function set(value){if(value===null){value=[];}if(typeof value==='string'){this._selected=[value];}if(typeof value==='number'){this._selected=[value+''];}// 由于_selected中元素取自_components的key，因此赋值的时候也强制转为string
-if(isArray_default()(value)){this._selected=value.map(function(item){return item+'';});}this.init();}},{key:"max",get:function get(){return this._max;},set:function set(value){if(value<1){this._max=1;return;}this._max=ceil_default()(value);while(this._selected.length>this._max){this._selected.pop();}this.init();}},{key:"getSelectComponent",value:function getSelectComponent(){var _this4=this;var arr=this.selected;var tempArr=[];Object.keys(arr).forEach(function(i){if(_this4._components.hasOwnProperty(i)){tempArr.push(_this4._components[i]);}});return tempArr;}}]);}(BaseGroup);_defineProperty(Group,"EVENT_DATACHANGED",'GROUP_CHANGED');
-;// ./src/platforms/react/hooks/useInputGroup.js
-function useInputGroup(model,attr){var _model$rules$attr;var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];var _useRef=(0,external_react_namespaceObject.useRef)(createGroupWigtht(model,attr)),groupWidget=_useRef.current;var _updateView=function _updateView(){setBool(function(bool){return!bool;});};function open(key){groupWidget.select(key);_updateView();}function close(key){groupWidget.unSelect(key);_updateView();}function getItemOpen(key){return groupWidget.selected.indexOf(key)>-1;}function setValue(valArr){groupWidget.selected=valArr;_updateView();}function getValue(){var _model$rules;var arr=groupWidget.selected;if((_model$rules=model.rules)!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.call(model)[attr])!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.dict)!==null&&_model$rules!==void 0&&_model$rules.multiple){return arr;}return arr[0];}return{value:groupWidget.selected,itemList:formatItemList((_model$rules$attr=model.rules()[attr])===null||_model$rules$attr===void 0?void 0:_model$rules$attr.dict),getItemOpen:getItemOpen,open:open,close:close,getValue:getValue,setValue:setValue};}function formatItemList(){var dict=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var list=[];var _dict$excludes=dict.excludes,excludes=_dict$excludes===void 0?[]:_dict$excludes;var listObj=dict.list||{};for(var key in listObj){var value=listObj[key];var disabled=excludes.indexOf(key)>-1;list.push({label:value,value:key,disabled:disabled});}return list;}function createGroupWigtht(model,attr){var _model$rules$attr2;var modelValue=model[attr];var dict=((_model$rules$attr2=model.rules()[attr])===null||_model$rules$attr2===void 0?void 0:_model$rules$attr2.dict)||{};var obj=new Group();// 构造组件
-var listObj=(dict===null||dict===void 0?void 0:dict.list)||{};// 添加组件
-for(var key in listObj){var _modelValue$indexOf;var isOpen=(modelValue===null||modelValue===void 0||(_modelValue$indexOf=modelValue.indexOf)===null||_modelValue$indexOf===void 0?void 0:_modelValue$indexOf.call(modelValue,key))>-1;var component=new WidgetGroupComponent(key,isOpen);obj.add(component);}// 设置最大选中值
-if(dict.max&&dict.multiple){obj.max=dict.max;}// 设置选中
-obj.selected=modelValue;return obj;}var WidgetGroupComponent=/*#__PURE__*/_createClass(function WidgetGroupComponent(groupKey){var _this=this;var isOpen=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;_classCallCheck(this,WidgetGroupComponent);_defineProperty(this,"isOpen",function(){return _this._isOpen;});_defineProperty(this,"open",function(){_this._isOpen=true;});_defineProperty(this,"close",function(){_this._isOpen=false;});this.groupKey=groupKey;this._isOpen=isOpen;});
-;// ./src/platforms/react/components/radio/RadioGroup.tsx
-var RadioGroup_excluded=["model","attr","value","onSetValue"];function RadioGroup(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,RadioGroup_excluded);var _useInputGroup=useInputGroup(model,attr),value=_useInputGroup.value,getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,getItemOpen=_useInputGroup.getItemOpen,open=_useInputGroup.open,close=_useInputGroup.close;var _onChangeRadio=function _onChangeRadio(checked,value){if(checked){open===null||open===void 0||open(value);}else{close===null||close===void 0||close(value);}var newVal=getValue();onSetValue===null||onSetValue===void 0||onSetValue(newVal);};var _onChangeGroup=function _onChangeGroup(e){var _e$target=e.target,checked=_e$target.checked,value=_e$target.value;_onChangeRadio(checked,value);};var targetValue=typeof propValue=="string"||typeof propValue=="number"?"".concat(propValue):Array.isArray(propValue)?propValue[0]:propValue;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio.Group,_extends({defaultValue:targetValue,value:targetValue,options:itemList,onChange:_onChangeGroup},resetProps));}
-;// ./src/platforms/react/components/checkbox/Checkbox.tsx
-var Checkbox_excluded=["value","attr","model","children"];function Checkbox(props){var value=props.value,attr=props.attr,model=props.model,_props$children=props.children,children=_props$children===void 0?"":_props$children,reset=_objectWithoutProperties(props,Checkbox_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({checked:!!value},reset),children);}
-;// ./src/platforms/react/components/checkbox/CheckboxGroup.tsx
-function CheckboxGroup(props){var model=props.model,attr=props.attr,checkboxProps=props.checkboxProps,propValue=props.value,onSetValue=props.onSetValue,_props$tag=props.tag,Tag=_props$tag===void 0?external_react_namespaceObject["default"].Fragment:_props$tag;var _useInputGroup=useInputGroup(model,attr),getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,open=_useInputGroup.open,close=_useInputGroup.close;var _getModelValue=function _getModelValue(){if(!propValue){return[];}return typeof propValue=="string"?[propValue]:propValue;};var _changeCheckbox=function _changeCheckbox(_ref,value){var _model$validate;var target=_ref.target;var checked=target.checked;if(checked){open(value);}else{close(value);}var valueList=getValue();onSetValue===null||onSetValue===void 0||onSetValue(valueList);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);};var targetValue=_getModelValue();return/*#__PURE__*/external_react_namespaceObject["default"].createElement(Tag,null,itemList.map(function(_ref2){var value=_ref2.value,label=_ref2.label,disabled=_ref2.disabled;var checked=targetValue.find(function(v){return v==value;});return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({key:value},checkboxProps,{disabled:disabled,checked:checked,onChange:function onChange(e){_changeCheckbox(e,value);}}),label);}));}
-// EXTERNAL MODULE: ./node_modules/lodash/get.js
-var get = __webpack_require__(8156);
-var get_default = /*#__PURE__*/__webpack_require__.n(get);
-;// ./src/platforms/react/utils/formatSelectOptions.ts
-function formatSelectOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes=dictOption.excludes,excludes=_dictOption$excludes===void 0?[]:_dictOption$excludes;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){// const disabled = excludes.indexOf(keyItem) > -1
-var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],value:keyItem,disabled:disabled};total.push(option);return total;},[]);}function formatDropDownOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes2=dictOption.excludes,excludes=_dictOption$excludes2===void 0?[]:_dictOption$excludes2;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],key:keyItem,disabled:disabled};total.push(option);return total;},[]);}
-;// ./src/platforms/react/components/select/Select.tsx
-var Select_excluded=["model","attr","value","onSetValue","formatOptions"];function Select(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,resetProps=_objectWithoutProperties(props,Select_excluded);function _onChange(e){var _model$validate;onSetValue===null||onSetValue===void 0||onSetValue(e);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var dictOptions=get_default()(model.rules(),[attr,"dict"],{});var maxCount=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?dictOptions.max:undefined;var mode=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?"multiple":undefined;var _options=formatSelectOptions(model,attr);var _value=value;if(mode===undefined){_value=_options.find(function(o){return o.value==_value;});}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({allowClear:true,mode:mode,defaultValue:value,value:_value,options:_options,maxCount:maxCount,onChange:_onChange},resetProps));}
-;// ./node_modules/@ant-design/icons-svg/es/asn/CaretDownOutlined.js
-// This icon file is generated automatically.
-var CaretDownOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "outlined" };
-/* harmony default export */ const asn_CaretDownOutlined = (CaretDownOutlined);
-
-;// ./node_modules/@ant-design/fast-color/es/FastColor.js
-
-const round = Math.round;
-
-/**
- * Support format, alpha unit will check the % mark:
- * - rgba(102, 204, 255, .5)      -> [102, 204, 255, 0.5]
- * - rgb(102 204 255 / .5)        -> [102, 204, 255, 0.5]
- * - rgb(100%, 50%, 0% / 50%)     -> [255, 128, 0, 0.5]
- * - hsl(270, 60, 40, .5)         -> [270, 60, 40, 0.5]
- * - hsl(270deg 60% 40% / 50%)   -> [270, 60, 40, 0.5]
- *
- * When `base` is provided, the percentage value will be divided by `base`.
- */
-function splitColorStr(str, parseNum) {
-  const match = str
-  // Remove str before `(`
-  .replace(/^[^(]*\((.*)/, '$1')
-  // Remove str after `)`
-  .replace(/\).*/, '').match(/\d*\.?\d+%?/g) || [];
-  const numList = match.map(item => parseFloat(item));
-  for (let i = 0; i < 3; i += 1) {
-    numList[i] = parseNum(numList[i] || 0, match[i] || '', i);
-  }
-
-  // For alpha. 50% should be 0.5
-  if (match[3]) {
-    numList[3] = match[3].includes('%') ? numList[3] / 100 : numList[3];
-  } else {
-    // By default, alpha is 1
-    numList[3] = 1;
-  }
-  return numList;
-}
-const parseHSVorHSL = (num, _, index) => index === 0 ? num : num / 100;
-
-/** round and limit number to integer between 0-255 */
-function limitRange(value, max) {
-  const mergedMax = max || 255;
-  if (value > mergedMax) {
-    return mergedMax;
-  }
-  if (value < 0) {
-    return 0;
-  }
-  return value;
-}
-class FastColor {
-  constructor(input) {
-    /**
-     * All FastColor objects are valid. So isValid is always true. This property is kept to be compatible with TinyColor.
-     */
-    _defineProperty(this, "isValid", true);
-    /**
-     * Red, R in RGB
-     */
-    _defineProperty(this, "r", 0);
-    /**
-     * Green, G in RGB
-     */
-    _defineProperty(this, "g", 0);
-    /**
-     * Blue, B in RGB
-     */
-    _defineProperty(this, "b", 0);
-    /**
-     * Alpha/Opacity, A in RGBA/HSLA
-     */
-    _defineProperty(this, "a", 1);
-    // HSV privates
-    _defineProperty(this, "_h", void 0);
-    _defineProperty(this, "_s", void 0);
-    _defineProperty(this, "_l", void 0);
-    _defineProperty(this, "_v", void 0);
-    // intermediate variables to calculate HSL/HSV
-    _defineProperty(this, "_max", void 0);
-    _defineProperty(this, "_min", void 0);
-    _defineProperty(this, "_brightness", void 0);
-    /**
-     * Always check 3 char in the object to determine the format.
-     * We not use function in check to save bundle size.
-     * e.g. 'rgb' -> { r: 0, g: 0, b: 0 }.
-     */
-    function matchFormat(str) {
-      return str[0] in input && str[1] in input && str[2] in input;
-    }
-    if (!input) {
-      // Do nothing since already initialized
-    } else if (typeof input === 'string') {
-      const trimStr = input.trim();
-      function matchPrefix(prefix) {
-        return trimStr.startsWith(prefix);
-      }
-      if (/^#?[A-F\d]{3,8}$/i.test(trimStr)) {
-        this.fromHexString(trimStr);
-      } else if (matchPrefix('rgb')) {
-        this.fromRgbString(trimStr);
-      } else if (matchPrefix('hsl')) {
-        this.fromHslString(trimStr);
-      } else if (matchPrefix('hsv') || matchPrefix('hsb')) {
-        this.fromHsvString(trimStr);
-      }
-    } else if (input instanceof FastColor) {
-      this.r = input.r;
-      this.g = input.g;
-      this.b = input.b;
-      this.a = input.a;
-      this._h = input._h;
-      this._s = input._s;
-      this._l = input._l;
-      this._v = input._v;
-    } else if (matchFormat('rgb')) {
-      this.r = limitRange(input.r);
-      this.g = limitRange(input.g);
-      this.b = limitRange(input.b);
-      this.a = typeof input.a === 'number' ? limitRange(input.a, 1) : 1;
-    } else if (matchFormat('hsl')) {
-      this.fromHsl(input);
-    } else if (matchFormat('hsv')) {
-      this.fromHsv(input);
-    } else {
-      throw new Error('@ant-design/fast-color: unsupported input ' + JSON.stringify(input));
-    }
-  }
-
-  // ======================= Setter =======================
-
-  setR(value) {
-    return this._sc('r', value);
-  }
-  setG(value) {
-    return this._sc('g', value);
-  }
-  setB(value) {
-    return this._sc('b', value);
-  }
-  setA(value) {
-    return this._sc('a', value, 1);
-  }
-  setHue(value) {
-    const hsv = this.toHsv();
-    hsv.h = value;
-    return this._c(hsv);
-  }
-
-  // ======================= Getter =======================
-  /**
-   * Returns the perceived luminance of a color, from 0-1.
-   * @see http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-   */
-  getLuminance() {
-    function adjustGamma(raw) {
-      const val = raw / 255;
-      return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
-    }
-    const R = adjustGamma(this.r);
-    const G = adjustGamma(this.g);
-    const B = adjustGamma(this.b);
-    return 0.2126 * R + 0.7152 * G + 0.0722 * B;
-  }
-  getHue() {
-    if (typeof this._h === 'undefined') {
-      const delta = this.getMax() - this.getMin();
-      if (delta === 0) {
-        this._h = 0;
-      } else {
-        this._h = round(60 * (this.r === this.getMax() ? (this.g - this.b) / delta + (this.g < this.b ? 6 : 0) : this.g === this.getMax() ? (this.b - this.r) / delta + 2 : (this.r - this.g) / delta + 4));
-      }
-    }
-    return this._h;
-  }
-  getSaturation() {
-    if (typeof this._s === 'undefined') {
-      const delta = this.getMax() - this.getMin();
-      if (delta === 0) {
-        this._s = 0;
-      } else {
-        this._s = delta / this.getMax();
-      }
-    }
-    return this._s;
-  }
-  getLightness() {
-    if (typeof this._l === 'undefined') {
-      this._l = (this.getMax() + this.getMin()) / 510;
-    }
-    return this._l;
-  }
-  getValue() {
-    if (typeof this._v === 'undefined') {
-      this._v = this.getMax() / 255;
-    }
-    return this._v;
-  }
-
-  /**
-   * Returns the perceived brightness of the color, from 0-255.
-   * Note: this is not the b of HSB
-   * @see http://www.w3.org/TR/AERT#color-contrast
-   */
-  getBrightness() {
-    if (typeof this._brightness === 'undefined') {
-      this._brightness = (this.r * 299 + this.g * 587 + this.b * 114) / 1000;
-    }
-    return this._brightness;
-  }
-
-  // ======================== Func ========================
-
-  darken(amount = 10) {
-    const h = this.getHue();
-    const s = this.getSaturation();
-    let l = this.getLightness() - amount / 100;
-    if (l < 0) {
-      l = 0;
-    }
-    return this._c({
-      h,
-      s,
-      l,
-      a: this.a
-    });
-  }
-  lighten(amount = 10) {
-    const h = this.getHue();
-    const s = this.getSaturation();
-    let l = this.getLightness() + amount / 100;
-    if (l > 1) {
-      l = 1;
-    }
-    return this._c({
-      h,
-      s,
-      l,
-      a: this.a
-    });
-  }
-
-  /**
-   * Mix the current color a given amount with another color, from 0 to 100.
-   * 0 means no mixing (return current color).
-   */
-  mix(input, amount = 50) {
-    const color = this._c(input);
-    const p = amount / 100;
-    const calc = key => (color[key] - this[key]) * p + this[key];
-    const rgba = {
-      r: round(calc('r')),
-      g: round(calc('g')),
-      b: round(calc('b')),
-      a: round(calc('a') * 100) / 100
-    };
-    return this._c(rgba);
-  }
-
-  /**
-   * Mix the color with pure white, from 0 to 100.
-   * Providing 0 will do nothing, providing 100 will always return white.
-   */
-  tint(amount = 10) {
-    return this.mix({
-      r: 255,
-      g: 255,
-      b: 255,
-      a: 1
-    }, amount);
-  }
-
-  /**
-   * Mix the color with pure black, from 0 to 100.
-   * Providing 0 will do nothing, providing 100 will always return black.
-   */
-  shade(amount = 10) {
-    return this.mix({
-      r: 0,
-      g: 0,
-      b: 0,
-      a: 1
-    }, amount);
-  }
-  onBackground(background) {
-    const bg = this._c(background);
-    const alpha = this.a + bg.a * (1 - this.a);
-    const calc = key => {
-      return round((this[key] * this.a + bg[key] * bg.a * (1 - this.a)) / alpha);
-    };
-    return this._c({
-      r: calc('r'),
-      g: calc('g'),
-      b: calc('b'),
-      a: alpha
-    });
-  }
-
-  // ======================= Status =======================
-  isDark() {
-    return this.getBrightness() < 128;
-  }
-  isLight() {
-    return this.getBrightness() >= 128;
-  }
-
-  // ======================== MISC ========================
-  equals(other) {
-    return this.r === other.r && this.g === other.g && this.b === other.b && this.a === other.a;
-  }
-  clone() {
-    return this._c(this);
-  }
-
-  // ======================= Format =======================
-  toHexString() {
-    let hex = '#';
-    const rHex = (this.r || 0).toString(16);
-    hex += rHex.length === 2 ? rHex : '0' + rHex;
-    const gHex = (this.g || 0).toString(16);
-    hex += gHex.length === 2 ? gHex : '0' + gHex;
-    const bHex = (this.b || 0).toString(16);
-    hex += bHex.length === 2 ? bHex : '0' + bHex;
-    if (typeof this.a === 'number' && this.a >= 0 && this.a < 1) {
-      const aHex = round(this.a * 255).toString(16);
-      hex += aHex.length === 2 ? aHex : '0' + aHex;
-    }
-    return hex;
-  }
-
-  /** CSS support color pattern */
-  toHsl() {
-    return {
-      h: this.getHue(),
-      s: this.getSaturation(),
-      l: this.getLightness(),
-      a: this.a
-    };
-  }
-
-  /** CSS support color pattern */
-  toHslString() {
-    const h = this.getHue();
-    const s = round(this.getSaturation() * 100);
-    const l = round(this.getLightness() * 100);
-    return this.a !== 1 ? `hsla(${h},${s}%,${l}%,${this.a})` : `hsl(${h},${s}%,${l}%)`;
-  }
-
-  /** Same as toHsb */
-  toHsv() {
-    return {
-      h: this.getHue(),
-      s: this.getSaturation(),
-      v: this.getValue(),
-      a: this.a
-    };
-  }
-  toRgb() {
-    return {
-      r: this.r,
-      g: this.g,
-      b: this.b,
-      a: this.a
-    };
-  }
-  toRgbString() {
-    return this.a !== 1 ? `rgba(${this.r},${this.g},${this.b},${this.a})` : `rgb(${this.r},${this.g},${this.b})`;
-  }
-  toString() {
-    return this.toRgbString();
-  }
-
-  // ====================== Privates ======================
-  /** Return a new FastColor object with one channel changed */
-  _sc(rgb, value, max) {
-    const clone = this.clone();
-    clone[rgb] = limitRange(value, max);
-    return clone;
-  }
-  _c(input) {
-    return new this.constructor(input);
-  }
-  getMax() {
-    if (typeof this._max === 'undefined') {
-      this._max = Math.max(this.r, this.g, this.b);
-    }
-    return this._max;
-  }
-  getMin() {
-    if (typeof this._min === 'undefined') {
-      this._min = Math.min(this.r, this.g, this.b);
-    }
-    return this._min;
-  }
-  fromHexString(trimStr) {
-    const withoutPrefix = trimStr.replace('#', '');
-    function connectNum(index1, index2) {
-      return parseInt(withoutPrefix[index1] + withoutPrefix[index2 || index1], 16);
-    }
-    if (withoutPrefix.length < 6) {
-      // #rgb or #rgba
-      this.r = connectNum(0);
-      this.g = connectNum(1);
-      this.b = connectNum(2);
-      this.a = withoutPrefix[3] ? connectNum(3) / 255 : 1;
-    } else {
-      // #rrggbb or #rrggbbaa
-      this.r = connectNum(0, 1);
-      this.g = connectNum(2, 3);
-      this.b = connectNum(4, 5);
-      this.a = withoutPrefix[6] ? connectNum(6, 7) / 255 : 1;
-    }
-  }
-  fromHsl({
-    h,
-    s,
-    l,
-    a
-  }) {
-    this._h = h % 360;
-    this._s = s;
-    this._l = l;
-    this.a = typeof a === 'number' ? a : 1;
-    if (s <= 0) {
-      const rgb = round(l * 255);
-      this.r = rgb;
-      this.g = rgb;
-      this.b = rgb;
-    }
-    let r = 0,
-      g = 0,
-      b = 0;
-    const huePrime = h / 60;
-    const chroma = (1 - Math.abs(2 * l - 1)) * s;
-    const secondComponent = chroma * (1 - Math.abs(huePrime % 2 - 1));
-    if (huePrime >= 0 && huePrime < 1) {
-      r = chroma;
-      g = secondComponent;
-    } else if (huePrime >= 1 && huePrime < 2) {
-      r = secondComponent;
-      g = chroma;
-    } else if (huePrime >= 2 && huePrime < 3) {
-      g = chroma;
-      b = secondComponent;
-    } else if (huePrime >= 3 && huePrime < 4) {
-      g = secondComponent;
-      b = chroma;
-    } else if (huePrime >= 4 && huePrime < 5) {
-      r = secondComponent;
-      b = chroma;
-    } else if (huePrime >= 5 && huePrime < 6) {
-      r = chroma;
-      b = secondComponent;
-    }
-    const lightnessModification = l - chroma / 2;
-    this.r = round((r + lightnessModification) * 255);
-    this.g = round((g + lightnessModification) * 255);
-    this.b = round((b + lightnessModification) * 255);
-  }
-  fromHsv({
-    h,
-    s,
-    v,
-    a
-  }) {
-    this._h = h % 360;
-    this._s = s;
-    this._v = v;
-    this.a = typeof a === 'number' ? a : 1;
-    const vv = round(v * 255);
-    this.r = vv;
-    this.g = vv;
-    this.b = vv;
-    if (s <= 0) {
-      return;
-    }
-    const hh = h / 60;
-    const i = Math.floor(hh);
-    const ff = hh - i;
-    const p = round(v * (1.0 - s) * 255);
-    const q = round(v * (1.0 - s * ff) * 255);
-    const t = round(v * (1.0 - s * (1.0 - ff)) * 255);
-    switch (i) {
-      case 0:
-        this.g = t;
-        this.b = p;
-        break;
-      case 1:
-        this.r = q;
-        this.b = p;
-        break;
-      case 2:
-        this.r = p;
-        this.b = t;
-        break;
-      case 3:
-        this.r = p;
-        this.g = q;
-        break;
-      case 4:
-        this.r = t;
-        this.g = p;
-        break;
-      case 5:
-      default:
-        this.g = p;
-        this.b = q;
-        break;
-    }
-  }
-  fromHsvString(trimStr) {
-    const cells = splitColorStr(trimStr, parseHSVorHSL);
-    this.fromHsv({
-      h: cells[0],
-      s: cells[1],
-      v: cells[2],
-      a: cells[3]
-    });
-  }
-  fromHslString(trimStr) {
-    const cells = splitColorStr(trimStr, parseHSVorHSL);
-    this.fromHsl({
-      h: cells[0],
-      s: cells[1],
-      l: cells[2],
-      a: cells[3]
-    });
-  }
-  fromRgbString(trimStr) {
-    const cells = splitColorStr(trimStr, (num, txt) =>
-    // Convert percentage to number. e.g. 50% -> 128
-    txt.includes('%') ? round(num / 100 * 255) : num);
-    this.r = cells[0];
-    this.g = cells[1];
-    this.b = cells[2];
-    this.a = cells[3];
-  }
-}
-;// ./node_modules/@ant-design/fast-color/es/index.js
-
-
-;// ./node_modules/@ant-design/colors/es/generate.js
-
-var hueStep = 2; // 色相阶梯
-var saturationStep = 0.16; // 饱和度阶梯，浅色部分
-var saturationStep2 = 0.05; // 饱和度阶梯，深色部分
-var brightnessStep1 = 0.05; // 亮度阶梯，浅色部分
-var brightnessStep2 = 0.15; // 亮度阶梯，深色部分
-var lightColorCount = 5; // 浅色数量，主色上
-var darkColorCount = 4; // 深色数量，主色下
-
-// 暗色主题颜色映射关系表
-var darkColorMap = [{
-  index: 7,
-  amount: 15
-}, {
-  index: 6,
-  amount: 25
-}, {
-  index: 5,
-  amount: 30
-}, {
-  index: 5,
-  amount: 45
-}, {
-  index: 5,
-  amount: 65
-}, {
-  index: 5,
-  amount: 85
-}, {
-  index: 4,
-  amount: 90
-}, {
-  index: 3,
-  amount: 95
-}, {
-  index: 2,
-  amount: 97
-}, {
-  index: 1,
-  amount: 98
-}];
-function getHue(hsv, i, light) {
-  var hue;
-  // 根据色相不同，色相转向不同
-  if (Math.round(hsv.h) >= 60 && Math.round(hsv.h) <= 240) {
-    hue = light ? Math.round(hsv.h) - hueStep * i : Math.round(hsv.h) + hueStep * i;
-  } else {
-    hue = light ? Math.round(hsv.h) + hueStep * i : Math.round(hsv.h) - hueStep * i;
-  }
-  if (hue < 0) {
-    hue += 360;
-  } else if (hue >= 360) {
-    hue -= 360;
-  }
-  return hue;
-}
-function getSaturation(hsv, i, light) {
-  // grey color don't change saturation
-  if (hsv.h === 0 && hsv.s === 0) {
-    return hsv.s;
-  }
-  var saturation;
-  if (light) {
-    saturation = hsv.s - saturationStep * i;
-  } else if (i === darkColorCount) {
-    saturation = hsv.s + saturationStep;
-  } else {
-    saturation = hsv.s + saturationStep2 * i;
-  }
-  // 边界值修正
-  if (saturation > 1) {
-    saturation = 1;
-  }
-  // 第一格的 s 限制在 0.06-0.1 之间
-  if (light && i === lightColorCount && saturation > 0.1) {
-    saturation = 0.1;
-  }
-  if (saturation < 0.06) {
-    saturation = 0.06;
-  }
-  return Math.round(saturation * 100) / 100;
-}
-function getValue(hsv, i, light) {
-  var value;
-  if (light) {
-    value = hsv.v + brightnessStep1 * i;
-  } else {
-    value = hsv.v - brightnessStep2 * i;
-  }
-  // Clamp value between 0 and 1
-  value = Math.max(0, Math.min(1, value));
-  return Math.round(value * 100) / 100;
-}
-function generate(color) {
-  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var patterns = [];
-  var pColor = new FastColor(color);
-  var hsv = pColor.toHsv();
-  for (var i = lightColorCount; i > 0; i -= 1) {
-    var c = new FastColor({
-      h: getHue(hsv, i, true),
-      s: getSaturation(hsv, i, true),
-      v: getValue(hsv, i, true)
-    });
-    patterns.push(c);
-  }
-  patterns.push(pColor);
-  for (var _i = 1; _i <= darkColorCount; _i += 1) {
-    var _c = new FastColor({
-      h: getHue(hsv, _i),
-      s: getSaturation(hsv, _i),
-      v: getValue(hsv, _i)
-    });
-    patterns.push(_c);
-  }
-
-  // dark theme patterns
-  if (opts.theme === 'dark') {
-    return darkColorMap.map(function (_ref) {
-      var index = _ref.index,
-        amount = _ref.amount;
-      return new FastColor(opts.backgroundColor || '#141414').mix(patterns[index], amount).toHexString();
-    });
-  }
-  return patterns.map(function (c) {
-    return c.toHexString();
-  });
-}
-;// ./node_modules/@ant-design/colors/es/presets.js
-// Generated by script. Do NOT modify!
-
-var presetPrimaryColors = {
-  "red": "#F5222D",
-  "volcano": "#FA541C",
-  "orange": "#FA8C16",
-  "gold": "#FAAD14",
-  "yellow": "#FADB14",
-  "lime": "#A0D911",
-  "green": "#52C41A",
-  "cyan": "#13C2C2",
-  "blue": "#1677FF",
-  "geekblue": "#2F54EB",
-  "purple": "#722ED1",
-  "magenta": "#EB2F96",
-  "grey": "#666666"
-};
-var red = ["#fff1f0", "#ffccc7", "#ffa39e", "#ff7875", "#ff4d4f", "#f5222d", "#cf1322", "#a8071a", "#820014", "#5c0011"];
-red.primary = red[5];
-var volcano = ["#fff2e8", "#ffd8bf", "#ffbb96", "#ff9c6e", "#ff7a45", "#fa541c", "#d4380d", "#ad2102", "#871400", "#610b00"];
-volcano.primary = volcano[5];
-var orange = ["#fff7e6", "#ffe7ba", "#ffd591", "#ffc069", "#ffa940", "#fa8c16", "#d46b08", "#ad4e00", "#873800", "#612500"];
-orange.primary = orange[5];
-var gold = ["#fffbe6", "#fff1b8", "#ffe58f", "#ffd666", "#ffc53d", "#faad14", "#d48806", "#ad6800", "#874d00", "#613400"];
-gold.primary = gold[5];
-var yellow = ["#feffe6", "#ffffb8", "#fffb8f", "#fff566", "#ffec3d", "#fadb14", "#d4b106", "#ad8b00", "#876800", "#614700"];
-yellow.primary = yellow[5];
-var lime = ["#fcffe6", "#f4ffb8", "#eaff8f", "#d3f261", "#bae637", "#a0d911", "#7cb305", "#5b8c00", "#3f6600", "#254000"];
-lime.primary = lime[5];
-var green = ["#f6ffed", "#d9f7be", "#b7eb8f", "#95de64", "#73d13d", "#52c41a", "#389e0d", "#237804", "#135200", "#092b00"];
-green.primary = green[5];
-var cyan = ["#e6fffb", "#b5f5ec", "#87e8de", "#5cdbd3", "#36cfc9", "#13c2c2", "#08979c", "#006d75", "#00474f", "#002329"];
-cyan.primary = cyan[5];
-var blue = ["#e6f4ff", "#bae0ff", "#91caff", "#69b1ff", "#4096ff", "#1677ff", "#0958d9", "#003eb3", "#002c8c", "#001d66"];
-blue.primary = blue[5];
-var geekblue = ["#f0f5ff", "#d6e4ff", "#adc6ff", "#85a5ff", "#597ef7", "#2f54eb", "#1d39c4", "#10239e", "#061178", "#030852"];
-geekblue.primary = geekblue[5];
-var purple = ["#f9f0ff", "#efdbff", "#d3adf7", "#b37feb", "#9254de", "#722ed1", "#531dab", "#391085", "#22075e", "#120338"];
-purple.primary = purple[5];
-var magenta = ["#fff0f6", "#ffd6e7", "#ffadd2", "#ff85c0", "#f759ab", "#eb2f96", "#c41d7f", "#9e1068", "#780650", "#520339"];
-magenta.primary = magenta[5];
-var grey = ["#a6a6a6", "#999999", "#8c8c8c", "#808080", "#737373", "#666666", "#404040", "#1a1a1a", "#000000", "#000000"];
-grey.primary = grey[5];
-var gray = (/* unused pure expression or super */ null && (grey));
-var presetPalettes = {
-  red: red,
-  volcano: volcano,
-  orange: orange,
-  gold: gold,
-  yellow: yellow,
-  lime: lime,
-  green: green,
-  cyan: cyan,
-  blue: blue,
-  geekblue: geekblue,
-  purple: purple,
-  magenta: magenta,
-  grey: grey
-};
-var redDark = ["#2a1215", "#431418", "#58181c", "#791a1f", "#a61d24", "#d32029", "#e84749", "#f37370", "#f89f9a", "#fac8c3"];
-redDark.primary = redDark[5];
-var volcanoDark = ["#2b1611", "#441d12", "#592716", "#7c3118", "#aa3e19", "#d84a1b", "#e87040", "#f3956a", "#f8b692", "#fad4bc"];
-volcanoDark.primary = volcanoDark[5];
-var orangeDark = ["#2b1d11", "#442a11", "#593815", "#7c4a15", "#aa6215", "#d87a16", "#e89a3c", "#f3b765", "#f8cf8d", "#fae3b7"];
-orangeDark.primary = orangeDark[5];
-var goldDark = ["#2b2111", "#443111", "#594214", "#7c5914", "#aa7714", "#d89614", "#e8b339", "#f3cc62", "#f8df8b", "#faedb5"];
-goldDark.primary = goldDark[5];
-var yellowDark = ["#2b2611", "#443b11", "#595014", "#7c6e14", "#aa9514", "#d8bd14", "#e8d639", "#f3ea62", "#f8f48b", "#fafab5"];
-yellowDark.primary = yellowDark[5];
-var limeDark = ["#1f2611", "#2e3c10", "#3e4f13", "#536d13", "#6f9412", "#8bbb11", "#a9d134", "#c9e75d", "#e4f88b", "#f0fab5"];
-limeDark.primary = limeDark[5];
-var greenDark = ["#162312", "#1d3712", "#274916", "#306317", "#3c8618", "#49aa19", "#6abe39", "#8fd460", "#b2e58b", "#d5f2bb"];
-greenDark.primary = greenDark[5];
-var cyanDark = ["#112123", "#113536", "#144848", "#146262", "#138585", "#13a8a8", "#33bcb7", "#58d1c9", "#84e2d8", "#b2f1e8"];
-cyanDark.primary = cyanDark[5];
-var blueDark = ["#111a2c", "#112545", "#15325b", "#15417e", "#1554ad", "#1668dc", "#3c89e8", "#65a9f3", "#8dc5f8", "#b7dcfa"];
-blueDark.primary = blueDark[5];
-var geekblueDark = ["#131629", "#161d40", "#1c2755", "#203175", "#263ea0", "#2b4acb", "#5273e0", "#7f9ef3", "#a8c1f8", "#d2e0fa"];
-geekblueDark.primary = geekblueDark[5];
-var purpleDark = ["#1a1325", "#24163a", "#301c4d", "#3e2069", "#51258f", "#642ab5", "#854eca", "#ab7ae0", "#cda8f0", "#ebd7fa"];
-purpleDark.primary = purpleDark[5];
-var magentaDark = ["#291321", "#40162f", "#551c3b", "#75204f", "#a02669", "#cb2b83", "#e0529c", "#f37fb7", "#f8a8cc", "#fad2e3"];
-magentaDark.primary = magentaDark[5];
-var greyDark = ["#151515", "#1f1f1f", "#2d2d2d", "#393939", "#494949", "#5a5a5a", "#6a6a6a", "#7b7b7b", "#888888", "#969696"];
-greyDark.primary = greyDark[5];
-var presetDarkPalettes = {
-  red: redDark,
-  volcano: volcanoDark,
-  orange: orangeDark,
-  gold: goldDark,
-  yellow: yellowDark,
-  lime: limeDark,
-  green: greenDark,
-  cyan: cyanDark,
-  blue: blueDark,
-  geekblue: geekblueDark,
-  purple: purpleDark,
-  magenta: magentaDark,
-  grey: greyDark
-};
-;// ./node_modules/@ant-design/colors/es/index.js
-
-
-
-;// ./node_modules/@ant-design/icons/es/components/Context.js
-
-var IconContext = /*#__PURE__*/(0,external_react_namespaceObject.createContext)({});
-/* harmony default export */ const Context = (IconContext);
-;// ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-
-function objectSpread2_ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? objectSpread2_ownKeys(Object(t), !0).forEach(function (r) {
-      _defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : objectSpread2_ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
-
-;// ./node_modules/rc-util/es/Dom/canUseDom.js
-function canUseDom() {
-  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-}
-;// ./node_modules/rc-util/es/Dom/contains.js
-function contains(root, n) {
-  if (!root) {
-    return false;
-  }
-
-  // Use native if support
-  if (root.contains) {
-    return root.contains(n);
-  }
-
-  // `document.contains` not support with IE11
-  var node = n;
-  while (node) {
-    if (node === root) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
-;// ./node_modules/rc-util/es/Dom/dynamicCSS.js
-
-
-
-var APPEND_ORDER = 'data-rc-order';
-var APPEND_PRIORITY = 'data-rc-priority';
-var MARK_KEY = "rc-util-key";
-var containerCache = new Map();
-function getMark() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    mark = _ref.mark;
-  if (mark) {
-    return mark.startsWith('data-') ? mark : "data-".concat(mark);
-  }
-  return MARK_KEY;
-}
-function getContainer(option) {
-  if (option.attachTo) {
-    return option.attachTo;
-  }
-  var head = document.querySelector('head');
-  return head || document.body;
-}
-function getOrder(prepend) {
-  if (prepend === 'queue') {
-    return 'prependQueue';
-  }
-  return prepend ? 'prepend' : 'append';
-}
-
-/**
- * Find style which inject by rc-util
- */
-function findStyles(container) {
-  return Array.from((containerCache.get(container) || container).children).filter(function (node) {
-    return node.tagName === 'STYLE';
-  });
-}
-function injectCSS(css) {
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  if (!canUseDom()) {
-    return null;
-  }
-  var csp = option.csp,
-    prepend = option.prepend,
-    _option$priority = option.priority,
-    priority = _option$priority === void 0 ? 0 : _option$priority;
-  var mergedOrder = getOrder(prepend);
-  var isPrependQueue = mergedOrder === 'prependQueue';
-  var styleNode = document.createElement('style');
-  styleNode.setAttribute(APPEND_ORDER, mergedOrder);
-  if (isPrependQueue && priority) {
-    styleNode.setAttribute(APPEND_PRIORITY, "".concat(priority));
-  }
-  if (csp !== null && csp !== void 0 && csp.nonce) {
-    styleNode.nonce = csp === null || csp === void 0 ? void 0 : csp.nonce;
-  }
-  styleNode.innerHTML = css;
-  var container = getContainer(option);
-  var firstChild = container.firstChild;
-  if (prepend) {
-    // If is queue `prepend`, it will prepend first style and then append rest style
-    if (isPrependQueue) {
-      var existStyle = (option.styles || findStyles(container)).filter(function (node) {
-        // Ignore style which not injected by rc-util with prepend
-        if (!['prepend', 'prependQueue'].includes(node.getAttribute(APPEND_ORDER))) {
-          return false;
-        }
-
-        // Ignore style which priority less then new style
-        var nodePriority = Number(node.getAttribute(APPEND_PRIORITY) || 0);
-        return priority >= nodePriority;
-      });
-      if (existStyle.length) {
-        container.insertBefore(styleNode, existStyle[existStyle.length - 1].nextSibling);
-        return styleNode;
-      }
-    }
-
-    // Use `insertBefore` as `prepend`
-    container.insertBefore(styleNode, firstChild);
-  } else {
-    container.appendChild(styleNode);
-  }
-  return styleNode;
-}
-function findExistNode(key) {
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var container = getContainer(option);
-  return (option.styles || findStyles(container)).find(function (node) {
-    return node.getAttribute(getMark(option)) === key;
-  });
-}
-function removeCSS(key) {
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var existNode = findExistNode(key, option);
-  if (existNode) {
-    var container = getContainer(option);
-    container.removeChild(existNode);
-  }
-}
-
-/**
- * qiankun will inject `appendChild` to insert into other
- */
-function syncRealContainer(container, option) {
-  var cachedRealContainer = containerCache.get(container);
-
-  // Find real container when not cached or cached container removed
-  if (!cachedRealContainer || !contains(document, cachedRealContainer)) {
-    var placeholderStyle = injectCSS('', option);
-    var parentNode = placeholderStyle.parentNode;
-    containerCache.set(container, parentNode);
-    container.removeChild(placeholderStyle);
-  }
-}
-
-/**
- * manually clear container cache to avoid global cache in unit testes
- */
-function clearContainerCache() {
-  containerCache.clear();
-}
-function updateCSS(css, key) {
-  var originOption = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var container = getContainer(originOption);
-  var styles = findStyles(container);
-  var option = _objectSpread2(_objectSpread2({}, originOption), {}, {
-    styles: styles
-  });
-
-  // Sync real parent
-  syncRealContainer(container, option);
-  var existNode = findExistNode(key, option);
-  if (existNode) {
-    var _option$csp, _option$csp2;
-    if ((_option$csp = option.csp) !== null && _option$csp !== void 0 && _option$csp.nonce && existNode.nonce !== ((_option$csp2 = option.csp) === null || _option$csp2 === void 0 ? void 0 : _option$csp2.nonce)) {
-      var _option$csp3;
-      existNode.nonce = (_option$csp3 = option.csp) === null || _option$csp3 === void 0 ? void 0 : _option$csp3.nonce;
-    }
-    if (existNode.innerHTML !== css) {
-      existNode.innerHTML = css;
-    }
-    return existNode;
-  }
-  var newNode = injectCSS(css, option);
-  newNode.setAttribute(getMark(option), key);
-  return newNode;
-}
-;// ./node_modules/rc-util/es/Dom/shadow.js
-function getRoot(ele) {
-  var _ele$getRootNode;
-  return ele === null || ele === void 0 || (_ele$getRootNode = ele.getRootNode) === null || _ele$getRootNode === void 0 ? void 0 : _ele$getRootNode.call(ele);
-}
-
-/**
- * Check if is in shadowRoot
- */
-function inShadow(ele) {
-  return getRoot(ele) instanceof ShadowRoot;
-}
-
-/**
- * Return shadowRoot if possible
- */
-function getShadowRoot(ele) {
-  return inShadow(ele) ? getRoot(ele) : null;
-}
-;// ./node_modules/rc-util/es/warning.js
-/* eslint-disable no-console */
-var warned = {};
-var preWarningFns = [];
-
-/**
- * Pre warning enable you to parse content before console.error.
- * Modify to null will prevent warning.
- */
-var preMessage = function preMessage(fn) {
-  preWarningFns.push(fn);
-};
-
-/**
- * Warning if condition not match.
- * @param valid Condition
- * @param message Warning message
- * @example
- * ```js
- * warning(false, 'some error'); // print some error
- * warning(true, 'some error'); // print nothing
- * warning(1 === 2, 'some error'); // print some error
- * ```
- */
-function warning(valid, message) {
-  if (false) { var finalMessage; }
-}
-
-/** @see Similar to {@link warning} */
-function note(valid, message) {
-  if (false) { var finalMessage; }
-}
-function resetWarned() {
-  warned = {};
-}
-function call(method, valid, message) {
-  if (!valid && !warned[message]) {
-    method(false, message);
-    warned[message] = true;
-  }
-}
-
-/** @see Same as {@link warning}, but only warn once for the same message */
-function warningOnce(valid, message) {
-  call(warning, valid, message);
-}
-
-/** @see Same as {@link warning}, but only warn once for the same message */
-function noteOnce(valid, message) {
-  call(note, valid, message);
-}
-warningOnce.preMessage = preMessage;
-warningOnce.resetWarned = resetWarned;
-warningOnce.noteOnce = noteOnce;
-/* harmony default export */ const es_warning = (warningOnce);
-;// ./node_modules/@ant-design/icons/es/utils.js
-
-
-
-
-
-
-
-
-function camelCase(input) {
-  return input.replace(/-(.)/g, function (match, g) {
-    return g.toUpperCase();
-  });
-}
-function utils_warning(valid, message) {
-  es_warning(valid, "[@ant-design/icons] ".concat(message));
-}
-function isIconDefinition(target) {
-  return _typeof(target) === 'object' && typeof target.name === 'string' && typeof target.theme === 'string' && (_typeof(target.icon) === 'object' || typeof target.icon === 'function');
-}
-function normalizeAttrs() {
-  var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object.keys(attrs).reduce(function (acc, key) {
-    var val = attrs[key];
-    switch (key) {
-      case 'class':
-        acc.className = val;
-        delete acc.class;
-        break;
-      default:
-        delete acc[key];
-        acc[camelCase(key)] = val;
-    }
-    return acc;
-  }, {});
-}
-function utils_generate(node, key, rootProps) {
-  if (!rootProps) {
-    return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2({
-      key: key
-    }, normalizeAttrs(node.attrs)), (node.children || []).map(function (child, index) {
-      return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
-    }));
-  }
-  return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2(_objectSpread2({
-    key: key
-  }, normalizeAttrs(node.attrs)), rootProps), (node.children || []).map(function (child, index) {
-    return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
-  }));
-}
-function getSecondaryColor(primaryColor) {
-  // choose the second color
-  return generate(primaryColor)[0];
-}
-function normalizeTwoToneColors(twoToneColor) {
-  if (!twoToneColor) {
-    return [];
-  }
-  return Array.isArray(twoToneColor) ? twoToneColor : [twoToneColor];
-}
-
-// These props make sure that the SVG behaviours like general text.
-// Reference: https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4
-var svgBaseProps = {
-  width: '1em',
-  height: '1em',
-  fill: 'currentColor',
-  'aria-hidden': 'true',
-  focusable: 'false'
-};
-var iconStyles = "\n.anticon {\n  display: inline-flex;\n  align-items: center;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n.anticon > * {\n  line-height: 1;\n}\n\n.anticon svg {\n  display: inline-block;\n}\n\n.anticon::before {\n  display: none;\n}\n\n.anticon .anticon-icon {\n  display: block;\n}\n\n.anticon[tabindex] {\n  cursor: pointer;\n}\n\n.anticon-spin::before,\n.anticon-spin {\n  display: inline-block;\n  -webkit-animation: loadingCircle 1s infinite linear;\n  animation: loadingCircle 1s infinite linear;\n}\n\n@-webkit-keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n";
-var useInsertStyles = function useInsertStyles(eleRef) {
-  var _useContext = (0,external_react_namespaceObject.useContext)(Context),
-    csp = _useContext.csp,
-    prefixCls = _useContext.prefixCls,
-    layer = _useContext.layer;
-  var mergedStyleStr = iconStyles;
-  if (prefixCls) {
-    mergedStyleStr = mergedStyleStr.replace(/anticon/g, prefixCls);
-  }
-  if (layer) {
-    mergedStyleStr = "@layer ".concat(layer, " {\n").concat(mergedStyleStr, "\n}");
-  }
-  (0,external_react_namespaceObject.useEffect)(function () {
-    var ele = eleRef.current;
-    var shadowRoot = getShadowRoot(ele);
-    updateCSS(mergedStyleStr, '@ant-design-icons', {
-      prepend: !layer,
-      csp: csp,
-      attachTo: shadowRoot
-    });
-  }, []);
-};
-;// ./node_modules/@ant-design/icons/es/components/IconBase.js
-
-
-var IconBase_excluded = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
-
-
-var twoToneColorPalette = {
-  primaryColor: '#333',
-  secondaryColor: '#E6E6E6',
-  calculated: false
-};
-function setTwoToneColors(_ref) {
-  var primaryColor = _ref.primaryColor,
-    secondaryColor = _ref.secondaryColor;
-  twoToneColorPalette.primaryColor = primaryColor;
-  twoToneColorPalette.secondaryColor = secondaryColor || getSecondaryColor(primaryColor);
-  twoToneColorPalette.calculated = !!secondaryColor;
-}
-function getTwoToneColors() {
-  return _objectSpread2({}, twoToneColorPalette);
-}
-var IconBase = function IconBase(props) {
-  var icon = props.icon,
-    className = props.className,
-    onClick = props.onClick,
-    style = props.style,
-    primaryColor = props.primaryColor,
-    secondaryColor = props.secondaryColor,
-    restProps = _objectWithoutProperties(props, IconBase_excluded);
-  var svgRef = external_react_namespaceObject.useRef();
-  var colors = twoToneColorPalette;
-  if (primaryColor) {
-    colors = {
-      primaryColor: primaryColor,
-      secondaryColor: secondaryColor || getSecondaryColor(primaryColor)
-    };
-  }
-  useInsertStyles(svgRef);
-  utils_warning(isIconDefinition(icon), "icon should be icon definiton, but got ".concat(icon));
-  if (!isIconDefinition(icon)) {
-    return null;
-  }
-  var target = icon;
-  if (target && typeof target.icon === 'function') {
-    target = _objectSpread2(_objectSpread2({}, target), {}, {
-      icon: target.icon(colors.primaryColor, colors.secondaryColor)
-    });
-  }
-  return utils_generate(target.icon, "svg-".concat(target.name), _objectSpread2(_objectSpread2({
-    className: className,
-    onClick: onClick,
-    style: style,
-    'data-icon': target.name,
-    width: '1em',
-    height: '1em',
-    fill: 'currentColor',
-    'aria-hidden': 'true'
-  }, restProps), {}, {
-    ref: svgRef
-  }));
-};
-IconBase.displayName = 'IconReact';
-IconBase.getTwoToneColors = getTwoToneColors;
-IconBase.setTwoToneColors = setTwoToneColors;
-/* harmony default export */ const components_IconBase = (IconBase);
-;// ./node_modules/@ant-design/icons/es/components/twoTonePrimaryColor.js
-
-
-
-function setTwoToneColor(twoToneColor) {
-  var _normalizeTwoToneColo = normalizeTwoToneColors(twoToneColor),
-    _normalizeTwoToneColo2 = _slicedToArray(_normalizeTwoToneColo, 2),
-    primaryColor = _normalizeTwoToneColo2[0],
-    secondaryColor = _normalizeTwoToneColo2[1];
-  return components_IconBase.setTwoToneColors({
-    primaryColor: primaryColor,
-    secondaryColor: secondaryColor
-  });
-}
-function getTwoToneColor() {
-  var colors = components_IconBase.getTwoToneColors();
-  if (!colors.calculated) {
-    return colors.primaryColor;
-  }
-  return [colors.primaryColor, colors.secondaryColor];
-}
-;// ./node_modules/@ant-design/icons/es/components/AntdIcon.js
-'use client';
-
-
-
-
-
-var AntdIcon_excluded = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
-
-
-
-
-
-
-
-// Initial setting
-// should move it to antd main repo?
-setTwoToneColor(blue.primary);
-
-// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34757#issuecomment-488848720
-
-var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (props, ref) {
-  var className = props.className,
-    icon = props.icon,
-    spin = props.spin,
-    rotate = props.rotate,
-    tabIndex = props.tabIndex,
-    onClick = props.onClick,
-    twoToneColor = props.twoToneColor,
-    restProps = _objectWithoutProperties(props, AntdIcon_excluded);
-  var _React$useContext = external_react_namespaceObject.useContext(Context),
-    _React$useContext$pre = _React$useContext.prefixCls,
-    prefixCls = _React$useContext$pre === void 0 ? 'anticon' : _React$useContext$pre,
-    rootClassName = _React$useContext.rootClassName;
-  var classString = classnames_default()(rootClassName, prefixCls, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-").concat(icon.name), !!icon.name), "".concat(prefixCls, "-spin"), !!spin || icon.name === 'loading'), className);
-  var iconTabIndex = tabIndex;
-  if (iconTabIndex === undefined && onClick) {
-    iconTabIndex = -1;
-  }
-  var svgStyle = rotate ? {
-    msTransform: "rotate(".concat(rotate, "deg)"),
-    transform: "rotate(".concat(rotate, "deg)")
-  } : undefined;
-  var _normalizeTwoToneColo = normalizeTwoToneColors(twoToneColor),
-    _normalizeTwoToneColo2 = _slicedToArray(_normalizeTwoToneColo, 2),
-    primaryColor = _normalizeTwoToneColo2[0],
-    secondaryColor = _normalizeTwoToneColo2[1];
-  return /*#__PURE__*/external_react_namespaceObject.createElement("span", _extends({
-    role: "img",
-    "aria-label": icon.name
-  }, restProps, {
-    ref: ref,
-    tabIndex: iconTabIndex,
-    onClick: onClick,
-    className: classString
-  }), /*#__PURE__*/external_react_namespaceObject.createElement(components_IconBase, {
-    icon: icon,
-    primaryColor: primaryColor,
-    secondaryColor: secondaryColor,
-    style: svgStyle
-  }));
-});
-Icon.displayName = 'AntdIcon';
-Icon.getTwoToneColor = getTwoToneColor;
-Icon.setTwoToneColor = setTwoToneColor;
-/* harmony default export */ const AntdIcon = (Icon);
-;// ./node_modules/@ant-design/icons/es/icons/CaretDownOutlined.js
-
-// GENERATE BY ./scripts/generate.ts
-// DON NOT EDIT IT MANUALLY
-
-
-
-
-var CaretDownOutlined_CaretDownOutlined = function CaretDownOutlined(props, ref) {
-  return /*#__PURE__*/external_react_namespaceObject.createElement(AntdIcon, _extends({}, props, {
-    ref: ref,
-    icon: asn_CaretDownOutlined
-  }));
-};
-
-/**![caret-down](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTg0MC40IDMwMEgxODMuNmMtMTkuNyAwLTMwLjcgMjAuOC0xOC41IDM1bDMyOC40IDM4MC44YzkuNCAxMC45IDI3LjUgMTAuOSAzNyAwTDg1OC45IDMzNWMxMi4yLTE0LjIgMS4yLTM1LTE4LjUtMzV6IiAvPjwvc3ZnPg==) */
-var RefIcon = /*#__PURE__*/external_react_namespaceObject.forwardRef(CaretDownOutlined_CaretDownOutlined);
-if (false) {}
-/* harmony default export */ const icons_CaretDownOutlined = (RefIcon);
-;// ./src/platforms/react/components/select/dropdown.module.less
-// extracted by mini-css-extract-plugin
-var dropdown_module_1 = "_module_dropdown_X2jF9";
-
-
-;// ./src/platforms/react/components/select/DropDown.tsx
-var DropDown_excluded=["model","attr","value","onSetValue","formatOptions","placeholder","Icon","menuProps","children"];function DropDown_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function DropDown_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?DropDown_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):DropDown_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function DropDown(props){var _items$find;var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,placeholder=props.placeholder,_props$Icon=props.Icon,Icon=_props$Icon===void 0?icons_CaretDownOutlined:_props$Icon,_props$menuProps=props.menuProps,menuProps=_props$menuProps===void 0?{}:_props$menuProps,_props$children=props.children,children=_props$children===void 0?null:_props$children,resetProps=_objectWithoutProperties(props,DropDown_excluded);function _onClick(e){var _model$validate;console.log("e:",e);onSetValue===null||onSetValue===void 0||onSetValue(e===null||e===void 0?void 0:e.key);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var items=formatDropDownOptions(model,attr);var currentLabel=(_items$find=items.find(function(i){return i.key==value;}))===null||_items$find===void 0?void 0:_items$find.label;var disabled=resetProps.disabled===true;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Dropdown,_extends({trigger:"click",menu:DropDown_objectSpread({items:items,onClick:_onClick,selectedKeys:["".concat(value||"")]},menuProps)},resetProps,{className:classnames_default()(dropdown_module_1,resetProps.className,{disabled:disabled})}),/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Space,null,children||currentLabel||placeholder||model.getAttributeHint(attr)||"请选择",/*#__PURE__*/external_react_namespaceObject["default"].createElement(Icon,null)));}
-// EXTERNAL MODULE: ./node_modules/lodash/merge.js
-var merge = __webpack_require__(5364);
-var merge_default = /*#__PURE__*/__webpack_require__.n(merge);
-// EXTERNAL MODULE: ./node_modules/lodash/isEmpty.js
-var lodash_isEmpty = __webpack_require__(2193);
-var isEmpty_default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty);
-;// ./node_modules/@babel/runtime/helpers/esm/superPropBase.js
-
-function _superPropBase(t, o) {
-  for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t)););
-  return t;
-}
-
-;// ./node_modules/@babel/runtime/helpers/esm/get.js
-
-function _get() {
-  return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) {
-    var p = _superPropBase(e, t);
-    if (p) {
-      var n = Object.getOwnPropertyDescriptor(p, t);
-      return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value;
-    }
-  }, _get.apply(null, arguments);
-}
-
-// EXTERNAL MODULE: ./node_modules/lodash/intersection.js
-var intersection = __webpack_require__(5287);
-var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
-// EXTERNAL MODULE: ./node_modules/lodash/set.js
-var set = __webpack_require__(3560);
-var set_default = /*#__PURE__*/__webpack_require__.n(set);
 ;// ./src/helpers/StringHelper.ts
 /**
  * 字符串处理函数
@@ -7747,13 +6329,13 @@ var BaseHelper=/*#__PURE__*/function(){function BaseHelper(){_classCallCheck(thi
 function isEmpty(value){// 包含对象和数组
 if(isObject_default()(value)){return isEmpty_default()(value);}if(value===undefined||value===''||value===null)return true;return false;}}]);}();
 ;// ./src/validators/Validator.ts
-function Validator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Validator_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Validator_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Validator_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}/* 所有validator的options均有如下约定:
+function _callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function _isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}/* 所有validator的options均有如下约定:
  * options = {
  *    skipOnEmpty: true, //当数据为空时，不校验
  *    message: "xxx", //校验失败时，显示的错误信息
  * },
  *
- */var Validator=/*#__PURE__*/function(_BaseObject){function Validator(attribute,type,options){var _this;_classCallCheck(this,Validator);_this=Validator_callSuper(this,Validator);_defineProperty(_this,"template",'的值不合法');_defineProperty(_this,"allowTypes",['number','string']);_this.attribute=attribute;_this.type=type;// 默认所有的带pattern名的参数，且以/开头的字符串都认为是正则表达式
+ */var Validator=/*#__PURE__*/function(_BaseObject){function Validator(attribute,type,options){var _this;_classCallCheck(this,Validator);_this=_callSuper(this,Validator);_defineProperty(_this,"template",'的值不合法');_defineProperty(_this,"allowTypes",['number','string']);_this.attribute=attribute;_this.type=type;// 默认所有的带pattern名的参数，且以/开头的字符串都认为是正则表达式
 Object.keys(options).forEach(function(key){var p=/pattern/i;if(p.test(key)&&typeof options[key]==='string'&&options[key][0]==='/'){options[key]=StringHelper.toRegExp(options[key]);}});_this.options=merge_default()({},(this instanceof Validator?this.constructor:void 0).defaultOptions,options);return _this;}_inherits(Validator,_BaseObject);return _createClass(Validator,[{key:"validateAttribute",value:function validateAttribute(model){if(!this.options['message']){this.options['message']=model.getAttributeLabel(this.attribute)+this.template;}var value=model[this.attribute];var valueType=_typeof(value);if(this.options['skipOnEmpty']&&BaseHelper.isEmpty(value)){return false;}if(this.allowTypes.indexOf(valueType)<0){model.addError(this.attribute,this.options['message']);return false;}return true;}}]);}(BaseObject);_defineProperty(Validator,"defaultOptions",{skipOnEmpty:true});
 ;// ./src/validators/BooleanValidator.ts
 function BooleanValidator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,BooleanValidator_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function BooleanValidator_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(BooleanValidator_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}function _superPropGet(t,o,e,r){var p=_get(_getPrototypeOf(1&r?t.prototype:t),o,e);return 2&r&&"function"==typeof p?function(t){return p.apply(e,t);}:p;}/*
@@ -7773,6 +6355,9 @@ function CompareValidator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possible
  *    compareAttribute : undefined, // model的另一个属性名
  * },
  */var CompareValidator=/*#__PURE__*/function(_Validator){function CompareValidator(){_classCallCheck(this,CompareValidator);return CompareValidator_callSuper(this,CompareValidator,arguments);}_inherits(CompareValidator,_Validator);return _createClass(CompareValidator,[{key:"validateAttribute",value:function validateAttribute(model){var ret=CompareValidator_superPropGet(CompareValidator,"validateAttribute",this,3)([model]);if(!ret){return ret;}var attribute=this.attribute;var options=this.options;var value=model[attribute];var compareValue;var valid=true;if(options.compareAttribute===undefined){compareValue=options.compareValue;}else{compareValue=model[options.compareAttribute];}if(options.type==='number'){value=parseFloat(value);compareValue=parseFloat(compareValue);}/* eslint-disable eqeqeq */switch(options.operator){case'==':valid=value==compareValue;break;case'===':valid=value===compareValue;break;case'!=':valid=value!=compareValue;break;case'!==':valid=value!==compareValue;break;case'>':valid=value>compareValue;break;case'>=':valid=value>=compareValue;break;case'<':valid=value<compareValue;break;case'<=':valid=value<=compareValue;break;default:valid=false;break;}if(!valid){model.addError(attribute,options.message);}return valid;}}]);}(Validator);
+// EXTERNAL MODULE: ./node_modules/lodash/isArray.js
+var isArray = __webpack_require__(6449);
+var isArray_default = /*#__PURE__*/__webpack_require__.n(isArray);
 ;// ./src/validators/DictValidator.ts
 function DictValidator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DictValidator_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DictValidator_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DictValidator_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}function DictValidator_superPropGet(t,o,e,r){var p=_get(_getPrototypeOf(1&r?t.prototype:t),o,e);return 2&r&&"function"==typeof p?function(t){return p.apply(e,t);}:p;}/** DictValidator代表model的属性值是dict中的某一个或多个。
  * options = {
@@ -8326,6 +6911,33 @@ function FnValidator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConst
 // EXTERNAL MODULE: ./node_modules/lodash/extend.js
 var lodash_extend = __webpack_require__(3346);
 var extend_default = /*#__PURE__*/__webpack_require__.n(lodash_extend);
+;// ./src/base/Pagination.ts
+function Pagination_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Pagination_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Pagination_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Pagination_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
+var Pagination=/*#__PURE__*/function(_BaseObject){function Pagination(){var _this;_classCallCheck(this,Pagination);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Pagination_callSuper(this,Pagination,[].concat(args));_defineProperty(_this,"totalCount",0);_defineProperty(_this,"pageCount",0);_defineProperty(_this,"perPage",20);_defineProperty(_this,"page",1);return _this;}_inherits(Pagination,_BaseObject);return _createClass(Pagination,[{key:"currentPage",get:function get(){return this.page;},set:function set(value){// page不允许超出范围
+if(value>this.pageCount){value=this.pageCount;}if(value<=0){value=1;}this.emit(Pagination.EVENT_SETPAGE,value,this.page,this);this.page=value;}},{key:"hasPrev",value:function hasPrev(){return this.currentPage>1;}},{key:"hasNext",value:function hasNext(){return this.currentPage<this.pageCount;}}]);}(BaseObject);_defineProperty(Pagination,"EVENT_SETPAGE",'page_setpage');
+;// ./src/base/DataProvider.ts
+function DataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
+var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model);_this.modelClass=get_default()(config,'modelClass',Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
+},{key:"toggleSort",value:function toggleSort(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var singleSort=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}var process=function process(attr){if(_this4._sort[attr]){if(_this4.isSortAsc(attr)){_this4._sort[attr]=DataProvider.SORT_DESC;}else{_this4._sort[attr]=DataProvider.SORT_ASC;}}else{_this4._sort[attr]=DataProvider.SORT_ASC;}};if(singleSort){var attribute=attributes[0];if(!attribute){return this.sort;}Object.keys(this._sort).forEach(function(key){if(key!==attribute){delete _this4._sort[key];}});process(attribute);}else{Object.keys(attributes).forEach(function(index){var key=attributes[index];process(key);});}return this.sort;}// 如果不传参则获取当前的url, params的传参会优先
+},{key:"getParams",value:function getParams(){var _this5=this;var args=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params={};Object.keys(this.searchModel).forEach(function(key){params[key]=_this5.searchModel[key];});params['page']=this.pager.currentPage;params['per-page']=this.pager.perPage;params['sort']=this.sort;Object.keys(args).forEach(function(key){params[key]=args[key];});return params;}},{key:"load",value:function load(data){var _this6=this;var append=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var primaryKey=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'';var params=get_default()(data,'params',{});if(!this.isLoad){var searchModel=new this['searchModelClass']();searchModel.load(params);this.searchModel=searchModel;}else{this.searchModel=this.searchModel.load(params);}var meta=get_default()(data,'meta',{});this.pager=this.pager.load(meta);this.sort=get_default()(data,'sort','');var models=this.models;if(isEmpty_default()(models)||!append){models=[];}var items=get_default()(data,'items',[]);var modelDict={};// 如果设置了primaryKey，则按primaryKey进行去重
+if(!isEmpty_default()(primaryKey)){Object.keys(models).forEach(function(key){var tempModel=models[key];if(tempModel.hasOwnProperty(primaryKey)){modelDict[tempModel[primaryKey]]=key;}});}Object.keys(items).forEach(function(key){var item=items[key];var model=new _this6.modelClass();model.load(item);if(!isEmpty_default()(primaryKey)&&model.hasOwnProperty(primaryKey)){if(modelDict.hasOwnProperty(model[primaryKey])){var tempKey=modelDict[model[primaryKey]];models[tempKey]=model;}else{modelDict[model[primaryKey]]=models.length;models.push(model);}}else{models.push(model);}});this.models=models;this.isLoad=true;this.init();return this;}},{key:"remove",value:function remove(){var _this7=this;var index=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(typeof index==='string'){index=parseInt(index,0);}if(typeof index==='number'){return this.models.splice(index,1);}var value=null;Object.keys(this.models).forEach(function(key){if(index===_this7.models[key]){value=_this7.remove(key);}});return value;}},{key:"localSort",value:function localSort(){var sortBy=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var attribute=Object.keys(this._sort)[0];if(!attribute){return;}this.sortModels(attribute,this.isSortAsc(attribute),sortBy);}},{key:"sortModels",value:function sortModels(attribute){var asc=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var sortBy=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;if(sortBy===null){sortBy=function sortBy(value1,value2,sortType){if(value1===value2){return 0;}if(sortType){return value1>value2?1:-1;}return value1<value2?1:-1;};}var compare=function compare(a,b){return sortBy(a[attribute],b[attribute],asc);};this.models.sort(compare);}}],[{key:"getInstance",value:function getInstance(data){var searchModelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Model;var modelClass=arguments.length>2&&arguments[2]!==undefined?arguments[2]:Model;var paginationClass=arguments.length>3&&arguments[3]!==undefined?arguments[3]:Pagination;var config={data:data,searchModelClass:searchModelClass,modelClass:modelClass,paginationClass:paginationClass};return new DataProvider(config);}}]);}(BaseObject);_defineProperty(DataProvider,"SORT_ASC",4);_defineProperty(DataProvider,"SORT_DESC",3);
+;// ./src/base/WebDataProvider.ts
+function WebDataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,WebDataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function WebDataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(WebDataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 数据提供器
+var WebDataProvider_WebDataProvider=/*#__PURE__*/function(_DataProvider){// 不允许请求同时进行，在ajax搜索时很有用
+function WebDataProvider(config){var _this2;_classCallCheck(this,WebDataProvider);_this2=WebDataProvider_callSuper(this,WebDataProvider,[config]);// 是否为加载中...
+_defineProperty(_this2,"isLoading",false);// 正常需要加载配置数据，此标签来判断是否应该加载配置数据
+_defineProperty(_this2,"isLoad",false);// 配置的标志位，指示后端是否传递配置过来
+_defineProperty(_this2,"configName",'withConfig');_defineProperty(_this2,"append",false);// 默认为id
+_defineProperty(_this2,"primaryKey",'id');config=merge_default()({},App.webDpConfig,config);_this2.httpRequest=get_default()(config,'httpRequest',null);_this2.httpOptions=get_default()(config,'httpOptions',null);_this2.primaryKey=get_default()(config,'primaryKey','id');_this2.configName=get_default()(config,'configName','withConfig');_this2.callback=get_default()(config,'callback',null);_this2.timeWait=get_default()(config,'timeWait',600);if(!_this2.httpRequest){throw new Error('httpRequest必须配置');}return _this2;}_inherits(WebDataProvider,_DataProvider);return _createClass(WebDataProvider,[{key:"refresh",value:function refresh(){var refreshType=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'refresh';if(refreshType==='header'){this.append=false;// 头部下拉刷新会将page置为1
+this.changePage(1,true);}else if(refreshType==='footer'){this.append=true;this.changePage(this.pager.currentPage+1,true);}else{this.append=false;this.changePage(this.pager.currentPage,true);}}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
+},{key:"setParams",value:function setParams(params){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;// 设置参数
+this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
+this.sort=sort;var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}// 用于网页的页码点击中
+},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){this.loadData();}}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
+},{key:"loadData",value:function loadData(){var _this=this;var getData=function getData(){if(!_this.beforeGetData()){return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);},function(error){_this.afterGetData(false,error);});};if(this.timeWait){if(this._timer){clearTimeout(this._timer);}this._timer=setTimeout(getData,this.timeWait);}else{getData();}}// 获取数据之前
+},{key:"beforeGetData",value:function beforeGetData(){this.isLoading=true;var reqData=get_default()(this.httpOptions,'params',{});reqData=this.getParams(reqData);reqData[this.configName]=!this.isLoad;this.httpOptions['params']=reqData;this.emit(WebDataProvider.EVENT_BEFOREGETDATA,this,{dp:this});return true;}// 获取数据
+},{key:"processData",value:function processData(data){this.load(data,this.append,this.primaryKey);}// 获取数据之后
+},{key:"afterGetData",value:function afterGetData(success,data){if(success){this.isLoad=true;}this.isLoading=false;this.append=false;this.httpOptions['params']={};this.emit(WebDataProvider.EVENT_AFTERGETDATA,this,{dp:this,success:success,data:data});if(this.callback){this.callback(data,success,this);}if(this._timer){clearTimeout(this._timer);}}}]);}(DataProvider);_defineProperty(WebDataProvider_WebDataProvider,"EVENT_BEFOREGETDATA",'DP_BEFORE_GETDATA');_defineProperty(WebDataProvider_WebDataProvider,"EVENT_AFTERGETDATA",'DP_AFTER_GETDATA');
 // EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
 var cloneDeep = __webpack_require__(8055);
 var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
@@ -8333,6 +6945,29 @@ var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
 /* harmony default export */ const tab = ({name:'tab',props:{tag:{type:String,"default":'a'},dataKey:{type:[String,Number],"default":null},attr:{type:String},canClose:{type:Boolean,"default":false},disabled:{type:Boolean,"default":false}},data:function data(){return{status:false,groupKey:this.dataKey,tagName:this.tag};},methods:{open:function open(){this.status=true;},close:function close(){this.status=false;},isOpen:function isOpen(){return this.status===true;},click:function click(){var isOpen=this.isOpen();var type='open';if(this.canClose){type=isOpen?'close':'open';}this[type]();this.$emit('toggle',{type:type,vm:this});}},template:"\n    <component :is=\"tagName\" :class=\"{'active': isOpen()}\" :disabled=\"disabled\" @click=\"click\">\n        <slot></slot>\n   </component>"});
 ;// ./src/platforms/vue/components/group/checkbox.ts
 var checkbox_tab=cloneDeep_default()(tab);/* harmony default export */ const group_checkbox = (merge_default()(checkbox_tab,{name:'checkbox',inheritAttrs:false,props:{tag:{type:String,"default":'div'},canClose:{type:Boolean,"default":true}},template:"<component :is=\"tagName\" :class=\"{'active': isOpen()}\" @click=\"click\">\n        <slot name=\"input\" :isOpen=\"isOpen\" :disabled=\"disabled\">\n            <input type=\"checkbox\" :name=\"attr\" :checked=\"isOpen()\" :disabled=\"disabled\" v-bind=\"$attrs\"/>\n        </slot>\n        <slot></slot>\n    </component>"}));
+// EXTERNAL MODULE: ./node_modules/lodash/ceil.js
+var ceil = __webpack_require__(3551);
+var ceil_default = /*#__PURE__*/__webpack_require__.n(ceil);
+// EXTERNAL MODULE: ./node_modules/lodash/keys.js
+var lodash_keys = __webpack_require__(5950);
+var keys_default = /*#__PURE__*/__webpack_require__.n(lodash_keys);
+;// ./src/widgets/BaseGroup.ts
+function BaseGroup_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,BaseGroup_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function BaseGroup_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(BaseGroup_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var BaseGroup=/*#__PURE__*/function(_BaseObject){function BaseGroup(){_classCallCheck(this,BaseGroup);return BaseGroup_callSuper(this,BaseGroup,arguments);}_inherits(BaseGroup,_BaseObject);return _createClass(BaseGroup,[{key:"addList",value:function addList(components){var _this=this;Object.keys(components).forEach(function(i){var component=components[i];_this.add(component);});this.init();}},{key:"isValid",value:function isValid(component){// component必须存在方法 open, close，本处接口由代码来实现。
+if(!component.hasOwnProperty('open')&&!component.hasOwnProperty('close')&&!component.hasOwnProperty('isOpen')){return false;}if(typeof component.open!=='function'){return false;}if(typeof component.close!=='function'){return false;}if(typeof component.isOpen!=='function'){return false;}return true;}}]);}(BaseObject);
+;// ./src/helpers/ArrayHelper.ts
+var ArrayHelper=/*#__PURE__*/function(){function ArrayHelper(){_classCallCheck(this,ArrayHelper);}return _createClass(ArrayHelper,null,[{key:"hasKey",value:// 对象的key会自动转为字符串，要实现数字格式的key和字符串格式的key是等价的，如groupinput 的 exclude中的判断
+function hasKey(arr,key){var numberKey=Number(key);var stringKey=String(key);var flag=false;for(var i=0,l=arr.length;i<l;i++){if(arr[i]===numberKey||arr[i]===stringKey){flag=true;break;}}return flag;}}]);}();
+;// ./src/widgets/Group.ts
+function Group_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Group_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Group_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Group_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// group组件组
+var Group=/*#__PURE__*/function(_BaseGroup){function Group(){var _this;_classCallCheck(this,Group);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Group_callSuper(this,Group,[].concat(args));_defineProperty(_this,"_max",1);_defineProperty(_this,"excludes",[]);// 默认模式为unstrict, 出现错误会自己处理，strict模式会throw出错误，交给上层处理
+_defineProperty(_this,"mode",'unstrict');_defineProperty(_this,"_selected",[]);_defineProperty(_this,"_components",{});return _this;}_inherits(Group,_BaseGroup);return _createClass(Group,[{key:"add",value:function add(component){if(!this.isValid(component)){return false;}var key;if(component.hasOwnProperty('groupKey')&&component.groupKey!==null){key=component.groupKey;}else{var keys=keys_default()(this._components);key=keys.length+'';}this._components[key]=component;return true;}// 初始化,将所有的参数都归位
+},{key:"init",value:function init(){var _this2=this;Object.keys(this._components).forEach(function(i){var component=_this2._components[i];var key=_this2.getKey(component);if(component.isOpen()&&_this2._selected.indexOf(key)<0){// 如果组件是打开的，但是要求关闭，则将其关闭
+component.close();_this2.toggle('close',component);}if(!component.isOpen()&&_this2._selected.indexOf(key)>-1){component.open();_this2.toggle('open',component);}});}},{key:"toggle",value:function toggle(type,component){var key=this.getKey(component);if(key===null){return false;}if(type==='open'){return this.select(key);}return this.unSelect(key);}},{key:"unSelect",value:function unSelect(key){// 如果已经是未选中了，直接返回
+var index=this._selected.indexOf(key);if(index<0){return true;}this._selected.splice(index,1);this.emit(Group.EVENT_DATACHANGED,this,{group:this,type:'close'});return true;}},{key:"getKey",value:function getKey(component){var _this3=this;var index=null;Object.keys(this._components).forEach(function(i){if(_this3._components[i]===component){index=i;return;}});return index;}// 选中某个组件
+},{key:"select",value:function select(key){if(!this._components.hasOwnProperty(key)){return false;}var component=this._components[key];// 若已经被选中，则直接返回
+if(this._selected.indexOf(key)>-1){return true;}if(ArrayHelper.hasKey(this.excludes,key)){component.close();if(this.mode==='strict'){throw new Error('该选项不可选');}return false;}if(this._selected.length+1>this.max&&this.max>1&&this.mode==='strict'){component.close();throw new Error('最多只允许选择'+this.max+'项');}// 选中时,把当前的组件push，然后根据情况pop
+this._selected.push(key);if(this._selected.length>this.max){var closeKey=this._selected.shift();if(this._components.hasOwnProperty(closeKey)){this._components[closeKey].close();}}this.emit(Group.EVENT_DATACHANGED,this,{group:this,type:'open'});return true;}},{key:"selected",get:function get(){return this._selected;},set:function set(value){if(value===null){value=[];}if(typeof value==='string'){this._selected=[value];}if(typeof value==='number'){this._selected=[value+''];}// 由于_selected中元素取自_components的key，因此赋值的时候也强制转为string
+if(isArray_default()(value)){this._selected=value.map(function(item){return item+'';});}this.init();}},{key:"max",get:function get(){return this._max;},set:function set(value){if(value<1){this._max=1;return;}this._max=ceil_default()(value);while(this._selected.length>this._max){this._selected.pop();}this.init();}},{key:"getSelectComponent",value:function getSelectComponent(){var _this4=this;var arr=this.selected;var tempArr=[];Object.keys(arr).forEach(function(i){if(_this4._components.hasOwnProperty(i)){tempArr.push(_this4._components[i]);}});return tempArr;}}]);}(BaseGroup);_defineProperty(Group,"EVENT_DATACHANGED",'GROUP_CHANGED');
 ;// ./src/platforms/vue/components/group/group.ts
 /* harmony default export */ const group = ({name:'group',props:{tag:{type:String,"default":'div'},multiple:{type:Boolean,"default":false},max:{type:Number,"default":1},excludes:{type:Array,"default":function _default(){return[];}},mode:{type:String,"default":'unstrict'},initValue:{"default":0}},data:function data(){return{selected:this.initValue};},mounted:function mounted(){var _this=this;this.$nextTick(function(){_this.init();});},watch:{initValue:function initValue(){this.init();}},methods:{init:function init(){var _this2=this;this.group=new Group(),this.group.max=this.multiple?this.max:1;this.group.excludes=this.excludes;this.group.mode=this.mode;this.group.addList(this.$children);for(var i in this.$children){var vm=this.$children[i];if(!vm['toggleEvent']){vm.$on('toggle',function(obj){_this2.change(obj);});vm['toggleEvent']=true;}}this.selected=this.initValue;this.group.selected=this.selected;this.setSelected();},change:function change(obj){this.group.toggle(obj.type,obj.vm);this.setSelected();this.$emit('change',this.selected);},setSelected:function setSelected(){var selected=this.group.selected;if(this.multiple){this.selected=selected;}else{this.selected=selected.length>0?selected[0]:null;}}},template:"<component :is=\"tag\"><slot></slot></component>"});
 ;// ./src/platforms/vue/components/group/radio.ts
@@ -12480,33 +11115,1399 @@ if(!attribute){return!isEmpty_default()(this._errors);}return!isEmpty_default()(
 },{key:"getErrors",value:function getErrors(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;if(!attribute){return this._errors;}return get_default()(this._errors,attribute,[]);}},{key:"getFirstError",value:function getFirstError(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var error=this.getErrors(attribute);if(attribute){return get_default()(error,'0','');}for(var attr in error){return error[attr][0];}return'';}// 添加错误
 },{key:"addError",value:function addError(attribute){var error=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';if(!attribute){return;}if(isEmpty_default()(this._errors[attribute])){this._errors[attribute]=[];}this._errors[attribute].push(error);}},{key:"clearErrors",value:function clearErrors(){var _this5=this;var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';if(!attribute){this._errors={};}else{if(typeof attribute==='string'){attribute=[attribute];}Object.keys(attribute).forEach(function(index){var key=attribute[index];delete _this5._errors[key];});}}},{key:"getAttributeHint",value:function getAttributeHint(attribute){var hints=this.attributeHints();if(hints.hasOwnProperty(attribute)){return hints[attribute];}return'';}// 根据attribute获取label
 },{key:"getAttributeLabel",value:function getAttributeLabel(attribute){var attrLabels=this.attributeLabels();if(attrLabels.hasOwnProperty(attribute)){return attrLabels[attribute];}return attribute;}}]);}(BaseObject);_defineProperty(Model,"SCENARIO_DEFAULT",'default');_defineProperty(Model,"EVENT_BEFORELOAD",'MODEL_BEFORE_LOAD');_defineProperty(Model,"EVENT_LOAD",'MODEL_LOAD');_defineProperty(Model,"EVENT_AFTERLOAD",'MODEL_AFTER_LOAD');_defineProperty(Model,"EVENT_BEFORE_VALIDATE",'MODEL_BEFORE_VALIDATE');_defineProperty(Model,"EVENT_AFTER_VALIDATE",'MODEL_AFTER_VALIDATE');
-;// ./src/base/Pagination.ts
-function Pagination_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Pagination_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Pagination_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Pagination_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
-var Pagination=/*#__PURE__*/function(_BaseObject){function Pagination(){var _this;_classCallCheck(this,Pagination);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Pagination_callSuper(this,Pagination,[].concat(args));_defineProperty(_this,"totalCount",0);_defineProperty(_this,"pageCount",0);_defineProperty(_this,"perPage",20);_defineProperty(_this,"page",1);return _this;}_inherits(Pagination,_BaseObject);return _createClass(Pagination,[{key:"currentPage",get:function get(){return this.page;},set:function set(value){// page不允许超出范围
-if(value>this.pageCount){value=this.pageCount;}if(value<=0){value=1;}this.emit(Pagination.EVENT_SETPAGE,value,this.page,this);this.page=value;}},{key:"hasPrev",value:function hasPrev(){return this.currentPage>1;}},{key:"hasNext",value:function hasNext(){return this.currentPage<this.pageCount;}}]);}(BaseObject);_defineProperty(Pagination,"EVENT_SETPAGE",'page_setpage');
-;// ./src/base/DataProvider.ts
-function DataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
-var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model);_this.modelClass=get_default()(config,'modelClass',Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
-},{key:"toggleSort",value:function toggleSort(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var singleSort=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}var process=function process(attr){if(_this4._sort[attr]){if(_this4.isSortAsc(attr)){_this4._sort[attr]=DataProvider.SORT_DESC;}else{_this4._sort[attr]=DataProvider.SORT_ASC;}}else{_this4._sort[attr]=DataProvider.SORT_ASC;}};if(singleSort){var attribute=attributes[0];if(!attribute){return this.sort;}Object.keys(this._sort).forEach(function(key){if(key!==attribute){delete _this4._sort[key];}});process(attribute);}else{Object.keys(attributes).forEach(function(index){var key=attributes[index];process(key);});}return this.sort;}// 如果不传参则获取当前的url, params的传参会优先
-},{key:"getParams",value:function getParams(){var _this5=this;var args=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params={};Object.keys(this.searchModel).forEach(function(key){params[key]=_this5.searchModel[key];});params['page']=this.pager.currentPage;params['per-page']=this.pager.perPage;params['sort']=this.sort;Object.keys(args).forEach(function(key){params[key]=args[key];});return params;}},{key:"load",value:function load(data){var _this6=this;var append=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var primaryKey=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'';var params=get_default()(data,'params',{});if(!this.isLoad){var searchModel=new this['searchModelClass']();searchModel.load(params);this.searchModel=searchModel;}else{this.searchModel=this.searchModel.load(params);}var meta=get_default()(data,'meta',{});this.pager=this.pager.load(meta);this.sort=get_default()(data,'sort','');var models=this.models;if(isEmpty_default()(models)||!append){models=[];}var items=get_default()(data,'items',[]);var modelDict={};// 如果设置了primaryKey，则按primaryKey进行去重
-if(!isEmpty_default()(primaryKey)){Object.keys(models).forEach(function(key){var tempModel=models[key];if(tempModel.hasOwnProperty(primaryKey)){modelDict[tempModel[primaryKey]]=key;}});}Object.keys(items).forEach(function(key){var item=items[key];var model=new _this6.modelClass();model.load(item);if(!isEmpty_default()(primaryKey)&&model.hasOwnProperty(primaryKey)){if(modelDict.hasOwnProperty(model[primaryKey])){var tempKey=modelDict[model[primaryKey]];models[tempKey]=model;}else{modelDict[model[primaryKey]]=models.length;models.push(model);}}else{models.push(model);}});this.models=models;this.isLoad=true;this.init();return this;}},{key:"remove",value:function remove(){var _this7=this;var index=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(typeof index==='string'){index=parseInt(index,0);}if(typeof index==='number'){return this.models.splice(index,1);}var value=null;Object.keys(this.models).forEach(function(key){if(index===_this7.models[key]){value=_this7.remove(key);}});return value;}},{key:"localSort",value:function localSort(){var sortBy=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var attribute=Object.keys(this._sort)[0];if(!attribute){return;}this.sortModels(attribute,this.isSortAsc(attribute),sortBy);}},{key:"sortModels",value:function sortModels(attribute){var asc=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var sortBy=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;if(sortBy===null){sortBy=function sortBy(value1,value2,sortType){if(value1===value2){return 0;}if(sortType){return value1>value2?1:-1;}return value1<value2?1:-1;};}var compare=function compare(a,b){return sortBy(a[attribute],b[attribute],asc);};this.models.sort(compare);}}],[{key:"getInstance",value:function getInstance(data){var searchModelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Model;var modelClass=arguments.length>2&&arguments[2]!==undefined?arguments[2]:Model;var paginationClass=arguments.length>3&&arguments[3]!==undefined?arguments[3]:Pagination;var config={data:data,searchModelClass:searchModelClass,modelClass:modelClass,paginationClass:paginationClass};return new DataProvider(config);}}]);}(BaseObject);_defineProperty(DataProvider,"SORT_ASC",4);_defineProperty(DataProvider,"SORT_DESC",3);
-;// ./src/base/WebDataProvider.ts
-function WebDataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,WebDataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function WebDataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(WebDataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 数据提供器
-var WebDataProvider_WebDataProvider=/*#__PURE__*/function(_DataProvider){// 不允许请求同时进行，在ajax搜索时很有用
-function WebDataProvider(config){var _this2;_classCallCheck(this,WebDataProvider);_this2=WebDataProvider_callSuper(this,WebDataProvider,[config]);// 是否为加载中...
-_defineProperty(_this2,"isLoading",false);// 正常需要加载配置数据，此标签来判断是否应该加载配置数据
-_defineProperty(_this2,"isLoad",false);// 配置的标志位，指示后端是否传递配置过来
-_defineProperty(_this2,"configName",'withConfig');_defineProperty(_this2,"append",false);// 默认为id
-_defineProperty(_this2,"primaryKey",'id');config=merge_default()({},App.webDpConfig,config);_this2.httpRequest=get_default()(config,'httpRequest',null);_this2.httpOptions=get_default()(config,'httpOptions',null);_this2.primaryKey=get_default()(config,'primaryKey','id');_this2.configName=get_default()(config,'configName','withConfig');_this2.callback=get_default()(config,'callback',null);_this2.timeWait=get_default()(config,'timeWait',600);if(!_this2.httpRequest){throw new Error('httpRequest必须配置');}return _this2;}_inherits(WebDataProvider,_DataProvider);return _createClass(WebDataProvider,[{key:"refresh",value:function refresh(){var refreshType=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'refresh';if(refreshType==='header'){this.append=false;// 头部下拉刷新会将page置为1
-this.changePage(1,true);}else if(refreshType==='footer'){this.append=true;this.changePage(this.pager.currentPage+1,true);}else{this.append=false;this.changePage(this.pager.currentPage,true);}}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
-},{key:"setParams",value:function setParams(params){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;// 设置参数
-this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
-this.sort=sort;var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}// 用于网页的页码点击中
-},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){this.loadData();}}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
-},{key:"loadData",value:function loadData(){var _this=this;var getData=function getData(){if(!_this.beforeGetData()){return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);},function(error){_this.afterGetData(false,error);});};if(this.timeWait){if(this._timer){clearTimeout(this._timer);}this._timer=setTimeout(getData,this.timeWait);}else{getData();}}// 获取数据之前
-},{key:"beforeGetData",value:function beforeGetData(){this.isLoading=true;var reqData=get_default()(this.httpOptions,'params',{});reqData=this.getParams(reqData);reqData[this.configName]=!this.isLoad;this.httpOptions['params']=reqData;this.emit(WebDataProvider.EVENT_BEFOREGETDATA,this,{dp:this});return true;}// 获取数据
-},{key:"processData",value:function processData(data){this.load(data,this.append,this.primaryKey);}// 获取数据之后
-},{key:"afterGetData",value:function afterGetData(success,data){if(success){this.isLoad=true;}this.isLoading=false;this.append=false;this.httpOptions['params']={};this.emit(WebDataProvider.EVENT_AFTERGETDATA,this,{dp:this,success:success,data:data});if(this.callback){this.callback(data,success,this);}if(this._timer){clearTimeout(this._timer);}}}]);}(DataProvider);_defineProperty(WebDataProvider_WebDataProvider,"EVENT_BEFOREGETDATA",'DP_BEFORE_GETDATA');_defineProperty(WebDataProvider_WebDataProvider,"EVENT_AFTERGETDATA",'DP_AFTER_GETDATA');
+;// ./src/platforms/react/hooks/useLedapModel.js
+/**
+ * 实现 react 数据的双向绑定
+ * 组件调用 setValue() 触发组件重新渲染和修改model值
+ * @param {*} model ledap框架load返回的model对象
+ * @returns 
+ */function useLedapModel(model){var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setbool=_useState2[1];function _setValue(attr,val){model[attr]=val;setbool(function(bool){return!bool;});}function getValue(attr){return model[attr];}function updateView(){setbool(function(bool){return!bool;});}return{setValue:_setValue,getValue:getValue,updateView:updateView,model:model};}function useModelEvent(model,attr){var initialValue=model[attr];var _useState3=(0,external_react_namespaceObject.useState)(initialValue?true:false),_useState4=_slicedToArray(_useState3,2),loaded=_useState4[0],setLoaded=_useState4[1];(0,external_react_namespaceObject.useEffect)(function(){var _model$on;function _onloaded(){console.log('_onloaded');setLoaded(true);}console.log('model bind event:',model.on,Model.EVENT_AFTERLOAD);model===null||model===void 0||(_model$on=model.on)===null||_model$on===void 0||_model$on.call(model,Model.EVENT_AFTERLOAD,_onloaded);return function(){var _model$off;model===null||model===void 0||(_model$off=model.off)===null||_model$off===void 0||_model$off.call(model,Model.EVENT_AFTERLOAD,_onloaded);};},[]);return{loaded:loaded};}
+;// ./src/platforms/react/components/formItem/form-item.module.less
+// extracted by mini-css-extract-plugin
+var _1 = "_module_formitem_m6q_j";
+
+
+;// ./src/platforms/react/contexts/FormContext.js
+var FormContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({});/* harmony default export */ const contexts_FormContext = (FormContext);
+;// ./src/platforms/react/components/formItem/FormItem.tsx
+var FormItem_excluded=["FormComponent","model","attr","label","validate","children","dp","inline","show","FormComponentProps"];function FormItem(props){var _props$FormComponent=props.FormComponent,FormComponent=_props$FormComponent===void 0?BaseInput:_props$FormComponent,propModel=props.model,attr=props.attr,label=props.label,validate=props.validate,children=props.children,dp=props.dp,inline=props.inline,show=props.show,FormComponentProps=props.FormComponentProps,reset=_objectWithoutProperties(props,FormItem_excluded);var _reset$labelCol=reset.labelCol,labelCol=_reset$labelCol===void 0?{span:8}:_reset$labelCol,_reset$wrapperCol=reset.wrapperCol,wrapperCol=_reset$wrapperCol===void 0?{span:16}:_reset$wrapperCol;var _ref=propModel?useLedapModel(propModel):(0,external_react_namespaceObject.useContext)(contexts_FormContext),setValue=_ref.setValue,getValue=_ref.getValue,updateView=_ref.updateView,model=_ref.model;var _setValue=function _setValue(val){setValue(attr,val);};if(inline){labelCol=null;wrapperCol=null;}var required=model===null||model===void 0?void 0:model.isRequired(attr);// console.log("render formItem:", {
+//   attr,
+//   value: model[attr],
+//   hasError: model.hasErrors(attr),
+//   error: model.getFirstError(attr),
+// });
+if(show===false){return null;}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormItemContext.Provider,{value:{getValue:getValue,setValue:setValue}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form.Item,_extends({className:classnames_default()(_1,{required:required}),label:label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),labelCol:labelCol,wrapperCol:wrapperCol,validateStatus:model.hasErrors(attr)?"error":null,help:model.getFirstError(attr)},reset),/*#__PURE__*/external_react_namespaceObject["default"].createElement(FormComponent,_extends({model:model,attr:attr,validate:validate,onSetValue:_setValue,value:model[attr],onBlur:updateView,dp:dp},FormComponentProps)),children));}/* harmony default export */ const formItem_FormItem = (FormItem);
+;// ./src/platforms/react/components/formItem/FormItemLabel.tsx
+function FormItemLabel(props){var _props$labelComponent=props.labelComponent,labelComponent=_props$labelComponent===void 0?null:_props$labelComponent,_props$model=props.model,model=_props$model===void 0?null:_props$model,_props$attr=props.attr,attr=_props$attr===void 0?"":_props$attr,_props$label=props.label,label=_props$label===void 0?"":_props$label,className=props.className;return labelComponent?labelComponent:/*#__PURE__*/external_react_namespaceObject["default"].createElement("label",{className:classnames_default()(className)},label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),model!==null&&model!==void 0&&model.isRequired(attr)?"*":"");}/* harmony default export */ const formItem_FormItemLabel = (FormItemLabel);
+;// ./src/platforms/react/components/button/Button.tsx
+function Button(props){return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Button,props);}Button.Group=external_antd_namespaceObject.Button.Group;/* harmony default export */ const button_Button = (Button);
+;// ./src/platforms/react/components/form/form.module.less
+// extracted by mini-css-extract-plugin
+var form_module_1 = "_form_kRBRi";
+
+
+;// ./src/platforms/react/components/form/Form.tsx
+var Form_excluded=["model","className","inline","onSubmit","onSetValue","enctype"];function ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function _objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Form(props){var model=props.model,className=props.className,inline=props.inline,onSubmit=props.onSubmit,onSetValue=props.onSetValue,_props$enctype=props.enctype,enctype=_props$enctype===void 0?"application/json":_props$enctype,reset=_objectWithoutProperties(props,Form_excluded);var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];function getValue(attr){return model[attr];}function setValue(attr,val){model[attr]=val;setBool(function(bool){return!bool;});onSetValue===null||onSetValue===void 0||onSetValue();}function updateView(){setBool(function(bool){return!bool;});}function _onFinish(e){var json=_objectSpread({},model);var data=json;switch(enctype.toLocaleLowerCase()){case"multipart/form-data":{var formData=new FormData();Object.keys(json).forEach(function(key){if(json[key]===null){return;}formData.append(key,json[key]);});data=formData;break;}default:{break;}}// console.log("form on filish json:", data, json);
+var firstErr="";try{var _model$validate;model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model);firstErr=model.getFirstError();}catch(e){console.error(e);}onSubmit===null||onSubmit===void 0||onSubmit(data,firstErr);updateView();}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormContext.Provider,{value:{getValue:getValue,setValue:setValue,updateView:updateView,model:model}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form,_extends({className:classnames_default()(form_module_1,className,inline&&"inline"),onFinish:_onFinish},reset),props.children));}
+// EXTERNAL MODULE: ./node_modules/antd/lib/locale/zh_CN.js
+var zh_CN = __webpack_require__(2187);
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(4353);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// EXTERNAL MODULE: ./node_modules/dayjs/locale/zh-cn.js
+var zh_cn = __webpack_require__(6033);
+// EXTERNAL MODULE: ./node_modules/dayjs/plugin/weekday.js
+var weekday = __webpack_require__(6986);
+var weekday_default = /*#__PURE__*/__webpack_require__.n(weekday);
+// EXTERNAL MODULE: ./node_modules/dayjs/plugin/localeData.js
+var localeData = __webpack_require__(1840);
+var localeData_default = /*#__PURE__*/__webpack_require__.n(localeData);
+;// ./src/platforms/react/components/configProvider/LedapAppContext.js
+var LedapAppContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({uploadUrl:''});
+;// ./src/platforms/react/components/configProvider/ConfigProvider.tsx
+var ConfigProvider_excluded=["theme","ledapConfig","children"];function ConfigProvider_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function ConfigProvider_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ConfigProvider_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ConfigProvider_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}dayjs_min_default().locale("zh-cn");dayjs_min_default().extend((weekday_default()));dayjs_min_default().extend((localeData_default()));function ConfigProvider(){var props=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var _props$theme=props.theme,theme=_props$theme===void 0?{}:_props$theme,ledapConfig=props.ledapConfig,children=props.children,reset=_objectWithoutProperties(props,ConfigProvider_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(LedapAppContext.Provider,{value:ConfigProvider_objectSpread({},ledapConfig)},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.ConfigProvider,_extends({locale:zh_CN/* default */.A,theme:ConfigProvider_objectSpread({cssVar:true},theme)},reset),children,/*#__PURE__*/external_react_namespaceObject["default"].createElement("div",{id:"ledap-modal-root"})));}/* harmony default export */ const configProvider_ConfigProvider = (ConfigProvider);
+;// ./src/platforms/react/components/radio/Radio.tsx
+var Radio_excluded=["value","model","attr","children"];function Radio(props){var value=props.value,model=props.model,attr=props.attr,children=props.children,reset=_objectWithoutProperties(props,Radio_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio,_extends({checked:!!value},reset),children);}/* harmony default export */ const radio_Radio = (Radio);
+;// ./src/platforms/react/hooks/useInputGroup.js
+function useInputGroup(model,attr){var _model$rules$attr;var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];var _useRef=(0,external_react_namespaceObject.useRef)(createGroupWigtht(model,attr)),groupWidget=_useRef.current;var _updateView=function _updateView(){setBool(function(bool){return!bool;});};function open(key){groupWidget.select(key);_updateView();}function close(key){groupWidget.unSelect(key);_updateView();}function getItemOpen(key){return groupWidget.selected.indexOf(key)>-1;}function setValue(valArr){groupWidget.selected=valArr;_updateView();}function getValue(){var _model$rules;var arr=groupWidget.selected;if((_model$rules=model.rules)!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.call(model)[attr])!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.dict)!==null&&_model$rules!==void 0&&_model$rules.multiple){return arr;}return arr[0];}return{value:groupWidget.selected,itemList:formatItemList((_model$rules$attr=model.rules()[attr])===null||_model$rules$attr===void 0?void 0:_model$rules$attr.dict),getItemOpen:getItemOpen,open:open,close:close,getValue:getValue,setValue:setValue};}function formatItemList(){var dict=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var list=[];var _dict$excludes=dict.excludes,excludes=_dict$excludes===void 0?[]:_dict$excludes;var listObj=dict.list||{};for(var key in listObj){var value=listObj[key];var disabled=excludes.indexOf(key)>-1;list.push({label:value,value:key,disabled:disabled});}return list;}function createGroupWigtht(model,attr){var _model$rules$attr2;var modelValue=model[attr];var dict=((_model$rules$attr2=model.rules()[attr])===null||_model$rules$attr2===void 0?void 0:_model$rules$attr2.dict)||{};var obj=new Group();// 构造组件
+var listObj=(dict===null||dict===void 0?void 0:dict.list)||{};// 添加组件
+for(var key in listObj){var _modelValue$indexOf;var isOpen=(modelValue===null||modelValue===void 0||(_modelValue$indexOf=modelValue.indexOf)===null||_modelValue$indexOf===void 0?void 0:_modelValue$indexOf.call(modelValue,key))>-1;var component=new WidgetGroupComponent(key,isOpen);obj.add(component);}// 设置最大选中值
+if(dict.max&&dict.multiple){obj.max=dict.max;}// 设置选中
+obj.selected=modelValue;return obj;}var WidgetGroupComponent=/*#__PURE__*/_createClass(function WidgetGroupComponent(groupKey){var _this=this;var isOpen=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;_classCallCheck(this,WidgetGroupComponent);_defineProperty(this,"isOpen",function(){return _this._isOpen;});_defineProperty(this,"open",function(){_this._isOpen=true;});_defineProperty(this,"close",function(){_this._isOpen=false;});this.groupKey=groupKey;this._isOpen=isOpen;});
+;// ./src/platforms/react/components/radio/RadioGroup.tsx
+var RadioGroup_excluded=["model","attr","value","onSetValue"];function RadioGroup(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,RadioGroup_excluded);var _useInputGroup=useInputGroup(model,attr),value=_useInputGroup.value,getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,getItemOpen=_useInputGroup.getItemOpen,open=_useInputGroup.open,close=_useInputGroup.close;var _onChangeRadio=function _onChangeRadio(checked,value){if(checked){open===null||open===void 0||open(value);}else{close===null||close===void 0||close(value);}var newVal=getValue();onSetValue===null||onSetValue===void 0||onSetValue(newVal);};var _onChangeGroup=function _onChangeGroup(e){var _e$target=e.target,checked=_e$target.checked,value=_e$target.value;_onChangeRadio(checked,value);};var targetValue=typeof propValue=="string"||typeof propValue=="number"?"".concat(propValue):Array.isArray(propValue)?propValue[0]:propValue;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio.Group,_extends({defaultValue:targetValue,value:targetValue,options:itemList,onChange:_onChangeGroup},resetProps));}
+;// ./src/platforms/react/components/checkbox/Checkbox.tsx
+var Checkbox_excluded=["value","attr","model","children"];function Checkbox(props){var value=props.value,attr=props.attr,model=props.model,_props$children=props.children,children=_props$children===void 0?"":_props$children,reset=_objectWithoutProperties(props,Checkbox_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({checked:!!value},reset),children);}
+;// ./src/platforms/react/components/checkbox/CheckboxGroup.tsx
+function CheckboxGroup(props){var model=props.model,attr=props.attr,checkboxProps=props.checkboxProps,propValue=props.value,onSetValue=props.onSetValue,_props$tag=props.tag,Tag=_props$tag===void 0?external_react_namespaceObject["default"].Fragment:_props$tag;var _useInputGroup=useInputGroup(model,attr),getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,open=_useInputGroup.open,close=_useInputGroup.close;var _getModelValue=function _getModelValue(){if(!propValue){return[];}return typeof propValue=="string"?[propValue]:propValue;};var _changeCheckbox=function _changeCheckbox(_ref,value){var _model$validate;var target=_ref.target;var checked=target.checked;if(checked){open(value);}else{close(value);}var valueList=getValue();onSetValue===null||onSetValue===void 0||onSetValue(valueList);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);};var targetValue=_getModelValue();return/*#__PURE__*/external_react_namespaceObject["default"].createElement(Tag,null,itemList.map(function(_ref2){var value=_ref2.value,label=_ref2.label,disabled=_ref2.disabled;var checked=targetValue.find(function(v){return v==value;});return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({key:value},checkboxProps,{disabled:disabled,checked:checked,onChange:function onChange(e){_changeCheckbox(e,value);}}),label);}));}
+;// ./src/platforms/react/utils/formatSelectOptions.ts
+function formatSelectOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes=dictOption.excludes,excludes=_dictOption$excludes===void 0?[]:_dictOption$excludes;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){// const disabled = excludes.indexOf(keyItem) > -1
+var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],value:keyItem,disabled:disabled};total.push(option);return total;},[]);}function formatDropDownOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes2=dictOption.excludes,excludes=_dictOption$excludes2===void 0?[]:_dictOption$excludes2;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],key:keyItem,disabled:disabled};total.push(option);return total;},[]);}
+;// ./src/platforms/react/components/select/Select.tsx
+var Select_excluded=["model","attr","value","onSetValue","formatOptions"];function Select(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,resetProps=_objectWithoutProperties(props,Select_excluded);function _onChange(e){var _model$validate;onSetValue===null||onSetValue===void 0||onSetValue(e);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var dictOptions=get_default()(model.rules(),[attr,"dict"],{});var maxCount=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?dictOptions.max:undefined;var mode=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?"multiple":undefined;var _options=formatSelectOptions(model,attr);var _value=value;if(mode===undefined){_value=_options.find(function(o){return o.value==_value;});}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({allowClear:true,mode:mode,defaultValue:value,value:_value,options:_options,maxCount:maxCount,onChange:_onChange},resetProps));}
+;// ./node_modules/@ant-design/icons-svg/es/asn/CaretDownOutlined.js
+// This icon file is generated automatically.
+var CaretDownOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "outlined" };
+/* harmony default export */ const asn_CaretDownOutlined = (CaretDownOutlined);
+
+;// ./node_modules/@ant-design/fast-color/es/FastColor.js
+
+const round = Math.round;
+
+/**
+ * Support format, alpha unit will check the % mark:
+ * - rgba(102, 204, 255, .5)      -> [102, 204, 255, 0.5]
+ * - rgb(102 204 255 / .5)        -> [102, 204, 255, 0.5]
+ * - rgb(100%, 50%, 0% / 50%)     -> [255, 128, 0, 0.5]
+ * - hsl(270, 60, 40, .5)         -> [270, 60, 40, 0.5]
+ * - hsl(270deg 60% 40% / 50%)   -> [270, 60, 40, 0.5]
+ *
+ * When `base` is provided, the percentage value will be divided by `base`.
+ */
+function splitColorStr(str, parseNum) {
+  const match = str
+  // Remove str before `(`
+  .replace(/^[^(]*\((.*)/, '$1')
+  // Remove str after `)`
+  .replace(/\).*/, '').match(/\d*\.?\d+%?/g) || [];
+  const numList = match.map(item => parseFloat(item));
+  for (let i = 0; i < 3; i += 1) {
+    numList[i] = parseNum(numList[i] || 0, match[i] || '', i);
+  }
+
+  // For alpha. 50% should be 0.5
+  if (match[3]) {
+    numList[3] = match[3].includes('%') ? numList[3] / 100 : numList[3];
+  } else {
+    // By default, alpha is 1
+    numList[3] = 1;
+  }
+  return numList;
+}
+const parseHSVorHSL = (num, _, index) => index === 0 ? num : num / 100;
+
+/** round and limit number to integer between 0-255 */
+function limitRange(value, max) {
+  const mergedMax = max || 255;
+  if (value > mergedMax) {
+    return mergedMax;
+  }
+  if (value < 0) {
+    return 0;
+  }
+  return value;
+}
+class FastColor {
+  constructor(input) {
+    /**
+     * All FastColor objects are valid. So isValid is always true. This property is kept to be compatible with TinyColor.
+     */
+    _defineProperty(this, "isValid", true);
+    /**
+     * Red, R in RGB
+     */
+    _defineProperty(this, "r", 0);
+    /**
+     * Green, G in RGB
+     */
+    _defineProperty(this, "g", 0);
+    /**
+     * Blue, B in RGB
+     */
+    _defineProperty(this, "b", 0);
+    /**
+     * Alpha/Opacity, A in RGBA/HSLA
+     */
+    _defineProperty(this, "a", 1);
+    // HSV privates
+    _defineProperty(this, "_h", void 0);
+    _defineProperty(this, "_s", void 0);
+    _defineProperty(this, "_l", void 0);
+    _defineProperty(this, "_v", void 0);
+    // intermediate variables to calculate HSL/HSV
+    _defineProperty(this, "_max", void 0);
+    _defineProperty(this, "_min", void 0);
+    _defineProperty(this, "_brightness", void 0);
+    /**
+     * Always check 3 char in the object to determine the format.
+     * We not use function in check to save bundle size.
+     * e.g. 'rgb' -> { r: 0, g: 0, b: 0 }.
+     */
+    function matchFormat(str) {
+      return str[0] in input && str[1] in input && str[2] in input;
+    }
+    if (!input) {
+      // Do nothing since already initialized
+    } else if (typeof input === 'string') {
+      const trimStr = input.trim();
+      function matchPrefix(prefix) {
+        return trimStr.startsWith(prefix);
+      }
+      if (/^#?[A-F\d]{3,8}$/i.test(trimStr)) {
+        this.fromHexString(trimStr);
+      } else if (matchPrefix('rgb')) {
+        this.fromRgbString(trimStr);
+      } else if (matchPrefix('hsl')) {
+        this.fromHslString(trimStr);
+      } else if (matchPrefix('hsv') || matchPrefix('hsb')) {
+        this.fromHsvString(trimStr);
+      }
+    } else if (input instanceof FastColor) {
+      this.r = input.r;
+      this.g = input.g;
+      this.b = input.b;
+      this.a = input.a;
+      this._h = input._h;
+      this._s = input._s;
+      this._l = input._l;
+      this._v = input._v;
+    } else if (matchFormat('rgb')) {
+      this.r = limitRange(input.r);
+      this.g = limitRange(input.g);
+      this.b = limitRange(input.b);
+      this.a = typeof input.a === 'number' ? limitRange(input.a, 1) : 1;
+    } else if (matchFormat('hsl')) {
+      this.fromHsl(input);
+    } else if (matchFormat('hsv')) {
+      this.fromHsv(input);
+    } else {
+      throw new Error('@ant-design/fast-color: unsupported input ' + JSON.stringify(input));
+    }
+  }
+
+  // ======================= Setter =======================
+
+  setR(value) {
+    return this._sc('r', value);
+  }
+  setG(value) {
+    return this._sc('g', value);
+  }
+  setB(value) {
+    return this._sc('b', value);
+  }
+  setA(value) {
+    return this._sc('a', value, 1);
+  }
+  setHue(value) {
+    const hsv = this.toHsv();
+    hsv.h = value;
+    return this._c(hsv);
+  }
+
+  // ======================= Getter =======================
+  /**
+   * Returns the perceived luminance of a color, from 0-1.
+   * @see http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+   */
+  getLuminance() {
+    function adjustGamma(raw) {
+      const val = raw / 255;
+      return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+    }
+    const R = adjustGamma(this.r);
+    const G = adjustGamma(this.g);
+    const B = adjustGamma(this.b);
+    return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+  }
+  getHue() {
+    if (typeof this._h === 'undefined') {
+      const delta = this.getMax() - this.getMin();
+      if (delta === 0) {
+        this._h = 0;
+      } else {
+        this._h = round(60 * (this.r === this.getMax() ? (this.g - this.b) / delta + (this.g < this.b ? 6 : 0) : this.g === this.getMax() ? (this.b - this.r) / delta + 2 : (this.r - this.g) / delta + 4));
+      }
+    }
+    return this._h;
+  }
+  getSaturation() {
+    if (typeof this._s === 'undefined') {
+      const delta = this.getMax() - this.getMin();
+      if (delta === 0) {
+        this._s = 0;
+      } else {
+        this._s = delta / this.getMax();
+      }
+    }
+    return this._s;
+  }
+  getLightness() {
+    if (typeof this._l === 'undefined') {
+      this._l = (this.getMax() + this.getMin()) / 510;
+    }
+    return this._l;
+  }
+  getValue() {
+    if (typeof this._v === 'undefined') {
+      this._v = this.getMax() / 255;
+    }
+    return this._v;
+  }
+
+  /**
+   * Returns the perceived brightness of the color, from 0-255.
+   * Note: this is not the b of HSB
+   * @see http://www.w3.org/TR/AERT#color-contrast
+   */
+  getBrightness() {
+    if (typeof this._brightness === 'undefined') {
+      this._brightness = (this.r * 299 + this.g * 587 + this.b * 114) / 1000;
+    }
+    return this._brightness;
+  }
+
+  // ======================== Func ========================
+
+  darken(amount = 10) {
+    const h = this.getHue();
+    const s = this.getSaturation();
+    let l = this.getLightness() - amount / 100;
+    if (l < 0) {
+      l = 0;
+    }
+    return this._c({
+      h,
+      s,
+      l,
+      a: this.a
+    });
+  }
+  lighten(amount = 10) {
+    const h = this.getHue();
+    const s = this.getSaturation();
+    let l = this.getLightness() + amount / 100;
+    if (l > 1) {
+      l = 1;
+    }
+    return this._c({
+      h,
+      s,
+      l,
+      a: this.a
+    });
+  }
+
+  /**
+   * Mix the current color a given amount with another color, from 0 to 100.
+   * 0 means no mixing (return current color).
+   */
+  mix(input, amount = 50) {
+    const color = this._c(input);
+    const p = amount / 100;
+    const calc = key => (color[key] - this[key]) * p + this[key];
+    const rgba = {
+      r: round(calc('r')),
+      g: round(calc('g')),
+      b: round(calc('b')),
+      a: round(calc('a') * 100) / 100
+    };
+    return this._c(rgba);
+  }
+
+  /**
+   * Mix the color with pure white, from 0 to 100.
+   * Providing 0 will do nothing, providing 100 will always return white.
+   */
+  tint(amount = 10) {
+    return this.mix({
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 1
+    }, amount);
+  }
+
+  /**
+   * Mix the color with pure black, from 0 to 100.
+   * Providing 0 will do nothing, providing 100 will always return black.
+   */
+  shade(amount = 10) {
+    return this.mix({
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 1
+    }, amount);
+  }
+  onBackground(background) {
+    const bg = this._c(background);
+    const alpha = this.a + bg.a * (1 - this.a);
+    const calc = key => {
+      return round((this[key] * this.a + bg[key] * bg.a * (1 - this.a)) / alpha);
+    };
+    return this._c({
+      r: calc('r'),
+      g: calc('g'),
+      b: calc('b'),
+      a: alpha
+    });
+  }
+
+  // ======================= Status =======================
+  isDark() {
+    return this.getBrightness() < 128;
+  }
+  isLight() {
+    return this.getBrightness() >= 128;
+  }
+
+  // ======================== MISC ========================
+  equals(other) {
+    return this.r === other.r && this.g === other.g && this.b === other.b && this.a === other.a;
+  }
+  clone() {
+    return this._c(this);
+  }
+
+  // ======================= Format =======================
+  toHexString() {
+    let hex = '#';
+    const rHex = (this.r || 0).toString(16);
+    hex += rHex.length === 2 ? rHex : '0' + rHex;
+    const gHex = (this.g || 0).toString(16);
+    hex += gHex.length === 2 ? gHex : '0' + gHex;
+    const bHex = (this.b || 0).toString(16);
+    hex += bHex.length === 2 ? bHex : '0' + bHex;
+    if (typeof this.a === 'number' && this.a >= 0 && this.a < 1) {
+      const aHex = round(this.a * 255).toString(16);
+      hex += aHex.length === 2 ? aHex : '0' + aHex;
+    }
+    return hex;
+  }
+
+  /** CSS support color pattern */
+  toHsl() {
+    return {
+      h: this.getHue(),
+      s: this.getSaturation(),
+      l: this.getLightness(),
+      a: this.a
+    };
+  }
+
+  /** CSS support color pattern */
+  toHslString() {
+    const h = this.getHue();
+    const s = round(this.getSaturation() * 100);
+    const l = round(this.getLightness() * 100);
+    return this.a !== 1 ? `hsla(${h},${s}%,${l}%,${this.a})` : `hsl(${h},${s}%,${l}%)`;
+  }
+
+  /** Same as toHsb */
+  toHsv() {
+    return {
+      h: this.getHue(),
+      s: this.getSaturation(),
+      v: this.getValue(),
+      a: this.a
+    };
+  }
+  toRgb() {
+    return {
+      r: this.r,
+      g: this.g,
+      b: this.b,
+      a: this.a
+    };
+  }
+  toRgbString() {
+    return this.a !== 1 ? `rgba(${this.r},${this.g},${this.b},${this.a})` : `rgb(${this.r},${this.g},${this.b})`;
+  }
+  toString() {
+    return this.toRgbString();
+  }
+
+  // ====================== Privates ======================
+  /** Return a new FastColor object with one channel changed */
+  _sc(rgb, value, max) {
+    const clone = this.clone();
+    clone[rgb] = limitRange(value, max);
+    return clone;
+  }
+  _c(input) {
+    return new this.constructor(input);
+  }
+  getMax() {
+    if (typeof this._max === 'undefined') {
+      this._max = Math.max(this.r, this.g, this.b);
+    }
+    return this._max;
+  }
+  getMin() {
+    if (typeof this._min === 'undefined') {
+      this._min = Math.min(this.r, this.g, this.b);
+    }
+    return this._min;
+  }
+  fromHexString(trimStr) {
+    const withoutPrefix = trimStr.replace('#', '');
+    function connectNum(index1, index2) {
+      return parseInt(withoutPrefix[index1] + withoutPrefix[index2 || index1], 16);
+    }
+    if (withoutPrefix.length < 6) {
+      // #rgb or #rgba
+      this.r = connectNum(0);
+      this.g = connectNum(1);
+      this.b = connectNum(2);
+      this.a = withoutPrefix[3] ? connectNum(3) / 255 : 1;
+    } else {
+      // #rrggbb or #rrggbbaa
+      this.r = connectNum(0, 1);
+      this.g = connectNum(2, 3);
+      this.b = connectNum(4, 5);
+      this.a = withoutPrefix[6] ? connectNum(6, 7) / 255 : 1;
+    }
+  }
+  fromHsl({
+    h,
+    s,
+    l,
+    a
+  }) {
+    this._h = h % 360;
+    this._s = s;
+    this._l = l;
+    this.a = typeof a === 'number' ? a : 1;
+    if (s <= 0) {
+      const rgb = round(l * 255);
+      this.r = rgb;
+      this.g = rgb;
+      this.b = rgb;
+    }
+    let r = 0,
+      g = 0,
+      b = 0;
+    const huePrime = h / 60;
+    const chroma = (1 - Math.abs(2 * l - 1)) * s;
+    const secondComponent = chroma * (1 - Math.abs(huePrime % 2 - 1));
+    if (huePrime >= 0 && huePrime < 1) {
+      r = chroma;
+      g = secondComponent;
+    } else if (huePrime >= 1 && huePrime < 2) {
+      r = secondComponent;
+      g = chroma;
+    } else if (huePrime >= 2 && huePrime < 3) {
+      g = chroma;
+      b = secondComponent;
+    } else if (huePrime >= 3 && huePrime < 4) {
+      g = secondComponent;
+      b = chroma;
+    } else if (huePrime >= 4 && huePrime < 5) {
+      r = secondComponent;
+      b = chroma;
+    } else if (huePrime >= 5 && huePrime < 6) {
+      r = chroma;
+      b = secondComponent;
+    }
+    const lightnessModification = l - chroma / 2;
+    this.r = round((r + lightnessModification) * 255);
+    this.g = round((g + lightnessModification) * 255);
+    this.b = round((b + lightnessModification) * 255);
+  }
+  fromHsv({
+    h,
+    s,
+    v,
+    a
+  }) {
+    this._h = h % 360;
+    this._s = s;
+    this._v = v;
+    this.a = typeof a === 'number' ? a : 1;
+    const vv = round(v * 255);
+    this.r = vv;
+    this.g = vv;
+    this.b = vv;
+    if (s <= 0) {
+      return;
+    }
+    const hh = h / 60;
+    const i = Math.floor(hh);
+    const ff = hh - i;
+    const p = round(v * (1.0 - s) * 255);
+    const q = round(v * (1.0 - s * ff) * 255);
+    const t = round(v * (1.0 - s * (1.0 - ff)) * 255);
+    switch (i) {
+      case 0:
+        this.g = t;
+        this.b = p;
+        break;
+      case 1:
+        this.r = q;
+        this.b = p;
+        break;
+      case 2:
+        this.r = p;
+        this.b = t;
+        break;
+      case 3:
+        this.r = p;
+        this.g = q;
+        break;
+      case 4:
+        this.r = t;
+        this.g = p;
+        break;
+      case 5:
+      default:
+        this.g = p;
+        this.b = q;
+        break;
+    }
+  }
+  fromHsvString(trimStr) {
+    const cells = splitColorStr(trimStr, parseHSVorHSL);
+    this.fromHsv({
+      h: cells[0],
+      s: cells[1],
+      v: cells[2],
+      a: cells[3]
+    });
+  }
+  fromHslString(trimStr) {
+    const cells = splitColorStr(trimStr, parseHSVorHSL);
+    this.fromHsl({
+      h: cells[0],
+      s: cells[1],
+      l: cells[2],
+      a: cells[3]
+    });
+  }
+  fromRgbString(trimStr) {
+    const cells = splitColorStr(trimStr, (num, txt) =>
+    // Convert percentage to number. e.g. 50% -> 128
+    txt.includes('%') ? round(num / 100 * 255) : num);
+    this.r = cells[0];
+    this.g = cells[1];
+    this.b = cells[2];
+    this.a = cells[3];
+  }
+}
+;// ./node_modules/@ant-design/fast-color/es/index.js
+
+
+;// ./node_modules/@ant-design/colors/es/generate.js
+
+var hueStep = 2; // 色相阶梯
+var saturationStep = 0.16; // 饱和度阶梯，浅色部分
+var saturationStep2 = 0.05; // 饱和度阶梯，深色部分
+var brightnessStep1 = 0.05; // 亮度阶梯，浅色部分
+var brightnessStep2 = 0.15; // 亮度阶梯，深色部分
+var lightColorCount = 5; // 浅色数量，主色上
+var darkColorCount = 4; // 深色数量，主色下
+
+// 暗色主题颜色映射关系表
+var darkColorMap = [{
+  index: 7,
+  amount: 15
+}, {
+  index: 6,
+  amount: 25
+}, {
+  index: 5,
+  amount: 30
+}, {
+  index: 5,
+  amount: 45
+}, {
+  index: 5,
+  amount: 65
+}, {
+  index: 5,
+  amount: 85
+}, {
+  index: 4,
+  amount: 90
+}, {
+  index: 3,
+  amount: 95
+}, {
+  index: 2,
+  amount: 97
+}, {
+  index: 1,
+  amount: 98
+}];
+function getHue(hsv, i, light) {
+  var hue;
+  // 根据色相不同，色相转向不同
+  if (Math.round(hsv.h) >= 60 && Math.round(hsv.h) <= 240) {
+    hue = light ? Math.round(hsv.h) - hueStep * i : Math.round(hsv.h) + hueStep * i;
+  } else {
+    hue = light ? Math.round(hsv.h) + hueStep * i : Math.round(hsv.h) - hueStep * i;
+  }
+  if (hue < 0) {
+    hue += 360;
+  } else if (hue >= 360) {
+    hue -= 360;
+  }
+  return hue;
+}
+function getSaturation(hsv, i, light) {
+  // grey color don't change saturation
+  if (hsv.h === 0 && hsv.s === 0) {
+    return hsv.s;
+  }
+  var saturation;
+  if (light) {
+    saturation = hsv.s - saturationStep * i;
+  } else if (i === darkColorCount) {
+    saturation = hsv.s + saturationStep;
+  } else {
+    saturation = hsv.s + saturationStep2 * i;
+  }
+  // 边界值修正
+  if (saturation > 1) {
+    saturation = 1;
+  }
+  // 第一格的 s 限制在 0.06-0.1 之间
+  if (light && i === lightColorCount && saturation > 0.1) {
+    saturation = 0.1;
+  }
+  if (saturation < 0.06) {
+    saturation = 0.06;
+  }
+  return Math.round(saturation * 100) / 100;
+}
+function getValue(hsv, i, light) {
+  var value;
+  if (light) {
+    value = hsv.v + brightnessStep1 * i;
+  } else {
+    value = hsv.v - brightnessStep2 * i;
+  }
+  // Clamp value between 0 and 1
+  value = Math.max(0, Math.min(1, value));
+  return Math.round(value * 100) / 100;
+}
+function generate(color) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var patterns = [];
+  var pColor = new FastColor(color);
+  var hsv = pColor.toHsv();
+  for (var i = lightColorCount; i > 0; i -= 1) {
+    var c = new FastColor({
+      h: getHue(hsv, i, true),
+      s: getSaturation(hsv, i, true),
+      v: getValue(hsv, i, true)
+    });
+    patterns.push(c);
+  }
+  patterns.push(pColor);
+  for (var _i = 1; _i <= darkColorCount; _i += 1) {
+    var _c = new FastColor({
+      h: getHue(hsv, _i),
+      s: getSaturation(hsv, _i),
+      v: getValue(hsv, _i)
+    });
+    patterns.push(_c);
+  }
+
+  // dark theme patterns
+  if (opts.theme === 'dark') {
+    return darkColorMap.map(function (_ref) {
+      var index = _ref.index,
+        amount = _ref.amount;
+      return new FastColor(opts.backgroundColor || '#141414').mix(patterns[index], amount).toHexString();
+    });
+  }
+  return patterns.map(function (c) {
+    return c.toHexString();
+  });
+}
+;// ./node_modules/@ant-design/colors/es/presets.js
+// Generated by script. Do NOT modify!
+
+var presetPrimaryColors = {
+  "red": "#F5222D",
+  "volcano": "#FA541C",
+  "orange": "#FA8C16",
+  "gold": "#FAAD14",
+  "yellow": "#FADB14",
+  "lime": "#A0D911",
+  "green": "#52C41A",
+  "cyan": "#13C2C2",
+  "blue": "#1677FF",
+  "geekblue": "#2F54EB",
+  "purple": "#722ED1",
+  "magenta": "#EB2F96",
+  "grey": "#666666"
+};
+var red = ["#fff1f0", "#ffccc7", "#ffa39e", "#ff7875", "#ff4d4f", "#f5222d", "#cf1322", "#a8071a", "#820014", "#5c0011"];
+red.primary = red[5];
+var volcano = ["#fff2e8", "#ffd8bf", "#ffbb96", "#ff9c6e", "#ff7a45", "#fa541c", "#d4380d", "#ad2102", "#871400", "#610b00"];
+volcano.primary = volcano[5];
+var orange = ["#fff7e6", "#ffe7ba", "#ffd591", "#ffc069", "#ffa940", "#fa8c16", "#d46b08", "#ad4e00", "#873800", "#612500"];
+orange.primary = orange[5];
+var gold = ["#fffbe6", "#fff1b8", "#ffe58f", "#ffd666", "#ffc53d", "#faad14", "#d48806", "#ad6800", "#874d00", "#613400"];
+gold.primary = gold[5];
+var yellow = ["#feffe6", "#ffffb8", "#fffb8f", "#fff566", "#ffec3d", "#fadb14", "#d4b106", "#ad8b00", "#876800", "#614700"];
+yellow.primary = yellow[5];
+var lime = ["#fcffe6", "#f4ffb8", "#eaff8f", "#d3f261", "#bae637", "#a0d911", "#7cb305", "#5b8c00", "#3f6600", "#254000"];
+lime.primary = lime[5];
+var green = ["#f6ffed", "#d9f7be", "#b7eb8f", "#95de64", "#73d13d", "#52c41a", "#389e0d", "#237804", "#135200", "#092b00"];
+green.primary = green[5];
+var cyan = ["#e6fffb", "#b5f5ec", "#87e8de", "#5cdbd3", "#36cfc9", "#13c2c2", "#08979c", "#006d75", "#00474f", "#002329"];
+cyan.primary = cyan[5];
+var blue = ["#e6f4ff", "#bae0ff", "#91caff", "#69b1ff", "#4096ff", "#1677ff", "#0958d9", "#003eb3", "#002c8c", "#001d66"];
+blue.primary = blue[5];
+var geekblue = ["#f0f5ff", "#d6e4ff", "#adc6ff", "#85a5ff", "#597ef7", "#2f54eb", "#1d39c4", "#10239e", "#061178", "#030852"];
+geekblue.primary = geekblue[5];
+var purple = ["#f9f0ff", "#efdbff", "#d3adf7", "#b37feb", "#9254de", "#722ed1", "#531dab", "#391085", "#22075e", "#120338"];
+purple.primary = purple[5];
+var magenta = ["#fff0f6", "#ffd6e7", "#ffadd2", "#ff85c0", "#f759ab", "#eb2f96", "#c41d7f", "#9e1068", "#780650", "#520339"];
+magenta.primary = magenta[5];
+var grey = ["#a6a6a6", "#999999", "#8c8c8c", "#808080", "#737373", "#666666", "#404040", "#1a1a1a", "#000000", "#000000"];
+grey.primary = grey[5];
+var gray = (/* unused pure expression or super */ null && (grey));
+var presetPalettes = {
+  red: red,
+  volcano: volcano,
+  orange: orange,
+  gold: gold,
+  yellow: yellow,
+  lime: lime,
+  green: green,
+  cyan: cyan,
+  blue: blue,
+  geekblue: geekblue,
+  purple: purple,
+  magenta: magenta,
+  grey: grey
+};
+var redDark = ["#2a1215", "#431418", "#58181c", "#791a1f", "#a61d24", "#d32029", "#e84749", "#f37370", "#f89f9a", "#fac8c3"];
+redDark.primary = redDark[5];
+var volcanoDark = ["#2b1611", "#441d12", "#592716", "#7c3118", "#aa3e19", "#d84a1b", "#e87040", "#f3956a", "#f8b692", "#fad4bc"];
+volcanoDark.primary = volcanoDark[5];
+var orangeDark = ["#2b1d11", "#442a11", "#593815", "#7c4a15", "#aa6215", "#d87a16", "#e89a3c", "#f3b765", "#f8cf8d", "#fae3b7"];
+orangeDark.primary = orangeDark[5];
+var goldDark = ["#2b2111", "#443111", "#594214", "#7c5914", "#aa7714", "#d89614", "#e8b339", "#f3cc62", "#f8df8b", "#faedb5"];
+goldDark.primary = goldDark[5];
+var yellowDark = ["#2b2611", "#443b11", "#595014", "#7c6e14", "#aa9514", "#d8bd14", "#e8d639", "#f3ea62", "#f8f48b", "#fafab5"];
+yellowDark.primary = yellowDark[5];
+var limeDark = ["#1f2611", "#2e3c10", "#3e4f13", "#536d13", "#6f9412", "#8bbb11", "#a9d134", "#c9e75d", "#e4f88b", "#f0fab5"];
+limeDark.primary = limeDark[5];
+var greenDark = ["#162312", "#1d3712", "#274916", "#306317", "#3c8618", "#49aa19", "#6abe39", "#8fd460", "#b2e58b", "#d5f2bb"];
+greenDark.primary = greenDark[5];
+var cyanDark = ["#112123", "#113536", "#144848", "#146262", "#138585", "#13a8a8", "#33bcb7", "#58d1c9", "#84e2d8", "#b2f1e8"];
+cyanDark.primary = cyanDark[5];
+var blueDark = ["#111a2c", "#112545", "#15325b", "#15417e", "#1554ad", "#1668dc", "#3c89e8", "#65a9f3", "#8dc5f8", "#b7dcfa"];
+blueDark.primary = blueDark[5];
+var geekblueDark = ["#131629", "#161d40", "#1c2755", "#203175", "#263ea0", "#2b4acb", "#5273e0", "#7f9ef3", "#a8c1f8", "#d2e0fa"];
+geekblueDark.primary = geekblueDark[5];
+var purpleDark = ["#1a1325", "#24163a", "#301c4d", "#3e2069", "#51258f", "#642ab5", "#854eca", "#ab7ae0", "#cda8f0", "#ebd7fa"];
+purpleDark.primary = purpleDark[5];
+var magentaDark = ["#291321", "#40162f", "#551c3b", "#75204f", "#a02669", "#cb2b83", "#e0529c", "#f37fb7", "#f8a8cc", "#fad2e3"];
+magentaDark.primary = magentaDark[5];
+var greyDark = ["#151515", "#1f1f1f", "#2d2d2d", "#393939", "#494949", "#5a5a5a", "#6a6a6a", "#7b7b7b", "#888888", "#969696"];
+greyDark.primary = greyDark[5];
+var presetDarkPalettes = {
+  red: redDark,
+  volcano: volcanoDark,
+  orange: orangeDark,
+  gold: goldDark,
+  yellow: yellowDark,
+  lime: limeDark,
+  green: greenDark,
+  cyan: cyanDark,
+  blue: blueDark,
+  geekblue: geekblueDark,
+  purple: purpleDark,
+  magenta: magentaDark,
+  grey: greyDark
+};
+;// ./node_modules/@ant-design/colors/es/index.js
+
+
+
+;// ./node_modules/@ant-design/icons/es/components/Context.js
+
+var IconContext = /*#__PURE__*/(0,external_react_namespaceObject.createContext)({});
+/* harmony default export */ const Context = (IconContext);
+;// ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+function objectSpread2_ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? objectSpread2_ownKeys(Object(t), !0).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : objectSpread2_ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+
+;// ./node_modules/rc-util/es/Dom/canUseDom.js
+function canUseDom() {
+  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+}
+;// ./node_modules/rc-util/es/Dom/contains.js
+function contains(root, n) {
+  if (!root) {
+    return false;
+  }
+
+  // Use native if support
+  if (root.contains) {
+    return root.contains(n);
+  }
+
+  // `document.contains` not support with IE11
+  var node = n;
+  while (node) {
+    if (node === root) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
+;// ./node_modules/rc-util/es/Dom/dynamicCSS.js
+
+
+
+var APPEND_ORDER = 'data-rc-order';
+var APPEND_PRIORITY = 'data-rc-priority';
+var MARK_KEY = "rc-util-key";
+var containerCache = new Map();
+function getMark() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    mark = _ref.mark;
+  if (mark) {
+    return mark.startsWith('data-') ? mark : "data-".concat(mark);
+  }
+  return MARK_KEY;
+}
+function getContainer(option) {
+  if (option.attachTo) {
+    return option.attachTo;
+  }
+  var head = document.querySelector('head');
+  return head || document.body;
+}
+function getOrder(prepend) {
+  if (prepend === 'queue') {
+    return 'prependQueue';
+  }
+  return prepend ? 'prepend' : 'append';
+}
+
+/**
+ * Find style which inject by rc-util
+ */
+function findStyles(container) {
+  return Array.from((containerCache.get(container) || container).children).filter(function (node) {
+    return node.tagName === 'STYLE';
+  });
+}
+function injectCSS(css) {
+  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (!canUseDom()) {
+    return null;
+  }
+  var csp = option.csp,
+    prepend = option.prepend,
+    _option$priority = option.priority,
+    priority = _option$priority === void 0 ? 0 : _option$priority;
+  var mergedOrder = getOrder(prepend);
+  var isPrependQueue = mergedOrder === 'prependQueue';
+  var styleNode = document.createElement('style');
+  styleNode.setAttribute(APPEND_ORDER, mergedOrder);
+  if (isPrependQueue && priority) {
+    styleNode.setAttribute(APPEND_PRIORITY, "".concat(priority));
+  }
+  if (csp !== null && csp !== void 0 && csp.nonce) {
+    styleNode.nonce = csp === null || csp === void 0 ? void 0 : csp.nonce;
+  }
+  styleNode.innerHTML = css;
+  var container = getContainer(option);
+  var firstChild = container.firstChild;
+  if (prepend) {
+    // If is queue `prepend`, it will prepend first style and then append rest style
+    if (isPrependQueue) {
+      var existStyle = (option.styles || findStyles(container)).filter(function (node) {
+        // Ignore style which not injected by rc-util with prepend
+        if (!['prepend', 'prependQueue'].includes(node.getAttribute(APPEND_ORDER))) {
+          return false;
+        }
+
+        // Ignore style which priority less then new style
+        var nodePriority = Number(node.getAttribute(APPEND_PRIORITY) || 0);
+        return priority >= nodePriority;
+      });
+      if (existStyle.length) {
+        container.insertBefore(styleNode, existStyle[existStyle.length - 1].nextSibling);
+        return styleNode;
+      }
+    }
+
+    // Use `insertBefore` as `prepend`
+    container.insertBefore(styleNode, firstChild);
+  } else {
+    container.appendChild(styleNode);
+  }
+  return styleNode;
+}
+function findExistNode(key) {
+  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var container = getContainer(option);
+  return (option.styles || findStyles(container)).find(function (node) {
+    return node.getAttribute(getMark(option)) === key;
+  });
+}
+function removeCSS(key) {
+  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var existNode = findExistNode(key, option);
+  if (existNode) {
+    var container = getContainer(option);
+    container.removeChild(existNode);
+  }
+}
+
+/**
+ * qiankun will inject `appendChild` to insert into other
+ */
+function syncRealContainer(container, option) {
+  var cachedRealContainer = containerCache.get(container);
+
+  // Find real container when not cached or cached container removed
+  if (!cachedRealContainer || !contains(document, cachedRealContainer)) {
+    var placeholderStyle = injectCSS('', option);
+    var parentNode = placeholderStyle.parentNode;
+    containerCache.set(container, parentNode);
+    container.removeChild(placeholderStyle);
+  }
+}
+
+/**
+ * manually clear container cache to avoid global cache in unit testes
+ */
+function clearContainerCache() {
+  containerCache.clear();
+}
+function updateCSS(css, key) {
+  var originOption = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var container = getContainer(originOption);
+  var styles = findStyles(container);
+  var option = _objectSpread2(_objectSpread2({}, originOption), {}, {
+    styles: styles
+  });
+
+  // Sync real parent
+  syncRealContainer(container, option);
+  var existNode = findExistNode(key, option);
+  if (existNode) {
+    var _option$csp, _option$csp2;
+    if ((_option$csp = option.csp) !== null && _option$csp !== void 0 && _option$csp.nonce && existNode.nonce !== ((_option$csp2 = option.csp) === null || _option$csp2 === void 0 ? void 0 : _option$csp2.nonce)) {
+      var _option$csp3;
+      existNode.nonce = (_option$csp3 = option.csp) === null || _option$csp3 === void 0 ? void 0 : _option$csp3.nonce;
+    }
+    if (existNode.innerHTML !== css) {
+      existNode.innerHTML = css;
+    }
+    return existNode;
+  }
+  var newNode = injectCSS(css, option);
+  newNode.setAttribute(getMark(option), key);
+  return newNode;
+}
+;// ./node_modules/rc-util/es/Dom/shadow.js
+function getRoot(ele) {
+  var _ele$getRootNode;
+  return ele === null || ele === void 0 || (_ele$getRootNode = ele.getRootNode) === null || _ele$getRootNode === void 0 ? void 0 : _ele$getRootNode.call(ele);
+}
+
+/**
+ * Check if is in shadowRoot
+ */
+function inShadow(ele) {
+  return getRoot(ele) instanceof ShadowRoot;
+}
+
+/**
+ * Return shadowRoot if possible
+ */
+function getShadowRoot(ele) {
+  return inShadow(ele) ? getRoot(ele) : null;
+}
+;// ./node_modules/rc-util/es/warning.js
+/* eslint-disable no-console */
+var warned = {};
+var preWarningFns = [];
+
+/**
+ * Pre warning enable you to parse content before console.error.
+ * Modify to null will prevent warning.
+ */
+var preMessage = function preMessage(fn) {
+  preWarningFns.push(fn);
+};
+
+/**
+ * Warning if condition not match.
+ * @param valid Condition
+ * @param message Warning message
+ * @example
+ * ```js
+ * warning(false, 'some error'); // print some error
+ * warning(true, 'some error'); // print nothing
+ * warning(1 === 2, 'some error'); // print some error
+ * ```
+ */
+function warning(valid, message) {
+  if (false) { var finalMessage; }
+}
+
+/** @see Similar to {@link warning} */
+function note(valid, message) {
+  if (false) { var finalMessage; }
+}
+function resetWarned() {
+  warned = {};
+}
+function call(method, valid, message) {
+  if (!valid && !warned[message]) {
+    method(false, message);
+    warned[message] = true;
+  }
+}
+
+/** @see Same as {@link warning}, but only warn once for the same message */
+function warningOnce(valid, message) {
+  call(warning, valid, message);
+}
+
+/** @see Same as {@link warning}, but only warn once for the same message */
+function noteOnce(valid, message) {
+  call(note, valid, message);
+}
+warningOnce.preMessage = preMessage;
+warningOnce.resetWarned = resetWarned;
+warningOnce.noteOnce = noteOnce;
+/* harmony default export */ const es_warning = (warningOnce);
+;// ./node_modules/@ant-design/icons/es/utils.js
+
+
+
+
+
+
+
+
+function camelCase(input) {
+  return input.replace(/-(.)/g, function (match, g) {
+    return g.toUpperCase();
+  });
+}
+function utils_warning(valid, message) {
+  es_warning(valid, "[@ant-design/icons] ".concat(message));
+}
+function isIconDefinition(target) {
+  return _typeof(target) === 'object' && typeof target.name === 'string' && typeof target.theme === 'string' && (_typeof(target.icon) === 'object' || typeof target.icon === 'function');
+}
+function normalizeAttrs() {
+  var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return Object.keys(attrs).reduce(function (acc, key) {
+    var val = attrs[key];
+    switch (key) {
+      case 'class':
+        acc.className = val;
+        delete acc.class;
+        break;
+      default:
+        delete acc[key];
+        acc[camelCase(key)] = val;
+    }
+    return acc;
+  }, {});
+}
+function utils_generate(node, key, rootProps) {
+  if (!rootProps) {
+    return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2({
+      key: key
+    }, normalizeAttrs(node.attrs)), (node.children || []).map(function (child, index) {
+      return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
+    }));
+  }
+  return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2(_objectSpread2({
+    key: key
+  }, normalizeAttrs(node.attrs)), rootProps), (node.children || []).map(function (child, index) {
+    return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
+  }));
+}
+function getSecondaryColor(primaryColor) {
+  // choose the second color
+  return generate(primaryColor)[0];
+}
+function normalizeTwoToneColors(twoToneColor) {
+  if (!twoToneColor) {
+    return [];
+  }
+  return Array.isArray(twoToneColor) ? twoToneColor : [twoToneColor];
+}
+
+// These props make sure that the SVG behaviours like general text.
+// Reference: https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4
+var svgBaseProps = {
+  width: '1em',
+  height: '1em',
+  fill: 'currentColor',
+  'aria-hidden': 'true',
+  focusable: 'false'
+};
+var iconStyles = "\n.anticon {\n  display: inline-flex;\n  align-items: center;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n.anticon > * {\n  line-height: 1;\n}\n\n.anticon svg {\n  display: inline-block;\n}\n\n.anticon::before {\n  display: none;\n}\n\n.anticon .anticon-icon {\n  display: block;\n}\n\n.anticon[tabindex] {\n  cursor: pointer;\n}\n\n.anticon-spin::before,\n.anticon-spin {\n  display: inline-block;\n  -webkit-animation: loadingCircle 1s infinite linear;\n  animation: loadingCircle 1s infinite linear;\n}\n\n@-webkit-keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n";
+var useInsertStyles = function useInsertStyles(eleRef) {
+  var _useContext = (0,external_react_namespaceObject.useContext)(Context),
+    csp = _useContext.csp,
+    prefixCls = _useContext.prefixCls,
+    layer = _useContext.layer;
+  var mergedStyleStr = iconStyles;
+  if (prefixCls) {
+    mergedStyleStr = mergedStyleStr.replace(/anticon/g, prefixCls);
+  }
+  if (layer) {
+    mergedStyleStr = "@layer ".concat(layer, " {\n").concat(mergedStyleStr, "\n}");
+  }
+  (0,external_react_namespaceObject.useEffect)(function () {
+    var ele = eleRef.current;
+    var shadowRoot = getShadowRoot(ele);
+    updateCSS(mergedStyleStr, '@ant-design-icons', {
+      prepend: !layer,
+      csp: csp,
+      attachTo: shadowRoot
+    });
+  }, []);
+};
+;// ./node_modules/@ant-design/icons/es/components/IconBase.js
+
+
+var IconBase_excluded = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
+
+
+var twoToneColorPalette = {
+  primaryColor: '#333',
+  secondaryColor: '#E6E6E6',
+  calculated: false
+};
+function setTwoToneColors(_ref) {
+  var primaryColor = _ref.primaryColor,
+    secondaryColor = _ref.secondaryColor;
+  twoToneColorPalette.primaryColor = primaryColor;
+  twoToneColorPalette.secondaryColor = secondaryColor || getSecondaryColor(primaryColor);
+  twoToneColorPalette.calculated = !!secondaryColor;
+}
+function getTwoToneColors() {
+  return _objectSpread2({}, twoToneColorPalette);
+}
+var IconBase = function IconBase(props) {
+  var icon = props.icon,
+    className = props.className,
+    onClick = props.onClick,
+    style = props.style,
+    primaryColor = props.primaryColor,
+    secondaryColor = props.secondaryColor,
+    restProps = _objectWithoutProperties(props, IconBase_excluded);
+  var svgRef = external_react_namespaceObject.useRef();
+  var colors = twoToneColorPalette;
+  if (primaryColor) {
+    colors = {
+      primaryColor: primaryColor,
+      secondaryColor: secondaryColor || getSecondaryColor(primaryColor)
+    };
+  }
+  useInsertStyles(svgRef);
+  utils_warning(isIconDefinition(icon), "icon should be icon definiton, but got ".concat(icon));
+  if (!isIconDefinition(icon)) {
+    return null;
+  }
+  var target = icon;
+  if (target && typeof target.icon === 'function') {
+    target = _objectSpread2(_objectSpread2({}, target), {}, {
+      icon: target.icon(colors.primaryColor, colors.secondaryColor)
+    });
+  }
+  return utils_generate(target.icon, "svg-".concat(target.name), _objectSpread2(_objectSpread2({
+    className: className,
+    onClick: onClick,
+    style: style,
+    'data-icon': target.name,
+    width: '1em',
+    height: '1em',
+    fill: 'currentColor',
+    'aria-hidden': 'true'
+  }, restProps), {}, {
+    ref: svgRef
+  }));
+};
+IconBase.displayName = 'IconReact';
+IconBase.getTwoToneColors = getTwoToneColors;
+IconBase.setTwoToneColors = setTwoToneColors;
+/* harmony default export */ const components_IconBase = (IconBase);
+;// ./node_modules/@ant-design/icons/es/components/twoTonePrimaryColor.js
+
+
+
+function setTwoToneColor(twoToneColor) {
+  var _normalizeTwoToneColo = normalizeTwoToneColors(twoToneColor),
+    _normalizeTwoToneColo2 = _slicedToArray(_normalizeTwoToneColo, 2),
+    primaryColor = _normalizeTwoToneColo2[0],
+    secondaryColor = _normalizeTwoToneColo2[1];
+  return components_IconBase.setTwoToneColors({
+    primaryColor: primaryColor,
+    secondaryColor: secondaryColor
+  });
+}
+function getTwoToneColor() {
+  var colors = components_IconBase.getTwoToneColors();
+  if (!colors.calculated) {
+    return colors.primaryColor;
+  }
+  return [colors.primaryColor, colors.secondaryColor];
+}
+;// ./node_modules/@ant-design/icons/es/components/AntdIcon.js
+'use client';
+
+
+
+
+
+var AntdIcon_excluded = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
+
+
+
+
+
+
+
+// Initial setting
+// should move it to antd main repo?
+setTwoToneColor(blue.primary);
+
+// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34757#issuecomment-488848720
+
+var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (props, ref) {
+  var className = props.className,
+    icon = props.icon,
+    spin = props.spin,
+    rotate = props.rotate,
+    tabIndex = props.tabIndex,
+    onClick = props.onClick,
+    twoToneColor = props.twoToneColor,
+    restProps = _objectWithoutProperties(props, AntdIcon_excluded);
+  var _React$useContext = external_react_namespaceObject.useContext(Context),
+    _React$useContext$pre = _React$useContext.prefixCls,
+    prefixCls = _React$useContext$pre === void 0 ? 'anticon' : _React$useContext$pre,
+    rootClassName = _React$useContext.rootClassName;
+  var classString = classnames_default()(rootClassName, prefixCls, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-").concat(icon.name), !!icon.name), "".concat(prefixCls, "-spin"), !!spin || icon.name === 'loading'), className);
+  var iconTabIndex = tabIndex;
+  if (iconTabIndex === undefined && onClick) {
+    iconTabIndex = -1;
+  }
+  var svgStyle = rotate ? {
+    msTransform: "rotate(".concat(rotate, "deg)"),
+    transform: "rotate(".concat(rotate, "deg)")
+  } : undefined;
+  var _normalizeTwoToneColo = normalizeTwoToneColors(twoToneColor),
+    _normalizeTwoToneColo2 = _slicedToArray(_normalizeTwoToneColo, 2),
+    primaryColor = _normalizeTwoToneColo2[0],
+    secondaryColor = _normalizeTwoToneColo2[1];
+  return /*#__PURE__*/external_react_namespaceObject.createElement("span", _extends({
+    role: "img",
+    "aria-label": icon.name
+  }, restProps, {
+    ref: ref,
+    tabIndex: iconTabIndex,
+    onClick: onClick,
+    className: classString
+  }), /*#__PURE__*/external_react_namespaceObject.createElement(components_IconBase, {
+    icon: icon,
+    primaryColor: primaryColor,
+    secondaryColor: secondaryColor,
+    style: svgStyle
+  }));
+});
+Icon.displayName = 'AntdIcon';
+Icon.getTwoToneColor = getTwoToneColor;
+Icon.setTwoToneColor = setTwoToneColor;
+/* harmony default export */ const AntdIcon = (Icon);
+;// ./node_modules/@ant-design/icons/es/icons/CaretDownOutlined.js
+
+// GENERATE BY ./scripts/generate.ts
+// DON NOT EDIT IT MANUALLY
+
+
+
+
+var CaretDownOutlined_CaretDownOutlined = function CaretDownOutlined(props, ref) {
+  return /*#__PURE__*/external_react_namespaceObject.createElement(AntdIcon, _extends({}, props, {
+    ref: ref,
+    icon: asn_CaretDownOutlined
+  }));
+};
+
+/**![caret-down](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTg0MC40IDMwMEgxODMuNmMtMTkuNyAwLTMwLjcgMjAuOC0xOC41IDM1bDMyOC40IDM4MC44YzkuNCAxMC45IDI3LjUgMTAuOSAzNyAwTDg1OC45IDMzNWMxMi4yLTE0LjIgMS4yLTM1LTE4LjUtMzV6IiAvPjwvc3ZnPg==) */
+var RefIcon = /*#__PURE__*/external_react_namespaceObject.forwardRef(CaretDownOutlined_CaretDownOutlined);
+if (false) {}
+/* harmony default export */ const icons_CaretDownOutlined = (RefIcon);
+;// ./src/platforms/react/components/select/dropdown.module.less
+// extracted by mini-css-extract-plugin
+var dropdown_module_1 = "_module_dropdown_X2jF9";
+
+
+;// ./src/platforms/react/components/select/DropDown.tsx
+var DropDown_excluded=["model","attr","value","onSetValue","formatOptions","placeholder","Icon","menuProps","children"];function DropDown_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function DropDown_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?DropDown_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):DropDown_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function DropDown(props){var _items$find;var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,placeholder=props.placeholder,_props$Icon=props.Icon,Icon=_props$Icon===void 0?icons_CaretDownOutlined:_props$Icon,_props$menuProps=props.menuProps,menuProps=_props$menuProps===void 0?{}:_props$menuProps,_props$children=props.children,children=_props$children===void 0?null:_props$children,resetProps=_objectWithoutProperties(props,DropDown_excluded);function _onClick(e){var _model$validate;console.log("e:",e);onSetValue===null||onSetValue===void 0||onSetValue(e===null||e===void 0?void 0:e.key);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var items=formatDropDownOptions(model,attr);var currentLabel=(_items$find=items.find(function(i){return i.key==value;}))===null||_items$find===void 0?void 0:_items$find.label;var disabled=resetProps.disabled===true;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Dropdown,_extends({trigger:"click",menu:DropDown_objectSpread({items:items,onClick:_onClick,selectedKeys:["".concat(value||"")]},menuProps)},resetProps,{className:classnames_default()(dropdown_module_1,resetProps.className,{disabled:disabled})}),/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Space,null,children||currentLabel||placeholder||model.getAttributeHint(attr)||"请选择",/*#__PURE__*/external_react_namespaceObject["default"].createElement(Icon,null)));}
 ;// ./src/platforms/react/hooks/useLedapDataProvider.js
 function useLedapDataProvider(dpConfig){var dpRef=useRef(new WebDataProvider(dpConfig));var dp=dpRef.current;var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,models=_useDpEvent.models,isLoad=_useDpEvent.isLoad;// const [loading, setLoading] = useState(dp?.loading)
 // useEffect(() => {
@@ -12526,11 +12527,13 @@ function useLedapDataProvider(dpConfig){var dpRef=useRef(new WebDataProvider(dpC
 //     }
 // }, [])
 return{isLoading:loading,data:models,setParams:dp===null||dp===void 0?void 0:dp.setParams,isLoad:isLoad};}function useDpEvent(dp){var _useState=(0,external_react_namespaceObject.useState)(dp===null||dp===void 0?void 0:dp.loading),_useState2=_slicedToArray(_useState,2),loading=_useState2[0],setLoading=_useState2[1];(0,external_react_namespaceObject.useEffect)(function(){var _dp$on,_dp$on2;function onBeforeGetData(){setLoading(true);}function onAfterGetData(){setLoading(false);}dp===null||dp===void 0||(_dp$on=dp.on)===null||_dp$on===void 0||_dp$on.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$on2=dp.on)===null||_dp$on2===void 0||_dp$on2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);return function(){var _dp$off,_dp$off2;dp===null||dp===void 0||(_dp$off=dp.off)===null||_dp$off===void 0||_dp$off.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$off2=dp.off)===null||_dp$off2===void 0||_dp$off2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);};},[]);return{loading:loading,models:dp===null||dp===void 0?void 0:dp.models,isLoad:dp===null||dp===void 0?void 0:dp.isLoad};}
-;// ./src/platforms/react/utils/GetParams.js
-function GetParams(){var url=location.search;var params=new Object();if(url.indexOf("?")!=-1){var str=url.substr(1);var strs=str.split("&");for(var i=0;i<strs.length;i++){params[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);}}return params;}
 ;// ./src/platforms/react/components/searchinput/SearchInput.tsx
 var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,_props$fieldNames=props.fieldNames,fieldNames=_props$fieldNames===void 0?{label:"text",value:"id"}:_props$fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var _handleChange=function _handleChange(value){// console.log("_handleChange:", value);
-onSetValue===null||onSetValue===void 0||onSetValue(value);dp===null||dp===void 0||dp.setParams(_defineProperty({},paramName,value||undefined));};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;(0,external_react_namespaceObject.useEffect)(function(){if(!dp||isLoad){return;}if(!loading){var _GetParams;var locationAttrParams=(_GetParams=GetParams())===null||_GetParams===void 0?void 0:_GetParams[attr];if(locationAttrParams){dp.setParams(_defineProperty({},paramName,locationAttrParams));}dp.refresh();}},[isLoad,loading]);var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _options=data;var _value=value;// const { label: _showLabel = "name", value: _showValue = "id" } = fieldNames;
+onSetValue===null||onSetValue===void 0||onSetValue(value);dp===null||dp===void 0||dp.setParams(_defineProperty({},paramName,value||undefined));};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;var _useModelEvent=useModelEvent(model,attr),ModelLoaded=_useModelEvent.loaded;(0,external_react_namespaceObject.useEffect)(function(){if(!dp||isLoad){return;}// console.log('ModelLoaded:',{model, ModelLoaded})
+// if(!ModelLoaded) {
+//   return
+// }
+if(!loading){console.log('model attr:',model===null||model===void 0?void 0:model[attr]);var ModelValue=model===null||model===void 0?void 0:model[attr];if(ModelValue){dp===null||dp===void 0||dp.setParams(_defineProperty({},paramName,ModelValue));}dp.refresh();}},[isLoad,loading,ModelLoaded]);var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _options=data;var _value=value;// const { label: _showLabel = "name", value: _showValue = "id" } = fieldNames;
 // const options = data.map((model) => ({
 //   label: model[_showLabel],
 //   value: String(model[_showValue]),
@@ -12656,6 +12659,8 @@ var Segmented_excluded=["model","attr","value","onSetValue"];function Segmented(
 ;// ./src/platforms/react/components/Detail/Detail.tsx
 var Detail_excluded=["model","columns","title","column","colon"];function Detail_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function Detail_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?Detail_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):Detail_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Detail(props){var model=props.model,columns=props.columns,_props$title=props.title,title=_props$title===void 0?null:_props$title,_props$column=props.column,column=_props$column===void 0?1:_props$column,_props$colon=props.colon,colon=_props$colon===void 0?true:_props$colon,reset=_objectWithoutProperties(props,Detail_excluded);var _useState=(0,external_react_namespaceObject.useState)(Column.normalizeColumns(columns)),_useState2=_slicedToArray(_useState,2),ledapColumns=_useState2[0],setLedapColumns=_useState2[1];var _useState3=(0,external_react_namespaceObject.useState)(false),_useState4=_slicedToArray(_useState3,2),setBool=_useState4[1];var _updateView=function _updateView(){setBool(function(b){return!b;});};(0,external_react_namespaceObject.useEffect)(function(){setLedapColumns(Column.normalizeColumns(columns));},[columns]);var antColumns=Detail_getAntColumns(ledapColumns,model);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Descriptions,_extends({column:column,colon:colon,bordered:true,title:title,items:antColumns},reset));}function Detail_getAntColumns(ledapColumns,model){var targetColumns=[];for(var i=0;i<ledapColumns.length;i++){var column=ledapColumns[i];var label=column.label,value=column.value,attribute=column.attribute,visible=column.visible;// 不可见
 if(visible==false){continue;}var antdColumn=Detail_objectSpread(Detail_objectSpread({},column),{},{label:Detail_getTableTitle(column)});if(attribute){antdColumn.key=attribute;}if(typeof value=="function"){antdColumn.children=value(model);}else{antdColumn.children="".concat(model[attribute]);}targetColumns.push(antdColumn);}return targetColumns;}function Detail_getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/external_react_namespaceObject["default"].createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}
+;// ./src/platforms/react/components/colorpicker/ColorPicker.tsx
+var ColorPicker_excluded=["attr","model","onSetValue","value","format"];function ColorPicker(props){var attr=props.attr,model=props.model,onSetValue=props.onSetValue,value=props.value,_props$format=props.format,format=_props$format===void 0?"hex":_props$format,resetProps=_objectWithoutProperties(props,ColorPicker_excluded);var _handleChange=function _handleChange(value){onSetValue(value);};return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.ColorPicker,_extends({onChange:_handleChange,format:format,value:value},resetProps));}/* harmony default export */ const colorpicker_ColorPicker = (ColorPicker);
 ;// ./src/platforms/react/contexts/index.ts
 
 ;// ./src/platforms/react/hooks/index.ts
@@ -12673,6 +12678,7 @@ var __webpack_exports__Button = __webpack_exports__.$n;
 var __webpack_exports__ButtonGroup = __webpack_exports__.e2;
 var __webpack_exports__Checkbox = __webpack_exports__.Sc;
 var __webpack_exports__CheckboxGroup = __webpack_exports__.$Q;
+var __webpack_exports__ColorPicker = __webpack_exports__.sk;
 var __webpack_exports__ConfigProvider = __webpack_exports__.sG;
 var __webpack_exports__DatePicker = __webpack_exports__.lr;
 var __webpack_exports__Detail = __webpack_exports__.kZ;
@@ -12693,4 +12699,4 @@ var __webpack_exports__Table = __webpack_exports__.XI;
 var __webpack_exports__Uploader = __webpack_exports__.d9;
 var __webpack_exports__useInputGroup = __webpack_exports__.rW;
 var __webpack_exports__useLedapModel = __webpack_exports__.b1;
-export { __webpack_exports__BaseInput as BaseInput, __webpack_exports__Button as Button, __webpack_exports__ButtonGroup as ButtonGroup, __webpack_exports__Checkbox as Checkbox, __webpack_exports__CheckboxGroup as CheckboxGroup, __webpack_exports__ConfigProvider as ConfigProvider, __webpack_exports__DatePicker as DatePicker, __webpack_exports__Detail as Detail, __webpack_exports__Dropdown as Dropdown, __webpack_exports__Form as Form, __webpack_exports__FormContext as FormContext, __webpack_exports__FormItem as FormItem, __webpack_exports__FormItemContext as FormItemContext, __webpack_exports__FormItemLabel as FormItemLabel, __webpack_exports__FormValidateEvent as FormValidateEvent, __webpack_exports__Modal as Modal, __webpack_exports__Radio as Radio, __webpack_exports__RadioGroup as RadioGroup, __webpack_exports__SearchInput as SearchInput, __webpack_exports__Segmented as Segmented, __webpack_exports__Select as Select, __webpack_exports__Table as Table, __webpack_exports__Uploader as Uploader, __webpack_exports__useInputGroup as useInputGroup, __webpack_exports__useLedapModel as useLedapModel };
+export { __webpack_exports__BaseInput as BaseInput, __webpack_exports__Button as Button, __webpack_exports__ButtonGroup as ButtonGroup, __webpack_exports__Checkbox as Checkbox, __webpack_exports__CheckboxGroup as CheckboxGroup, __webpack_exports__ColorPicker as ColorPicker, __webpack_exports__ConfigProvider as ConfigProvider, __webpack_exports__DatePicker as DatePicker, __webpack_exports__Detail as Detail, __webpack_exports__Dropdown as Dropdown, __webpack_exports__Form as Form, __webpack_exports__FormContext as FormContext, __webpack_exports__FormItem as FormItem, __webpack_exports__FormItemContext as FormItemContext, __webpack_exports__FormItemLabel as FormItemLabel, __webpack_exports__FormValidateEvent as FormValidateEvent, __webpack_exports__Modal as Modal, __webpack_exports__Radio as Radio, __webpack_exports__RadioGroup as RadioGroup, __webpack_exports__SearchInput as SearchInput, __webpack_exports__Segmented as Segmented, __webpack_exports__Select as Select, __webpack_exports__Table as Table, __webpack_exports__Uploader as Uploader, __webpack_exports__useInputGroup as useInputGroup, __webpack_exports__useLedapModel as useLedapModel };

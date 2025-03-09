@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Model from '../../../base/Model'
 
 /**
  * 实现 react 数据的双向绑定
@@ -24,5 +25,24 @@ export default function useLedapModel(model) {
         getValue,
         updateView,
         model
+    }
+}
+export function useModelEvent(model,attr){
+    const initialValue = model[attr]
+    const [loaded, setLoaded] = useState(initialValue ? true : false)
+
+    useEffect(() => {
+        function _onloaded() {
+            console.log('_onloaded')
+            setLoaded(true)
+        }
+        console.log('model bind event:', model.on,Model.EVENT_AFTERLOAD)
+        model?.on?.(Model.EVENT_AFTERLOAD, _onloaded)
+        return () => {
+            model?.off?.(Model.EVENT_AFTERLOAD, _onloaded)
+        }
+    }, [])
+    return {
+        loaded
     }
 }

@@ -15,6 +15,7 @@ import {
   Dropdown,
   Uploader,
   Detail,
+  ColorPicker,
 } from "@/platforms/react";
 import { message } from 'antd'
 
@@ -109,6 +110,8 @@ export default function ModelTestComponent() {
           }}
         />
         <FormItem attr="birthDate" FormComponent={DatePicker} />
+        <FormItem attr="color" FormComponent={ColorPicker} />
+        <FormItem attr="color1" FormComponent={ColorPicker} />
 
         <FormItem
           attr="icon"

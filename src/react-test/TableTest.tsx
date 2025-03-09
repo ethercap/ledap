@@ -13,7 +13,7 @@ import {
   Table,
   Modal,
 } from "@/platforms/react";
-import { Flex, Row, Col } from "antd";
+import { Flex, Row, Col,Card } from "antd";
 import WriteMobileCodeModal from "./WriteMobileCodeModal";
 import { GetParams } from "./utils.js";
 
@@ -110,9 +110,9 @@ export default function TableTest() {
       },
     },
   ];
-
+  console.log('searchModel:',dp.searchModel['id'])
   return (
-    <>
+    <Card>
       <Form model={dp.searchModel}>
         <Row>
           <Col span={12}>
@@ -149,6 +149,6 @@ export default function TableTest() {
         //   setSelectedIds(selectedRowKeys);
         // }}
       />
-    </>
+    </Card>
   );
 }

@@ -19,6 +19,7 @@ export { default as Modal } from './components/modal/Modal'
 export { default as Uploader } from './components/uploader/uploader'
 export { default as Segmented } from './components/segmented/Segmented'
 export { default as Detail } from './components/Detail/Detail'
+export { default as ColorPicker } from './components/colorpicker/ColorPicker'
 
 export * from './contexts/'
 
