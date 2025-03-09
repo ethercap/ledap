@@ -11,6 +11,8 @@ interface SearchInputProps {
   fieldNames?: any;
 }
 
+
+
 export default function SearchInput(props: SearchInputProps) {
   const {
     value,
@@ -18,7 +20,7 @@ export default function SearchInput(props: SearchInputProps) {
     model,
     attr,
     dp,
-    fieldNames,
+    fieldNames={label: "text", value: "id"},
     paramName = "keyword",
     ...resetProps
   } = props;
