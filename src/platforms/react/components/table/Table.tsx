@@ -24,7 +24,17 @@ export default function Table(props: TableProps) {
     ...reset
   } = props;
 
-  const { models: data, isLoading, pager } = dp;
+  const { models: data, isLoading, pager,isLoad } = dp;
+   useEffect(() => {
+      if(isLoad) {
+        return
+      }
+      if (!isLoading) {
+        dp.refresh()
+      }
+    }, [isLoad, isLoading]);
+    
+  
   const [ledapColumns, setLedapColumns] = useState(
     Column.normalizeColumns(columns)
   );

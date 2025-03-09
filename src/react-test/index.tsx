@@ -31,9 +31,9 @@ function App() {
   return (
     <ConfigProvider ledapConfig={{ uploader: LedapUploader }}>
       <div className="app">
-        this is react app
+        this is react app1
         <div className="react-form">
-          <ModelTestComponent />
+          {/* <ModelTestComponent /> */}
           <hr />
           <TableTest />
         </div>

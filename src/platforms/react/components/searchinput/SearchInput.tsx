@@ -1,5 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Select as AntSelect, Spin } from "antd";
+import { useDpEvent } from "../../hooks/useLedapDataProvider";
+import GetParams from '../../utils/GetParams'
 
 interface SearchInputProps {
   value: any;
@@ -24,19 +26,28 @@ export default function SearchInput(props: SearchInputProps) {
     paramName = "keyword",
     ...resetProps
   } = props;
-  const { models: data, isLoading } = dp;
 
   const _handleChange = (value) => {
     // console.log("_handleChange:", value);
     onSetValue?.(value);
+    dp?.setParams({[paramName]: value || undefined})
+
   };
 
-  // useEffect(() => {
-  //   console.log("search input loaded", { dp, attr, value, model });
-  //   if (dp && attr && value) {
-  //     dp.setParams({ [attr]: value });
-  //   }
-  // }, [dp]);
+  const { loading,isLoad,models: data } = useDpEvent(dp)
+
+  useEffect(() => {
+    if(!dp || isLoad) {
+      return
+    }
+    if (!loading) {
+      const locationAttrParams = GetParams()?.[attr]
+      if(locationAttrParams) {
+        dp.setParams({[paramName]: locationAttrParams})
+      }
+      dp.refresh()
+    }
+  }, [isLoad, loading]);
 
   const _handleSearch = (value) => {
     const searchParams = { [paramName]: value };
@@ -63,9 +74,9 @@ export default function SearchInput(props: SearchInputProps) {
       filterOption={false}
       onSearch={_handleSearch}
       onChange={_handleChange}
-      notFoundContent={isLoading ? <Spin size="small" /> : null}
+      notFoundContent={loading ? <Spin size="small" /> : null}
       options={_options}
-      loading={isLoading}
+      loading={loading}
       {...resetProps}
     />
   );

@@ -72,7 +72,7 @@ App.useWebDp = (dpConfig) => {
             console.log('dp on after loading')
             setBool((bool) => !bool)
         }
-        dp.refresh()
+        // dp.refresh()
         dp?.on?.(WebDataProvider.EVENT_BEFOREGETDATA, onBeforeGetData)
         dp?.on?.(WebDataProvider.EVENT_AFTERGETDATA, onAfterGetData)
         return () => {
