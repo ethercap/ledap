@@ -48,10 +48,10 @@ export default function SearchInput(props: SearchInputProps) {
     if (!loading) {
       console.log('model attr:', model?.[attr])
       const ModelValue = model?.[attr]
-      if(ModelValue) {
-        dp?.setParams({[paramName]: ModelValue})
-      }
-      dp.refresh()
+      // if(ModelValue) {
+      //   dp?.setParams({[paramName]: ModelValue})
+      // }
+      // dp.refresh()
     }
   }, [isLoad, loading,ModelLoaded]);
 

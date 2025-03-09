@@ -30,7 +30,7 @@ export default function Table(props: TableProps) {
         return
       }
       if (!isLoading) {
-        dp.refresh()
+        // dp.refresh()
       }
     }, [isLoad, isLoading]);
     
