@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Tag as AntTag, TagProps as AntTagProps, Space, Input } from "antd";
+import { Tag as AntTag, TagProps as AntTagProps, Space, Input,Flex } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
@@ -80,7 +80,7 @@ export default function TagList(props: TagListProps) {
     )
   ) : null;
   return (
-    <Space gap={4} wrap>
+    <Flex wrap style={{rowGap: 8}}>
       {_value.map((item, index) => {
         return (
           <AntTag
@@ -98,6 +98,6 @@ export default function TagList(props: TagListProps) {
         );
       })}
       {AddFragment}
-    </Space>
+    </Flex>
   );
 }
