@@ -16,8 +16,9 @@ import {
   Uploader,
   Detail,
   ColorPicker,
+  TagList,
 } from "@/platforms/react";
-import { message } from 'antd'
+import { message } from "antd";
 
 export default function ModelTestComponent() {
   const model1 = ledap.App.useModel({
@@ -44,7 +45,7 @@ export default function ModelTestComponent() {
   });
 
   function _onFilish(data, json) {
-    message.error({content:'错误提示'})
+    message.error({ content: "错误提示" });
     console.log("_onFilish data,json:", data, json);
   }
 
@@ -112,6 +113,12 @@ export default function ModelTestComponent() {
         <FormItem attr="birthDate" FormComponent={DatePicker} />
         <FormItem attr="color" FormComponent={ColorPicker} />
         <FormItem attr="color1" FormComponent={ColorPicker} />
+        <FormItem attr="numberTag" FormComponent={TagList} />
+        <FormItem
+          attr="textTag"
+          FormComponentProps={{ inputType: "text" }}
+          FormComponent={TagList}
+        />
 
         <FormItem
           attr="icon"

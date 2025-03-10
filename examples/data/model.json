@@ -48,6 +48,16 @@
       ],
       "value": ""
     },
+    "numberTag":{
+      "label":"数字标签",
+      "hint":"请输入数字标签",
+      "value":[11,22,33]
+    },
+    "textTag":{
+      "label":"文本标签",
+      "hint":"请输入文本标签",
+      "value":["aa","bb","cc"]
+    },
     "email": {
       "label": "邮箱",
       "value": "",
