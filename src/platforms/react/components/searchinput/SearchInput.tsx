@@ -30,7 +30,6 @@ export default function SearchInput(props: SearchInputProps) {
   const _handleChange = (value) => {
     // console.log("_handleChange:", value);
     onSetValue?.(value);
-    dp?.setParams({[paramName]: value || undefined})
 
   };
 
@@ -46,8 +45,8 @@ export default function SearchInput(props: SearchInputProps) {
     //   return
     // }
     if (!loading) {
-      console.log('model attr:', model?.[attr])
-      const ModelValue = model?.[attr]
+      // console.log('model attr:', model?.[attr])
+      // const ModelValue = model?.[attr]
       // if(ModelValue) {
       //   dp?.setParams({[paramName]: ModelValue})
       // }
