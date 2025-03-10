@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { Tag as AntTag, TagProps as AntTagProps, Space, Input,Flex } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import classNames from "classnames";
@@ -47,6 +47,11 @@ export default function TagList(props: TagListProps) {
     setInputVisible(false);
     setInputValue("");
   };
+  useEffect(() => {
+    if (inputVisible) {
+      inputRef.current?.focus();
+    }
+  }, [inputVisible]);
 
   const AddFragment = useAdd ? (
     inputVisible ? (
