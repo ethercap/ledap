@@ -20,8 +20,9 @@ function ColorPicker(props: ColorPickerProps) {
     format = "hex",
     ...resetProps
   } = props;
-  const _handleChange = (value) => {
-    onSetValue(value);
+  const _handleChange = (colorHex) => {
+    const _val = typeof colorHex === 'string' ? colorHex : colorHex?.toHexString()
+    onSetValue(_val);
   };
   return (
     <AntColorPicker
