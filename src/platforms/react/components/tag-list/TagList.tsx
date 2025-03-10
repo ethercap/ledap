@@ -3,7 +3,7 @@ import { Tag as AntTag, TagProps as AntTagProps, Space, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-export interface TagProps {
+export interface TagListProps {
   model: any;
   attr: string;
   value?: any;
@@ -13,8 +13,9 @@ export interface TagProps {
   closable?: boolean;
   addText?: string;
   inputType?: string;
+  tagProps?: AntTagProps;
 }
-export default function TagList(props: TagProps) {
+export default function TagList(props: TagListProps) {
   const {
     model,
     attr,
@@ -25,13 +26,13 @@ export default function TagList(props: TagProps) {
     closable = true,
     addText = "添加",
     inputType="number",
-    ...resetProps
+    tagProps={},
   } = props;
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
   const _value =
-    typeof value === "string" ? [value] : Array.isArray(value) ? value : [];
+    (typeof value === "string" || typeof value === "number") ? [value] : Array.isArray(value) ? value : [];
   const showInput = () => {
     setInputVisible(true);
   };
@@ -69,6 +70,7 @@ export default function TagList(props: TagProps) {
         style={{
           height: 22,
           borderStyle: "dashed",
+          cursor: "pointer"
         }}
         icon={<PlusOutlined />}
         onClick={showInput}
@@ -83,12 +85,13 @@ export default function TagList(props: TagProps) {
         return (
           <AntTag
             key={index}
-            closable
+            closable={closable}
             onClose={(e) => {
               const newValue = [..._value];
               newValue.splice(index, 1);
               onSetValue?.(newValue);
             }}
+            {...tagProps}
           >
             {item}
           </AntTag>
