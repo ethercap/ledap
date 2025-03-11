@@ -2,37 +2,44 @@ import React from "react";
 import {
   DatePicker as AntDatePicker,
   DatePickerProps as AntDatePickerProps,
+  RangePickerProps as AntRangePickerProps,
 } from "antd";
-import dayjs from "dayjs";
-import { getDateValue } from './utils'
+import { getRangeDataValue } from './utils'
 
-interface DatePickerProps extends AntDatePickerProps {
+
+interface RangePickerProps extends AntRangePickerProps {
   value: any;
   onSetValue: Function;
   model: any;
   attr: string;
   format?: string;
+  onBlur?:Function;
+  dp?:any;
+  validate?:any
 }
 
-export default function DatePicker(props: DatePickerProps) {
+export default function RangeDatePicker(props: RangePickerProps) {
   const {
     model,
     attr,
     value,
     onSetValue,
     format = "YYYY-MM-DD",
+    onBlur,
+    dp,
+    validate,
     ...reset
   } = props;
   function _onChange(_val) {
-    const val = _val ? _val.format(format) : undefined;
+    const val = !_val ? [] : getRangeDataValue(_val);
     onSetValue?.(val);
   }
   const placeholder = model.getAttributeHint(attr);
-  const _value = getDateValue(value);
+  const _value = getRangeDataValue(value);
   return (
-    <AntDatePicker
+    <AntDatePicker.RangePicker
       format={format}
-      defaultValue={value}
+      defaultValue={_value}
       placeholder={placeholder}
       onChange={_onChange}
       value={_value}

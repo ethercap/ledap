@@ -13,6 +13,7 @@ export { default as Select } from './components/select/Select';
 export { default as Dropdown } from './components/select/DropDown';
 export { default as SearchInput } from './components/searchinput/SearchInput'
 export { default as DatePicker } from './components/datepicker/DatePicker'
+export { default as RangeDatePicker } from './components/datepicker/RangeDatePicker';
 export { default as Table } from './components/table/Table'
 export { default as ButtonGroup } from './components/button/ButtonGroup'
 export { default as Modal } from './components/modal/Modal'

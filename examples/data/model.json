@@ -130,6 +130,36 @@
       "rules": [],
       "hint": "请选择"
     },
+    "rangeDate": {
+      "label": "时间段",
+      "value": [],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate1": {
+      "label": "时间段1",
+      "value": ["2027-01-01"],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate2": {
+      "label": "时间段2",
+      "value": ["","2027-01-01"],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate3": {
+      "label": "时间段3",
+      "value": ["",""],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate4": {
+      "label": "时间段4",
+      "value": [1741672052864],
+      "rules": [],
+      "hint": "请选择"
+    },
     "color": {
       "label": "颜色",
       "value": "",

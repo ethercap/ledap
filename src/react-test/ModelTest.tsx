@@ -16,6 +16,7 @@ import {
   Uploader,
   Detail,
   ColorPicker,
+  RangeDatePicker,
   TagList,
 } from "@/platforms/react";
 import { message } from "antd";
@@ -111,6 +112,11 @@ export default function ModelTestComponent() {
           }}
         />
         <FormItem attr="birthDate" FormComponent={DatePicker} />
+        <FormItem attr="rangeDate" FormComponent={RangeDatePicker} />
+        <FormItem attr="rangeDate1" FormComponent={RangeDatePicker} />
+        <FormItem attr="rangeDate2" FormComponent={RangeDatePicker} />
+        <FormItem attr="rangeDate3" FormComponent={RangeDatePicker} />
+        <FormItem attr="rangeDate4" FormComponentProps={{showTime:true, format:'YYYY-MM-DD HH:mm:ss'}} FormComponent={RangeDatePicker} />
         <FormItem attr="color" FormComponent={ColorPicker} />
         <FormItem attr="color1" FormComponent={ColorPicker} />
         <FormItem attr="numberTag" FormComponent={TagList} />
