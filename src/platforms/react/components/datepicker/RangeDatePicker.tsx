@@ -15,7 +15,9 @@ interface RangePickerProps extends AntRangePickerProps {
   format?: string;
   onBlur?:Function;
   dp?:any;
-  validate?:any
+  validate?:any;
+  placeholder?:string;
+  showTime?:boolean
 }
 
 export default function RangeDatePicker(props: RangePickerProps) {
@@ -24,21 +26,25 @@ export default function RangeDatePicker(props: RangePickerProps) {
     attr,
     value,
     onSetValue,
-    format = "YYYY-MM-DD",
+    format,
     onBlur,
     dp,
     validate,
+    placeholder:propPlaceholder,
+    showTime,
     ...reset
   } = props;
+  const _format = format || (showTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD")
   function _onChange(_val) {
     const val = !_val ? [] : getRangeDataValue(_val);
     onSetValue?.(val);
   }
-  const placeholder = model.getAttributeHint(attr);
+  const placeholder = model.getAttributeHint(attr) || propPlaceholder  || ["开始时间","结束时间"];
   const _value = getRangeDataValue(value);
   return (
     <AntDatePicker.RangePicker
-      format={format}
+      format={_format}
+      showTime={showTime}
       defaultValue={_value}
       placeholder={placeholder}
       onChange={_onChange}
