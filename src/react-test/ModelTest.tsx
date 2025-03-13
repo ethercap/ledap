@@ -93,6 +93,7 @@ export default function ModelTestComponent() {
         />
         <FormItem attr="city" FormComponent={Select} />
         <FormItem attr="city" FormComponent={Dropdown} />
+        <FormItem attr="city" inline showError={false} showLabel={false} FormComponent={Dropdown} />
         <FormItem attr="stayCity" FormComponent={Select} />
         <FormItem
           attr="search1"
