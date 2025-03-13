@@ -21,7 +21,8 @@ interface FormItemProp extends AntFormItemProps {
   inline?: boolean;
   show?: boolean;
   showError?:boolean;
-  showLabel?:boolean
+  showLabel?:boolean;
+  className?:string;
 }
 
 function FormItem(props: FormItemProp) {
@@ -38,6 +39,7 @@ function FormItem(props: FormItemProp) {
     FormComponentProps,
     showLabel=true,
     showError=true,
+    className,
     ...reset
   } = props;
   let { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
@@ -68,7 +70,7 @@ function FormItem(props: FormItemProp) {
   return (
     <FormItemContext.Provider value={{ getValue, setValue }}>
       <Form.Item
-        className={classnames(_module_formitem, { required, 'hide-error':showError === false })}
+        className={classnames(_module_formitem,className, { required, 'hide-error':showError === false })}
         label={_label}
         labelCol={labelCol}
         wrapperCol={wrapperCol}

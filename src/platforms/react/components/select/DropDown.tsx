@@ -20,6 +20,7 @@ export interface DropDownProps extends AntDropDownProps {
   menuProps?: any;
   Icon?: any;
   children?: any;
+  onChange?:Function
 }
 export default function DropDown(props: DropDownProps) {
   const {
@@ -32,12 +33,15 @@ export default function DropDown(props: DropDownProps) {
     Icon = CaretDownOutlined,
     menuProps = {},
     children = null,
+    onChange,
     ...resetProps
   } = props;
 
   function _onClick(e) {
-    console.log("e:", e);
-    onSetValue?.(e?.key);
+    const val = e?.key
+    const _changed = value!== val
+    onSetValue?.(val);
+    _changed && onChange?.(val)
     model?.validate?.(attr);
   }
 
