@@ -90,11 +90,26 @@ export default function ModelTestComponent() {
           show={model1?.sex == "2"}
           attr="stayCity"
           FormComponent={CheckboxGroup}
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
         />
         <FormItem attr="city" FormComponent={Select} />
         <FormItem attr="city" FormComponent={Dropdown} />
-        <FormItem attr="city" inline showError={false} showLabel={false} FormComponent={Dropdown} />
-        <FormItem attr="stayCity" FormComponent={Select} />
+        <FormItem
+          attr="city"
+          inline
+          showError={false}
+          showLabel={false}
+          FormComponent={Dropdown}
+        />
+        <FormItem
+          attr="stayCity"
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
+          FormComponent={Select}
+        />
         <FormItem
           attr="search1"
           FormComponent={SearchInput}
@@ -117,7 +132,11 @@ export default function ModelTestComponent() {
         <FormItem attr="rangeDate1" FormComponent={RangeDatePicker} />
         <FormItem attr="rangeDate2" FormComponent={RangeDatePicker} />
         <FormItem attr="rangeDate3" FormComponent={RangeDatePicker} />
-        <FormItem attr="rangeDate4" FormComponentProps={{showTime:true, format:'YYYY-MM-DD HH:mm:ss'}} FormComponent={RangeDatePicker} />
+        <FormItem
+          attr="rangeDate4"
+          FormComponentProps={{ showTime: true, format: "YYYY-MM-DD HH:mm:ss" }}
+          FormComponent={RangeDatePicker}
+        />
         <FormItem attr="color" FormComponent={ColorPicker} />
         <FormItem attr="color1" FormComponent={ColorPicker} />
         <FormItem attr="numberTag" FormComponent={TagList} />

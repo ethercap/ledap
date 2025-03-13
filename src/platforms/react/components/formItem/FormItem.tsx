@@ -50,8 +50,9 @@ function FormItem(props: FormItemProp) {
     : useContext(FormContext);
 
   const _setValue = (val) => {
+    const changed = val!== model[attr]
     setValue(attr, val);
-    if(val!== model[attr]) {
+    if(changed) {
       onChanged?.(val)
     }
   };
