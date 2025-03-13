@@ -23,6 +23,7 @@ interface FormItemProp extends AntFormItemProps {
   showError?:boolean;
   showLabel?:boolean;
   className?:string;
+  onChanged?:Function
 }
 
 function FormItem(props: FormItemProp) {
@@ -40,6 +41,7 @@ function FormItem(props: FormItemProp) {
     showLabel=true,
     showError=true,
     className,
+    onChanged,
     ...reset
   } = props;
   let { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
@@ -49,6 +51,9 @@ function FormItem(props: FormItemProp) {
 
   const _setValue = (val) => {
     setValue(attr, val);
+    if(val!== model[attr]) {
+      onChanged?.(val)
+    }
   };
   if (inline) {
     labelCol = null;
