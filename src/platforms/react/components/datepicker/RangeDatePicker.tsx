@@ -4,8 +4,8 @@ import {
   DatePickerProps as AntDatePickerProps,
   RangePickerProps as AntRangePickerProps,
 } from "antd";
-import { getRangeDataValue } from './utils'
-
+import { getRangeDataValue } from "./utils";
+import dayjs from "dayjs";
 
 interface RangePickerProps extends AntRangePickerProps {
   value: any;
@@ -13,11 +13,11 @@ interface RangePickerProps extends AntRangePickerProps {
   model: any;
   attr: string;
   format?: string;
-  onBlur?:Function;
-  dp?:any;
-  validate?:any;
-  placeholder?:string;
-  showTime?:boolean
+  onBlur?: Function;
+  dp?: any;
+  validate?: any;
+  placeholder?: string;
+  showTime?: boolean;
 }
 
 export default function RangeDatePicker(props: RangePickerProps) {
@@ -30,16 +30,23 @@ export default function RangeDatePicker(props: RangePickerProps) {
     onBlur,
     dp,
     validate,
-    placeholder:propPlaceholder,
+    placeholder: propPlaceholder,
     showTime,
     ...reset
   } = props;
-  const _format = format || (showTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD")
+  const _format = format || (showTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD");
+  function getVal(val) {
+    if (Array.isArray(val)) {
+      return val.map((v) => dayjs(v).format(_format));
+    }
+    return []
+  }
   function _onChange(_val) {
-    const val = !_val ? [] : getRangeDataValue(_val);
+    const val = !_val ? [] : getVal(_val);
     onSetValue?.(val);
   }
-  const placeholder = model.getAttributeHint(attr) || propPlaceholder  || ["开始时间","结束时间"];
+  const placeholder = model.getAttributeHint(attr) ||
+    propPlaceholder || ["开始时间", "结束时间"];
   const _value = getRangeDataValue(value);
   return (
     <AntDatePicker.RangePicker
