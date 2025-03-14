@@ -12567,7 +12567,7 @@ total:pager.totalCount,showQuickJumper:true,showSizeChanger:false},paginationPro
 // if (visible == false) {
 //   continue;
 // }
-var antdColumn={hidden:visible===false,title:getTableTitle(column)};if(attribute){antdColumn.dataIndex=attribute;antdColumn.key=attribute;}else{// 没有属性为操作
+var antdColumn=Table_objectSpread(Table_objectSpread({},column),{},{hidden:visible===false,title:getTableTitle(column)});if(attribute){antdColumn.dataIndex=attribute;antdColumn.key=attribute;}else{// 没有属性为操作
 antdColumn.key="action";}// 排序
 if(attribute&&useSort){antdColumn.showSorterTooltip={target:"sorter-icon"};var sortOrder=getSortDir(dp,attribute);antdColumn.sortOrder=sortOrder;antdColumn.sortDirections=["ascend","descend","ascend"];antdColumn.defaultSortOrder=sortOrder;antdColumn.sorter=true;}if(typeof value=="function"){antdColumn.render=function(val,item,index){return value(item,val,index);};}targetColumns.push(antdColumn);};for(var i=0;i<ledapColumns.length;i++){_loop();}return targetColumns;}function getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/external_react_namespaceObject["default"].createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}function getSortDir(dp,attribute){return dp.isSortAsc(attribute)?"ascend":dp.isSortDesc(attribute)?"descend":null;}
 ;// ./src/platforms/react/components/button/ButtonGroup.tsx
