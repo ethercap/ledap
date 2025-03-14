@@ -34,7 +34,6 @@
     "build:umd": "webpack --config=./config/webpack.umd.js",
     "build:es6": "webpack --config=./config/webpack.es6.js",
     "prepublishOnly": "npm run build"
-
   },
   "files": [
     "src",
@@ -67,8 +66,10 @@
     "eslint": "^9.20.1",
     "eslint-webpack-plugin": "^4.2.0",
     "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.7",
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
+    "lint-staged": "^15.5.0",
     "lodash-webpack-plugin": "^0.11.6",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss-loader": "^8.1.1",
