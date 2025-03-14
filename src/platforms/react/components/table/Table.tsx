@@ -141,6 +141,7 @@ function getAntColumns(ledapColumns, dp) {
     //   continue;
     // }
     const antdColumn: any = {
+      ...column,
       hidden: visible === false,
       title: getTableTitle(column),
     };
