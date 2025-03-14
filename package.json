@@ -33,7 +33,8 @@
     "build": "npm run build:umd & npm run build:es6",
     "build:umd": "webpack --config=./config/webpack.umd.js",
     "build:es6": "webpack --config=./config/webpack.es6.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
   },
   "files": [
     "src",
