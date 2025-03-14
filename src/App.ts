@@ -62,6 +62,11 @@ export default class App extends BaseObject {
         return HttpModel.find(config, params);
     }
 
+    /**
+     * 注册组件（仅vue组件可注册）
+     * @param name 
+     * @param vue 
+     */
     public static register(name, vue) {
         App.getTheme().register(name, vue);
     }
@@ -79,7 +84,6 @@ export default class App extends BaseObject {
     }
 
     public static extend(a, b) {
-        return lodash.extend(a, b);
+        return lodash.extend(a, b)
     }
-
 }
