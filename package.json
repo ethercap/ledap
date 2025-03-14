@@ -22,18 +22,12 @@
       "require": "./dist/core.js"
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build && lint-staged"
-    }
-  },
   "scripts": {
     "dev": "webpack-dev-server --config=./config/webpack.devServer.js",
     "dev:react": "webpack-dev-server --config=./config/webpack.react.devServer.js",
     "build": "npm run build:umd & npm run build:es6",
     "build:umd": "webpack --config=./config/webpack.umd.js",
     "build:es6": "webpack --config=./config/webpack.es6.js",
-    "prepublishOnly": "npm run build",
     "prepare": "husky"
   },
   "files": [
