@@ -28,45 +28,29 @@ export default function SearchInput(props: SearchInputProps) {
   } = props;
 
   const _handleChange = (value) => {
-    // console.log("_handleChange:", value);
     onSetValue?.(value);
 
   };
 
   const { loading,isLoad,models: data } = useDpEvent(dp)
-  const { loaded:ModelLoaded } = useModelEvent(model, attr)
+  
 
-  useEffect(() => {
-    if(!dp || isLoad) {
-      return
-    }
-    // console.log('ModelLoaded:',{model, ModelLoaded})
-    // if(!ModelLoaded) {
-    //   return
-    // }
-    if (!loading) {
-      // console.log('model attr:', model?.[attr])
-      // const ModelValue = model?.[attr]
-      // if(ModelValue) {
-      //   dp?.setParams({[paramName]: ModelValue})
-      // }
-      // dp.refresh()
-    }
-  }, [isLoad, loading,ModelLoaded]);
 
   const _handleSearch = (value) => {
     const searchParams = { [paramName]: value };
     dp.setParams(searchParams);
   };
+
+  const _onListScroll = (e) => {
+    const { scrollTop,scrollHeight,clientHeight } = e.target
+    const isBottom = (scrollTop + clientHeight + 20) >= scrollHeight
+    if(isBottom) {
+      dp.refresh('footer')
+    }
+  }
   const _options = data;
   const _value = value;
-  // const { label: _showLabel = "name", value: _showValue = "id" } = fieldNames;
-  // const options = data.map((model) => ({
-  //   label: model[_showLabel],
-  //   value: String(model[_showValue]),
-  // }));
-  // const _value = Array.isArray(value) ? value.map((v) => `${v}`) : `${value}`;
-  // console.log("searchInput", { data, value, options, _value });
+
   return (
     <AntSelect
       fieldNames={fieldNames}
@@ -82,6 +66,7 @@ export default function SearchInput(props: SearchInputProps) {
       notFoundContent={loading ? <Spin size="small" /> : null}
       options={_options}
       loading={loading}
+      onPopupScroll={_onListScroll}
       {...resetProps}
     />
   );
