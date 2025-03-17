@@ -2,6 +2,8 @@ import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Select as AntSelect, Spin } from "antd";
 import { useDpEvent } from "../../hooks/useLedapDataProvider";
 import { useModelEvent } from "../../hooks/useLedapModel";
+import { uniqBy } from "lodash";
+
 
 interface SearchInputProps {
   value: any;
@@ -48,7 +50,7 @@ export default function SearchInput(props: SearchInputProps) {
       dp.refresh('footer')
     }
   }
-  const _options = data;
+  const _options = uniqBy(data,(v) => v[fieldNames.value]);
   const _value = value;
 
   return (

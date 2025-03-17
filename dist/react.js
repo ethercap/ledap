@@ -16,6 +16,44 @@ module.exports = nativeKeys;
 
 /***/ }),
 
+/***/ 14:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIteratee = __webpack_require__(5389),
+    baseUniq = __webpack_require__(5765);
+
+/**
+ * This method is like `_.uniq` except that it accepts `iteratee` which is
+ * invoked for each element in `array` to generate the criterion by which
+ * uniqueness is computed. The order of result values is determined by the
+ * order they occur in the array. The iteratee is invoked with one argument:
+ * (value).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Array
+ * @param {Array} array The array to inspect.
+ * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
+ * @returns {Array} Returns the new duplicate free array.
+ * @example
+ *
+ * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
+ * // => [2.1, 1.2]
+ *
+ * // The `_.property` iteratee shorthand.
+ * _.uniqBy([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x');
+ * // => [{ 'x': 1 }, { 'x': 2 }]
+ */
+function uniqBy(array, iteratee) {
+  return (array && array.length) ? baseUniq(array, baseIteratee(iteratee, 2)) : [];
+}
+
+module.exports = uniqBy;
+
+
+/***/ }),
+
 /***/ 79:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -2670,6 +2708,30 @@ module.exports = stringToArray;
 
 /***/ }),
 
+/***/ 3950:
+/***/ ((module) => {
+
+/**
+ * This method returns `undefined`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.3.0
+ * @category Util
+ * @example
+ *
+ * _.times(2, _.noop);
+ * // => [undefined, undefined]
+ */
+function noop() {
+  // No operation performed.
+}
+
+module.exports = noop;
+
+
+/***/ }),
+
 /***/ 4128:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -2714,6 +2776,36 @@ function isKeyable(value) {
 }
 
 module.exports = isKeyable;
+
+
+/***/ }),
+
+/***/ 4247:
+/***/ ((module) => {
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+module.exports = stubArray;
 
 
 /***/ }),
@@ -2821,6 +2913,32 @@ function mapCacheHas(key) {
 }
 
 module.exports = mapCacheHas;
+
+
+/***/ }),
+
+/***/ 4517:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Set = __webpack_require__(6545),
+    noop = __webpack_require__(3950),
+    setToArray = __webpack_require__(4247);
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/**
+ * Creates a set object of `values`.
+ *
+ * @private
+ * @param {Array} values The values to add to the set.
+ * @returns {Object} Returns the new set.
+ */
+var createSet = !(Set && (1 / setToArray(new Set([,-0]))[1]) == INFINITY) ? noop : function(values) {
+  return new Set(values);
+};
+
+module.exports = createSet;
 
 
 /***/ }),
@@ -3679,6 +3797,34 @@ module.exports = merge;
 
 /***/ }),
 
+/***/ 5389:
+/***/ ((module) => {
+
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+
+/***/ }),
+
 /***/ 5463:
 /***/ ((module) => {
 
@@ -3774,6 +3920,85 @@ function hashSet(key, value) {
 }
 
 module.exports = hashSet;
+
+
+/***/ }),
+
+/***/ 5765:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var SetCache = __webpack_require__(8859),
+    arrayIncludes = __webpack_require__(5325),
+    arrayIncludesWith = __webpack_require__(9905),
+    cacheHas = __webpack_require__(9219),
+    createSet = __webpack_require__(4517),
+    setToArray = __webpack_require__(4247);
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/**
+ * The base implementation of `_.uniqBy` without support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new duplicate free array.
+ */
+function baseUniq(array, iteratee, comparator) {
+  var index = -1,
+      includes = arrayIncludes,
+      length = array.length,
+      isCommon = true,
+      result = [],
+      seen = result;
+
+  if (comparator) {
+    isCommon = false;
+    includes = arrayIncludesWith;
+  }
+  else if (length >= LARGE_ARRAY_SIZE) {
+    var set = iteratee ? null : createSet(array);
+    if (set) {
+      return setToArray(set);
+    }
+    isCommon = false;
+    includes = cacheHas;
+    seen = new SetCache;
+  }
+  else {
+    seen = iteratee ? [] : result;
+  }
+  outer:
+  while (++index < length) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (isCommon && computed === computed) {
+      var seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
+        }
+      }
+      if (iteratee) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+    else if (!includes(seen, computed, comparator)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+module.exports = baseUniq;
 
 
 /***/ }),
@@ -4195,6 +4420,20 @@ module.exports = stubArray;
 var isArray = Array.isArray;
 
 module.exports = isArray;
+
+
+/***/ }),
+
+/***/ 6545:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(6110),
+    root = __webpack_require__(9325);
+
+/* Built-in method references that are verified to be native. */
+var Set = getNative(root, 'Set');
+
+module.exports = Set;
 
 
 /***/ }),
@@ -12510,6 +12749,9 @@ var dropdown_module_1 = "_module_dropdown_X2jF9";
 
 ;// ./src/platforms/react/components/select/DropDown.tsx
 var DropDown_excluded=["model","attr","value","onSetValue","formatOptions","placeholder","Icon","menuProps","children","onChange"];function DropDown_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function DropDown_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?DropDown_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):DropDown_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function DropDown(props){var _items$find;var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,placeholder=props.placeholder,_props$Icon=props.Icon,Icon=_props$Icon===void 0?icons_CaretDownOutlined:_props$Icon,_props$menuProps=props.menuProps,menuProps=_props$menuProps===void 0?{}:_props$menuProps,_props$children=props.children,children=_props$children===void 0?null:_props$children,onChange=props.onChange,resetProps=_objectWithoutProperties(props,DropDown_excluded);function _onClick(e){var _model$validate;var val=e===null||e===void 0?void 0:e.key;var _changed=value!==val;onSetValue===null||onSetValue===void 0||onSetValue(val);_changed&&(onChange===null||onChange===void 0?void 0:onChange(val));model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var items=formatDropDownOptions(model,attr);var currentLabel=(_items$find=items.find(function(i){return i.key==value;}))===null||_items$find===void 0?void 0:_items$find.label;var disabled=resetProps.disabled===true;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Dropdown,_extends({trigger:"click",menu:DropDown_objectSpread({items:items,onClick:_onClick,selectedKeys:["".concat(value||"")]},menuProps)},resetProps,{className:classnames_default()(dropdown_module_1,resetProps.className,{disabled:disabled})}),/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Space,null,children||currentLabel||placeholder||model.getAttributeHint(attr)||"请选择",/*#__PURE__*/external_react_namespaceObject["default"].createElement(Icon,null)));}
+// EXTERNAL MODULE: ./node_modules/lodash/uniqBy.js
+var uniqBy = __webpack_require__(14);
+var uniqBy_default = /*#__PURE__*/__webpack_require__.n(uniqBy);
 ;// ./src/platforms/react/hooks/useLedapDataProvider.js
 function useLedapDataProvider(dpConfig){var dpRef=useRef(new WebDataProvider(dpConfig));var dp=dpRef.current;var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,models=_useDpEvent.models,isLoad=_useDpEvent.isLoad;// const [loading, setLoading] = useState(dp?.loading)
 // useEffect(() => {
@@ -12530,7 +12772,7 @@ function useLedapDataProvider(dpConfig){var dpRef=useRef(new WebDataProvider(dpC
 // }, [])
 return{isLoading:loading,data:models,setParams:dp===null||dp===void 0?void 0:dp.setParams,isLoad:isLoad};}function useDpEvent(dp){var _useState=(0,external_react_namespaceObject.useState)(dp===null||dp===void 0?void 0:dp.loading),_useState2=slicedToArray_slicedToArray(_useState,2),loading=_useState2[0],setLoading=_useState2[1];(0,external_react_namespaceObject.useEffect)(function(){var _dp$on,_dp$on2;function onBeforeGetData(){setLoading(true);}function onAfterGetData(){setLoading(false);}dp===null||dp===void 0||(_dp$on=dp.on)===null||_dp$on===void 0||_dp$on.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$on2=dp.on)===null||_dp$on2===void 0||_dp$on2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);return function(){var _dp$off,_dp$off2;dp===null||dp===void 0||(_dp$off=dp.off)===null||_dp$off===void 0||_dp$off.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$off2=dp.off)===null||_dp$off2===void 0||_dp$off2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);};},[]);return{loading:loading,models:dp===null||dp===void 0?void 0:dp.models,isLoad:dp===null||dp===void 0?void 0:dp.isLoad};}
 ;// ./src/platforms/react/components/searchinput/SearchInput.tsx
-var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,_props$fieldNames=props.fieldNames,fieldNames=_props$fieldNames===void 0?{label:"text",value:"id"}:_props$fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var _handleChange=function _handleChange(value){onSetValue===null||onSetValue===void 0||onSetValue(value);};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _onListScroll=function _onListScroll(e){var _e$target=e.target,scrollTop=_e$target.scrollTop,scrollHeight=_e$target.scrollHeight,clientHeight=_e$target.clientHeight;var isBottom=scrollTop+clientHeight+20>=scrollHeight;if(isBottom){dp.refresh('footer');}};var _options=data;var _value=value;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({fieldNames:fieldNames,showSearch:true,allowClear:true,value:_value,placeholder:model.getAttributeHint(attr)||"",defaultActiveFirstOption:false,suffixIcon:null,filterOption:false,onSearch:_handleSearch,onChange:_handleChange,notFoundContent:loading?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Spin,{size:"small"}):null,options:_options,loading:loading,onPopupScroll:_onListScroll},resetProps));}
+var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,_props$fieldNames=props.fieldNames,fieldNames=_props$fieldNames===void 0?{label:"text",value:"id"}:_props$fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var _handleChange=function _handleChange(value){onSetValue===null||onSetValue===void 0||onSetValue(value);};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _onListScroll=function _onListScroll(e){var _e$target=e.target,scrollTop=_e$target.scrollTop,scrollHeight=_e$target.scrollHeight,clientHeight=_e$target.clientHeight;var isBottom=scrollTop+clientHeight+20>=scrollHeight;if(isBottom){dp.refresh('footer');}};var _options=uniqBy_default()(data,function(v){return v[fieldNames.value];});var _value=value;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({fieldNames:fieldNames,showSearch:true,allowClear:true,value:_value,placeholder:model.getAttributeHint(attr)||"",defaultActiveFirstOption:false,suffixIcon:null,filterOption:false,onSearch:_handleSearch,onChange:_handleChange,notFoundContent:loading?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Spin,{size:"small"}):null,options:_options,loading:loading,onPopupScroll:_onListScroll},resetProps));}
 ;// ./src/platforms/react/components/datepicker/utils.js
 function getDateValue(val){if(!val){return"";}return dayjs_min_default()(val);}function getRangeDataValue(val){if(!val){return[];}if(typeof val=='string'||typeof val=='number'){return[dayjs_min_default()(val),dayjs_min_default()(val)];}if(Array.isArray(val)){return val.map(function(v){return getDateValue(v);});}return[];}
 ;// ./src/platforms/react/components/datepicker/DatePicker.tsx
