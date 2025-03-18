@@ -218,7 +218,7 @@ function useFileList(initFileList = [], upload, attach) {
 }
 
 function checkFileType(file, allowedTypes) {
-  if (!file || !file.type || !file.name) {
+  if (!file || !file.name) {
     return false; // 文件无效
   }
 
