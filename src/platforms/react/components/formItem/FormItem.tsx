@@ -9,16 +9,21 @@ import { _module_formitem } from "./form-item.module.less";
 import { Row, Col, Form, FormItemProps as AntFormItemProps } from "antd";
 import FormContext from "../../contexts/FormContext";
 
-interface FormItemProp {
+interface FormItemProp extends AntFormItemProps {
   model?: any;
   attr: string;
   label?: string | number;
   FormComponent?: any;
   validate?: Array<string>;
   children?: any;
-  antProps?: AntFormItemProps;
   FormComponentProps?: any;
   dp?: any;
+  inline?: boolean;
+  show?: boolean;
+  showError?:boolean;
+  showLabel?:boolean;
+  className?:string;
+  onChanged?:Function
 }
 
 function FormItem(props: FormItemProp) {
@@ -29,19 +34,32 @@ function FormItem(props: FormItemProp) {
     label,
     validate,
     children,
-    antProps = {},
     dp,
+    inline,
+    show,
     FormComponentProps,
+    showLabel=true,
+    showError=true,
+    className,
+    onChanged,
     ...reset
   } = props;
-  const { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
+  let { labelCol = { span: 8 }, wrapperCol = { span: 16 } } = reset;
   const { setValue, getValue, updateView, model } = propModel
     ? useLedapModel(propModel)
     : useContext(FormContext);
 
   const _setValue = (val) => {
+    const changed = val!== model[attr]
     setValue(attr, val);
+    if(changed) {
+      onChanged?.(val)
+    }
   };
+  if (inline) {
+    labelCol = null;
+    wrapperCol = null;
+  }
 
   const required = model?.isRequired(attr);
 
@@ -51,12 +69,15 @@ function FormItem(props: FormItemProp) {
   //   hasError: model.hasErrors(attr),
   //   error: model.getFirstError(attr),
   // });
-
+  if (show === false) {
+    return null;
+  }
+  const _label = showLabel ? label || model?.getAttributeLabel(attr) : null
   return (
     <FormItemContext.Provider value={{ getValue, setValue }}>
       <Form.Item
-        className={classnames(_module_formitem, { required })}
-        label={label || model?.getAttributeLabel(attr)}
+        className={classnames(_module_formitem,className, { required, 'hide-error':showError === false })}
+        label={_label}
         labelCol={labelCol}
         wrapperCol={wrapperCol}
         validateStatus={model.hasErrors(attr) ? "error" : null}

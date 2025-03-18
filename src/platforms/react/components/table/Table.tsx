@@ -24,10 +24,24 @@ export default function Table(props: TableProps) {
     ...reset
   } = props;
 
-  const { models: data, isLoading, pager } = dp;
+  const { models: data, isLoading, pager,isLoad } = dp;
+   useEffect(() => {
+      if(isLoad) {
+        return
+      }
+      if (!isLoading) {
+        // dp.refresh()
+      }
+    }, [isLoad, isLoading]);
+    
+  
   const [ledapColumns, setLedapColumns] = useState(
     Column.normalizeColumns(columns)
   );
+  const [, setBool] = useState(false);
+  const _updateView = () => {
+    setBool((b) => !b);
+  };
 
   useEffect(() => {
     setLedapColumns(Column.normalizeColumns(columns));
@@ -63,12 +77,34 @@ export default function Table(props: TableProps) {
     showSizeChanger: false,
     ...paginationProp,
   };
-  const rowSelection = useSelection
-    ? {
-        onChange: onSelectionChanged,
-        ...(rowSelectionProps || {}),
+
+  const onRowSelectionChanged = (selectedRowKeys, selectedRows) => {
+    for (let i = 0; i < data.length; i++) {
+      const model = data[i];
+      if (selectedRowKeys.indexOf(model[rowKey]) > -1) {
+        model.is_checked = true;
+      } else {
+        if (model.is_checked === true) {
+          model.is_checked = undefined;
+          delete model.is_checked;
+        }
       }
-    : rowSelectionProps;
+    }
+    _updateView();
+    onSelectionChanged && onSelectionChanged(selectedRowKeys, selectedRows);
+  };
+  let rowSelection = rowSelectionProps;
+  if (useSelection) {
+    const selectedRowKeys = dp?.models
+      ?.filter((m) => m.is_checked === true)
+      .map((m) => m[rowKey]);
+    rowSelection = {
+      onChange: onRowSelectionChanged,
+      selectedRowKeys, // 受控选中状态
+      ...(rowSelectionProps || {}),
+    };
+  }
+
   return (
     <AntTable
       rowKey={rowKey}
@@ -105,6 +141,7 @@ function getAntColumns(ledapColumns, dp) {
     //   continue;
     // }
     const antdColumn: any = {
+      ...column,
       hidden: visible === false,
       title: getTableTitle(column),
     };

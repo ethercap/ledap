@@ -1,8 +1,27 @@
 {
   "name": "ledap",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "a javascript framwork, which can collaboration with Vue, angular, jquery etc.",
-  "main": "dist",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "typings/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "import": "./dist/react.js",
+      "require": "./dist/react.js"
+    },
+    "./react.css": {
+      "import": "./dist/react.css"
+    },
+    "./core": {
+      "import": "./dist/core.js",
+      "require": "./dist/core.js"
+    }
+  },
   "scripts": {
     "dev": "webpack-dev-server --config=./config/webpack.devServer.js",
     "dev:react": "webpack-dev-server --config=./config/webpack.react.devServer.js",
@@ -13,6 +32,7 @@
   "files": [
     "src",
     "dist",
+    "umd",
     "examples"
   ],
   "repository": {
@@ -35,6 +55,7 @@
     "babel-plugin-import": "^1.13.8",
     "babel-plugin-lodash": "^3.3.4",
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "eslint": "^9.20.1",
     "eslint-webpack-plugin": "^4.2.0",

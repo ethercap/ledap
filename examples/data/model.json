@@ -1,195 +1,361 @@
 {
-    "code" : 0,
-    "msg" : "操作成功",
-    "data" : {
-        "name": {
-            "label": "姓名",
-            "hint": "请输入姓名",
-            "rules": [{
-                "type": "required",
-                "options": { "message": "姓名不能为空",  "skipOnEmpty": 1 }
-            }, {
-                "type": "string",
-                "options": { "message": "必须是字符串", "max": 5 }
-            }],
-            "value": ""
+  "code": 0,
+  "msg": "操作成功",
+  "data": {
+    "name": {
+      "label": "姓名",
+      "hint": "请输入姓名",
+      "rules": [
+        {
+          "type": "required",
+          "options": {
+            "message": "姓名不能为空",
+            "skipOnEmpty": 1
+          }
         },
-        "introduce": {
-            "label": "简介",
-            "hint": "请输入简介",
-            "rules": [{
-                "type": "required"
-            }],
-            "value": ""
+        {
+          "type": "string",
+          "options": {
+            "message": "必须是字符串",
+            "max": 5
+          }
+        }
+      ],
+      "value": ""
+    },
+    "introduce": {
+      "label": "简介",
+      "hint": "请输入简介",
+      "rules": [
+        {
+          "type": "required"
+        }
+      ],
+      "value": ""
+    },
+    "age": {
+      "label": "年龄",
+      "hint": "请输入年龄",
+      "rules": [
+        {
+          "type": "number",
+          "options": {
+            "message": "xxx",
+            "max": 200,
+            "min": 18
+          }
+        }
+      ],
+      "value": ""
+    },
+    "numberTag":{
+      "label":"数字标签",
+      "hint":"请输入数字标签",
+      "value":[11,22,33]
+    },
+    "textTag":{
+      "label":"文本标签",
+      "hint":"请输入文本标签",
+      "value":["aa","bb","cc"]
+    },
+    "email": {
+      "label": "邮箱",
+      "value": "",
+      "hint": "请输入邮箱",
+      "rules": [
+        {
+          "type": "email",
+          "options": {
+            "message": "邮箱格式不正确"
+          }
         },
-        "age": {
-            "label": "年龄",
-            "hint": "请输入年龄",
-            "rules": [{
-                "type": "number",
-                "options": { "message": "xxx", "max": 200, "min": 18 }
-            }],
-            "value": ""
+        {
+          "type": "required",
+          "options": {
+            "message": "邮箱不能为空"
+          }
+        }
+      ]
+    },
+    "city": {
+      "label": "城市",
+      "rules": [
+        {
+          "type": "required",
+          "options": {
+            "message": "城市不能为空。"
+          },
+          "skipOnError": true,
+          "skipOnEmpty": false
         },
-        "email": {
-            "label": "邮箱",
-            "value": "",
-            "hint": "请输入邮箱",
-            "rules": [{
-                "type": "email",
-                "options": {
-                    "message": "邮箱格式不正确"
-                }
-            }, {
-                "type": "required",
-                "options": {
-                    "message": "邮箱不能为空"
-                }
-            }]
-        },
-        "city": {
-            "label": "城市",
-            "rules": [
-              {
-                "type": "dict",
-                "options": {
-                  "list": {
-                    "北京": "北京",
-                    "上海": "上海",
-                    "杭州": "杭州",
-                    "成都": "成都",
-                    "武汉": "武汉",
-                    "南京": "南京",
-                    "厦门": "厦门",
-                    "其他": "其他",
-                    "a": "a",
-                    "3": "3"
-                  },
-                  "order": ["北京", "上海","杭州","成都","武汉","南京","3","厦门","a","其他"],
-                  "multiple": false,
-                  "excludes" : [],
-                  "message": "城市的值不正确",
-                  "skipOnEmpty": 1
-                }
-              }
+        {
+          "type": "dict",
+          "options": {
+            "list": {
+              "北京": "北京",
+              "上海": "上海",
+              "杭州": "杭州",
+              "成都": "成都",
+              "武汉": "武汉",
+              "南京": "南京",
+              "厦门": "厦门",
+              "其他": "其他",
+              "a": "a",
+              "3": "3"
+            },
+            "order": [
+              "北京",
+              "上海",
+              "杭州",
+              "成都",
+              "武汉",
+              "南京",
+              "3",
+              "厦门",
+              "a",
+              "其他"
             ],
-            "value": "上海"
-          },
-          "birthDate" : {
-            "label":"生日",
-            "value": "2010-01-01",
-            "rules" : []
-          },
-          "stayCity": {
-            "label": "常驻城市",
-            "rules": [
-              {
-                "type": "dict",
-                "options": {
-                  "list": {
-                    "a": "a",
-                    "北京": "北京",
-                    "上海": "上海",
-                    "3": "3",
-                    "杭州": "杭州",
-                    "成都": "成都",
-                    "武汉": "武汉",
-                    "南京": "南京",
-                    "厦门": "厦门",
-                    "其他": "其他",
-                    "a": "a",
-                    "3": "3",
-                    "4": "4",
-                    "-1": "-1"
-                  },
-                  "order": ["北京", "a", "上海", "3", "杭州", "成都", -1, "武汉", "南京", "厦门", "4", "其他"],
-                  "multiple": true,
-                  "excludes" : ["武汉", 4],
-                  "max" : 3,
-                  "message": "常驻城市的值不正确",
-                  "skipOnEmpty": 1
-                }
-              }
+            "multiple": false,
+            "excludes": [],
+            "message": "城市的值不正确",
+            "skipOnEmpty": 1
+          }
+        }
+      ],
+      "value": ""
+    },
+    "birthDate": {
+      "label": "生日",
+      "value": "2010-01-01",
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate": {
+      "label": "时间段",
+      "value": [],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate1": {
+      "label": "时间段1",
+      "value": ["2027-01-01"],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate2": {
+      "label": "时间段2",
+      "value": ["","2027-01-01"],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate3": {
+      "label": "时间段3",
+      "value": ["",""],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "rangeDate4": {
+      "label": "时间段4",
+      "value": [1741672052864],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "color": {
+      "label": "颜色",
+      "value": "",
+      "rules": [],
+      "hint": "请选择颜色"
+    },
+    "color1": {
+      "label": "颜色1",
+      "value": "#ff0000",
+      "rules": [],
+      "hint": "请选择颜色1"
+    },
+    "stayCity": {
+      "label": "常驻城市",
+      "rules": [
+        {
+          "type": "dict",
+          "options": {
+            "list": {
+              "北京": "北京市",
+              "上海": "上海",
+              "杭州": "杭州",
+              "成都": "成都",
+              "武汉": "武汉",
+              "南京": "南京",
+              "厦门": "厦门",
+              "其他": "其他",
+              "a": "aaa",
+              "3": "333",
+              "4": "4",
+              "-1": "-1"
+            },
+            "order": [
+              "北京",
+              "a",
+              "上海",
+              "3",
+              "杭州",
+              "成都",
+              -1,
+              "武汉",
+              "南京",
+              "厦门",
+              "4",
+              "其他"
             ],
-            "value": ["成都", "杭州"]
+            "multiple": true,
+            "excludes": [
+              "武汉",
+              "4"
+            ],
+            "max": 3,
+            "message": "常驻城市的值不正确",
+            "skipOnEmpty": 1
+          }
+        }
+      ],
+      "value": [
+        "成都",
+        "杭州"
+      ]
+    },
+    "sex": {
+      "label": "性别",
+      "rules": [
+        {
+          "type": "dict",
+          "options": {
+            "list": {
+              "1": "男",
+              "2": "女",
+              "3": "不可用"
+            },
+            "multiple": false,
+            "excludes": [],
+            "message": "性别不正确",
+            "skipOnEmpty": 1
+          }
+        }
+      ],
+      "value": "1"
+    },
+    "phone": {
+      "label": "手机号",
+      "rules": [
+        {
+          "type": "match",
+          "options": {
+            "pattern": "/^1[3-9]{1}\\d{9}$/",
+            "not": false,
+            "message": "手机号是无效的。",
+            "skipOnEmpty": 1
+          }
+        }
+      ],
+      "hint": "请输入手机号",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "rules": [
+        {
+          "type": "match",
+          "options": {
+            "pattern": "/(?=^.{8,16}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
+            "not": false,
+            "message": "密码必须8-16位且包含大小写字母，数字或特殊字符。",
+            "skipOnEmpty": 1
+          }
+        },
+        {
+          "type": "required",
+          "options": {
+            "message": "密码必须填写"
+          }
+        }
+      ],
+      "hint": "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
+      "value": ""
+    },
+    "upload": {
+      "label": "上传",
+      "value": [
+        {
+          "name": "name-initial",
+          "url": "url-initial"
+        }
+      ]
+    },
+    "upload2": {
+      "label": "上传2(url-list)",
+      "value": [
+        "url-initial2"
+      ]
+    },
+    "upload3": {
+      "label": "上传3(string值)",
+      "value": "url-initial3"
+    },
+    "search1": {
+      "label": "搜索1",
+      "hint": "关键词",
+      "value": "3"
+    },
+    "search2": {
+      "label": "搜索2（多个值）",
+      "hint": "关键词",
+      "value": [
+        1
+      ]
+    },
+    "icon": {
+      "label": "道具图标(URL地址)",
+      "rules": [
+        {
+          "type": "required",
+          "options": {
+            "message": "道具图标不能为空。"
           },
-          "sex": {
-            "label": "性别",
-            "rules": [
-          {
-            "type": "dict",
-            "options": {
-              "list": {
-                "1": "男",
-                "2": "女",
-                "3": "不可用"
-              },
-              "multiple": false,
-              "excludes" : [],
-              "message": "性别不正确",
-              "skipOnEmpty": 1
-            }
-          }
-        ],
-        "value": 1
-      },
-
-      "phone": {
-        "label": "手机号",
-        "rules": [
-          {
-            "type": "match",
-            "options": {
-              "pattern": "/^1[3-9]{1}\\d{9}$/",
-              "not": false,
-              "message": "手机号是无效的。",
-              "skipOnEmpty": 1
-            }
-          }
-        ],
-        "hint" : "请输入手机号",
-        "value": ""
-      },
-      "password": {
-        "label": "密码",
-        "rules": [
-          {
-            "type": "match",
-            "options": {
-              "pattern": "/(?=^.{8,16}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
-              "not": false,
-              "message": "密码必须8-16位且包含大小写字母，数字或特殊字符。",
-              "skipOnEmpty": 1
-            }
+          "skipOnError": true,
+          "skipOnEmpty": false
+        },
+        {
+          "type": "string",
+          "options": {
+            "message": "道具图标必须是一条字符串。",
+            "max": 255,
+            "tooLong": "道具图标只能包含至多255个字符。",
+            "skipOnEmpty": 1
           },
-          {
-             "type":"required",
-             "options" : {
-                "message" : "密码必须填写"
-             }
-          }
-        ],
-        "hint" : "8到16位密码, 包括大写字母，小写字母, 数字或特殊字符。",
-        "value": ""
-      },
-      "upload": {
-          "label": "上传",
-          "value": [
-              {
-                  "name": "name-initial",
-                  "url": "url-initial"
-              }
-          ]
-      },
-      "search1": {
-        "label": "搜索1",
-        "hint" : "关键词",
-        "value": "key"
-      },
-      "search2": {
-        "label": "搜索2",
-        "hint" : "关键词",
-        "value": 1
-      }
+          "skipOnError": true,
+          "skipOnEmpty": true
+        }
+      ],
+      "value": ""
+    },
+    "batch_id": {
+      "label": "批次",
+      "rules": [],
+      "value": 0
+    },
+    "batch_id2": {
+      "label": "批次",
+      "rules": [
+        {
+          "type": "double",
+          "options": {
+            "pattern": "/^\\s*[+-]?\\d+\\s*$/",
+            "message": "批次必须是整数。",
+            "skipOnEmpty": 1
+          },
+          "skipOnError": true,
+          "skipOnEmpty": true
+        }
+      ],
+      "value": ""
     }
+  }
 }

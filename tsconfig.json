@@ -1,6 +1,8 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "./dist/types",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "sourceMap": true,
