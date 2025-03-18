@@ -217,11 +217,16 @@ function useFileList(initFileList = [], upload, attach) {
   };
 }
 
-function checkFileType(file, mimeTypes) {
-  if (mimeTypes && mimeTypes.length > 0) {
-    return mimeTypes.indexOf(file.type) > -1;
+function checkFileType(file, allowedTypes) {
+  if (!file || !file.type || !file.name) {
+    return false; // 文件无效
   }
-  return true;
+
+  return allowedTypes.some(
+    (type) =>
+      file.type === type ||
+      file.name.toLowerCase().endsWith(`.${type.toLowerCase()}`)
+  );
 }
 function checkFilePxSize(file, width, height) {
   return new Promise((resolve, reject) => {
