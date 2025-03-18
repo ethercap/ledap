@@ -33,7 +33,8 @@
     "src",
     "dist",
     "umd",
-    "examples"
+    "examples",
+    "typings"
   ],
   "repository": {
     "type": "git",
