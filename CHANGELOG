@@ -1,3 +1,44 @@
+
+## [0.1.13]
+
+### Added
+
+- 增加 `Uploader` 组件 文件上传组件
+- 增加 `Segmented` 分段控制器组件
+- 增加 `ColorPicker` 颜色选择组件
+- 增加 `RangeDatePicker` 范围时间选择组件
+
+## [0.1.12] - 2025-02-20
+
+### Addad
+
+- 增加 ledap-react 组件：Form,FormItem,Form,FormItem,
+  Button,
+  FormValidateEvent,
+  RadioGroup,
+  CheckboxGroup,
+  Select,
+  SearchInput,
+  DatePicker,
+  Table,
+  Modal
+
+- 增加 react examples（umd 引入方式），目录：examples/react
+
+- 增加 react 组件开发调试环境，目录：src/react-test
+
+### Changed
+
+- 文件打包修改
+  - 支持同时输出 umd 文件和 esm 模块
+  - webpack 打包修改，支持引入 css/less/cssModule/图片资源等
+
+## [0.1.11] - 2025-02-12
+
+#### Changed
+
+- updated packages
+
 ##[0.1.10] - 2021-01-20
 
 ### Added
@@ -150,42 +191,3 @@
 
 - Fix the bug when npm install ledap, show "ledap Appears to be a git repo or submodule"
 
-## [0.1.11] - 2025-02-12
-
-#### Changed
-
-- updated packages
-
-## [0.1.12] - 2025-02-20
-
-### Addad
-
-- 增加 ledap-react 组件：Form,FormItem,Form,FormItem,
-  Button,
-  FormValidateEvent,
-  RadioGroup,
-  CheckboxGroup,
-  Select,
-  SearchInput,
-  DatePicker,
-  Table,
-  Modal
-
-- 增加 react examples（umd 引入方式），目录：examples/react
-
-- 增加 react 组件开发调试环境，目录：src/react-test
-
-### Changed
-
-- 文件打包修改
-  - 支持同时输出 umd 文件和 esm 模块
-  - webpack 打包修改，支持引入 css/less/cssModule/图片资源等
-
-## [0.1.13]
-
-### Added
-
-- 增加 `Uploader` 组件 文件上传组件
-- 增加 `Segmented` 分段控制器组件
-- 增加 `ColorPicker` 颜色选择组件
-- 增加 `RangeDatePicker` 范围时间选择组件
