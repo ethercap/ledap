@@ -89,7 +89,7 @@ export default function TagList(props: TagListProps) {
       {_value.map((item, index) => {
         return (
           <AntTag
-            key={index}
+            key={`${index}-${item}`}
             closable={closable}
             onClose={(e) => {
               const newValue = [..._value];
