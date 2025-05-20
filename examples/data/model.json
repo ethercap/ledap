@@ -356,6 +356,10 @@
         }
       ],
       "value": ""
+    },
+    "switch":{
+      "label": "开关",
+      "value":false
     }
   }
 }

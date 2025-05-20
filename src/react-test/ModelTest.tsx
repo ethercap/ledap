@@ -18,6 +18,7 @@ import {
   ColorPicker,
   RangeDatePicker,
   TagList,
+  Switch
 } from "@/platforms/react";
 import { message } from "antd";
 
@@ -109,6 +110,10 @@ export default function ModelTestComponent() {
             console.log("onChanged:", v);
           }}
           FormComponent={Select}
+        />
+        <FormItem
+          attr="switch"
+          FormComponent={Switch}
         />
         <FormItem
           attr="search1"
