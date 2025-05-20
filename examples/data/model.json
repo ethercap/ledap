@@ -387,6 +387,44 @@
         }
       ],
       "value": 0
+    },
+    "clients":{
+      "label": "显示端",
+      "rules": [
+        {
+          "type": "dict",
+          "options": {
+            "list": [
+              "网页",
+              "客户端",
+              "安卓",
+              "IOS"
+            ],
+            "order": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "multiple": true,
+            "excludes": [],
+            "message": "显示端的值不正确",
+            "min": 1,
+            "tooSmall": "显示端最少需要选择1个",
+            "max": 4,
+            "tooMuch": "显示端最多只允许选择4个",
+            "skipOnEmpty": 1
+          },
+          "skipOnError": true,
+          "skipOnEmpty": true
+        }
+      ],
+      "value": [
+        0,
+        1,
+        2,
+        3
+      ]
     }
   }
 }
