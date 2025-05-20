@@ -1,3 +1,4 @@
+import React from 'react'
 import { Switch as AntSwitch, SwitchProps as AntSwitchProps } from 'antd'
 interface SwitchProps extends AntSwitchProps {
     onSetValue:Function;
@@ -6,5 +7,5 @@ interface SwitchProps extends AntSwitchProps {
 }
 export default function Switch(props:SwitchProps) {
     const { value:propValue,...reset } = props
-    return <Switch checked={propValue} {...reset} />
+    return <AntSwitch checked={propValue} {...reset} />
 }
