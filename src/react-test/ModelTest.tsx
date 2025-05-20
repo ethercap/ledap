@@ -132,7 +132,8 @@ export default function ModelTestComponent() {
             fieldNames: { label: "name", value: "id" },
           }}
         />
-        <FormItem attr="birthDate" FormComponent={DatePicker} />
+        {/* <FormItem attr="birthDate" FormComponent={DatePicker} /> */}
+        <FormItem attr="birthDate" FormComponentProps={{showTime:true,format:"YYYY-MM-DD HH:mm:ss"}} FormComponent={DatePicker} />
         <FormItem
           attr="rangeDate"
           FormComponent={RangeDatePicker}

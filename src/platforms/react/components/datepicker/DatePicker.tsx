@@ -12,6 +12,9 @@ interface DatePickerProps extends AntDatePickerProps {
   model: any;
   attr: string;
   format?: string;
+  dp?:any;
+  onBlur?:Function;
+  validate?:any
 }
 
 export default function DatePicker(props: DatePickerProps) {
@@ -21,6 +24,9 @@ export default function DatePicker(props: DatePickerProps) {
     value,
     onSetValue,
     format = "YYYY-MM-DD",
+    dp,
+    validate,
+    onBlur,
     ...reset
   } = props;
   function _onChange(_val) {
