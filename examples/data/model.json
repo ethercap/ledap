@@ -360,6 +360,33 @@
     "switch":{
       "label": "开关",
       "value":false
+    },
+    "user_filter":{
+      "label": "User Filter",
+      "rules": [
+        {
+          "type": "dict",
+          "options": {
+            "list": [
+              "全体可见",
+              "隐藏",
+              "测试用户可见"
+            ],
+            "order": [
+              "0",
+              "1",
+              "2"
+            ],
+            "multiple": false,
+            "excludes": [],
+            "message": "User Filter的值不正确",
+            "skipOnEmpty": 1
+          },
+          "skipOnError": true,
+          "skipOnEmpty": true
+        }
+      ],
+      "value": 0
     }
   }
 }
