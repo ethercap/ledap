@@ -11,6 +11,7 @@ interface SelectProps {
   options?: any;
   formatOptions?: Function;
   allowClear?:boolean
+  checkDisabled?:Function
 }
 export default function Select(props: SelectProps) {
   const {
@@ -20,6 +21,7 @@ export default function Select(props: SelectProps) {
     onSetValue,
     formatOptions,
     allowClear=true,
+    checkDisabled,
     ...resetProps
     // style={width:120}
   } = props;
@@ -31,7 +33,7 @@ export default function Select(props: SelectProps) {
   const dictOptions = lodash.get(model.rules(), [attr, "dict"], {});
   const maxCount = dictOptions?.multiple ? dictOptions.max : undefined;
   const mode = dictOptions?.multiple ? "multiple" : undefined;
-  const _options = formatSelectOptions(model, attr);
+  const _options = formatSelectOptions(model, attr, checkDisabled);
   let _value = value;
   if (mode === undefined) {
     _value = _options.find((o) => o.value == _value);
