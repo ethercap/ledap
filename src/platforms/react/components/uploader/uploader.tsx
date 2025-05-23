@@ -4,6 +4,7 @@ import { message, Upload, Button } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { get } from "lodash";
 import { LedapAppContext } from "../configProvider/LedapAppContext";
+import { getDefaultHint,getDefaultFiles,checkFileType,checkFilePxSize } from './utils'
 
 interface Size {
   width: number;
@@ -54,7 +55,7 @@ function Uploader(props: UploaderDraggerProps) {
     ...reset
   } = props;
   const { multiple = false, onFileChanged } = reset;
-  const _hint = hint || model?.getAttributeHint?.(attr);
+  const _hint = hint || model?.getAttributeHint?.(attr) || getDefaultHint(mimeTypes,maxPxSize,maxFileKBSize);
   const propValue = model[attr];
   const _defaultFileList = getDefaultFiles(propValue);
   const { fileList, removeFile, addFile, clear } = useFileList(
@@ -217,52 +218,7 @@ function useFileList(initFileList = [], upload, attach) {
   };
 }
 
-function checkFileType(file, allowedTypes) {
-  if (!file || !file.name) {
-    return false; // 文件无效
-  }
 
-  return allowedTypes.some(
-    (type) =>
-      file.type === type ||
-      file.name.toLowerCase().endsWith(`.${type.toLowerCase()}`)
-  );
-}
-function checkFilePxSize(file, width, height) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = function () {
-      if (img.width > width || img.height > height) {
-        reject("图像尺寸过大");
-      } else {
-        resolve(true);
-      }
-    };
-    img.onerror = function (e) {
-      reject("图像加载失败");
-    };
-    img.src = URL.createObjectURL(file);
-  });
-}
 
-function getDefaultFiles(value) {
-  if (!value) {
-    return [];
-  }
-  if (typeof value == "string" && value.length > 0) {
-    return [{ url: value, name: value }];
-  }
-  if (value.length == 0) {
-    return [];
-  }
-  // array
-  if (value[0]?.url) {
-    return value;
-  }
-  if (typeof value[0] == "string") {
-    return value.map((item) => ({ name: item, url: item }));
-  }
-  return [];
-}
 
 export default Uploader;

@@ -249,7 +249,7 @@ export default function ModelTestComponent() {
           FormComponentProps={{
             multiple: false,
             dragger: true,
-            hint: "PNG格式 512x512 不超过1M",
+            // hint: "PNG格式 512x512 不超过1M",
             text: "点击或拖拽到此处上传file1",
             mimeTypes: ["image/png"],
             maxFileKBSize: 1024,
