@@ -4,6 +4,7 @@ import Column from "../../../../widgets/Column";
 
 interface TableProps extends AntTableProps {
   dp?: any;
+  load?:boolean;
   columns?: Array<any>;
   paginationProp?: any;
   useSelection?: boolean; // 是否使用选择器
@@ -21,18 +22,17 @@ export default function Table(props: TableProps) {
     rowSelection: rowSelectionProps,
     onSelectionChanged,
     rowKey = "id",
+    load,
     ...reset
   } = props;
 
   const { models: data, isLoading, pager,isLoad } = dp;
-   useEffect(() => {
-      if(isLoad) {
-        return
+
+    useEffect(() => {
+      if(load !== false) {
+        dp.refresh()
       }
-      if (!isLoading) {
-        // dp.refresh()
-      }
-    }, [isLoad, isLoading]);
+    },[])
     
   
   const [ledapColumns, setLedapColumns] = useState(

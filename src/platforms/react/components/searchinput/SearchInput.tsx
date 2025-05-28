@@ -59,7 +59,8 @@ export default function SearchInput(props: SearchInputProps) {
     }
   }
   const _options = uniqBy(data,(v) => v[fieldNames.value]);
-  const _value = value;
+  const selOpt = _options?.find(o => o[fieldNames.value] == value)
+  const _value = selOpt !== undefined ? selOpt?.[fieldNames.value] : value
 
   return (
     <AntSelect
