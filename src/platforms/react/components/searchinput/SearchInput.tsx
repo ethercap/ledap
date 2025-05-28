@@ -36,7 +36,15 @@ export default function SearchInput(props: SearchInputProps) {
 
   const { loading,isLoad,models: data } = useDpEvent(dp)
   
-
+  useEffect(() => {
+    if(model?.[attr]) {
+      dp?.setParams({
+        [fieldNames?.value || 'id'] :model?.[attr]
+      });
+    } else {
+      dp?.refresh()
+    }
+  }, [])
 
   const _handleSearch = (value) => {
     const searchParams = { [paramName]: value };
