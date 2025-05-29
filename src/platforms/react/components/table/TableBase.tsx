@@ -33,17 +33,14 @@ export default function TableBase(props: TableProps) {
     ...reset
   } = props;
 
-  
-
   const { models: data, isLoading, pager,isLoad } = dp;
 
   const { batchAdd,add,remove,batchRemove,selectedIds } = useContext(TableContext)
 
-
     useEffect(() => {
-      if(load !== false) {
+        if(load !== false) {
         dp.refresh()
-      }
+        }
     },[])
     
   
@@ -109,7 +106,6 @@ export default function TableBase(props: TableProps) {
       ...(rowSelectionProps || {}),
     };
   }
-console.log("当前选中：",rowSelection?.selectedRowKeys)
   return (
     <AntTable
       rowKey={rowKey}
