@@ -27,3 +27,8 @@ label {
   cursor: pointer;
 }
 
+.selection-tags .selection-tags-title {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
