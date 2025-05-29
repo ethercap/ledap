@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import * as ledap from "./lib/ledap";
 import {
   Form,
@@ -19,6 +19,8 @@ import { GetParams } from "./utils.js";
 
 export default function TableTest() {
   const [selectedIds, setSelectedIds] = useState([]);
+
+  const selectionRef = useRef([])
 
   const dp = ledap.App.useWebDp({
     httpOptions: {
@@ -63,7 +65,7 @@ export default function TableTest() {
     const selectedIds = dp?.models
       ?.filter((m) => m.is_checked === true)
       .map((m) => m.id);
-    console.log(selectedIds);
+    console.log(selectedIds,"sel:",selectionRef.current);
   }
 
   function _writeCode() {
@@ -145,10 +147,18 @@ export default function TableTest() {
         columns={columns}
         dp={dp}
         useSelection
-        // onSelectionChanged={(selectedRowKeys, selectedRows) => {
-        //   setSelectedIds(selectedRowKeys);
-        // }}
+        persistent
+        labelKey="fullname"
+        onSelectionChanged={(selectedItems) => {
+          selectionRef.current = selectedItems.map(i => i.id)
+        }}
       />
+      <hr />
+      {/* <Table
+        columns={columns}
+        dp={dp}
+        useSelection
+      /> */}
     </Card>
   );
 }
