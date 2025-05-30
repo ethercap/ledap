@@ -30,7 +30,7 @@ export default function DatePicker(props: DatePickerProps) {
     ...reset
   } = props;
   function _onChange(_val) {
-    const val = _val ? _val.format(format) : undefined;
+    const val = _val ? _val.format(format) : null;
     onSetValue?.(val);
   }
   const placeholder = model.getAttributeHint(attr);

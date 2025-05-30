@@ -91,6 +91,9 @@ export default function SearchInput(props: SearchInputProps) {
       suffixIcon={null}
       filterOption={false}
       onSearch={_handleSearch}
+      onClear={() => {
+        _handleSearch('')
+      }}
       onChange={_handleChange}
       notFoundContent={loading ? <Spin size="small" /> : null}
       options={_options}

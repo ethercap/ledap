@@ -234,7 +234,7 @@
               "3": "不可用"
             },
             "multiple": false,
-            "excludes": [],
+            "excludes": ["3"],
             "message": "性别不正确",
             "skipOnEmpty": 1
           }
