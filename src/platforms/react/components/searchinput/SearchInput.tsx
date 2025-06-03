@@ -34,7 +34,8 @@ export default function SearchInput(props: SearchInputProps) {
   const searchedRef = useRef(false)
 
   const _handleChange = (value) => {
-    onSetValue?.(value);
+    const _value = value === undefined ? null : value
+    onSetValue?.(_value);
 
   };
 
