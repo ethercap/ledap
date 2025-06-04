@@ -112,6 +112,25 @@ export default function TableTest() {
       },
     },
   ];
+  const nodeColumns = ['id', {label:"儿子用户名",attribute:"username"}, {label:"操作", value:(model) => {
+    return (
+      <Button.Group>
+        <Button
+          type="primary"
+          onClick={() => {
+            window.open(
+              `https://mis.dev.chuanyuapp.com/user/view?id=${model.id}`
+            );
+          }}
+        >
+          查看
+        </Button>
+        <Button type="primary" danger onClick={() => _clickDel(model)}>
+          删除
+        </Button>
+      </Button.Group>
+    );
+  }}]
   console.log('searchModel:',dp.searchModel['id'])
   return (
     <Card>
@@ -152,7 +171,7 @@ export default function TableTest() {
         onSelectionChanged={(selectedItems) => {
           selectionRef.current = selectedItems.map(i => i.id)
         }}
-        expandColumns={columns}
+        expandColumns={nodeColumns}
         expandKey={'son'}
       />
       <hr />

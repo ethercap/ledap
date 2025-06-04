@@ -52,7 +52,7 @@
                 "is_golive": false,
                 "is_personal_card_bg": false,
                 "is_checked": false,
-                "sun":[
+                "son":[
                     { "username":"儿子1","id":1, "avatar": "avatars/k/2.png" },
                     { "username":"儿子2","id":2, "avatar": "avatars/k/2.png" }
                 ]
@@ -106,9 +106,9 @@
                 "is_golive": false,
                 "is_personal_card_bg": false,
                 "is_checked": false,
-                "sun":[
-                    { "username":"儿子1","id":3 },
-                    { "username":"儿子2","id":4 }
+                "son":[
+                    { "username":"儿子11","id":3 },
+                    { "username":"儿子22","id":4 }
                 ]
             },
             {
@@ -134,7 +134,11 @@
                 "is_ai_reduce_noise": false,
                 "is_golive": false,
                 "is_personal_card_bg": false,
-                "is_checked": false
+                "is_checked": false,
+                "son":[
+                    { "username":"儿子111","id":3 },
+                    { "username":"儿子22222","id":4 }
+                ]
             },
             {
                 "id": 8035445,
