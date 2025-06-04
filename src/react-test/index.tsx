@@ -34,7 +34,7 @@ function App() {
       <div className="app">
         this is react app1
         <div className="react-form">
-          <ModelTestComponent />
+          {/* <ModelTestComponent /> */}
           <hr />
           <TableTest />
           <hr />

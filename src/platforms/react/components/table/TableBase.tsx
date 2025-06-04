@@ -1,7 +1,7 @@
-import React, { useState, useEffect,useContext } from "react";
-import { Table as AntTable, TableProps as AntTableProps } from "antd";
+import React, { useState, useEffect,useContext,useRef } from "react";
+import { Table as AntTable, TableProps as AntTableProps,Badge,Space } from "antd";
 import Column from "../../../../widgets/Column";
-import { getAntColumns,getSortDir } from "./utils";
+import { getAntColumns,getAntSubColumns,getSortDir } from "./utils";
 import TableContext from './TableContext'
 
 
@@ -16,6 +16,10 @@ interface TableProps extends AntTableProps {
   rowKey?: any;
   persistent:boolean;// 是否支持持续选择
   labelKey?:string;// 多选时的label
+  expandKey?:string;// 子表格key
+  expandColumns?:any[];// 子表格表头
+  expandTableProps?:any;// 子表格属性
+  defaultExpandAllRows?:boolean;// 默认展开子表格
 }
 
 export default function TableBase(props: TableProps) {
@@ -30,6 +34,13 @@ export default function TableBase(props: TableProps) {
     load,
     persistent=false,
     labelKey="text",
+    expandKey,
+    expandColumns,
+    defaultExpandAllRows=true,
+    expandTableProps={
+      rowKey:"id",
+      size:"small"
+    },
     ...reset
   } = props;
 
@@ -48,10 +59,18 @@ export default function TableBase(props: TableProps) {
     Column.normalizeColumns(columns)
   );
 
+  const [ledapSubColumns, setLedapSubColumns] = useState(
+    Column.normalizeColumns(expandColumns)
+  );
+
 
   useEffect(() => {
     setLedapColumns(Column.normalizeColumns(columns));
   }, [columns]);
+
+  useEffect(() => {
+    setLedapSubColumns(Column.normalizeColumns(expandColumns));
+  }, [expandColumns]);
 
   const _onChange = (pagination, filters, sorter) => {
     if (pagination.current !== pager.page) {
@@ -106,8 +125,14 @@ export default function TableBase(props: TableProps) {
       ...(rowSelectionProps || {}),
     };
   }
+  let expandedRowRender = expandKey ?  (_data) => {
+    const expandDataSource = _data[expandKey] || []
+    return <AntTable columns={getAntSubColumns(ledapSubColumns)} dataSource={expandDataSource} pagination={false} {...expandTableProps} />
+  } : null
+  
   return (
     <AntTable
+      key={getKey(expandKey,defaultExpandAllRows,rowKey,data)}
       rowKey={rowKey}
       rowSelection={rowSelection}
       columns={antColumns}
@@ -115,7 +140,15 @@ export default function TableBase(props: TableProps) {
       dataSource={data}
       loading={isLoading}
       pagination={pagination}
+      expandable={{ expandedRowRender, defaultExpandAllRows }}
       {...reset}
     />
   );
+}
+
+function getKey(expandKey,defaultExpandAllRows,rowKey,data=[]){
+  if(!expandKey) return undefined
+  // fix 表格首次加载没数据不展开子表格BUG
+  if(!defaultExpandAllRows) return undefined
+  return data.map(m => m[rowKey]).join(",")
 }
