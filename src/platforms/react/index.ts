@@ -24,8 +24,11 @@ export { default as ColorPicker } from './components/color-picker/ColorPicker'
 export { default as TagList } from './components/tag-list/TagList'
 export { default as Switch } from './components/switch/Switch'
 
+
 export * from './contexts/'
 
 export * from './hooks/'
 
 export * from './const';
+
+export * from './components/table/utils';
