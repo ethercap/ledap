@@ -49,11 +49,11 @@ function FormItem(props: FormItemProp) {
     ? useLedapModel(propModel)
     : useContext(FormContext);
 
-  const _setValue = (val) => {
+  const _setValue = (val,extra) => {
     const changed = val!== model[attr]
     setValue(attr, val);
     if(changed) {
-      onChanged?.(val)
+      onChanged?.(val,extra)
     }
   };
   if (inline) {
