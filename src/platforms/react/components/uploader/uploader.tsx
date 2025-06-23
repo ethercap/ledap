@@ -136,7 +136,7 @@ function Uploader(props: UploaderDraggerProps) {
   useEffect(() => {
     // console.log("file list changed:", fileList);
     const _fileList = upload ? fileList.map((f) => f.url) : fileList;
-    const targetFile = multiple ? [..._fileList] : _fileList[0];
+    const targetFile = multiple ? [..._fileList] : (_fileList[0] || '');
     onFileChanged?.(targetFile);
     onSetValue?.(targetFile);
   }, [fileList]);
