@@ -1,7 +1,6 @@
 import React from "react";
 import useInputGroup from "../../hooks/useInputGroup";
 import classnames from "classnames";
-import Radio from "./Radio";
 import { Radio as AntRadio } from "antd";
 
 interface RadioGroupProps {

@@ -20,12 +20,12 @@ module.exports = (env) => {
         entry: {
             'react': './src/platforms/react/index.ts',
             'core': './src/index.core.ts',
-            'ledap': './src/index.ts'
+            'index': './src/index.ts'
         },
         externals: {
-            "react": 'React',
-            "jquery": 'jquery',
-            'react-dom': 'ReactDOM'
+            "react": 'react',
+            'react-dom': 'react-dom',
+            'antd': 'antd'
         },
         output: {
             path: path.resolve(__dirname, '../dist'),

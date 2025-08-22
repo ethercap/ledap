@@ -1,5 +1,9 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import { Select as AntSelect, Spin } from "antd";
+import { useDpEvent } from "../../hooks/useLedapDataProvider";
+import { useModelEvent } from "../../hooks/useLedapModel";
+import { uniqBy } from "lodash";
+
 
 interface SearchInputProps {
   value: any;
@@ -11,6 +15,8 @@ interface SearchInputProps {
   fieldNames?: any;
 }
 
+
+
 export default function SearchInput(props: SearchInputProps) {
   const {
     value,
@@ -18,33 +24,51 @@ export default function SearchInput(props: SearchInputProps) {
     model,
     attr,
     dp,
-    fieldNames,
+    fieldNames={label: "text", value: "id"},
     paramName = "keyword",
     ...resetProps
   } = props;
-  const { models: data, isLoading } = dp;
+
   const _handleChange = (value) => {
     onSetValue?.(value);
+
   };
+
+  const { loading,isLoad,models: data } = useDpEvent(dp)
+  
+
+
   const _handleSearch = (value) => {
     const searchParams = { [paramName]: value };
     dp.setParams(searchParams);
   };
+
+  const _onListScroll = (e) => {
+    const { scrollTop,scrollHeight,clientHeight } = e.target
+    const isBottom = (scrollTop + clientHeight + 20) >= scrollHeight
+    if(isBottom) {
+      dp.refresh('footer')
+    }
+  }
+  const _options = uniqBy(data,(v) => v[fieldNames.value]);
+  const _value = value;
+
   return (
     <AntSelect
+      fieldNames={fieldNames}
       showSearch
       allowClear
-      value={value}
+      value={_value}
       placeholder={model.getAttributeHint(attr) || ""}
       defaultActiveFirstOption={false}
       suffixIcon={null}
       filterOption={false}
       onSearch={_handleSearch}
       onChange={_handleChange}
-      notFoundContent={isLoading ? <Spin size="small" /> : null}
-      fieldNames={fieldNames}
-      options={data}
-      loading={isLoading}
+      notFoundContent={loading ? <Spin size="small" /> : null}
+      options={_options}
+      loading={loading}
+      onPopupScroll={_onListScroll}
       {...resetProps}
     />
   );

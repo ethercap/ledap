@@ -10,6 +10,7 @@ interface SelectProps {
   onSetValue?: Function;
   options?: any;
   formatOptions?: Function;
+  allowClear?:boolean
 }
 export default function Select(props: SelectProps) {
   const {
@@ -18,12 +19,14 @@ export default function Select(props: SelectProps) {
     value,
     onSetValue,
     formatOptions,
+    allowClear=true,
     ...resetProps
     // style={width:120}
   } = props;
 
   function _onChange(e) {
     onSetValue?.(e);
+    model?.validate?.(attr);
   }
   const dictOptions = lodash.get(model.rules(), [attr, "dict"], {});
   const maxCount = dictOptions?.multiple ? dictOptions.max : undefined;
@@ -35,7 +38,7 @@ export default function Select(props: SelectProps) {
   }
   return (
     <AntSelect
-      allowClear
+      allowClear={allowClear}
       mode={mode}
       defaultValue={value}
       value={_value}

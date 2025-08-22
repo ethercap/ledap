@@ -10,9 +10,20 @@ label {
   content: "*";
   color: #ff4d4f;
 }
+._module_formitem_m6q_j.hide-error .ant-form-item-additional {
+  display: none;
+}
 
 ._form_kRBRi.inline {
   display: flex;
   flex-wrap: nowrap;
+}
+
+._module_dropdown_X2jF9.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+._module_dropdown_X2jF9:not(.disabled) {
+  cursor: pointer;
 }
 

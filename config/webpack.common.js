@@ -17,7 +17,7 @@ module.exports = (env) => {
     return {
         context: path.resolve(__dirname, '../'),
         resolve: {
-            modules: ['node_modules', 'src'],
+            // modules: ['node_modules', 'src'],
             extensions: ['.ts', '.js', '.json', '.tsx', '.jsx', '.less'],
             alias: {
                 '@': path.resolve(__dirname, '../src')
@@ -33,10 +33,10 @@ module.exports = (env) => {
                         plugins: [
                             // 'lodash'
                             'lodash',
-                            ['import', {  // 导入一个插件
-                                libraryName: 'antd',   // 暴露的库名
-                                style: true // 直接将ants样式文件动态编译成行内样式插入，就不需要每次都导入
-                            }]
+                            // ['import', {  // 导入一个插件
+                            //     libraryName: 'antd',   // 暴露的库名
+                            //     style: true // 直接将ants样式文件动态编译成行内样式插入，就不需要每次都导入
+                            // }]
                         ],
                         compact: true,
                         presets: [

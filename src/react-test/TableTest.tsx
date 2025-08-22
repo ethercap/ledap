@@ -13,8 +13,9 @@ import {
   Table,
   Modal,
 } from "@/platforms/react";
-import { Flex, Row, Col } from "antd";
+import { Flex, Row, Col,Card } from "antd";
 import WriteMobileCodeModal from "./WriteMobileCodeModal";
+import { GetParams } from "./utils.js";
 
 export default function TableTest() {
   const [selectedIds, setSelectedIds] = useState([]);
@@ -22,7 +23,7 @@ export default function TableTest() {
   const dp = ledap.App.useWebDp({
     httpOptions: {
       url: "/mis-api/user/index",
-      params: {},
+      params: GetParams(),
     },
   });
 
@@ -56,6 +57,13 @@ export default function TableTest() {
 
   function _handleSearch() {
     dp.refresh();
+  }
+
+  function _previewSelected() {
+    const selectedIds = dp?.models
+      ?.filter((m) => m.is_checked === true)
+      .map((m) => m.id);
+    console.log(selectedIds);
   }
 
   function _writeCode() {
@@ -102,9 +110,9 @@ export default function TableTest() {
       },
     },
   ];
-
+  console.log('searchModel:',dp.searchModel['id'])
   return (
-    <>
+    <Card>
       <Form model={dp.searchModel}>
         <Row>
           <Col span={12}>
@@ -129,6 +137,7 @@ export default function TableTest() {
           <Col span={8} offset={4}>
             <Button onClick={_writeCode}>写验证码</Button>
             <Button onClick={_handleSearch}>查询</Button>
+            <Button onClick={_previewSelected}>查看选中</Button>
           </Col>
         </Row>
       </Form>
@@ -136,10 +145,10 @@ export default function TableTest() {
         columns={columns}
         dp={dp}
         useSelection
-        onSelectionChanged={(selectedRowKeys, selectedRows) => {
-          setSelectedIds(selectedRowKeys);
-        }}
+        // onSelectionChanged={(selectedRowKeys, selectedRows) => {
+        //   setSelectedIds(selectedRowKeys);
+        // }}
       />
-    </>
+    </Card>
   );
 }

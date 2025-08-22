@@ -1,8 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.common.js')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 function r(...args) {
     return path.resolve('../', ...args);
 }
@@ -60,6 +59,14 @@ module.exports = (env = {}, argv) => {
             minimize: true,
         },
         plugins: [
+            // new CopyWebpackPlugin({
+            //     patterns: [{
+            //         context: './',
+            //         from: 'umd',
+            //         to: '../examples/dist'
+            //     }]
+
+            // })
         ]
     })
 };

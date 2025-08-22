@@ -3,7 +3,7 @@ import * as ledap from "./lib/ledap";
 import { Form, FormItem, Button, Modal } from "@/platforms/react";
 
 export default function WriteMobileCodeModal(props) {
-  const { onSuccess, ...reset } = props;
+  const { onSuccess } = props;
   const [loading, setLoading] = useState(false);
   const { current: model } = useRef(ledap.App.getModel(getMobileData()));
   const { closeModal } = Modal.useModalContext();
@@ -32,7 +32,6 @@ export default function WriteMobileCodeModal(props) {
       okText="提交"
       onOk={_handleOk}
       confirmLoading={loading}
-      {...reset}
     >
       <Form model={model} layout="horizontal">
         <FormItem attr="mobilePrefix" />

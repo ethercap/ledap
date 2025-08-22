@@ -25,7 +25,7 @@ interface BaseInputProps {
   value?: string;
 }
 
-const getControlConponent = (tag, type) => {
+const getControlComponent = (tag, type) => {
   if (tag == "textarea") {
     return Input.TextArea;
   }
@@ -80,7 +80,8 @@ export default function BaseInput(props: BaseInputProps) {
     _checkValue(InputEvents.blur);
     onBlur?.(e);
   }
-  const ControlComponent = getControlConponent(tag, type);
+  const ControlComponent = getControlComponent(tag, type);
+  const ControlProps = ControlComponent == Input.TextArea ? { rows: 8 } : {};
   const maxLength = model.getValidatorData(attr, "string", "max");
   return (
     <ControlComponent
@@ -90,6 +91,7 @@ export default function BaseInput(props: BaseInputProps) {
       onChange={_onInput}
       onFocus={_onFocus}
       onBlur={_onBlur}
+      {...ControlProps}
       {...reset}
     />
   );
