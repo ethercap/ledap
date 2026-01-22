@@ -136,6 +136,18 @@
       "rules": [],
       "hint": "请选择"
     },
+    "rangeTime": {
+      "label": "时间段(时分)",
+      "value": [],
+      "rules": [],
+      "hint": "请选择"
+    },
+    "time": {
+      "label": "时间(时分)",
+      "value": "",
+      "rules": [],
+      "hint": "请选择"
+    },
     "rangeDate1": {
       "label": "时间段1",
       "value": ["2027-01-01"],

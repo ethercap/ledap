@@ -18,6 +18,8 @@ import {
   ColorPicker,
   RangeDatePicker,
   TagList,
+  TimePicker,
+  RangeTimePicker,
   Switch
 } from "@/platforms/react";
 import { message } from "antd";
@@ -54,7 +56,7 @@ export default function ModelTestComponent() {
   if (!model1) {
     return "loading...";
   }
-  console.log({ fileModel });
+  console.log({ fileModel,model1 });
   return (
     <div>
       <Form
@@ -135,6 +137,20 @@ export default function ModelTestComponent() {
         />
         {/* <FormItem attr="birthDate" FormComponent={DatePicker} /> */}
         <FormItem attr="birthDate" FormComponentProps={{showTime:true,format:"YYYY-MM-DD HH:mm:ss"}} FormComponent={DatePicker} />
+        <FormItem
+          attr="rangeTime"
+          FormComponent={RangeTimePicker}
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
+        />
+        <FormItem
+          attr="time"
+          FormComponent={TimePicker}
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
+        />
         <FormItem
           attr="rangeDate"
           FormComponent={RangeDatePicker}
