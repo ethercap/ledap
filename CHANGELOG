@@ -1,3 +1,14 @@
+## [0.1.15]
+
+### Added
+
+- 增加 `TimePicker` 时间选择器组件（时分选择）
+- 增加 `RangeTimePicker` 时间段选择器组件（时分段选择）
+
+### Changed
+
+- `ConfigProvider` 组件增加 dayjs 的 `customParseFormat` 插件支持，用于自定义时间格式解析
+
 ## [0.1.14]
 
 ### Added
