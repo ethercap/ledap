@@ -47,6 +47,13 @@ npm run dev
 npm run dev:react
 ```
 
+## 发布
+
+发布前需要执行一次
+```bash
+npm run build
+```
+
 ## 文档
 
 [文档](http://zhiyuancap.com/ledap.org/)
