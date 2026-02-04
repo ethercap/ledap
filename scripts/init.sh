@@ -5,4 +5,4 @@ set -e
 cp node_modules/axios/index.d.ts node_modules/@types/axios/index.d.ts
 cd examples 
 npm install 
-ln -s -f ../dist ./
+ln -s -f ../umd ./dist
