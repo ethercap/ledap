@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BoolInput示例</title>
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
+  </head>
+  <body>
+      <div id="app" class="container">
+        <h3>BoolInput组件示例</h3>
+        
+        <div class="form-group">
+          <label>基础BoolInput (boolean类型):</label>
+          <form-item :model="model" attr="isActive" label="是否激活">
+            <boolinput :model="model" attr="isActive" value-type="boolean"></boolinput>
+          </form-item>
+          <div>当前值: {{model.isActive}} (类型: {{typeof model.isActive}})</div>
+        </div>
+
+        <div class="form-group">
+          <label>自定义文本的BoolInput (boolean类型):</label>
+          <form-item :model="model2" attr="isEnabled" label="是否启用">
+            <boolinput :model="model2" attr="isEnabled" value-type="boolean" true-text="是" false-text="否"></boolinput>
+          </form-item>
+          <div>当前值: {{model2.isEnabled}} (类型: {{typeof model2.isEnabled}})</div>
+        </div>
+
+        <div class="form-group">
+          <label>初始值为true的BoolInput (boolean类型):</label>
+          <form-item :model="model3" attr="isCompleted" label="是否完成">
+            <boolinput :model="model3" attr="isCompleted" value-type="boolean" true-text="已完成" false-text="未完成"></boolinput>
+          </form-item>
+          <div>当前值: {{model3.isCompleted}} (类型: {{typeof model3.isCompleted}})</div>
+        </div>
+
+        <div class="form-group">
+          <label>测试值规范化的BoolInput:</label>
+          <form-item :model="model6" attr="testValue" label="测试规范化">
+            <boolinput :model="model6" attr="testValue" value-type="number"></boolinput>
+          </form-item>
+          <div>当前值: {{model6.testValue}} (类型: {{typeof model6.testValue}})</div>
+        </div>
+
+        <div class="form-group">
+          <label>使用0/1数值类型的BoolInput:</label>
+          <form-item :model="model4" attr="status" label="状态">
+            <boolinput :model="model4" attr="status" value-type="number" true-text="启用" false-text="禁用"></boolinput>
+          </form-item>
+          <div>当前值: {{model4.status}} (类型: {{typeof model4.status}})</div>
+        </div>
+
+        <div class="form-group">
+          <label>使用boolean类型的BoolInput:</label>
+          <form-item :model="model5" attr="enabled" label="启用状态">
+            <boolinput :model="model5" attr="enabled" value-type="boolean" true-text="开" false-text="关"></boolinput>
+          </form-item>
+          <div>当前值: {{model5.enabled}} (类型: {{typeof model5.enabled}})</div>
+        </div>
+      </div>
+      
+      <script src="../assets/lib/vue/vue.js"></script>
+      <script src="../dist/ledap.js"></script>
+      <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="../assets/js/bootstrap-theme.js"></script>
+      <script src="../assets/js/ledap-init.js"></script>
+  </body>
+  <script>
+const ledap = window["ledap"];
+ledap.App.register(['form-item', 'boolinput'], Vue);
+
+var app = new Vue({
+  el: '#app',
+  data: () => {
+    return {
+      model: ledap.App.getModel({isActive: false}),
+      model2: ledap.App.getModel({isEnabled: true}),
+      model3: ledap.App.getModel({isCompleted: true}),
+      model4: ledap.App.getModel({status: 1}),
+      model5: ledap.App.getModel({enabled: false}),
+      model6: ledap.App.getModel({testValue: "true"})
+    };
+  },
+  created: function(){
+  },
+  methods: {
+  }
+});
+  </script>
+</html>
