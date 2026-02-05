@@ -30,16 +30,6 @@ export default lodash.merge(input, {
     },
     created() {
         this.init();
-        // 监听LEDAP Model的事件，当属性变更时强制更新
-        if (this.model && this.model.on) {
-            this.model.on(ledap.Model.EVENT_LOAD, this.handleModelChange.bind(this));
-        }
-    },
-    beforeDestroy() {
-        // 清理事件监听
-        if (this.model && this.model.off) {
-            this.model.off(ledap.Model.EVENT_LOAD, this.handleModelChange.bind(this));
-        }
     },
     methods: {
         init() {
