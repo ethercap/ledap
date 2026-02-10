@@ -8,6 +8,7 @@ import "./style.less";
 import ModelTestComponent from "./ModelTest";
 import TableTest from "./TableTest";
 import Uploader from "./uploader";
+import SonTableTest from "./SonTable";
 
 function LedapUploader(file) {
   return new Promise((resolve, reject) => {
@@ -36,6 +37,8 @@ function App() {
           <ModelTestComponent />
           <hr />
           {/* <TableTest /> */}
+          <hr />
+          {/* <SonTableTest /> */}
         </div>
       </div>
     </ConfigProvider>

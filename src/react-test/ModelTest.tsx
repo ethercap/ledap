@@ -18,6 +18,9 @@ import {
   ColorPicker,
   RangeDatePicker,
   TagList,
+  TimePicker,
+  RangeTimePicker,
+  Switch
 } from "@/platforms/react";
 import { message } from "antd";
 
@@ -53,7 +56,7 @@ export default function ModelTestComponent() {
   if (!model1) {
     return "loading...";
   }
-  console.log({ fileModel });
+  console.log({ fileModel,model1 });
   return (
     <div>
       <Form
@@ -84,6 +87,7 @@ export default function ModelTestComponent() {
           FormComponentProps={{ optionType: "button" }}
         />
         <FormItem attr="sex" FormComponent={Segmented} />
+        <FormItem attr="user_filter" FormComponent={Segmented} />
         <FormItem attr="batch_id" FormComponent={Select} />
         <FormItem attr="city" FormComponent={CheckboxGroup} />
         <FormItem
@@ -111,6 +115,10 @@ export default function ModelTestComponent() {
           FormComponent={Select}
         />
         <FormItem
+          attr="switch"
+          FormComponent={Switch}
+        />
+        <FormItem
           attr="search1"
           FormComponent={SearchInput}
           dp={search1Dp}
@@ -127,7 +135,22 @@ export default function ModelTestComponent() {
             fieldNames: { label: "name", value: "id" },
           }}
         />
-        <FormItem attr="birthDate" FormComponent={DatePicker} />
+        {/* <FormItem attr="birthDate" FormComponent={DatePicker} /> */}
+        <FormItem attr="birthDate" FormComponentProps={{showTime:true,format:"YYYY-MM-DD HH:mm:ss"}} FormComponent={DatePicker} />
+        <FormItem
+          attr="rangeTime"
+          FormComponent={RangeTimePicker}
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
+        />
+        <FormItem
+          attr="time"
+          FormComponent={TimePicker}
+          onChanged={(v) => {
+            console.log("onChanged:", v);
+          }}
+        />
         <FormItem
           attr="rangeDate"
           FormComponent={RangeDatePicker}
@@ -242,7 +265,7 @@ export default function ModelTestComponent() {
           FormComponentProps={{
             multiple: false,
             dragger: true,
-            hint: "PNG格式 512x512 不超过1M",
+            // hint: "PNG格式 512x512 不超过1M",
             text: "点击或拖拽到此处上传file1",
             mimeTypes: ["image/png"],
             maxFileKBSize: 1024,

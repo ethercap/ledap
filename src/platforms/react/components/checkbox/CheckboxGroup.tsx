@@ -44,7 +44,7 @@ export default function CheckboxGroup(props: CheckboxGroupProps) {
   return (
     <Tag>
       {itemList.map(({ value, label, disabled }) => {
-        const checked = targetValue.find((v) => v == value);
+        const checked = targetValue.find((v) => v == value)!==undefined;
         return (
           <Checkbox
             key={value}

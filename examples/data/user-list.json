@@ -1,0 +1,897 @@
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": {
+        "items": [
+            {
+                "id": 8035450,
+                "code": 1047768013,
+                "fullname": "177*****777#6153",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748589775,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035449,
+                "code": 1395624644,
+                "fullname": "125*****711#3412",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748490777,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false,
+                "son":[
+                    { "username":"儿子1","id":1, "avatar": "avatars/k/2.png" },
+                    { "username":"儿子2","id":2, "avatar": "avatars/k/2.png" }
+                ]
+            },
+            {
+                "id": 8035448,
+                "code": 3814768658,
+                "fullname": "156*****656#7850",
+                "avatar": "avatars/k/3.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748489073,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035447,
+                "code": 850229970,
+                "fullname": "小明测试号#1496",
+                "avatar": "avatars/k/1.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748434805,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false,
+                "son":[
+                    { "username":"儿子11","id":3 },
+                    { "username":"儿子22","id":4 }
+                ]
+            },
+            {
+                "id": 8035446,
+                "code": 489005083,
+                "fullname": "138*****098#7723",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748330787,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false,
+                "son":[
+                    { "username":"儿子111","id":3 },
+                    { "username":"儿子22222","id":4 }
+                ]
+            },
+            {
+                "id": 8035445,
+                "code": 3937842058,
+                "fullname": "飞鸟#4779",
+                "avatar": "avatars/k/3.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748328176,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035444,
+                "code": 2911525907,
+                "fullname": "陌生人别私信我#1523",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\":true,\"same_friend\":false,\"guild_member\":false}",
+                "chat_setting": "0",
+                "created_at": 1748327270,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035443,
+                "code": 758472412,
+                "fullname": "智慧嘟嘟#5502",
+                "avatar": "avatars/2025-01/17/4M2QvjA2tC06j06j.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748260581,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035442,
+                "code": 589371469,
+                "fullname": "156*****000#0278",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748253958,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035441,
+                "code": 2305578678,
+                "fullname": "13220#5356",
+                "avatar": "avatars/k/4.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1748243622,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035440,
+                "code": 2877001390,
+                "fullname": "不准私信我#7668",
+                "avatar": "avatars/k/1.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\":true,\"same_friend\":false,\"guild_member\":false}",
+                "chat_setting": "0",
+                "created_at": 1748225974,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035439,
+                "code": 802785797,
+                "fullname": "189*****4631#1220",
+                "avatar": "avatars/k/1.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747907088,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035438,
+                "code": 2930561756,
+                "fullname": "176*****672#7639",
+                "avatar": "avatars/k/3.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747828716,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035437,
+                "code": 2167245807,
+                "fullname": "189*****123#6176",
+                "avatar": "avatars/k/4.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747637893,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 8035436,
+                "code": 316485203,
+                "fullname": "真沒睡#8792",
+                "avatar": "avatars/2023-02/fO0ggeHAL103o03o.jpg",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1676224574,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 3438341,
+                "code": 3226853866,
+                "fullname": "GoodLucky#3887",
+                "avatar": "avatars/2024-08/rRykhcnYdw0ds0ds.jpg",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 1,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 1,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1650296664,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 671347,
+                "code": 3444292250,
+                "fullname": "Bruce11322#4191",
+                "avatar": "avatars/2025-04/18/otyxFLA0xg054054.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747222865,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 671346,
+                "code": 468903951,
+                "fullname": "001#7246",
+                "avatar": "avatars/k/1.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747215741,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 671345,
+                "code": 2456777544,
+                "fullname": "166*****222#1196",
+                "avatar": "avatars/k/2.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\": true}",
+                "chat_setting": "1",
+                "created_at": 1747215112,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            },
+            {
+                "id": 671344,
+                "code": 935703721,
+                "fullname": "开心的绿色飞船#8193",
+                "avatar": "avatars/k/3.png",
+                "status": 1,
+                "verify_status": 0,
+                "inviter": 0,
+                "lase_activity_time": 0,
+                "privacy_game_activity": 0,
+                "privacy_game_statistics": 0,
+                "privacy_music_activity": 0,
+                "enable_desktop_notification": 1,
+                "auto_exit_audio_channel": 0,
+                "audio_setting": "",
+                "friend_setting": "{\"all\":true,\"same_friend\":false,\"guild_member\":false}",
+                "chat_setting": "0",
+                "created_at": 1747214177,
+                "bot_id": 0,
+                "statusDesc": "未设置密码",
+                "is_ai_reduce_noise": false,
+                "is_golive": false,
+                "is_personal_card_bg": false,
+                "is_checked": false
+            }
+        ],
+        "meta": {
+            "currentPage": 1,
+            "pageCount": 5000,
+            "perPage": 20,
+            "totalCount": 99999
+        },
+        "sort": {
+            "id": 3
+        },
+        "params": {
+            "id": {
+                "label": "User ID",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "User ID必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "code": {
+                "label": "自定义ID",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "自定义ID必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "risk": {
+                "label": "Risk",
+                "rules": [
+                    {
+                        "type": "boolean",
+                        "options": {
+                            "trueValue": "1",
+                            "falseValue": "0",
+                            "message": "Risk的值必须要么为\"1\"，要么为\"0\"。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": 0
+            },
+            "username": {
+                "label": "用户名",
+                "rules": [],
+                "value": null
+            },
+            "identify_num": {
+                "label": "用户名的唯一ID",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "用户名的唯一ID必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "mobile_prefix": {
+                "label": "手机国家区号",
+                "rules": [],
+                "value": null
+            },
+            "mobile": {
+                "label": "手机号",
+                "rules": [],
+                "value": null
+            },
+            "password": {
+                "label": "密码",
+                "rules": [],
+                "value": null
+            },
+            "avatar": {
+                "label": "头像",
+                "rules": [],
+                "value": null
+            },
+            "status": {
+                "label": "用户状态",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "用户状态必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    },
+                    {
+                        "type": "dict",
+                        "options": {
+                            "list": {
+                                "-1": "所有",
+                                "0": "正常",
+                                "1": "未设置密码",
+                                "10": "已封禁",
+                                "100": "已删除",
+                                "90": "注销冷却期"
+                            },
+                            "order": [
+                                "-1",
+                                "0",
+                                "1",
+                                "10",
+                                "100",
+                                "90"
+                            ],
+                            "multiple": false,
+                            "excludes": [],
+                            "message": "用户状态的值不正确",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": -1
+            },
+            "verify_status": {
+                "label": "审核状态",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "审核状态必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "inviter": {
+                "label": "邀请人",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "邀请人必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "lase_activity_time": {
+                "label": "Lase Activity Time",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Lase Activity Time必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "privacy_game_activity": {
+                "label": "Privacy Game Activity",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Privacy Game Activity必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "privacy_game_statistics": {
+                "label": "Privacy Game Statistics",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Privacy Game Statistics必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "privacy_music_activity": {
+                "label": "Privacy Music Activity",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Privacy Music Activity必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "enable_desktop_notification": {
+                "label": "Enable Desktop Notification",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Enable Desktop Notification必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "auto_exit_audio_channel": {
+                "label": "Auto Exit Audio Channel",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Auto Exit Audio Channel必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "audio_setting": {
+                "label": "Audio Setting",
+                "rules": [],
+                "value": null
+            },
+            "friend_setting": {
+                "label": "Friend Setting",
+                "rules": [],
+                "value": null
+            },
+            "chat_setting": {
+                "label": "Chat Setting",
+                "rules": [],
+                "value": null
+            },
+            "created_at": {
+                "label": "创建时间",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "创建时间必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "bot_id": {
+                "label": "Bot Id",
+                "rules": [
+                    {
+                        "type": "double",
+                        "options": {
+                            "pattern": "\/^\\s*[+-]?\\d+\\s*$\/",
+                            "message": "Bot Id必须是整数。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": null
+            },
+            "test_feature": {
+                "label": "功能",
+                "rules": [
+                    {
+                        "type": "dict",
+                        "options": {
+                            "list": {
+                                "-1": "所有",
+                                "0": "AI降噪",
+                                "1": "go-live",
+                                "2": "个人卡片背景",
+                                "3": "禁用自定义背景",
+                                "4": "禁用渐变色名称显示",
+                                "5": "开启QP新值",
+                                "6": "声网AI降噪",
+                                "7": "声网3A",
+                                "8": "声网golive",
+                                "9": "火山golive"
+                            },
+                            "order": [
+                                "-1",
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9"
+                            ],
+                            "multiple": false,
+                            "excludes": [],
+                            "message": "功能的值不正确",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": -1
+            },
+            "users": {
+                "label": "用户",
+                "rules": [
+                    {
+                        "type": "string",
+                        "options": {
+                            "message": "用户必须是一条字符串。",
+                            "skipOnEmpty": 1
+                        },
+                        "skipOnError": true,
+                        "skipOnEmpty": true
+                    }
+                ],
+                "value": ""
+            }
+        }
+    }
+}

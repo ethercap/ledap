@@ -11,6 +11,7 @@ interface SearchInputProps {
   model: any;
   attr: string;
   dp: any;
+  load?:boolean;
   paramName?: string;
   fieldNames?: any;
 }
@@ -24,34 +25,61 @@ export default function SearchInput(props: SearchInputProps) {
     model,
     attr,
     dp,
-    fieldNames={label: "text", value: "id"},
+    load,
+    fieldNames = { label: "text", value: "id" },
     paramName = "keyword",
     ...resetProps
   } = props;
 
+  const searchedRef = useRef(false)
+
   const _handleChange = (value) => {
-    onSetValue?.(value);
+    const _value = value === undefined ? null : value
+    onSetValue?.(_value);
 
   };
 
-  const { loading,isLoad,models: data } = useDpEvent(dp)
-  
+  const { loading, isLoad, models: data } = useDpEvent(dp)
 
+  useEffect(() => {
+    if (model?.[attr]) {
+      const searchParamName = fieldNames?.value
+      if (searchParamName) {
+        dp?.setParams({
+          [searchParamName]: model?.[attr]
+        });
+        searchedRef.current = searchParamName
+      }
+
+    } else {
+      if(load!== false) {
+        dp?.refresh()
+      }
+      
+    }
+  }, [])
 
   const _handleSearch = (value) => {
+    if (searchedRef.current) {
+      if (dp?.searchModel) {
+        dp.searchModel[searchedRef.current] = ''
+      }
+      searchedRef.current = null
+    }
     const searchParams = { [paramName]: value };
     dp.setParams(searchParams);
   };
 
   const _onListScroll = (e) => {
-    const { scrollTop,scrollHeight,clientHeight } = e.target
+    const { scrollTop, scrollHeight, clientHeight } = e.target
     const isBottom = (scrollTop + clientHeight + 20) >= scrollHeight
-    if(isBottom) {
+    if (isBottom) {
       dp.refresh('footer')
     }
   }
-  const _options = uniqBy(data,(v) => v[fieldNames.value]);
-  const _value = value;
+  const _options = uniqBy(data, (v) => v[fieldNames.value]);
+  const selOpt = _options?.find(o => o[fieldNames.value] == value)
+  const _value = selOpt !== undefined ? selOpt?.[fieldNames.value] : value
 
   return (
     <AntSelect
@@ -64,6 +92,9 @@ export default function SearchInput(props: SearchInputProps) {
       suffixIcon={null}
       filterOption={false}
       onSearch={_handleSearch}
+      onClear={() => {
+        _handleSearch('')
+      }}
       onChange={_handleChange}
       notFoundContent={loading ? <Spin size="small" /> : null}
       options={_options}

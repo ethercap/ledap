@@ -1,12 +1,11 @@
 import React from "react";
 import {
-  DatePicker as AntDatePicker,
-  DatePickerProps as AntDatePickerProps,
+  TimePicker as AntTimePicker,
+  TimePickerProps as AntTimePickerProps,
 } from "antd";
-import dayjs from "dayjs";
-import { getDateValue } from './utils'
+import { getTimeValue } from './utils'
 
-interface DatePickerProps extends AntDatePickerProps {
+interface TimePickerProps extends AntTimePickerProps {
   value: any;
   onSetValue: Function;
   model: any;
@@ -17,13 +16,13 @@ interface DatePickerProps extends AntDatePickerProps {
   validate?:any
 }
 
-export default function DatePicker(props: DatePickerProps) {
+export default function DatePicker(props: TimePickerProps) {
   const {
     model,
     attr,
     value,
     onSetValue,
-    format = "YYYY-MM-DD",
+    format = "HH:mm",
     dp,
     validate,
     onBlur,
@@ -34,9 +33,9 @@ export default function DatePicker(props: DatePickerProps) {
     onSetValue?.(val);
   }
   const placeholder = model.getAttributeHint(attr);
-  const _value = getDateValue(value);
+  const _value = getTimeValue(value,format);
   return (
-    <AntDatePicker
+    <AntTimePicker
       format={format}
       defaultValue={value}
       placeholder={placeholder}

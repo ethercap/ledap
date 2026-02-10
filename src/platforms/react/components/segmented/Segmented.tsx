@@ -21,10 +21,12 @@ export default function Segmented(props: SegmentedProps) {
   function _onChange(val) {
     onSetValue?.(val);
   }
+  const valueObj = itemList.find(i => i.value == propValue)
+  const _value = valueObj !== undefined ? valueObj?.value : propValue
   return (
     <AntSegmented
       defaultValue={propValue}
-      value={propValue}
+      value={_value}
       options={itemList}
       onChange={_onChange}
       {...resetProps}
