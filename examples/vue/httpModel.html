@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HttpModel 示例</title>
+    <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
+  </head>
+  <body>
+    <div id="app" class="container">
+      <h3>HttpModel CRUD 测试页</h3>
+      <p>该页面使用内存 mock 接口，验证 HttpModel 的 find/create/update/delete 流程。</p>
+
+      <form class="form-horizontal" @submit.prevent>
+        <form-item class="form-group" :model="formModel" attr="id">
+          <template v-slot:default="p">
+            <baseinput v-bind="p" type="number"></baseinput>
+          </template>
+        </form-item>
+        <form-item class="form-group" :model="formModel" attr="name"></form-item>
+        <form-item class="form-group" :model="formModel" attr="age">
+          <template v-slot:default="p">
+            <baseinput v-bind="p" type="number"></baseinput>
+          </template>
+        </form-item>
+        <form-item class="form-group" :model="formModel" attr="comment"></form-item>
+      </form>
+
+      <div class="row" style="margin-top: 12px;">
+        <div class="col-sm-12">
+          <button class="btn btn-primary" @click="findModel">find(id)</button>
+          <button class="btn btn-success" @click="createModel">createModel()</button>
+          <button class="btn btn-warning" @click="updateModel">updateModel()</button>
+          <button class="btn btn-danger" @click="deleteModel">deleteModel()</button>
+        </div>
+      </div>
+
+      <hr>
+      <h4>Mock 数据</h4>
+      <pre>{{recordsText}}</pre>
+
+      <h4>执行日志</h4>
+      <pre style="max-height: 260px; overflow: auto;">{{logsText}}</pre>
+    </div>
+
+    <script src="../assets/lib/vue/vue.js"></script>
+    <script src="../dist/ledap.js"></script>
+    <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+    <script src="../assets/js/bootstrap-theme.js"></script>
+    <script src="../assets/js/ledap-init.js"></script>
+    <script>
+      const mockDb = {
+        1: { id: 1, name: 'Alice', age: 20, comment: 'seed data' },
+      };
+      let seq = 2;
+
+      function parseQuery(url) {
+        const idx = url.indexOf('?');
+        const query = idx > -1 ? url.slice(idx + 1) : '';
+        const params = {};
+        query.split('&').forEach(item => {
+          if (!item) {
+            return;
+          }
+          const pair = item.split('=');
+          params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+        });
+        return params;
+      }
+
+      function mockRequest(httpOptions, success, fail) {
+        const url = httpOptions.url || '';
+        const query = parseQuery(url);
+        const id = Number(query.id || (httpOptions.params && httpOptions.params.id) || 0);
+
+        setTimeout(() => {
+          try {
+            if (url.indexOf('/view') > -1) {
+              const item = mockDb[id];
+              if (!item) {
+                throw new Error('记录不存在: ' + id);
+              }
+              success({ data: JSON.parse(JSON.stringify(item)) });
+              return;
+            }
+
+            if (url.indexOf('/create') > -1) {
+              const body = Object.assign({}, httpOptions.data || {});
+              body.id = seq;
+              seq += 1;
+              mockDb[body.id] = body;
+              success({ data: JSON.parse(JSON.stringify(body)) });
+              return;
+            }
+
+            if (url.indexOf('/update') > -1) {
+              if (!mockDb[id]) {
+                throw new Error('记录不存在: ' + id);
+              }
+              Object.keys(httpOptions.data || {}).forEach(key => {
+                mockDb[id][key] = httpOptions.data[key];
+              });
+              success({ data: JSON.parse(JSON.stringify(mockDb[id])) });
+              return;
+            }
+
+            if (url.indexOf('/delete') > -1) {
+              if (!mockDb[id]) {
+                throw new Error('记录不存在: ' + id);
+              }
+              const item = mockDb[id];
+              delete mockDb[id];
+              success({ data: JSON.parse(JSON.stringify(item)) });
+              return;
+            }
+
+            throw new Error('未知请求: ' + url);
+          } catch (error) {
+            fail(error);
+          }
+        }, 200);
+      }
+
+      const Model = ledap.Model;
+      ledap.App.register(['form-item', 'baseinput'], Vue);
+
+      new Vue({
+        el: '#app',
+        data: function() {
+          const formModel = new Model();
+          formModel.attributeLabels = function() {
+            return {
+              id: 'ID',
+              name: '姓名',
+              age: '年龄',
+              comment: '备注',
+            };
+          };
+          formModel.load({
+            id: 1,
+            name: 'Alice',
+            age: 20,
+            comment: 'seed data',
+          });
+          return {
+            formModel,
+            currentModel: null,
+            logs: [],
+            recordsText: '',
+            logsText: '',
+          };
+        },
+        created: function() {
+          this.refreshRecords();
+          this.pushLog('页面初始化完成');
+        },
+        methods: {
+          getConfig: function() {
+            return {
+              basePath: '/mock/model',
+              primaryKey: 'id',
+              httpRequest: mockRequest,
+            };
+          },
+          pushLog: function(msg, payload) {
+            const line = payload ? (msg + ' => ' + JSON.stringify(payload)) : msg;
+            this.logs.unshift(new Date().toLocaleTimeString() + ' ' + line);
+            this.logsText = this.logs.join('\n');
+          },
+          refreshRecords: function() {
+            const list = Object.keys(mockDb).map(id => mockDb[id]);
+            this.recordsText = JSON.stringify(list, null, 2);
+          },
+          syncFormFromModel: function(model) {
+            this.formModel.load({
+              id: model.id || 0,
+              name: model.name || '',
+              age: model.age || 0,
+              comment: model.comment || '',
+            });
+          },
+          findModel: async function() {
+            try {
+              const ret = await ledap.App.getHttpModel(this.getConfig(), { id: this.formModel.id });
+              this.currentModel = ret.model;
+              this.syncFormFromModel(ret.model);
+              this.pushLog('find 成功', ret.model);
+            } catch (error) {
+              this.pushLog('find 失败', { message: error.message });
+            }
+          },
+          createModel: async function() {
+            try {
+              const model = new ledap.HttpModel(this.getConfig());
+              model.load({
+                name: this.formModel.name,
+                age: this.formModel.age,
+                comment: this.formModel.comment,
+              });
+              const ret = await model.createModel();
+              this.currentModel = ret.model;
+              this.syncFormFromModel(ret.model);
+              this.refreshRecords();
+              this.pushLog('create 成功', ret.model);
+            } catch (error) {
+              this.pushLog('create 失败', { message: error.message });
+            }
+          },
+          updateModel: async function() {
+            try {
+              if (!this.currentModel) {
+                await this.findModel();
+              }
+              if (!this.currentModel) {
+                throw new Error('请先 find 一个模型');
+              }
+              this.currentModel.name = this.formModel.name;
+              this.currentModel.age = this.formModel.age;
+              this.currentModel.comment = this.formModel.comment;
+              const ret = await this.currentModel.updateModel();
+              this.currentModel = ret.model;
+              this.syncFormFromModel(ret.model);
+              this.refreshRecords();
+              this.pushLog('update 成功', ret.model);
+            } catch (error) {
+              this.pushLog('update 失败', { message: error.message });
+            }
+          },
+          deleteModel: async function() {
+            try {
+              if (!this.currentModel) {
+                await this.findModel();
+              }
+              if (!this.currentModel) {
+                throw new Error('请先 find 一个模型');
+              }
+              const ret = await this.currentModel.deleteModel();
+              this.refreshRecords();
+              this.pushLog('delete 成功', ret.model);
+              this.currentModel = null;
+            } catch (error) {
+              this.pushLog('delete 失败', { message: error.message });
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

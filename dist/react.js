@@ -1,6 +1,6 @@
 import * as __WEBPACK_EXTERNAL_MODULE_react_dom_7dac9eee__ from "react-dom";
-import * as __WEBPACK_EXTERNAL_MODULE_react__ from "react";
-import * as __WEBPACK_EXTERNAL_MODULE_antd__ from "antd";
+import { createContext, createElement, default as default_0, forwardRef, useContext, useEffect, useRef, useState } from "react";
+import { Button, Checkbox, ColorPicker, ConfigProvider, DatePicker, Descriptions, Dropdown, Flex, Form, Input, InputNumber, Modal, Radio, Segmented, Select, Space, Spin, Table, Tag, Upload, message } from "antd";
 /******/ var __webpack_modules__ = ({
 
 /***/ 2:
@@ -303,6 +303,31 @@ module.exports = isIndex;
 
 /***/ }),
 
+/***/ 579:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(3738)["default"]);
+function _regeneratorValues(e) {
+  if (null != e) {
+    var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"],
+      r = 0;
+    if (t) return t.call(e);
+    if ("function" == typeof e.next) return e;
+    if (!isNaN(e.length)) return {
+      next: function next() {
+        return e && r >= e.length && (e = void 0), {
+          value: e && e[r++],
+          done: !e
+        };
+      }
+    };
+  }
+  throw new TypeError(_typeof(e) + " is not iterable");
+}
+module.exports = _regeneratorValues, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ 689:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -418,6 +443,18 @@ function castArrayLikeObject(value) {
 
 module.exports = castArrayLikeObject;
 
+
+/***/ }),
+
+/***/ 887:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var regenerator = __webpack_require__(6993);
+var regeneratorAsyncIterator = __webpack_require__(4172);
+function _regeneratorAsyncGen(r, e, t, o, n) {
+  return new regeneratorAsyncIterator(regenerator().w(r, e, t, o), n || Promise);
+}
+module.exports = _regeneratorAsyncGen, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
@@ -1211,7 +1248,8 @@ const localeValues = {
   Calendar: _zh_CN2.default,
   // locales for all components
   global: {
-    placeholder: '请选择'
+    placeholder: '请选择',
+    close: '关闭'
   },
   Table: {
     filterTitle: '筛选',
@@ -1464,7 +1502,7 @@ module.exports = identity;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var copyObject = __webpack_require__(1791),
-    getSymbols = __webpack_require__(2283);
+    getSymbols = __webpack_require__(4664);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -1484,31 +1522,48 @@ module.exports = copySymbols;
 /***/ }),
 
 /***/ 2283:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(1791),
+    createAssigner = __webpack_require__(999),
+    keysIn = __webpack_require__(7241);
 
 /**
- * This method returns a new empty array.
+ * This method is like `_.assign` except that it iterates over own and
+ * inherited source properties.
+ *
+ * **Note:** This method mutates `object`.
  *
  * @static
  * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {Array} Returns the new empty array.
+ * @since 4.0.0
+ * @alias extend
+ * @category Object
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @returns {Object} Returns `object`.
+ * @see _.assign
  * @example
  *
- * var arrays = _.times(2, _.stubArray);
+ * function Foo() {
+ *   this.a = 1;
+ * }
  *
- * console.log(arrays);
- * // => [[], []]
+ * function Bar() {
+ *   this.c = 3;
+ * }
  *
- * console.log(arrays[0] === arrays[1]);
- * // => false
+ * Foo.prototype.b = 2;
+ * Bar.prototype.d = 4;
+ *
+ * _.assignIn({ 'a': 0 }, new Foo, new Bar);
+ * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
  */
-function stubArray() {
-  return [];
-}
+var assignIn = createAssigner(function(object, source) {
+  copyObject(source, keysIn(source), object);
+});
 
-module.exports = stubArray;
+module.exports = assignIn;
 
 
 /***/ }),
@@ -2172,7 +2227,7 @@ module.exports = cloneBuffer;
 /***/ 3346:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__(4664);
+module.exports = __webpack_require__(2283);
 
 
 /***/ }),
@@ -2758,6 +2813,45 @@ module.exports = baseTrim;
 
 /***/ }),
 
+/***/ 4172:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var OverloadYield = __webpack_require__(5172);
+var regeneratorDefine = __webpack_require__(5546);
+function AsyncIterator(t, e) {
+  function n(r, o, i, f) {
+    try {
+      var c = t[r](o),
+        u = c.value;
+      return u instanceof OverloadYield ? e.resolve(u.v).then(function (t) {
+        n("next", t, i, f);
+      }, function (t) {
+        n("throw", t, i, f);
+      }) : e.resolve(u).then(function (t) {
+        c.value = t, i(c);
+      }, function (t) {
+        return n("throw", t, i, f);
+      });
+    } catch (t) {
+      f(t);
+    }
+  }
+  var r;
+  this.next || (regeneratorDefine(AsyncIterator.prototype), regeneratorDefine(AsyncIterator.prototype, "function" == typeof Symbol && Symbol.asyncIterator || "@asyncIterator", function () {
+    return this;
+  })), regeneratorDefine(this, "_invoke", function (t, o, i) {
+    function f() {
+      return new e(function (e, r) {
+        n(t, i, e, r);
+      });
+    }
+    return r = r ? r.then(f, f) : f();
+  }, !0);
+}
+module.exports = AsyncIterator, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ 4218:
 /***/ ((module) => {
 
@@ -2869,6 +2963,22 @@ module.exports = overArg;
 
 /***/ }),
 
+/***/ 4373:
+/***/ ((module) => {
+
+function _regeneratorKeys(e) {
+  var n = Object(e),
+    r = [];
+  for (var t in n) r.unshift(t);
+  return function e() {
+    for (; r.length;) if ((t = r.pop()) in n) return e.value = t, e.done = !1, e;
+    return e.done = !0, e;
+  };
+}
+module.exports = _regeneratorKeys, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ 4394:
 /***/ ((module) => {
 
@@ -2946,356 +3056,112 @@ module.exports = createSet;
 /***/ 4633:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var _typeof = (__webpack_require__(3738)["default"]);
+var OverloadYield = __webpack_require__(5172);
+var regenerator = __webpack_require__(6993);
+var regeneratorAsync = __webpack_require__(5869);
+var regeneratorAsyncGen = __webpack_require__(887);
+var regeneratorAsyncIterator = __webpack_require__(4172);
+var regeneratorKeys = __webpack_require__(4373);
+var regeneratorValues = __webpack_require__(579);
 function _regeneratorRuntime() {
-  "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
-    return e;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  var t,
-    e = {},
-    r = Object.prototype,
-    n = r.hasOwnProperty,
-    o = Object.defineProperty || function (t, e, r) {
-      t[e] = r.value;
-    },
-    i = "function" == typeof Symbol ? Symbol : {},
-    a = i.iterator || "@@iterator",
-    c = i.asyncIterator || "@@asyncIterator",
-    u = i.toStringTag || "@@toStringTag";
-  function define(t, e, r) {
-    return Object.defineProperty(t, e, {
-      value: r,
-      enumerable: !0,
-      configurable: !0,
-      writable: !0
-    }), t[e];
+  "use strict";
+
+  var r = regenerator(),
+    e = r.m(_regeneratorRuntime),
+    t = (Object.getPrototypeOf ? Object.getPrototypeOf(e) : e.__proto__).constructor;
+  function n(r) {
+    var e = "function" == typeof r && r.constructor;
+    return !!e && (e === t || "GeneratorFunction" === (e.displayName || e.name));
   }
-  try {
-    define({}, "");
-  } catch (t) {
-    define = function define(t, e, r) {
-      return t[e] = r;
-    };
-  }
-  function wrap(t, e, r, n) {
-    var i = e && e.prototype instanceof Generator ? e : Generator,
-      a = Object.create(i.prototype),
-      c = new Context(n || []);
-    return o(a, "_invoke", {
-      value: makeInvokeMethod(t, r, c)
-    }), a;
-  }
-  function tryCatch(t, e, r) {
-    try {
-      return {
-        type: "normal",
-        arg: t.call(e, r)
-      };
-    } catch (t) {
-      return {
-        type: "throw",
-        arg: t
-      };
-    }
-  }
-  e.wrap = wrap;
-  var h = "suspendedStart",
-    l = "suspendedYield",
-    f = "executing",
-    s = "completed",
-    y = {};
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-  var p = {};
-  define(p, a, function () {
-    return this;
-  });
-  var d = Object.getPrototypeOf,
-    v = d && d(d(values([])));
-  v && v !== r && n.call(v, a) && (p = v);
-  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
-  function defineIteratorMethods(t) {
-    ["next", "throw", "return"].forEach(function (e) {
-      define(t, e, function (t) {
-        return this._invoke(e, t);
-      });
-    });
-  }
-  function AsyncIterator(t, e) {
-    function invoke(r, o, i, a) {
-      var c = tryCatch(t[r], t, o);
-      if ("throw" !== c.type) {
-        var u = c.arg,
-          h = u.value;
-        return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) {
-          invoke("next", t, i, a);
-        }, function (t) {
-          invoke("throw", t, i, a);
-        }) : e.resolve(h).then(function (t) {
-          u.value = t, i(u);
-        }, function (t) {
-          return invoke("throw", t, i, a);
-        });
-      }
-      a(c.arg);
-    }
-    var r;
-    o(this, "_invoke", {
-      value: function value(t, n) {
-        function callInvokeWithMethodAndArg() {
-          return new e(function (e, r) {
-            invoke(t, n, e, r);
-          });
+  var o = {
+    "throw": 1,
+    "return": 2,
+    "break": 3,
+    "continue": 3
+  };
+  function a(r) {
+    var e, t;
+    return function (n) {
+      e || (e = {
+        stop: function stop() {
+          return t(n.a, 2);
+        },
+        "catch": function _catch() {
+          return n.v;
+        },
+        abrupt: function abrupt(r, e) {
+          return t(n.a, o[r], e);
+        },
+        delegateYield: function delegateYield(r, o, a) {
+          return e.resultName = o, t(n.d, regeneratorValues(r), a);
+        },
+        finish: function finish(r) {
+          return t(n.f, r);
         }
-        return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-      }
-    });
-  }
-  function makeInvokeMethod(e, r, n) {
-    var o = h;
-    return function (i, a) {
-      if (o === f) throw Error("Generator is already running");
-      if (o === s) {
-        if ("throw" === i) throw a;
-        return {
-          value: t,
-          done: !0
-        };
-      }
-      for (n.method = i, n.arg = a;;) {
-        var c = n.delegate;
-        if (c) {
-          var u = maybeInvokeDelegate(c, n);
-          if (u) {
-            if (u === y) continue;
-            return u;
-          }
+      }, t = function t(r, _t, o) {
+        n.p = e.prev, n.n = e.next;
+        try {
+          return r(_t, o);
+        } finally {
+          e.next = n.n;
         }
-        if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) {
-          if (o === h) throw o = s, n.arg;
-          n.dispatchException(n.arg);
-        } else "return" === n.method && n.abrupt("return", n.arg);
-        o = f;
-        var p = tryCatch(e, r, n);
-        if ("normal" === p.type) {
-          if (o = n.done ? s : l, p.arg === y) continue;
-          return {
-            value: p.arg,
-            done: n.done
-          };
-        }
-        "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg);
+      }), e.resultName && (e[e.resultName] = n.v, e.resultName = void 0), e.sent = n.v, e.next = n.n;
+      try {
+        return r.call(this, e);
+      } finally {
+        n.p = e.prev, n.n = e.next;
       }
     };
   }
-  function maybeInvokeDelegate(e, r) {
-    var n = r.method,
-      o = e.iterator[n];
-    if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y;
-    var i = tryCatch(o, e.iterator, r.arg);
-    if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y;
-    var a = i.arg;
-    return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y);
-  }
-  function pushTryEntry(t) {
-    var e = {
-      tryLoc: t[0]
-    };
-    1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e);
-  }
-  function resetTryEntry(t) {
-    var e = t.completion || {};
-    e.type = "normal", delete e.arg, t.completion = e;
-  }
-  function Context(t) {
-    this.tryEntries = [{
-      tryLoc: "root"
-    }], t.forEach(pushTryEntry, this), this.reset(!0);
-  }
-  function values(e) {
-    if (e || "" === e) {
-      var r = e[a];
-      if (r) return r.call(e);
-      if ("function" == typeof e.next) return e;
-      if (!isNaN(e.length)) {
-        var o = -1,
-          i = function next() {
-            for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next;
-            return next.value = t, next.done = !0, next;
-          };
-        return i.next = i;
-      }
-    }
-    throw new TypeError(_typeof(e) + " is not iterable");
-  }
-  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", {
-    value: GeneratorFunctionPrototype,
-    configurable: !0
-  }), o(GeneratorFunctionPrototype, "constructor", {
-    value: GeneratorFunction,
-    configurable: !0
-  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) {
-    var e = "function" == typeof t && t.constructor;
-    return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name));
-  }, e.mark = function (t) {
-    return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t;
-  }, e.awrap = function (t) {
+  return (module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
     return {
-      __await: t
+      wrap: function wrap(e, t, n, o) {
+        return r.w(a(e), t, n, o && o.reverse());
+      },
+      isGeneratorFunction: n,
+      mark: r.m,
+      awrap: function awrap(r, e) {
+        return new OverloadYield(r, e);
+      },
+      AsyncIterator: regeneratorAsyncIterator,
+      async: function async(r, e, t, o, u) {
+        return (n(e) ? regeneratorAsyncGen : regeneratorAsync)(a(r), e, t, o, u);
+      },
+      keys: regeneratorKeys,
+      values: regeneratorValues
     };
-  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () {
-    return this;
-  }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) {
-    void 0 === i && (i = Promise);
-    var a = new AsyncIterator(wrap(t, r, n, o), i);
-    return e.isGeneratorFunction(r) ? a : a.next().then(function (t) {
-      return t.done ? t.value : a.next();
-    });
-  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () {
-    return this;
-  }), define(g, "toString", function () {
-    return "[object Generator]";
-  }), e.keys = function (t) {
-    var e = Object(t),
-      r = [];
-    for (var n in e) r.push(n);
-    return r.reverse(), function next() {
-      for (; r.length;) {
-        var t = r.pop();
-        if (t in e) return next.value = t, next.done = !1, next;
-      }
-      return next.done = !0, next;
-    };
-  }, e.values = values, Context.prototype = {
-    constructor: Context,
-    reset: function reset(e) {
-      if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t);
-    },
-    stop: function stop() {
-      this.done = !0;
-      var t = this.tryEntries[0].completion;
-      if ("throw" === t.type) throw t.arg;
-      return this.rval;
-    },
-    dispatchException: function dispatchException(e) {
-      if (this.done) throw e;
-      var r = this;
-      function handle(n, o) {
-        return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o;
-      }
-      for (var o = this.tryEntries.length - 1; o >= 0; --o) {
-        var i = this.tryEntries[o],
-          a = i.completion;
-        if ("root" === i.tryLoc) return handle("end");
-        if (i.tryLoc <= this.prev) {
-          var c = n.call(i, "catchLoc"),
-            u = n.call(i, "finallyLoc");
-          if (c && u) {
-            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
-            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
-          } else if (c) {
-            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
-          } else {
-            if (!u) throw Error("try statement without catch or finally");
-            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
-          }
-        }
-      }
-    },
-    abrupt: function abrupt(t, e) {
-      for (var r = this.tryEntries.length - 1; r >= 0; --r) {
-        var o = this.tryEntries[r];
-        if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) {
-          var i = o;
-          break;
-        }
-      }
-      i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null);
-      var a = i ? i.completion : {};
-      return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a);
-    },
-    complete: function complete(t, e) {
-      if ("throw" === t.type) throw t.arg;
-      return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y;
-    },
-    finish: function finish(t) {
-      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
-        var r = this.tryEntries[e];
-        if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y;
-      }
-    },
-    "catch": function _catch(t) {
-      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
-        var r = this.tryEntries[e];
-        if (r.tryLoc === t) {
-          var n = r.completion;
-          if ("throw" === n.type) {
-            var o = n.arg;
-            resetTryEntry(r);
-          }
-          return o;
-        }
-      }
-      throw Error("illegal catch attempt");
-    },
-    delegateYield: function delegateYield(e, r, n) {
-      return this.delegate = {
-        iterator: values(e),
-        resultName: r,
-        nextLoc: n
-      }, "next" === this.method && (this.arg = t), y;
-    }
-  }, e;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports)();
 }
 module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
 /***/ 4664:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var copyObject = __webpack_require__(1791),
-    createAssigner = __webpack_require__(999),
-    keysIn = __webpack_require__(7241);
+/***/ ((module) => {
 
 /**
- * This method is like `_.assign` except that it iterates over own and
- * inherited source properties.
- *
- * **Note:** This method mutates `object`.
+ * This method returns a new empty array.
  *
  * @static
  * @memberOf _
- * @since 4.0.0
- * @alias extend
- * @category Object
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
- * @see _.assign
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
  * @example
  *
- * function Foo() {
- *   this.a = 1;
- * }
+ * var arrays = _.times(2, _.stubArray);
  *
- * function Bar() {
- *   this.c = 3;
- * }
+ * console.log(arrays);
+ * // => [[], []]
  *
- * Foo.prototype.b = 2;
- * Bar.prototype.d = 4;
- *
- * _.assignIn({ 'a': 0 }, new Foo, new Bar);
- * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
  */
-var assignIn = createAssigner(function(object, source) {
-  copyObject(source, keysIn(source), object);
-});
+function stubArray() {
+  return [];
+}
 
-module.exports = assignIn;
+module.exports = stubArray;
 
 
 /***/ }),
@@ -3583,6 +3449,16 @@ module.exports = baseSlice;
 
 /***/ }),
 
+/***/ 5172:
+/***/ ((module) => {
+
+function _OverloadYield(e, d) {
+  this.v = e, this.k = d;
+}
+module.exports = _OverloadYield, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ 5250:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -3746,7 +3622,8 @@ var m = __webpack_require__(7516);
 if (true) {
   exports.createRoot = m.createRoot;
   exports.hydrateRoot = m.hydrateRoot;
-} else { var i; }
+} else // removed by dead control flow
+{ var i; }
 
 
 /***/ }),
@@ -3894,6 +3771,34 @@ module.exports = initCloneObject;
 
 /***/ }),
 
+/***/ 5546:
+/***/ ((module) => {
+
+function _regeneratorDefine(e, r, n, t) {
+  var i = Object.defineProperty;
+  try {
+    i({}, "", {});
+  } catch (e) {
+    i = 0;
+  }
+  module.exports = _regeneratorDefine = function regeneratorDefine(e, r, n, t) {
+    function o(r, n) {
+      _regeneratorDefine(e, r, function (e) {
+        return this._invoke(r, n, e);
+      });
+    }
+    r ? i ? i(e, r, {
+      value: n,
+      enumerable: !t,
+      configurable: !t,
+      writable: !t
+    }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2));
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _regeneratorDefine(e, r, n, t);
+}
+module.exports = _regeneratorDefine, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ 5749:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -4029,6 +3934,20 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
+
+/***/ }),
+
+/***/ 5869:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var regeneratorAsyncGen = __webpack_require__(887);
+function _regeneratorAsync(n, e, r, t, o) {
+  var a = regeneratorAsyncGen(n, e, r, t, o);
+  return a.next().then(function (n) {
+    return n.done ? n.value : a.next();
+  });
+}
+module.exports = _regeneratorAsync, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
@@ -4678,7 +4597,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 			return classNames;
 		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
+	} else // removed by dead control flow
+{}
 }());
 
 
@@ -4718,6 +4638,101 @@ module.exports = strictIndexOf;
 /***/ (function(module) {
 
 !function(e,t){ true?module.exports=t():0}(this,(function(){"use strict";return function(e,t){t.prototype.weekday=function(e){var t=this.$locale().weekStart||0,i=this.$W,n=(i<t?i+7:i)-t;return this.$utils().u(e)?n:this.subtract(n,"day").add(e,"day")}}}));
+
+/***/ }),
+
+/***/ 6993:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var regeneratorDefine = __webpack_require__(5546);
+function _regenerator() {
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
+  var e,
+    t,
+    r = "function" == typeof Symbol ? Symbol : {},
+    n = r.iterator || "@@iterator",
+    o = r.toStringTag || "@@toStringTag";
+  function i(r, n, o, i) {
+    var c = n && n.prototype instanceof Generator ? n : Generator,
+      u = Object.create(c.prototype);
+    return regeneratorDefine(u, "_invoke", function (r, n, o) {
+      var i,
+        c,
+        u,
+        f = 0,
+        p = o || [],
+        y = !1,
+        G = {
+          p: 0,
+          n: 0,
+          v: e,
+          a: d,
+          f: d.bind(e, 4),
+          d: function d(t, r) {
+            return i = t, c = 0, u = e, G.n = r, a;
+          }
+        };
+      function d(r, n) {
+        for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) {
+          var o,
+            i = p[t],
+            d = G.p,
+            l = i[2];
+          r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0));
+        }
+        if (o || r > 1) return a;
+        throw y = !0, n;
+      }
+      return function (o, p, l) {
+        if (f > 1) throw TypeError("Generator is already running");
+        for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) {
+          i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u);
+          try {
+            if (f = 2, i) {
+              if (c || (o = "next"), t = i[o]) {
+                if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object");
+                if (!t.done) return t;
+                u = t.value, c < 2 && (c = 0);
+              } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1);
+              i = e;
+            } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break;
+          } catch (t) {
+            i = e, c = 1, u = t;
+          } finally {
+            f = 1;
+          }
+        }
+        return {
+          value: t,
+          done: y
+        };
+      };
+    }(r, o, i), !0), u;
+  }
+  var a = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  t = Object.getPrototypeOf;
+  var c = [][n] ? t(t([][n]())) : (regeneratorDefine(t = {}, n, function () {
+      return this;
+    }), t),
+    u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
+  function f(e) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, regeneratorDefine(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e;
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, regeneratorDefine(u, "constructor", GeneratorFunctionPrototype), regeneratorDefine(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", regeneratorDefine(GeneratorFunctionPrototype, o, "GeneratorFunction"), regeneratorDefine(u), regeneratorDefine(u, o, "Generator"), regeneratorDefine(u, n, function () {
+    return this;
+  }), regeneratorDefine(u, "toString", function () {
+    return "[object Generator]";
+  }), (module.exports = _regenerator = function _regenerator() {
+    return {
+      w: i,
+      m: f
+    };
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports)();
+}
+module.exports = _regenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
@@ -6202,38 +6217,6 @@ module.exports = baseClone;
 /************************************************************************/
 var __webpack_exports__ = {};
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  aE: () => (/* reexport */ BaseInput),
-  $n: () => (/* reexport */ button_Button),
-  e2: () => (/* reexport */ ButtonGroup),
-  Sc: () => (/* reexport */ Checkbox),
-  $Q: () => (/* reexport */ CheckboxGroup),
-  sk: () => (/* reexport */ color_picker_ColorPicker),
-  sG: () => (/* reexport */ configProvider_ConfigProvider),
-  lr: () => (/* reexport */ DatePicker),
-  kZ: () => (/* reexport */ Detail),
-  ms: () => (/* reexport */ DropDown),
-  lV: () => (/* reexport */ Form),
-  cK: () => (/* reexport */ contexts_FormContext),
-  eI: () => (/* reexport */ formItem_FormItem),
-  zG: () => (/* reexport */ contexts_FormItemContext),
-  cm: () => (/* reexport */ formItem_FormItemLabel),
-  Ds: () => (/* reexport */ FormValidateEvent),
-  aF: () => (/* reexport */ modal_Modal),
-  sx: () => (/* reexport */ radio_Radio),
-  z6: () => (/* reexport */ RadioGroup),
-  wT: () => (/* reexport */ RangeDatePicker),
-  DO: () => (/* reexport */ SearchInput),
-  $q: () => (/* reexport */ Segmented),
-  l6: () => (/* reexport */ Select),
-  XI: () => (/* reexport */ Table),
-  LY: () => (/* reexport */ TagList),
-  d9: () => (/* reexport */ uploader),
-  rW: () => (/* reexport */ useInputGroup),
-  b1: () => (/* reexport */ useLedapModel)
-});
-
 // NAMESPACE OBJECT: ./src/platforms/vue/index.ts
 var vue_namespaceObject = {};
 __webpack_require__.r(vue_namespaceObject);
@@ -6305,25 +6288,17 @@ function _objectWithoutProperties(e, t) {
 }
 
 ;// external "react"
-var x = (y) => {
-	var x = {}; __webpack_require__.d(x, y); return x
-} 
-var y = (x) => (() => (x))
-const external_react_namespaceObject = x({ ["createContext"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.createContext), ["createElement"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.createElement), ["default"]: () => (__WEBPACK_EXTERNAL_MODULE_react__["default"]), ["forwardRef"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.forwardRef), ["useContext"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.useContext), ["useEffect"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.useEffect), ["useRef"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.useRef), ["useState"]: () => (__WEBPACK_EXTERNAL_MODULE_react__.useState) });
+
 ;// external "antd"
-var external_antd_x = (y) => {
-	var x = {}; __webpack_require__.d(x, y); return x
-} 
-var external_antd_y = (x) => (() => (x))
-const external_antd_namespaceObject = external_antd_x({ ["Button"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Button), ["Checkbox"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Checkbox), ["ColorPicker"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.ColorPicker), ["ConfigProvider"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.ConfigProvider), ["DatePicker"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.DatePicker), ["Descriptions"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Descriptions), ["Dropdown"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Dropdown), ["Flex"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Flex), ["Form"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Form), ["Input"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Input), ["InputNumber"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.InputNumber), ["Modal"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Modal), ["Radio"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Radio), ["Segmented"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Segmented), ["Select"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Select), ["Space"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Space), ["Spin"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Spin), ["Table"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Table), ["Tag"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Tag), ["Upload"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.Upload), ["message"]: () => (__WEBPACK_EXTERNAL_MODULE_antd__.message) });
+
 ;// ./src/platforms/react/components/formItem/BaseInput.tsx
-var _excluded=["tag","attr","model","type","validate","onFocus","onBlur","onInput","onSetValue","value"];var InputEvents={blur:"blur",focus:"focus",input:"input"};var getControlComponent=function getControlComponent(tag,type){if(tag=="textarea"){return external_antd_namespaceObject.Input.TextArea;}if(type=="text"){return external_antd_namespaceObject.Input;}if(type=="password"){return external_antd_namespaceObject.Input.Password;}if(type=="number"){return external_antd_namespaceObject.InputNumber;}if(type=="textarea"){return external_antd_namespaceObject.Input.TextArea;}};function BaseInput(props){var tag=props.tag,attr=props.attr,model=props.model,_props$type=props.type,type=_props$type===void 0?"text":_props$type,_props$validate=props.validate,validate=_props$validate===void 0?[InputEvents.blur]:_props$validate,onFocus=props.onFocus,onBlur=props.onBlur,onInput=props.onInput,onSetValue=props.onSetValue,_props$value=props.value,value=_props$value===void 0?"":_props$value,reset=_objectWithoutProperties(props,_excluded);function _checkValue(eventType){if(validate.indexOf(eventType)>-1){var validateRes=model.validate(attr,true);var error=model.getFirstError(attr);// console.log("call validate", { model, attr, validateRes, error });
-}}function _onInput(e){var _e$target;var value=typeof e=="number"||typeof e=="string"?e:e===null||e===void 0||(_e$target=e.target)===null||_e$target===void 0?void 0:_e$target.value;onSetValue===null||onSetValue===void 0||onSetValue(value);_checkValue(InputEvents.input);onInput===null||onInput===void 0||onInput(e);}function _onFocus(e){_checkValue(InputEvents.focus);onFocus===null||onFocus===void 0||onFocus(e);}function _onBlur(e){_checkValue(InputEvents.blur);onBlur===null||onBlur===void 0||onBlur(e);}var ControlComponent=getControlComponent(tag,type);var ControlProps=ControlComponent==external_antd_namespaceObject.Input.TextArea?{rows:8}:{};var maxLength=model.getValidatorData(attr,"string","max");return/*#__PURE__*/external_react_namespaceObject["default"].createElement(ControlComponent,_extends({value:value,placeholder:model.getAttributeHint(attr),maxLength:maxLength,onChange:_onInput,onFocus:_onFocus,onBlur:_onBlur},ControlProps,reset));}
+var _excluded=["tag","attr","model","type","validate","onFocus","onBlur","onInput","onSetValue","value"];var InputEvents={blur:"blur",focus:"focus",input:"input"};var getControlComponent=function getControlComponent(tag,type){if(tag=="textarea"){return Input.TextArea;}if(type=="text"){return Input;}if(type=="password"){return Input.Password;}if(type=="number"){return InputNumber;}if(type=="textarea"){return Input.TextArea;}};function BaseInput(props){var tag=props.tag,attr=props.attr,model=props.model,_props$type=props.type,type=_props$type===void 0?"text":_props$type,_props$validate=props.validate,validate=_props$validate===void 0?[InputEvents.blur]:_props$validate,onFocus=props.onFocus,onBlur=props.onBlur,onInput=props.onInput,onSetValue=props.onSetValue,_props$value=props.value,value=_props$value===void 0?"":_props$value,reset=_objectWithoutProperties(props,_excluded);function _checkValue(eventType){if(validate.indexOf(eventType)>-1){var validateRes=model.validate(attr,true);var error=model.getFirstError(attr);// console.log("call validate", { model, attr, validateRes, error });
+}}function _onInput(e){var _e$target;var value=typeof e=="number"||typeof e=="string"?e:e===null||e===void 0||(_e$target=e.target)===null||_e$target===void 0?void 0:_e$target.value;onSetValue===null||onSetValue===void 0||onSetValue(value);_checkValue(InputEvents.input);onInput===null||onInput===void 0||onInput(e);}function _onFocus(e){_checkValue(InputEvents.focus);onFocus===null||onFocus===void 0||onFocus(e);}function _onBlur(e){_checkValue(InputEvents.blur);onBlur===null||onBlur===void 0||onBlur(e);}var ControlComponent=getControlComponent(tag,type);var ControlProps=ControlComponent==Input.TextArea?{rows:8}:{};var maxLength=model.getValidatorData(attr,"string","max");return/*#__PURE__*/default_0.createElement(ControlComponent,_extends({value:value,placeholder:model.getAttributeHint(attr),maxLength:maxLength,onChange:_onInput,onFocus:_onFocus,onBlur:_onBlur},ControlProps,reset));}
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
 var classnames = __webpack_require__(6942);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 ;// ./src/platforms/react/contexts/FormItemContext.js
-var FormItemContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({});/* harmony default export */ const contexts_FormItemContext = (FormItemContext);
+var FormItemContext=/*#__PURE__*/createContext({});/* harmony default export */ const contexts_FormItemContext = (FormItemContext);
 ;// ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(r) {
   if (Array.isArray(r)) return r;
@@ -6514,6 +6489,9 @@ function _defineProperty(e, r, t) {
   }) : e[r] = t, e;
 }
 
+// EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
+var isEqual = __webpack_require__(2404);
+var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 // EXTERNAL MODULE: ./node_modules/lodash/get.js
 var get = __webpack_require__(8156);
 var get_default = /*#__PURE__*/__webpack_require__.n(get);
@@ -6523,6 +6501,9 @@ var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
 // EXTERNAL MODULE: ./node_modules/lodash/isEmpty.js
 var lodash_isEmpty = __webpack_require__(2193);
 var isEmpty_default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty);
+// EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
+var cloneDeep = __webpack_require__(8055);
+var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
 // EXTERNAL MODULE: ./node_modules/lodash/set.js
 var set = __webpack_require__(3560);
 var set_default = /*#__PURE__*/__webpack_require__.n(set);
@@ -7159,7 +7140,7 @@ var Pagination=/*#__PURE__*/function(_BaseObject){function Pagination(){var _thi
 if(value>this.pageCount){value=this.pageCount;}if(value<=0){value=1;}this.emit(Pagination.EVENT_SETPAGE,value,this.page,this);this.page=value;}},{key:"hasPrev",value:function hasPrev(){return this.currentPage>1;}},{key:"hasNext",value:function hasNext(){return this.currentPage<this.pageCount;}}]);}(BaseObject);_defineProperty(Pagination,"EVENT_SETPAGE",'page_setpage');
 ;// ./src/base/DataProvider.ts
 function DataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
-var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model_Model);_this.modelClass=get_default()(config,'modelClass',Model_Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
+var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"modelCallback",null);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model_Model);_this.modelClass=get_default()(config,'modelClass',Model_Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');_this.modelCallback=get_default()(config,'modelCallback',null);var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
 },{key:"toggleSort",value:function toggleSort(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var singleSort=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}var process=function process(attr){if(_this4._sort[attr]){if(_this4.isSortAsc(attr)){_this4._sort[attr]=DataProvider.SORT_DESC;}else{_this4._sort[attr]=DataProvider.SORT_ASC;}}else{_this4._sort[attr]=DataProvider.SORT_ASC;}};if(singleSort){var attribute=attributes[0];if(!attribute){return this.sort;}Object.keys(this._sort).forEach(function(key){if(key!==attribute){delete _this4._sort[key];}});process(attribute);}else{Object.keys(attributes).forEach(function(index){var key=attributes[index];process(key);});}return this.sort;}// 如果不传参则获取当前的url, params的传参会优先
 },{key:"getParams",value:function getParams(){var _this5=this;var args=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params={};Object.keys(this.searchModel).forEach(function(key){params[key]=_this5.searchModel[key];});params['page']=this.pager.currentPage;params['per-page']=this.pager.perPage;params['sort']=this.sort;Object.keys(args).forEach(function(key){params[key]=args[key];});return params;}},{key:"load",value:function load(data){var _this6=this;var append=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var primaryKey=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'';var params=get_default()(data,'params',{});if(!this.isLoad){var searchModel=new this['searchModelClass']();searchModel.load(params);this.searchModel=searchModel;}else{this.searchModel=this.searchModel.load(params);}var meta=get_default()(data,'meta',{});this.pager=this.pager.load(meta);this.sort=get_default()(data,'sort','');var models=this.models;if(isEmpty_default()(models)||!append){models=[];}var items=get_default()(data,'items',[]);var modelDict={};// 如果设置了primaryKey，则按primaryKey进行去重
 if(!isEmpty_default()(primaryKey)){Object.keys(models).forEach(function(key){var tempModel=models[key];if(tempModel.hasOwnProperty(primaryKey)){modelDict[tempModel[primaryKey]]=key;}});}Object.keys(items).forEach(function(key){var item=items[key];var model=new _this6.modelClass();model.load(item);if(!isEmpty_default()(primaryKey)&&model.hasOwnProperty(primaryKey)){if(modelDict.hasOwnProperty(model[primaryKey])){var tempKey=modelDict[model[primaryKey]];models[tempKey]=model;}else{modelDict[model[primaryKey]]=models.length;models.push(model);}}else{models.push(model);}});this.models=models;this.isLoad=true;this.init();return this;}},{key:"remove",value:function remove(){var _this7=this;var index=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(typeof index==='string'){index=parseInt(index,0);}if(typeof index==='number'){return this.models.splice(index,1);}var value=null;Object.keys(this.models).forEach(function(key){if(index===_this7.models[key]){value=_this7.remove(key);}});return value;}},{key:"localSort",value:function localSort(){var sortBy=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var attribute=Object.keys(this._sort)[0];if(!attribute){return;}this.sortModels(attribute,this.isSortAsc(attribute),sortBy);}},{key:"sortModels",value:function sortModels(attribute){var asc=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var sortBy=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;if(sortBy===null){sortBy=function sortBy(value1,value2,sortType){if(value1===value2){return 0;}if(sortType){return value1>value2?1:-1;}return value1<value2?1:-1;};}var compare=function compare(a,b){return sortBy(a[attribute],b[attribute],asc);};this.models.sort(compare);}}],[{key:"getInstance",value:function getInstance(data){var searchModelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Model_Model;var modelClass=arguments.length>2&&arguments[2]!==undefined?arguments[2]:Model_Model;var paginationClass=arguments.length>3&&arguments[3]!==undefined?arguments[3]:Pagination;var config={data:data,searchModelClass:searchModelClass,modelClass:modelClass,paginationClass:paginationClass};return new DataProvider(config);}}]);}(BaseObject);_defineProperty(DataProvider,"SORT_ASC",4);_defineProperty(DataProvider,"SORT_DESC",3);
@@ -7171,18 +7152,23 @@ _defineProperty(_this2,"isLoading",false);// 正常需要加载配置数据，�
 _defineProperty(_this2,"isLoad",false);// 配置的标志位，指示后端是否传递配置过来
 _defineProperty(_this2,"configName",'withConfig');_defineProperty(_this2,"append",false);// 默认为id
 _defineProperty(_this2,"primaryKey",'id');config=merge_default()({},App.webDpConfig,config);_this2.httpRequest=get_default()(config,'httpRequest',null);_this2.httpOptions=get_default()(config,'httpOptions',null);_this2.primaryKey=get_default()(config,'primaryKey','id');_this2.configName=get_default()(config,'configName','withConfig');_this2.callback=get_default()(config,'callback',null);_this2.timeWait=get_default()(config,'timeWait',600);if(!_this2.httpRequest){throw new Error('httpRequest必须配置');}return _this2;}_inherits(WebDataProvider,_DataProvider);return _createClass(WebDataProvider,[{key:"refresh",value:function refresh(){var refreshType=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'refresh';if(refreshType==='header'){this.append=false;// 头部下拉刷新会将page置为1
-this.changePage(1,true);}else if(refreshType==='footer'){this.append=true;this.changePage(this.pager.currentPage+1,true);}else{this.append=false;this.changePage(this.pager.currentPage,true);}}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
+return this.changePage(1,true);}if(refreshType==='footer'){this.append=true;return this.changePage(this.pager.currentPage+1,true);}this.append=false;return this.changePage(this.pager.currentPage,true);}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
 },{key:"setParams",value:function setParams(params){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;// 设置参数
-this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
-this.sort=sort;var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}// 用于网页的页码点击中
-},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){this.loadData();}}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
-},{key:"loadData",value:function loadData(){var _this=this;var getData=function getData(){if(!_this.beforeGetData()){return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);},function(error){_this.afterGetData(false,error);});};if(this.timeWait){if(this._timer){clearTimeout(this._timer);}this._timer=setTimeout(getData,this.timeWait);}else{getData();}}// 获取数据之前
+this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;return this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
+this.sort=sort;var page=changePage?1:this.pager.currentPage;return this.changePage(page,reload);}// 用于网页的页码点击中
+},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){return this.loadData();}return new Promise(function(resolve,reject){resolve({});});}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
+},{key:"loadData",value:function loadData(){var _this3=this;var _this=this;var getData=function getData(resolve,reject){var ret=_this.beforeGetData();if(!ret){if(reject){reject(new Error('数据核验失败'));}return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);if(resolve){resolve(data);}},function(error){_this.afterGetData(false,error);if(reject){reject(error);}});};return new Promise(function(resolve,reject){if(_this3.timeWait){if(_this3._timer){clearTimeout(_this3._timer);}_this3._timer=setTimeout(function(){getData(resolve,reject);},_this3.timeWait);}else{getData(resolve,reject);}});}// 获取数据之前
 },{key:"beforeGetData",value:function beforeGetData(){this.isLoading=true;var reqData=get_default()(this.httpOptions,'params',{});reqData=this.getParams(reqData);reqData[this.configName]=!this.isLoad;this.httpOptions['params']=reqData;this.emit(WebDataProvider.EVENT_BEFOREGETDATA,this,{dp:this});return true;}// 获取数据
 },{key:"processData",value:function processData(data){this.load(data,this.append,this.primaryKey);}// 获取数据之后
 },{key:"afterGetData",value:function afterGetData(success,data){if(success){this.isLoad=true;}this.isLoading=false;this.append=false;this.httpOptions['params']={};this.emit(WebDataProvider.EVENT_AFTERGETDATA,this,{dp:this,success:success,data:data});if(this.callback){this.callback(data,success,this);}if(this._timer){clearTimeout(this._timer);}}}]);}(DataProvider);_defineProperty(WebDataProvider_WebDataProvider,"EVENT_BEFOREGETDATA",'DP_BEFORE_GETDATA');_defineProperty(WebDataProvider_WebDataProvider,"EVENT_AFTERGETDATA",'DP_AFTER_GETDATA');
-// EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
-var cloneDeep = __webpack_require__(8055);
-var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
+;// ./src/base/HttpModel.ts
+function HttpModel_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,HttpModel_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function HttpModel_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(HttpModel_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var HttpModel=/*#__PURE__*/function(_Model){function HttpModel(){var _this;var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};_classCallCheck(this,HttpModel);_this=HttpModel_callSuper(this,HttpModel);_defineProperty(_this,"_primaryKey",'id');_defineProperty(_this,"_basePath",'');_defineProperty(_this,"_viewPath",'/view');_defineProperty(_this,"_createPath",'/create');_defineProperty(_this,"_updatePath",'/update');_defineProperty(_this,"_deletePath",'/delete');var keyMap={httpRequest:'_httpRequest',primaryKey:'_primaryKey',basePath:'_basePath',viewPath:'_viewPath',createPath:'_createPath',updatePath:'_updatePath',deletePath:'_deletePath'};Object.keys(keyMap).forEach(function(key){if(config.hasOwnProperty(key)){_this[keyMap[key]]=config[key];}});if(!_this._httpRequest){throw new Error('httpRequest必须配置');}if(!_this._basePath){throw new Error('basePath必须配置');}return _this;}_inherits(HttpModel,_Model);return _createClass(HttpModel,[{key:"createUrl",get:function get(){return this._basePath+this._createPath;}},{key:"viewUrl",get:function get(){return this._basePath+this._viewPath;}},{key:"updateUrl",get:function get(){return this._basePath+this._updatePath;}},{key:"deleteUrl",get:function get(){return this._basePath+this._deletePath;}// 找到相关的参数
+},{key:"getRequestData",value:function getRequestData(){var _this2=this;var excludePrimaryKey=arguments.length>0&&arguments[0]!==undefined?arguments[0]:false;var data={};Object.keys(this).forEach(function(key){if(_this2.isPrivateKey(key)){return;}data[key]=_this2[key];});if(excludePrimaryKey){delete data[this._primaryKey];}return data;}},{key:"getChangedRequestData",value:function getChangedRequestData(){var _this3=this;var changedData=this.getChangeData();var data={};Object.keys(changedData).forEach(function(key){if(_this3.isPrivateKey(key)){return;}data[key]=changedData[key];});return data;}},{key:"getModel",value:function getModel(){var _this4=this;var id=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};return new Promise(function(resolve,reject){_this4._httpRequest({url:_this4.viewUrl+'?'+_this4._primaryKey+'='+id,params:params,method:'GET'},function(data){_this4.load(data.data);resolve({model:_this4,data:data});},function(error){reject(error);});});}},{key:"process",value:function process(httpOptions,resolve,reject){var _this5=this;this._httpRequest(httpOptions,function(data){_this5.load(data.data);_this5.sync();resolve({model:_this5,data:data});},function(error){reject(error);});}// 更新model
+},{key:"updateModel",value:function updateModel(){var _this6=this;var dirtyObject=this.getChangedRequestData();return new Promise(function(resolve,reject){if(dirtyObject==null||Object.keys(dirtyObject).length===0){return resolve({model:_this6,data:{}});}if(dirtyObject.hasOwnProperty(_this6._primaryKey)){return reject(new Error('不允许更改primaryKey'));}_this6.process({url:_this6.updateUrl+'?'+_this6._primaryKey+'='+_this6[_this6._primaryKey],method:'POST',data:dirtyObject},resolve,reject);});}// 创建新model
+},{key:"createModel",value:function createModel(){var _this7=this;var data=this.getRequestData(true);return new Promise(function(resolve,reject){_this7.process({url:_this7.createUrl,method:'POST',data:data},resolve,reject);});}// 删除当前model
+},{key:"deleteModel",value:function deleteModel(){var _this8=this;return new Promise(function(resolve,reject){if(!_this8[_this8._primaryKey]){return reject(new Error('primaryKey不能为空'));}_this8.process({url:_this8.deleteUrl+'?'+_this8._primaryKey+'='+_this8[_this8._primaryKey],method:'POST',data:{}},resolve,reject);});}}],[{key:"find",value:function find(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};var model=new this(config);if(params.hasOwnProperty('withConfig')){params['withConfig']=!!params['withConfig'];}return model.getModel(params[model._primaryKey]||0,params);}}]);}(Model_Model);
+;// ./src/base/index.ts
+
 ;// ./src/platforms/vue/components/group/tab.ts
 /* harmony default export */ const tab = ({name:'tab',props:{tag:{type:String,"default":'a'},dataKey:{type:[String,Number,Boolean],"default":null},attr:{type:String},canClose:{type:Boolean,"default":false},disabled:{type:Boolean,"default":false}},data:function data(){return{status:false,groupKey:this.dataKey,tagName:this.tag};},methods:{open:function open(){this.status=true;},close:function close(){this.status=false;},isOpen:function isOpen(){return this.status===true;},click:function click(){var isOpen=this.isOpen();var type='open';if(this.canClose){type=isOpen?'close':'open';}this[type]();this.$emit('toggle',{type:type,vm:this});}},template:"\n    <component :is=\"tagName\" :class=\"{'active': isOpen()}\" :disabled=\"disabled\" @click=\"click\">\n        <slot></slot>\n   </component>"});
 ;// ./src/platforms/vue/components/group/checkbox.ts
@@ -7308,9 +7294,6 @@ formValue:function formValue(){return this.model[this.attr];}},watch:{formValue:
 init:function init(){this.value=this.model[this.attr];},// 上层履盖
 inputChange:function inputChange(e){this.value=e.target.value;if(this.value){this.request(_defineProperty({},this.paramName,this.value));}this.inputListeners.input(e);},focusChange:function focusChange(e){this.inputListeners.focus(e);},blurChange:function blurChange(e){this.inputListeners.blur(e);},// 选择model
 choose:function choose(model,index,e){var _this4=this;if(typeof model[this.itemName]!=='undefined'){this.model[this.attr]=this.value=model[this.itemName];setTimeout(function(){_this4.request(_defineProperty({},_this4.paramName,_this4.value));},this.delay);}this.$emit('choose',model,index,e);}},template:"<div style=\"position: relative;\">\n    <span>\n        <input :name=\"attr\" :value=\"value\" :placeholder=\"model.getAttributeHint(attr)\" v-on=\"listeners\" autocomplete=\"off\" v-bind=\"$attrs\">\n    </span>\n    <ul v-show=\"showList\" style=\"position: absolute;\" :style=\"{opacity: isHide ? 0 : 1}\">\n        <li v-for=\"(model, index) in models\" @click=\"choose(model, index, $event)\">\n            <slot name=\"tab\" :model=\"model\" :index=\"index\">{{model[itemName]}}</slot>\n        </li>\n    </ul>\n</div>",depends:['form-item']}));
-// EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
-var isEqual = __webpack_require__(2404);
-var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 ;// ./src/platforms/vue/components/formItem/select2.ts
 var select2_input=cloneDeep_default()(searchinput);/* harmony default export */ const select2 = (merge_default()(select2_input,{name:'select2',props:{keyName:{type:String,"default":'id'},multiple:{type:Boolean,"default":false}},data:function data(){return{showError:this.model.getFirstError(this.attr),isFocus:false,isHide:false,// input的值
 value:'',models:this.dataProvider.models||[],filter:this.dataFilter,selected:{}};},watch:{selected:function selected(value){var keys=Object.keys(value);if(this.multiple){// 为了防止死循环，只有当值不同的时候才进行赋值
@@ -7337,7 +7320,7 @@ var step=cloneDeep_default()(tab);/* harmony default export */ const step_step =
 ;// ./src/platforms/vue/index.ts
 
 ;// ./src/platforms/vue/Theme.ts
-function Theme_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Theme_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Theme_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Theme_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var Theme=/*#__PURE__*/function(_BaseObject){function Theme(){var _this;_classCallCheck(this,Theme);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Theme_callSuper(this,Theme,[].concat(args));_defineProperty(_this,"key",'default');_defineProperty(_this,"components",{});_defineProperty(_this,"_registerComps",{});return _this;}_inherits(Theme,_BaseObject);return _createClass(Theme,[{key:"getComponentByName",value:function getComponentByName(name){return get_default()(this.components,name,null);}},{key:"addComponent",value:function addComponent(comp){var cloneFrom=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;var parentComp=null;if(cloneFrom){parentComp=this.getComponentByName(cloneFrom);}if(parentComp){comp=merge_default()(cloneDeep_default()(parentComp),comp);}if(!comp.hasOwnProperty('name')){throw new Error('组件必须有name字段');}if(this.components.hasOwnProperty(comp['name'])){throw new Error('该组件名已经被占用，请重新设置组件名');}this.components[comp['name']]=comp;return comp;}// 注册组件, 循环遍历整棵树
+function Theme_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Theme_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Theme_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Theme_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var Theme=/*#__PURE__*/function(_BaseObject){function Theme(){var _this;_classCallCheck(this,Theme);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Theme_callSuper(this,Theme,[].concat(args));_defineProperty(_this,"key",'default');_defineProperty(_this,"components",{});_defineProperty(_this,"_registerComps",{});return _this;}_inherits(Theme,_BaseObject);return _createClass(Theme,[{key:"getComponentByName",value:function getComponentByName(name){return get_default()(this.components,name,null);}},{key:"addComponent",value:function addComponent(comp){var cloneFrom=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;var parentComp=null;if(cloneFrom){parentComp=this.getComponentByName(cloneFrom);}if(parentComp){comp=merge_default()(cloneDeep_default()(parentComp),comp);}if(!comp.hasOwnProperty('name')){throw new Error('组件必须有name字段');}if(this.components.hasOwnProperty(comp['name'])){throw new Error('该组件名已经被占用，请重新设置组件名');}this.components[comp['name']]=comp;return comp;}},{key:"registerAll",value:function registerAll(vue){return this.register(Object.keys(this.components),vue);}// 注册组件, 循环遍历整棵树
 },{key:"register",value:function register(name,vue){var _this2=this;var objs=[];if(typeof name==='string'){var comp=this.getComponentByName(name);if(comp){objs.push(comp);}}else{Object.keys(name).forEach(function(key){var comp=_this2.getComponentByName(name[key]);if(comp){objs.push(comp);}});}Object.keys(objs).forEach(function(key){var obj=objs[key];// 如果有depend先register depend组件
 if(obj.hasOwnProperty('depends')&&!_this2._registerComps.hasOwnProperty(obj.name)){_this2.register(obj['depends'],vue);}vue['component'](_this2.getName(obj.name),obj);_this2._registerComps[obj.name]=true;});}},{key:"getName",value:function getName(name){var suffix=this.key==='default'?'':this.key;return name+suffix;}}],[{key:"getInstance",value:// 全局的一些配置
 function getInstance(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var key=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'default';var theme=null;if(Theme.themes.hasOwnProperty(key)){theme=Theme.themes[key];}else{theme=new Theme();theme.key=key;Theme.themes[key]=theme;}Object.keys(vue_namespaceObject).forEach(function(index){var obj=vue_namespaceObject[index];if(obj.hasOwnProperty('name')){theme.components[obj['name']]=obj;}});theme.components=merge_default()(theme.components,config);return theme;}}]);}(BaseObject);_defineProperty(Theme,"themes",{});
@@ -7359,6 +7342,7 @@ function bind(fn, thisArg) {
 
 const {toString: utils_toString} = Object.prototype;
 const {getPrototypeOf} = Object;
+const {iterator, toStringTag} = Symbol;
 
 const kindOf = (cache => thing => {
     const str = utils_toString.call(thing);
@@ -7485,7 +7469,28 @@ const isPlainObject = (val) => {
   }
 
   const prototype = getPrototypeOf(val);
-  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in val) && !(Symbol.iterator in val);
+  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(toStringTag in val) && !(iterator in val);
+}
+
+/**
+ * Determine if a value is an empty object (safely handles Buffers)
+ *
+ * @param {*} val The value to test
+ *
+ * @returns {boolean} True if value is an empty object, otherwise false
+ */
+const isEmptyObject = (val) => {
+  // Early return for non-objects or Buffers to prevent RangeError
+  if (!utils_isObject(val) || isBuffer(val)) {
+    return false;
+  }
+  
+  try {
+    return Object.keys(val).length === 0 && Object.getPrototypeOf(val) === Object.prototype;
+  } catch (e) {
+    // Fallback for any other objects that might cause RangeError with Object.keys()
+    return false;
+  }
 }
 
 /**
@@ -7610,6 +7615,11 @@ function forEach(obj, fn, {allOwnKeys = false} = {}) {
       fn.call(null, obj[i], i, obj);
     }
   } else {
+    // Buffer check
+    if (isBuffer(obj)) {
+      return;
+    }
+
     // Iterate over object keys
     const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
     const len = keys.length;
@@ -7623,6 +7633,10 @@ function forEach(obj, fn, {allOwnKeys = false} = {}) {
 }
 
 function findKey(obj, key) {
+  if (isBuffer(obj)){
+    return null;
+  }
+
   key = key.toLowerCase();
   const keys = Object.keys(obj);
   let i = keys.length;
@@ -7836,13 +7850,13 @@ const isTypedArray = (TypedArray => {
  * @returns {void}
  */
 const forEachEntry = (obj, fn) => {
-  const generator = obj && obj[Symbol.iterator];
+  const generator = obj && obj[iterator];
 
-  const iterator = generator.call(obj);
+  const _iterator = generator.call(obj);
 
   let result;
 
-  while ((result = iterator.next()) && !result.done) {
+  while ((result = _iterator.next()) && !result.done) {
     const pair = result.value;
     fn.call(obj, pair[0], pair[1]);
   }
@@ -7963,7 +7977,7 @@ const toFiniteNumber = (value, defaultValue) => {
  * @returns {boolean}
  */
 function isSpecCompliantForm(thing) {
-  return !!(thing && isFunction(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
+  return !!(thing && isFunction(thing.append) && thing[toStringTag] === 'FormData' && thing[iterator]);
 }
 
 const toJSONObject = (obj) => {
@@ -7974,6 +7988,11 @@ const toJSONObject = (obj) => {
     if (utils_isObject(source)) {
       if (stack.indexOf(source) >= 0) {
         return;
+      }
+
+      //Buffer check
+      if (isBuffer(source)) {
+        return source;
       }
 
       if(!('toJSON' in source)) {
@@ -8032,6 +8051,10 @@ const asap = typeof queueMicrotask !== 'undefined' ?
 
 // *********************
 
+
+const isIterable = (thing) => thing != null && isFunction(thing[iterator]);
+
+
 /* harmony default export */ const utils = ({
   isArray: utils_isArray,
   isArrayBuffer,
@@ -8043,6 +8066,7 @@ const asap = typeof queueMicrotask !== 'undefined' ?
   isBoolean,
   isObject: utils_isObject,
   isPlainObject,
+  isEmptyObject,
   isReadableStream,
   isRequest,
   isResponse,
@@ -8087,7 +8111,8 @@ const asap = typeof queueMicrotask !== 'undefined' ?
   isAsyncFn,
   isThenable,
   setImmediate: _setImmediate,
-  asap
+  asap,
+  isIterable
 });
 
 ;// ./node_modules/axios/lib/core/AxiosError.js
@@ -8320,6 +8345,10 @@ function toFormData(obj, formData, options) {
 
     if (utils.isDate(value)) {
       return value.toISOString();
+    }
+
+    if (utils.isBoolean(value)) {
+      return value.toString();
     }
 
     if (!useBlob && utils.isBlob(value)) {
@@ -8728,7 +8757,7 @@ const origin = hasBrowserEnv && window.location.href || 'http://localhost';
 
 
 function toURLEncodedForm(data, options) {
-  return helpers_toFormData(data, new platform.classes.URLSearchParams(), Object.assign({
+  return helpers_toFormData(data, new platform.classes.URLSearchParams(), {
     visitor: function(value, key, path, helpers) {
       if (platform.isNode && utils.isBuffer(value)) {
         this.append(key, value.toString('base64'));
@@ -8736,8 +8765,9 @@ function toURLEncodedForm(data, options) {
       }
 
       return helpers.defaultVisitor.apply(this, arguments);
-    }
-  }, options));
+    },
+    ...options
+  });
 }
 
 ;// ./node_modules/axios/lib/helpers/formDataToJSON.js
@@ -9160,10 +9190,18 @@ class AxiosHeaders {
       setHeaders(header, valueOrRewrite)
     } else if(utils.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
       setHeaders(parseHeaders(header), valueOrRewrite);
-    } else if (utils.isHeaders(header)) {
-      for (const [key, value] of header.entries()) {
-        setHeader(value, key, rewrite);
+    } else if (utils.isObject(header) && utils.isIterable(header)) {
+      let obj = {}, dest, key;
+      for (const entry of header) {
+        if (!utils.isArray(entry)) {
+          throw TypeError('Object iterator must return a key-value pair');
+        }
+
+        obj[key = entry[0]] = (dest = obj[key]) ?
+          (utils.isArray(dest) ? [...dest, entry[1]] : [dest, entry[1]]) : entry[1];
       }
+
+      setHeaders(obj, valueOrRewrite)
     } else {
       header != null && setHeader(valueOrRewrite, header, rewrite);
     }
@@ -9303,6 +9341,10 @@ class AxiosHeaders {
 
   toString() {
     return Object.entries(this.toJSON()).map(([header, value]) => header + ': ' + value).join('\n');
+  }
+
+  getSetCookie() {
+    return this.get("set-cookie") || [];
   }
 
   get [Symbol.toStringTag]() {
@@ -9539,7 +9581,7 @@ function throttle(fn, freq) {
       clearTimeout(timer);
       timer = null;
     }
-    fn.apply(null, args);
+    fn(...args);
   }
 
   const throttled = (...args) => {
@@ -9723,7 +9765,7 @@ function combineURLs(baseURL, relativeURL) {
  */
 function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
   let isRelativeUrl = !isAbsoluteURL(requestedURL);
-  if (baseURL && isRelativeUrl || allowAbsoluteUrls == false) {
+  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
@@ -9828,7 +9870,7 @@ function mergeConfig(config1, config2) {
     headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
   };
 
-  utils.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
+  utils.forEach(Object.keys({...config1, ...config2}), function computeConfigValue(prop) {
     const merge = mergeMap[prop] || mergeDeepProperties;
     const configValue = merge(config1[prop], config2[prop], prop);
     (utils.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
@@ -9854,7 +9896,7 @@ function mergeConfig(config1, config2) {
 
   newConfig.headers = headers = core_AxiosHeaders.from(headers);
 
-  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config.params, config.paramsSerializer);
+  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
 
   // HTTP basic authentication
   if (auth) {
@@ -10404,7 +10446,7 @@ const resolveBodyLength = async (headers, body) => {
       credentials: isCredentialsSupported ? withCredentials : undefined
     });
 
-    let response = await fetch(request);
+    let response = await fetch(request, fetchOptions);
 
     const isStreamResponse = supportsResponseStream && (responseType === 'stream' || responseType === 'response');
 
@@ -10450,7 +10492,7 @@ const resolveBodyLength = async (headers, body) => {
   } catch (err) {
     unsubscribe && unsubscribe();
 
-    if (err && err.name === 'TypeError' && /fetch/i.test(err.message)) {
+    if (err && err.name === 'TypeError' && /Load failed|fetch/i.test(err.message)) {
       throw Object.assign(
         new core_AxiosError('Network Error', core_AxiosError.ERR_NETWORK, config, request),
         {
@@ -10630,7 +10672,7 @@ function dispatchRequest(config) {
 }
 
 ;// ./node_modules/axios/lib/env/data.js
-const VERSION = "1.8.1";
+const VERSION = "1.11.0";
 ;// ./node_modules/axios/lib/helpers/validator.js
 
 
@@ -10755,7 +10797,7 @@ const Axios_validators = validator.validators;
  */
 class Axios {
   constructor(instanceConfig) {
-    this.defaults = instanceConfig;
+    this.defaults = instanceConfig || {};
     this.interceptors = {
       request: new core_InterceptorManager(),
       response: new core_InterceptorManager()
@@ -10888,8 +10930,8 @@ class Axios {
 
     if (!synchronousRequestInterceptors) {
       const chain = [dispatchRequest.bind(this), undefined];
-      chain.unshift.apply(chain, requestInterceptorChain);
-      chain.push.apply(chain, responseInterceptorChain);
+      chain.unshift(...requestInterceptorChain);
+      chain.push(...responseInterceptorChain);
       len = chain.length;
 
       promise = Promise.resolve(config);
@@ -11325,7 +11367,7 @@ axios.default = axios;
 
 ;// ./src/App.ts
 function App_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,App_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function App_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(App_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var App=/*#__PURE__*/function(_BaseObject){function App(){_classCallCheck(this,App);return App_callSuper(this,App,arguments);}_inherits(App,_BaseObject);return _createClass(App,null,[{key:"config",value:// 全局的一些配置
-function config(){var _config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};App.themeConfig=get_default()(_config,'themeConfig',{});App.request=get_default()(_config,'request',null);if(App.request===null){App.request=function(httpOptions,success,fail){lib_axios.request(httpOptions).then(function(response){success(response.data);})["catch"](function(error){fail(error);});};}App.webDpConfig=get_default()(_config,'webDpConfig',{});if(App.webDpConfig.httpRequest===undefined){App.webDpConfig.httpRequest=App.request;}App.validators=get_default()(_config,'validators',{});}},{key:"getModel",value:function getModel(){var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var modelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;if(modelClass===null){modelClass=Model_Model;}var model=new modelClass();return model.load(data);}},{key:"getWebDp",value:function getWebDp(config){config=merge_default()({},App.webDpConfig,config);var webDp=new WebDataProvider_WebDataProvider(config);return webDp;}/**
+function config(){var _config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};App.themeConfig=get_default()(_config,'themeConfig',{});App.request=get_default()(_config,'request',null);if(App.request===null){App.request=function(httpOptions,success,fail){lib_axios.request(httpOptions).then(function(response){success(response.data);})["catch"](function(error){fail(error);});};}App.webDpConfig=get_default()(_config,'webDpConfig',{});if(App.webDpConfig.httpRequest===undefined){App.webDpConfig.httpRequest=App.request;}App.validators=get_default()(_config,'validators',{});}},{key:"getModel",value:function getModel(){var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var modelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;if(modelClass===null){modelClass=Model_Model;}var model=new modelClass();return model.load(data);}},{key:"getWebDp",value:function getWebDp(config){config=merge_default()({},App.webDpConfig,config);var webDp=new WebDataProvider_WebDataProvider(config);return webDp;}},{key:"getHttpModel",value:function getHttpModel(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};if(!config['httpRequest']){config['httpRequest']=App.request;}return HttpModel.find(config,params);}/**
      * 注册组件（仅vue组件可注册）
      * @param name 
      * @param vue 
@@ -11340,8 +11382,10 @@ validator=new FnValidator(attribute,type,options);}return validator;}}]);}();_de
 function Model_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Model_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Model_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Model_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}function Model_superPropGet(t,o,e,r){var p=_get(_getPrototypeOf(1&r?t.prototype:t),o,e);return 2&r&&"function"==typeof p?function(t){return p.apply(e,t);}:p;}var Model_Model=/*#__PURE__*/function(_BaseObject){function Model(){var _this;_classCallCheck(this,Model);_this=Model_callSuper(this,Model);// 当前的错误
 _defineProperty(_this,"_errors",{});// 当前的场景
 _defineProperty(_this,"_scenario",Model.SCENARIO_DEFAULT);// 当前的校验器
-_defineProperty(_this,"_validators",[]);_this._errors={};_this._scenario='';_this._validators=[];return _this;}_inherits(Model,_BaseObject);return _createClass(Model,[{key:"init",value:function init(){// 手动触发触发双绑
-this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttributeLabel.bind(this);this.getAttributeHint=this.getAttributeHint.bind(this);this.getValidatorData=this.getValidatorData.bind(this);Model_superPropGet(Model,"init",this,3)([]);}/* 规则, 规则的格式为
+_defineProperty(_this,"_validators",[]);// 标签的Map
+_defineProperty(_this,"_attrLabels",{});_defineProperty(_this,"_attrHints",{});_defineProperty(_this,"_attrRules",{});// 两个变量用于记录数据的变化情况
+_defineProperty(_this,"_old",{});_this._errors={};_this._scenario='';_this._validators=[];return _this;}_inherits(Model,_BaseObject);return _createClass(Model,[{key:"init",value:function init(){// 手动触发触发双绑
+this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttributeLabel.bind(this);this.getAttributeHint=this.getAttributeHint.bind(this);this.getValidatorData=this.getValidatorData.bind(this);Model_superPropGet(Model,"init",this,3)([]);}},{key:"isPrivateKey",value:function isPrivateKey(key){return key.charAt(0)==='_';}/* 规则, 规则的格式为
      *  {
      *      'attribute1' : {
      *        'type1' : {...},
@@ -11349,61 +11393,63 @@ this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttrib
      *       },
      *      'attribute2' : {...}
      *  }
-     */},{key:"rules",value:function rules(){return{};}// model的所有的字段的意义,需要上层覆盖
-},{key:"attributeLabels",value:function attributeLabels(){return{};}// model的所有的字段的hint,需要上层覆盖
-},{key:"attributeHints",value:function attributeHints(){return{};}// 只load数据
-},{key:"load",value:function load(data){var _this2=this;this.emit(Model.EVENT_BEFORELOAD,this);Object.keys(data).forEach(function(key){if(_typeof(data[key])==='object'&&data[key]!==null&&data[key].hasOwnProperty('value')){var rules=_this2.rules();var attrLabels=_this2.attributeLabels();var attrHints=_this2.attributeHints();var obj=data[key];if(obj.hasOwnProperty('label')){attrLabels[key]=obj.label;}if(obj.hasOwnProperty('hint')){attrHints[key]=obj.hint;}if(obj.hasOwnProperty('rules')){// 依次将rule规则存入到model中
-Object.keys(obj.rules).forEach(function(i){var rule=obj.rules[i];if(rule.hasOwnProperty('type')){set_default()(rules,[key,rule.type],rule.options||{});}});}_this2.emit(Model.EVENT_LOAD,_this2,key,obj.value);_this2[key]=obj.value;_this2.rules=function(){return rules;};_this2.attributeLabels=function(){return attrLabels;};_this2.attributeHints=function(){return attrHints;};}else{_this2.emit(Model.EVENT_LOAD,_this2,key,data[key]);_this2[key]=data[key];}});this.init();this.emit(Model.EVENT_AFTERLOAD,this);return this;}},{key:"beforeValidate",value:function beforeValidate(){this.emit(Model.EVENT_BEFORE_VALIDATE,this);return true;}},{key:"afterValidate",value:function afterValidate(){// TODO: emit events
+     */},{key:"rules",value:function rules(){return this._attrRules;}// model的所有的字段的意义,可以上层覆盖
+},{key:"attributeLabels",value:function attributeLabels(){return this._attrLabels;}// model的所有的字段的hint,可以上层覆盖
+},{key:"attributeHints",value:function attributeHints(){return this._attrHints;}// 只load数据
+},{key:"load",value:function load(data){var _this2=this;this.emit(Model.EVENT_BEFORELOAD,this);Object.keys(data).forEach(function(key){if(_typeof(data[key])==='object'&&data[key]!==null&&data[key].hasOwnProperty('value')){var rules=_this2.rules();var _attrLabels=_this2.attributeLabels();var _attrHints=_this2.attributeHints();var obj=data[key];if(obj.hasOwnProperty('label')){_attrLabels[key]=obj.label;}if(obj.hasOwnProperty('hint')){_attrHints[key]=obj.hint;}if(obj.hasOwnProperty('rules')){// 依次将rule规则存入到model中
+Object.keys(obj.rules).forEach(function(i){var rule=obj.rules[i];if(rule.hasOwnProperty('type')){set_default()(rules,[key,rule.type],rule.options||{});}});}_this2.emit(Model.EVENT_LOAD,_this2,key,obj.value);_this2[key]=obj.value;_this2._old[key]=cloneDeep_default()(obj.value);_this2._attrRules=rules;_this2._attrLabels=_attrLabels;_this2._attrHints=_attrHints;}else{_this2.emit(Model.EVENT_LOAD,_this2,key,data[key]);_this2[key]=data[key];_this2._old[key]=cloneDeep_default()(data[key]);}});this.init();this.emit(Model.EVENT_AFTERLOAD,this);return this;}},{key:"beforeValidate",value:function beforeValidate(){this.emit(Model.EVENT_BEFORE_VALIDATE,this);return true;}},{key:"afterValidate",value:function afterValidate(){// TODO: emit events
 this.emit(Model.EVENT_AFTER_VALIDATE,this);return;}},{key:"scenario",get:function get(){if(!this._scenario){this._scenario=Model.SCENARIO_DEFAULT;}return this._scenario;},set:function set(value){this._scenario=value;}/* 返回所有的scenarios,格式
      * {
      *    "scenarios1" : {'field1','field2'},
      *    "scenarios2" => {},
      * }
-     */},{key:"scenarios",value:function scenarios(){var scenarios={};scenarios[Model.SCENARIO_DEFAULT]=[];// 将所有的字段填充到DEFAULT中
-Object.keys(this).forEach(function(key){scenarios[Model.SCENARIO_DEFAULT].push(key);});return scenarios;}},{key:"getValidators",value:function getValidators(){if(isEmpty_default()(this._validators)){this._validators=this.createValidators();}return this._validators;}},{key:"createValidators",value:function createValidators(){var _this3=this;this._validators=[];var rules=this.rules();Object.keys(rules).forEach(function(attribute){Object.keys(rules[attribute]).forEach(function(type){var validator=_this3.createValidator(attribute,type,rules[attribute][type]);if(validator){_this3._validators.push(validator);}});});return this._validators;}},{key:"createValidator",value:function createValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};if(typeof ruleType==='string'&&this.hasOwnProperty(ruleType)&&typeof this[ruleType]==='function'){ruleType=this[ruleType];}return ValidatorFactory.getInstance(attribute,ruleType,options);}// validate方法，判断model的数据是否合法,如果返回false代表不合法
-},{key:"validate",value:function validate(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var clearErrors=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}if(!this.beforeValidate()){return false;}var scenarios=this.scenarios();var scenario=this.scenario;if(!scenarios.hasOwnProperty(scenario)){return false;}// 调用validator去验证
-if(isEmpty_default()(attributes)){attributes=scenarios[scenario];}attributes=intersection_default()(attributes,scenarios[scenario]);if(clearErrors){this.clearErrors(attributes);}var validators=this.getValidators();Object.keys(validators).forEach(function(index){var validator=validators[index];if(attributes.indexOf(validator.attribute)>-1){validator.validateAttribute(_this4);}});this.afterValidate();return!this.hasErrors();}// 返回相应的规则数据
+     */},{key:"scenarios",value:function scenarios(){var _this3=this;var scenarios={};var attributes=[];Object.keys(this).forEach(function(key){if(!_this3.isPrivateKey(key)){attributes.push(key);}});Object.keys(this.rules()).forEach(function(key){if(attributes.indexOf(key)===-1){attributes.push(key);}});scenarios[Model.SCENARIO_DEFAULT]=attributes;return scenarios;}},{key:"getValidators",value:function getValidators(){if(isEmpty_default()(this._validators)){this._validators=this.createValidators();}return this._validators;}},{key:"createValidators",value:function createValidators(){var _this4=this;this._validators=[];var rules=this.rules();Object.keys(rules).forEach(function(attribute){Object.keys(rules[attribute]).forEach(function(type){var validator=_this4.createValidator(attribute,type,rules[attribute][type]);if(validator){_this4._validators.push(validator);}});});return this._validators;}},{key:"createValidator",value:function createValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};if(typeof ruleType==='string'&&typeof this[ruleType]==='function'){ruleType=this[ruleType];}return ValidatorFactory.getInstance(attribute,ruleType,options);}// validate方法，判断model的数据是否合法,如果返回false代表不合法
+},{key:"validate",value:function validate(){var _this5=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var clearErrors=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}if(!this.beforeValidate()){return false;}var scenarios=this.scenarios();var scenario=this.scenario;if(!scenarios.hasOwnProperty(scenario)){return false;}// 调用validator去验证
+if(isEmpty_default()(attributes)){attributes=scenarios[scenario];}attributes=intersection_default()(attributes,scenarios[scenario]);if(clearErrors){this.clearErrors(attributes);}var validators=this.getValidators();Object.keys(validators).forEach(function(index){var validator=validators[index];if(attributes.indexOf(validator.attribute)>-1){validator.validateAttribute(_this5);}});this.afterValidate();return!this.hasErrors();}// 返回相应的规则数据
 },{key:"getValidatorData",value:function getValidatorData(attribute,type,key){var defaultVal=arguments.length>3&&arguments[3]!==undefined?arguments[3]:'';var rules=this.rules();return get_default()(rules,[attribute,type,key],defaultVal);}},{key:"addValidator",value:function addValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};var validator=this.createValidator(attribute,ruleType,options);if(validator){this.getValidators().push(validator);}}// 判断是否为required
-},{key:"isRequired",value:function isRequired(attribute){var rules=this.rules();return get_default()(rules,[attribute,'required'],false);}// 判断当前attribute是否有错误
+},{key:"isRequired",value:function isRequired(attribute){var rules=this.rules();return get_default()(rules,[attribute,'required'],false);}// 获取属性值的列表
+},{key:"getValidator",value:function getValidator(attribute,type){var rules=this.rules();return get_default()(rules,[attribute,type],null);}// 获取属性值的
+},{key:"getAttributeDesc",value:function getAttributeDesc(attribute){var dict=this.getValidator(attribute,'dict');if(dict){var list=dict.list;var value=this[attribute];return list[value]||value;}return this[attribute];}// 判断当前attribute是否有错误
 },{key:"hasErrors",value:function hasErrors(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;// 如果没有传attribute
 if(!attribute){return!isEmpty_default()(this._errors);}return!isEmpty_default()(this._errors[attribute]);}// 获取所有的错误
 },{key:"getErrors",value:function getErrors(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;if(!attribute){return this._errors;}return get_default()(this._errors,attribute,[]);}},{key:"getFirstError",value:function getFirstError(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var error=this.getErrors(attribute);if(attribute){return get_default()(error,'0','');}for(var attr in error){return error[attr][0];}return'';}// 添加错误
-},{key:"addError",value:function addError(attribute){var error=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';if(!attribute){return;}if(isEmpty_default()(this._errors[attribute])){this._errors[attribute]=[];}this._errors[attribute].push(error);}},{key:"clearErrors",value:function clearErrors(){var _this5=this;var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';if(!attribute){this._errors={};}else{if(typeof attribute==='string'){attribute=[attribute];}Object.keys(attribute).forEach(function(index){var key=attribute[index];delete _this5._errors[key];});}}},{key:"getAttributeHint",value:function getAttributeHint(attribute){var hints=this.attributeHints();if(hints.hasOwnProperty(attribute)){return hints[attribute];}return'';}// 根据attribute获取label
-},{key:"getAttributeLabel",value:function getAttributeLabel(attribute){var attrLabels=this.attributeLabels();if(attrLabels.hasOwnProperty(attribute)){return attrLabels[attribute];}return attribute;}}]);}(BaseObject);_defineProperty(Model_Model,"SCENARIO_DEFAULT",'default');_defineProperty(Model_Model,"EVENT_BEFORELOAD",'MODEL_BEFORE_LOAD');_defineProperty(Model_Model,"EVENT_LOAD",'MODEL_LOAD');_defineProperty(Model_Model,"EVENT_AFTERLOAD",'MODEL_AFTER_LOAD');_defineProperty(Model_Model,"EVENT_BEFORE_VALIDATE",'MODEL_BEFORE_VALIDATE');_defineProperty(Model_Model,"EVENT_AFTER_VALIDATE",'MODEL_AFTER_VALIDATE');
+},{key:"addError",value:function addError(attribute){var error=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';if(!attribute){return;}if(isEmpty_default()(this._errors[attribute])){this._errors[attribute]=[];}this._errors[attribute].push(error);}},{key:"addRule",value:function addRule(attribute,rule){if(!attribute){return;}if(rule.hasOwnProperty('type')){set_default()(this._attrRules,[attribute,rule.type],rule.options||{});}}},{key:"clearErrors",value:function clearErrors(){var _this6=this;var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';if(!attribute){this._errors={};}else{if(typeof attribute==='string'){attribute=[attribute];}Object.keys(attribute).forEach(function(index){var key=attribute[index];delete _this6._errors[key];});}}},{key:"getAttributeHint",value:function getAttributeHint(attribute){var defaultValue=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';var hints=this.attributeHints();return hints[attribute]||defaultValue;}},{key:"setAttributeHint",value:function setAttributeHint(attribute,hint){this._attrHints[attribute]=hint;}},{key:"setAttributeLabel",value:function setAttributeLabel(attribute,label){this._attrLabels[attribute]=label;}// 根据attribute获取label
+},{key:"getAttributeLabel",value:function getAttributeLabel(attribute){var defaultValue=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';var _attrLabels=this.attributeLabels();return _attrLabels[attribute]||defaultValue||attribute;}},{key:"clone",value:function clone(){var _this7=this;var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var model=new Model();model._attrRules=cloneDeep_default()(this._attrRules);model._attrLabels=cloneDeep_default()(this._attrLabels);model._attrHints=cloneDeep_default()(this._attrHints);model._errors=cloneDeep_default()(this._errors);if(!data){data={};Object.keys(this).forEach(function(key){if(!_this7.isPrivateKey(key)){data[key]=cloneDeep_default()(_this7[key]);}});}model.load(data);return model;}// reset
+},{key:"reset",value:function reset(){var _this8=this;Object.keys(this._old).forEach(function(key){_this8[key]=_this8._old[key];});}},{key:"sync",value:function sync(){var _this9=this;Object.keys(this._old).forEach(function(key){_this9._old[key]=cloneDeep_default()(_this9[key]);});}},{key:"getChangeData",value:function getChangeData(){var _this0=this;var dirtyObject={};Object.keys(this._old).forEach(function(key){if(!isEqual_default()(_this0[key],_this0._old[key])){dirtyObject[key]=_this0[key];}});return dirtyObject;}}]);}(BaseObject);_defineProperty(Model_Model,"SCENARIO_DEFAULT",'default');_defineProperty(Model_Model,"EVENT_BEFORELOAD",'MODEL_BEFORE_LOAD');_defineProperty(Model_Model,"EVENT_LOAD",'MODEL_LOAD');_defineProperty(Model_Model,"EVENT_AFTERLOAD",'MODEL_AFTER_LOAD');_defineProperty(Model_Model,"EVENT_BEFORE_VALIDATE",'MODEL_BEFORE_VALIDATE');_defineProperty(Model_Model,"EVENT_AFTER_VALIDATE",'MODEL_AFTER_VALIDATE');
 ;// ./src/platforms/react/hooks/useLedapModel.js
 /**
  * 实现 react 数据的双向绑定
  * 组件调用 setValue() 触发组件重新渲染和修改model值
  * @param {*} model ledap框架load返回的model对象
  * @returns 
- */function useLedapModel(model){var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setbool=_useState2[1];function _setValue(attr,val){model[attr]=val;setbool(function(bool){return!bool;});}function getValue(attr){return model[attr];}function updateView(){setbool(function(bool){return!bool;});}return{setValue:_setValue,getValue:getValue,updateView:updateView,model:model};}function useModelEvent(model,attr){var initialValue=model[attr];var _useState3=useState(initialValue?true:false),_useState4=_slicedToArray(_useState3,2),loaded=_useState4[0],setLoaded=_useState4[1];useEffect(function(){var _model$on;function _onloaded(){console.log('_onloaded');setLoaded(true);}console.log('model bind event:',model.on,Model.EVENT_AFTERLOAD);model===null||model===void 0||(_model$on=model.on)===null||_model$on===void 0||_model$on.call(model,Model.EVENT_AFTERLOAD,_onloaded);return function(){var _model$off;model===null||model===void 0||(_model$off=model.off)===null||_model$off===void 0||_model$off.call(model,Model.EVENT_AFTERLOAD,_onloaded);};},[]);return{loaded:loaded};}
+ */function useLedapModel(model){var _useState=useState(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setbool=_useState2[1];function _setValue(attr,val){model[attr]=val;setbool(function(bool){return!bool;});}function getValue(attr){return model[attr];}function updateView(){setbool(function(bool){return!bool;});}return{setValue:_setValue,getValue:getValue,updateView:updateView,model:model};}function useModelEvent(model,attr){var initialValue=model[attr];var _useState3=useState(initialValue?true:false),_useState4=_slicedToArray(_useState3,2),loaded=_useState4[0],setLoaded=_useState4[1];useEffect(function(){var _model$on;function _onloaded(){console.log('_onloaded');setLoaded(true);}console.log('model bind event:',model.on,Model.EVENT_AFTERLOAD);model===null||model===void 0||(_model$on=model.on)===null||_model$on===void 0||_model$on.call(model,Model.EVENT_AFTERLOAD,_onloaded);return function(){var _model$off;model===null||model===void 0||(_model$off=model.off)===null||_model$off===void 0||_model$off.call(model,Model.EVENT_AFTERLOAD,_onloaded);};},[]);return{loaded:loaded};}
 ;// ./src/platforms/react/components/formItem/form-item.module.less
 // extracted by mini-css-extract-plugin
 var _1 = "_module_formitem_m6q_j";
 
 
 ;// ./src/platforms/react/contexts/FormContext.js
-var FormContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({});/* harmony default export */ const contexts_FormContext = (FormContext);
+var FormContext=/*#__PURE__*/createContext({});/* harmony default export */ const contexts_FormContext = (FormContext);
 ;// ./src/platforms/react/components/formItem/FormItem.tsx
-var FormItem_excluded=["FormComponent","model","attr","label","validate","children","dp","inline","show","FormComponentProps","showLabel","showError","className","onChanged"];function FormItem(props){var _props$FormComponent=props.FormComponent,FormComponent=_props$FormComponent===void 0?BaseInput:_props$FormComponent,propModel=props.model,attr=props.attr,label=props.label,validate=props.validate,children=props.children,dp=props.dp,inline=props.inline,show=props.show,FormComponentProps=props.FormComponentProps,_props$showLabel=props.showLabel,showLabel=_props$showLabel===void 0?true:_props$showLabel,_props$showError=props.showError,showError=_props$showError===void 0?true:_props$showError,className=props.className,onChanged=props.onChanged,reset=_objectWithoutProperties(props,FormItem_excluded);var _reset$labelCol=reset.labelCol,labelCol=_reset$labelCol===void 0?{span:8}:_reset$labelCol,_reset$wrapperCol=reset.wrapperCol,wrapperCol=_reset$wrapperCol===void 0?{span:16}:_reset$wrapperCol;var _ref=propModel?useLedapModel(propModel):(0,external_react_namespaceObject.useContext)(contexts_FormContext),setValue=_ref.setValue,getValue=_ref.getValue,updateView=_ref.updateView,model=_ref.model;var _setValue=function _setValue(val){var changed=val!==model[attr];setValue(attr,val);if(changed){onChanged===null||onChanged===void 0||onChanged(val);}};if(inline){labelCol=null;wrapperCol=null;}var required=model===null||model===void 0?void 0:model.isRequired(attr);// console.log("render formItem:", {
+var FormItem_excluded=["FormComponent","model","attr","label","validate","children","dp","inline","show","FormComponentProps","showLabel","showError","className","onChanged"];function FormItem(props){var _props$FormComponent=props.FormComponent,FormComponent=_props$FormComponent===void 0?BaseInput:_props$FormComponent,propModel=props.model,attr=props.attr,label=props.label,validate=props.validate,children=props.children,dp=props.dp,inline=props.inline,show=props.show,FormComponentProps=props.FormComponentProps,_props$showLabel=props.showLabel,showLabel=_props$showLabel===void 0?true:_props$showLabel,_props$showError=props.showError,showError=_props$showError===void 0?true:_props$showError,className=props.className,onChanged=props.onChanged,reset=_objectWithoutProperties(props,FormItem_excluded);var _reset$labelCol=reset.labelCol,labelCol=_reset$labelCol===void 0?{span:8}:_reset$labelCol,_reset$wrapperCol=reset.wrapperCol,wrapperCol=_reset$wrapperCol===void 0?{span:16}:_reset$wrapperCol;var _ref=propModel?useLedapModel(propModel):useContext(contexts_FormContext),setValue=_ref.setValue,getValue=_ref.getValue,updateView=_ref.updateView,model=_ref.model;var _setValue=function _setValue(val){var changed=val!==model[attr];setValue(attr,val);if(changed){onChanged===null||onChanged===void 0||onChanged(val);}};if(inline){labelCol=null;wrapperCol=null;}var required=model===null||model===void 0?void 0:model.isRequired(attr);// console.log("render formItem:", {
 //   attr,
 //   value: model[attr],
 //   hasError: model.hasErrors(attr),
 //   error: model.getFirstError(attr),
 // });
-if(show===false){return null;}var _label=showLabel?label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)):null;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormItemContext.Provider,{value:{getValue:getValue,setValue:setValue}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form.Item,_extends({className:classnames_default()(_1,className,{required:required,'hide-error':showError===false}),label:_label,labelCol:labelCol,wrapperCol:wrapperCol,validateStatus:model.hasErrors(attr)?"error":null,help:model.getFirstError(attr)},reset),/*#__PURE__*/external_react_namespaceObject["default"].createElement(FormComponent,_extends({model:model,attr:attr,validate:validate,onSetValue:_setValue,value:model[attr],onBlur:updateView,dp:dp},FormComponentProps)),children));}/* harmony default export */ const formItem_FormItem = (FormItem);
+if(show===false){return null;}var _label=showLabel?label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)):null;return/*#__PURE__*/default_0.createElement(contexts_FormItemContext.Provider,{value:{getValue:getValue,setValue:setValue}},/*#__PURE__*/default_0.createElement(Form.Item,_extends({className:classnames_default()(_1,className,{required:required,'hide-error':showError===false}),label:_label,labelCol:labelCol,wrapperCol:wrapperCol,validateStatus:model.hasErrors(attr)?"error":null,help:model.getFirstError(attr)},reset),/*#__PURE__*/default_0.createElement(FormComponent,_extends({model:model,attr:attr,validate:validate,onSetValue:_setValue,value:model[attr],onBlur:updateView,dp:dp},FormComponentProps)),children));}/* harmony default export */ const formItem_FormItem = (FormItem);
 ;// ./src/platforms/react/components/formItem/FormItemLabel.tsx
-function FormItemLabel(props){var _props$labelComponent=props.labelComponent,labelComponent=_props$labelComponent===void 0?null:_props$labelComponent,_props$model=props.model,model=_props$model===void 0?null:_props$model,_props$attr=props.attr,attr=_props$attr===void 0?"":_props$attr,_props$label=props.label,label=_props$label===void 0?"":_props$label,className=props.className;return labelComponent?labelComponent:/*#__PURE__*/external_react_namespaceObject["default"].createElement("label",{className:classnames_default()(className)},label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),model!==null&&model!==void 0&&model.isRequired(attr)?"*":"");}/* harmony default export */ const formItem_FormItemLabel = (FormItemLabel);
+function FormItemLabel(props){var _props$labelComponent=props.labelComponent,labelComponent=_props$labelComponent===void 0?null:_props$labelComponent,_props$model=props.model,model=_props$model===void 0?null:_props$model,_props$attr=props.attr,attr=_props$attr===void 0?"":_props$attr,_props$label=props.label,label=_props$label===void 0?"":_props$label,className=props.className;return labelComponent?labelComponent:/*#__PURE__*/default_0.createElement("label",{className:classnames_default()(className)},label||(model===null||model===void 0?void 0:model.getAttributeLabel(attr)),model!==null&&model!==void 0&&model.isRequired(attr)?"*":"");}/* harmony default export */ const formItem_FormItemLabel = (FormItemLabel);
 ;// ./src/platforms/react/components/button/Button.tsx
-function Button(props){return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Button,props);}Button.Group=external_antd_namespaceObject.Button.Group;/* harmony default export */ const button_Button = (Button);
+function Button_Button(props){return/*#__PURE__*/default_0.createElement(Button,props);}Button_Button.Group=Button.Group;/* harmony default export */ const button_Button = (Button_Button);
 ;// ./src/platforms/react/components/form/form.module.less
 // extracted by mini-css-extract-plugin
 var form_module_1 = "_form_kRBRi";
 
 
 ;// ./src/platforms/react/components/form/Form.tsx
-var Form_excluded=["model","className","inline","onSubmit","onSetValue","enctype"];function ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function _objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Form(props){var model=props.model,className=props.className,inline=props.inline,onSubmit=props.onSubmit,onSetValue=props.onSetValue,_props$enctype=props.enctype,enctype=_props$enctype===void 0?"application/json":_props$enctype,reset=_objectWithoutProperties(props,Form_excluded);var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];function getValue(attr){return model[attr];}function setValue(attr,val){model[attr]=val;setBool(function(bool){return!bool;});onSetValue===null||onSetValue===void 0||onSetValue();}function updateView(){setBool(function(bool){return!bool;});}function _onFinish(e){var json=_objectSpread({},model);var data=json;switch(enctype.toLocaleLowerCase()){case"multipart/form-data":{var formData=new FormData();Object.keys(json).forEach(function(key){if(json[key]===null){return;}formData.append(key,json[key]);});data=formData;break;}default:{break;}}// console.log("form on filish json:", data, json);
-var firstErr="";try{var _model$validate;model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model);firstErr=model.getFirstError();}catch(e){console.error(e);}onSubmit===null||onSubmit===void 0||onSubmit(data,firstErr);updateView();}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(contexts_FormContext.Provider,{value:{getValue:getValue,setValue:setValue,updateView:updateView,model:model}},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Form,_extends({className:classnames_default()(form_module_1,className,inline&&"inline"),onFinish:_onFinish},reset),props.children));}
+var Form_excluded=["model","className","inline","onSubmit","onSetValue","enctype"];function ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function _objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Form_Form(props){var model=props.model,className=props.className,inline=props.inline,onSubmit=props.onSubmit,onSetValue=props.onSetValue,_props$enctype=props.enctype,enctype=_props$enctype===void 0?"application/json":_props$enctype,reset=_objectWithoutProperties(props,Form_excluded);var _useState=useState(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];function getValue(attr){return model[attr];}function setValue(attr,val){model[attr]=val;setBool(function(bool){return!bool;});onSetValue===null||onSetValue===void 0||onSetValue();}function updateView(){setBool(function(bool){return!bool;});}function _onFinish(e){var json=_objectSpread({},model);var data=json;switch(enctype.toLocaleLowerCase()){case"multipart/form-data":{var formData=new FormData();Object.keys(json).forEach(function(key){if(json[key]===null){return;}formData.append(key,json[key]);});data=formData;break;}default:{break;}}// console.log("form on filish json:", data, json);
+var firstErr="";try{var _model$validate;model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model);firstErr=model.getFirstError();}catch(e){console.error(e);}onSubmit===null||onSubmit===void 0||onSubmit(data,firstErr);updateView();}return/*#__PURE__*/default_0.createElement(contexts_FormContext.Provider,{value:{getValue:getValue,setValue:setValue,updateView:updateView,model:model}},/*#__PURE__*/default_0.createElement(Form,_extends({className:classnames_default()(form_module_1,className,inline&&"inline"),onFinish:_onFinish},reset),props.children));}
 // EXTERNAL MODULE: ./node_modules/antd/lib/locale/zh_CN.js
 var zh_CN = __webpack_require__(2187);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
@@ -11418,28 +11464,28 @@ var weekday_default = /*#__PURE__*/__webpack_require__.n(weekday);
 var localeData = __webpack_require__(1840);
 var localeData_default = /*#__PURE__*/__webpack_require__.n(localeData);
 ;// ./src/platforms/react/components/configProvider/LedapAppContext.js
-var LedapAppContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({uploadUrl:''});
+var LedapAppContext=/*#__PURE__*/createContext({uploadUrl:''});
 ;// ./src/platforms/react/components/configProvider/ConfigProvider.tsx
-var ConfigProvider_excluded=["theme","ledapConfig","children"];function ConfigProvider_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function ConfigProvider_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ConfigProvider_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ConfigProvider_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}dayjs_min_default().locale("zh-cn");dayjs_min_default().extend((weekday_default()));dayjs_min_default().extend((localeData_default()));function ConfigProvider(){var props=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var _props$theme=props.theme,theme=_props$theme===void 0?{}:_props$theme,ledapConfig=props.ledapConfig,children=props.children,reset=_objectWithoutProperties(props,ConfigProvider_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(LedapAppContext.Provider,{value:ConfigProvider_objectSpread({},ledapConfig)},/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.ConfigProvider,_extends({locale:zh_CN/* default */.A,theme:ConfigProvider_objectSpread({cssVar:true},theme)},reset),children,/*#__PURE__*/external_react_namespaceObject["default"].createElement("div",{id:"ledap-modal-root"})));}/* harmony default export */ const configProvider_ConfigProvider = (ConfigProvider);
+var ConfigProvider_excluded=["theme","ledapConfig","children"];function ConfigProvider_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function ConfigProvider_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?ConfigProvider_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):ConfigProvider_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}dayjs_min_default().locale("zh-cn");dayjs_min_default().extend((weekday_default()));dayjs_min_default().extend((localeData_default()));function ConfigProvider_ConfigProvider(){var props=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var _props$theme=props.theme,theme=_props$theme===void 0?{}:_props$theme,ledapConfig=props.ledapConfig,children=props.children,reset=_objectWithoutProperties(props,ConfigProvider_excluded);return/*#__PURE__*/default_0.createElement(LedapAppContext.Provider,{value:ConfigProvider_objectSpread({},ledapConfig)},/*#__PURE__*/default_0.createElement(ConfigProvider,_extends({locale:zh_CN/* default */.A,theme:ConfigProvider_objectSpread({cssVar:true},theme)},reset),children,/*#__PURE__*/default_0.createElement("div",{id:"ledap-modal-root"})));}/* harmony default export */ const configProvider_ConfigProvider = (ConfigProvider_ConfigProvider);
 ;// ./src/platforms/react/components/radio/Radio.tsx
-var Radio_excluded=["value","model","attr","children"];function Radio(props){var value=props.value,model=props.model,attr=props.attr,children=props.children,reset=_objectWithoutProperties(props,Radio_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio,_extends({checked:!!value},reset),children);}/* harmony default export */ const radio_Radio = (Radio);
+var Radio_excluded=["value","model","attr","children"];function Radio_Radio(props){var value=props.value,model=props.model,attr=props.attr,children=props.children,reset=_objectWithoutProperties(props,Radio_excluded);return/*#__PURE__*/default_0.createElement(Radio,_extends({checked:!!value},reset),children);}/* harmony default export */ const radio_Radio = (Radio_Radio);
 ;// ./src/platforms/react/hooks/useInputGroup.js
-function useInputGroup(model,attr){var _model$rules$attr;var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];var _useRef=(0,external_react_namespaceObject.useRef)(createGroupWigtht(model,attr)),groupWidget=_useRef.current;var _updateView=function _updateView(){setBool(function(bool){return!bool;});};function open(key){groupWidget.select(key);_updateView();}function close(key){groupWidget.unSelect(key);_updateView();}function getItemOpen(key){return groupWidget.selected.indexOf(key)>-1;}function setValue(valArr){groupWidget.selected=valArr;_updateView();}function getValue(){var _model$rules;var arr=groupWidget.selected;if((_model$rules=model.rules)!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.call(model)[attr])!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.dict)!==null&&_model$rules!==void 0&&_model$rules.multiple){return arr;}return arr[0];}return{value:groupWidget.selected,itemList:formatItemList((_model$rules$attr=model.rules()[attr])===null||_model$rules$attr===void 0?void 0:_model$rules$attr.dict),getItemOpen:getItemOpen,open:open,close:close,getValue:getValue,setValue:setValue};}function formatItemList(){var dict=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var list=[];var _dict$excludes=dict.excludes,excludes=_dict$excludes===void 0?[]:_dict$excludes;var listObj=dict.list||{};for(var key in listObj){var value=listObj[key];var disabled=excludes.indexOf(key)>-1;list.push({label:value,value:key,disabled:disabled});}return list;}function createGroupWigtht(model,attr){var _model$rules$attr2;var modelValue=model[attr];var dict=((_model$rules$attr2=model.rules()[attr])===null||_model$rules$attr2===void 0?void 0:_model$rules$attr2.dict)||{};var obj=new Group();// 构造组件
+function useInputGroup(model,attr){var _model$rules$attr;var _useState=useState(false),_useState2=slicedToArray_slicedToArray(_useState,2),bool=_useState2[0],setBool=_useState2[1];var _useRef=useRef(createGroupWigtht(model,attr)),groupWidget=_useRef.current;var _updateView=function _updateView(){setBool(function(bool){return!bool;});};function open(key){groupWidget.select(key);_updateView();}function close(key){groupWidget.unSelect(key);_updateView();}function getItemOpen(key){return groupWidget.selected.indexOf(key)>-1;}function setValue(valArr){groupWidget.selected=valArr;_updateView();}function getValue(){var _model$rules;var arr=groupWidget.selected;if((_model$rules=model.rules)!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.call(model)[attr])!==null&&_model$rules!==void 0&&(_model$rules=_model$rules.dict)!==null&&_model$rules!==void 0&&_model$rules.multiple){return arr;}return arr[0];}return{value:groupWidget.selected,itemList:formatItemList((_model$rules$attr=model.rules()[attr])===null||_model$rules$attr===void 0?void 0:_model$rules$attr.dict),getItemOpen:getItemOpen,open:open,close:close,getValue:getValue,setValue:setValue};}function formatItemList(){var dict=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var list=[];var _dict$excludes=dict.excludes,excludes=_dict$excludes===void 0?[]:_dict$excludes;var listObj=dict.list||{};for(var key in listObj){var value=listObj[key];var disabled=excludes.indexOf(key)>-1;list.push({label:value,value:key,disabled:disabled});}return list;}function createGroupWigtht(model,attr){var _model$rules$attr2;var modelValue=model[attr];var dict=((_model$rules$attr2=model.rules()[attr])===null||_model$rules$attr2===void 0?void 0:_model$rules$attr2.dict)||{};var obj=new Group();// 构造组件
 var listObj=(dict===null||dict===void 0?void 0:dict.list)||{};// 添加组件
 for(var key in listObj){var _modelValue$indexOf;var isOpen=(modelValue===null||modelValue===void 0||(_modelValue$indexOf=modelValue.indexOf)===null||_modelValue$indexOf===void 0?void 0:_modelValue$indexOf.call(modelValue,key))>-1;var component=new WidgetGroupComponent(key,isOpen);obj.add(component);}// 设置最大选中值
 if(dict.max&&dict.multiple){obj.max=dict.max;}// 设置选中
 obj.selected=modelValue;return obj;}var WidgetGroupComponent=/*#__PURE__*/_createClass(function WidgetGroupComponent(groupKey){var _this=this;var isOpen=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;_classCallCheck(this,WidgetGroupComponent);_defineProperty(this,"isOpen",function(){return _this._isOpen;});_defineProperty(this,"open",function(){_this._isOpen=true;});_defineProperty(this,"close",function(){_this._isOpen=false;});this.groupKey=groupKey;this._isOpen=isOpen;});
 ;// ./src/platforms/react/components/radio/RadioGroup.tsx
-var RadioGroup_excluded=["model","attr","value","onSetValue"];function RadioGroup(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,RadioGroup_excluded);var _useInputGroup=useInputGroup(model,attr),value=_useInputGroup.value,getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,getItemOpen=_useInputGroup.getItemOpen,open=_useInputGroup.open,close=_useInputGroup.close;var _onChangeRadio=function _onChangeRadio(checked,value){if(checked){open===null||open===void 0||open(value);}else{close===null||close===void 0||close(value);}var newVal=getValue();onSetValue===null||onSetValue===void 0||onSetValue(newVal);};var _onChangeGroup=function _onChangeGroup(e){var _e$target=e.target,checked=_e$target.checked,value=_e$target.value;_onChangeRadio(checked,value);};var targetValue=typeof propValue=="string"||typeof propValue=="number"?"".concat(propValue):Array.isArray(propValue)?propValue[0]:propValue;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Radio.Group,_extends({defaultValue:targetValue,value:targetValue,options:itemList,onChange:_onChangeGroup},resetProps));}
+var RadioGroup_excluded=["model","attr","value","onSetValue"];function RadioGroup(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,RadioGroup_excluded);var _useInputGroup=useInputGroup(model,attr),value=_useInputGroup.value,getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,getItemOpen=_useInputGroup.getItemOpen,open=_useInputGroup.open,close=_useInputGroup.close;var _onChangeRadio=function _onChangeRadio(checked,value){if(checked){open===null||open===void 0||open(value);}else{close===null||close===void 0||close(value);}var newVal=getValue();onSetValue===null||onSetValue===void 0||onSetValue(newVal);};var _onChangeGroup=function _onChangeGroup(e){var _e$target=e.target,checked=_e$target.checked,value=_e$target.value;_onChangeRadio(checked,value);};var targetValue=typeof propValue=="string"||typeof propValue=="number"?"".concat(propValue):Array.isArray(propValue)?propValue[0]:propValue;return/*#__PURE__*/default_0.createElement(Radio.Group,_extends({defaultValue:targetValue,value:targetValue,options:itemList,onChange:_onChangeGroup},resetProps));}
 ;// ./src/platforms/react/components/checkbox/Checkbox.tsx
-var Checkbox_excluded=["value","attr","model","children"];function Checkbox(props){var value=props.value,attr=props.attr,model=props.model,_props$children=props.children,children=_props$children===void 0?"":_props$children,reset=_objectWithoutProperties(props,Checkbox_excluded);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({checked:!!value},reset),children);}
+var Checkbox_excluded=["value","attr","model","children"];function Checkbox_Checkbox(props){var value=props.value,attr=props.attr,model=props.model,_props$children=props.children,children=_props$children===void 0?"":_props$children,reset=_objectWithoutProperties(props,Checkbox_excluded);return/*#__PURE__*/default_0.createElement(Checkbox,_extends({checked:!!value},reset),children);}
 ;// ./src/platforms/react/components/checkbox/CheckboxGroup.tsx
-function CheckboxGroup(props){var model=props.model,attr=props.attr,checkboxProps=props.checkboxProps,propValue=props.value,onSetValue=props.onSetValue,_props$tag=props.tag,Tag=_props$tag===void 0?external_react_namespaceObject["default"].Fragment:_props$tag;var _useInputGroup=useInputGroup(model,attr),getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,open=_useInputGroup.open,close=_useInputGroup.close;var _getModelValue=function _getModelValue(){if(!propValue){return[];}return typeof propValue=="string"?[propValue]:propValue;};var _changeCheckbox=function _changeCheckbox(_ref,value){var _model$validate;var target=_ref.target;var checked=target.checked;if(checked){open(value);}else{close(value);}var valueList=getValue();onSetValue===null||onSetValue===void 0||onSetValue(valueList);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);};var targetValue=_getModelValue();return/*#__PURE__*/external_react_namespaceObject["default"].createElement(Tag,null,itemList.map(function(_ref2){var value=_ref2.value,label=_ref2.label,disabled=_ref2.disabled;var checked=targetValue.find(function(v){return v==value;});return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Checkbox,_extends({key:value},checkboxProps,{disabled:disabled,checked:checked,onChange:function onChange(e){_changeCheckbox(e,value);}}),label);}));}
+function CheckboxGroup(props){var model=props.model,attr=props.attr,checkboxProps=props.checkboxProps,propValue=props.value,onSetValue=props.onSetValue,_props$tag=props.tag,Tag=_props$tag===void 0?default_0.Fragment:_props$tag;var _useInputGroup=useInputGroup(model,attr),getValue=_useInputGroup.getValue,itemList=_useInputGroup.itemList,open=_useInputGroup.open,close=_useInputGroup.close;var _getModelValue=function _getModelValue(){if(!propValue){return[];}return typeof propValue=="string"?[propValue]:propValue;};var _changeCheckbox=function _changeCheckbox(_ref,value){var _model$validate;var target=_ref.target;var checked=target.checked;if(checked){open(value);}else{close(value);}var valueList=getValue();onSetValue===null||onSetValue===void 0||onSetValue(valueList);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);};var targetValue=_getModelValue();return/*#__PURE__*/default_0.createElement(Tag,null,itemList.map(function(_ref2){var value=_ref2.value,label=_ref2.label,disabled=_ref2.disabled;var checked=targetValue.find(function(v){return v==value;});return/*#__PURE__*/default_0.createElement(Checkbox,_extends({key:value},checkboxProps,{disabled:disabled,checked:checked,onChange:function onChange(e){_changeCheckbox(e,value);}}),label);}));}
 ;// ./src/platforms/react/utils/formatSelectOptions.ts
 function formatSelectOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes=dictOption.excludes,excludes=_dictOption$excludes===void 0?[]:_dictOption$excludes;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){// const disabled = excludes.indexOf(keyItem) > -1
 var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],value:keyItem,disabled:disabled};total.push(option);return total;},[]);}function formatDropDownOptions(model,attr){var dictOption=get_default()(model.rules(),[attr,'dict'],{});var listObj=dictOption.list||{};var _dictOption$excludes2=dictOption.excludes,excludes=_dictOption$excludes2===void 0?[]:_dictOption$excludes2;var orderObj=dictOption.order||Object.keys(listObj);return orderObj.reduce(function(total,keyItem){var disabled=Boolean(excludes.find(function(i){return i==keyItem;}));var option={label:listObj[keyItem],key:keyItem,disabled:disabled};total.push(option);return total;},[]);}
 ;// ./src/platforms/react/components/select/Select.tsx
-var Select_excluded=["model","attr","value","onSetValue","formatOptions","allowClear"];function Select(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,_props$allowClear=props.allowClear,allowClear=_props$allowClear===void 0?true:_props$allowClear,resetProps=_objectWithoutProperties(props,Select_excluded);function _onChange(e){var _model$validate;onSetValue===null||onSetValue===void 0||onSetValue(e);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var dictOptions=get_default()(model.rules(),[attr,"dict"],{});var maxCount=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?dictOptions.max:undefined;var mode=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?"multiple":undefined;var _options=formatSelectOptions(model,attr);var _value=value;if(mode===undefined){_value=_options.find(function(o){return o.value==_value;});}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({allowClear:allowClear,mode:mode,defaultValue:value,value:_value,options:_options,maxCount:maxCount,onChange:_onChange},resetProps));}
+var Select_excluded=["model","attr","value","onSetValue","formatOptions","allowClear"];function Select_Select(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,_props$allowClear=props.allowClear,allowClear=_props$allowClear===void 0?true:_props$allowClear,resetProps=_objectWithoutProperties(props,Select_excluded);function _onChange(e){var _model$validate;onSetValue===null||onSetValue===void 0||onSetValue(e);model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var dictOptions=get_default()(model.rules(),[attr,"dict"],{});var maxCount=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?dictOptions.max:undefined;var mode=dictOptions!==null&&dictOptions!==void 0&&dictOptions.multiple?"multiple":undefined;var _options=formatSelectOptions(model,attr);var _value=value;if(mode===undefined){_value=_options.find(function(o){return o.value==_value;});}return/*#__PURE__*/default_0.createElement(Select,_extends({allowClear:allowClear,mode:mode,defaultValue:value,value:_value,options:_options,maxCount:maxCount,onChange:_onChange},resetProps));}
 ;// ./node_modules/@ant-design/icons-svg/es/asn/CaretDownOutlined.js
 // This icon file is generated automatically.
 var CaretDownOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "outlined" };
@@ -12215,10 +12261,9 @@ var presetDarkPalettes = {
 ;// ./node_modules/@ant-design/colors/es/index.js
 
 
-
 ;// ./node_modules/@ant-design/icons/es/components/Context.js
 
-var IconContext = /*#__PURE__*/(0,external_react_namespaceObject.createContext)({});
+var IconContext = /*#__PURE__*/createContext({});
 /* harmony default export */ const Context = (IconContext);
 ;// ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 
@@ -12462,12 +12507,14 @@ var preMessage = function preMessage(fn) {
  * ```
  */
 function warning(valid, message) {
-  if (false) { var finalMessage; }
+  if (false) // removed by dead control flow
+{ var finalMessage; }
 }
 
 /** @see Similar to {@link warning} */
 function note(valid, message) {
-  if (false) { var finalMessage; }
+  if (false) // removed by dead control flow
+{ var finalMessage; }
 }
 function resetWarned() {
   warned = {};
@@ -12530,13 +12577,13 @@ function normalizeAttrs() {
 }
 function utils_generate(node, key, rootProps) {
   if (!rootProps) {
-    return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2({
+    return /*#__PURE__*/default_0.createElement(node.tag, _objectSpread2({
       key: key
     }, normalizeAttrs(node.attrs)), (node.children || []).map(function (child, index) {
       return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
     }));
   }
-  return /*#__PURE__*/external_react_namespaceObject["default"].createElement(node.tag, _objectSpread2(_objectSpread2({
+  return /*#__PURE__*/default_0.createElement(node.tag, _objectSpread2(_objectSpread2({
     key: key
   }, normalizeAttrs(node.attrs)), rootProps), (node.children || []).map(function (child, index) {
     return utils_generate(child, "".concat(key, "-").concat(node.tag, "-").concat(index));
@@ -12564,7 +12611,7 @@ var svgBaseProps = {
 };
 var iconStyles = "\n.anticon {\n  display: inline-flex;\n  align-items: center;\n  color: inherit;\n  font-style: normal;\n  line-height: 0;\n  text-align: center;\n  text-transform: none;\n  vertical-align: -0.125em;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n.anticon > * {\n  line-height: 1;\n}\n\n.anticon svg {\n  display: inline-block;\n}\n\n.anticon::before {\n  display: none;\n}\n\n.anticon .anticon-icon {\n  display: block;\n}\n\n.anticon[tabindex] {\n  cursor: pointer;\n}\n\n.anticon-spin::before,\n.anticon-spin {\n  display: inline-block;\n  -webkit-animation: loadingCircle 1s infinite linear;\n  animation: loadingCircle 1s infinite linear;\n}\n\n@-webkit-keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes loadingCircle {\n  100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n";
 var useInsertStyles = function useInsertStyles(eleRef) {
-  var _useContext = (0,external_react_namespaceObject.useContext)(Context),
+  var _useContext = useContext(Context),
     csp = _useContext.csp,
     prefixCls = _useContext.prefixCls,
     layer = _useContext.layer;
@@ -12575,7 +12622,7 @@ var useInsertStyles = function useInsertStyles(eleRef) {
   if (layer) {
     mergedStyleStr = "@layer ".concat(layer, " {\n").concat(mergedStyleStr, "\n}");
   }
-  (0,external_react_namespaceObject.useEffect)(function () {
+  useEffect(function () {
     var ele = eleRef.current;
     var shadowRoot = getShadowRoot(ele);
     updateCSS(mergedStyleStr, '@ant-design-icons', {
@@ -12614,7 +12661,7 @@ var IconBase = function IconBase(props) {
     primaryColor = props.primaryColor,
     secondaryColor = props.secondaryColor,
     restProps = _objectWithoutProperties(props, IconBase_excluded);
-  var svgRef = external_react_namespaceObject.useRef();
+  var svgRef = useRef();
   var colors = twoToneColorPalette;
   if (primaryColor) {
     colors = {
@@ -12692,7 +12739,7 @@ setTwoToneColor(blue.primary);
 
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34757#issuecomment-488848720
 
-var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (props, ref) {
+var Icon = /*#__PURE__*/forwardRef(function (props, ref) {
   var className = props.className,
     icon = props.icon,
     spin = props.spin,
@@ -12701,7 +12748,7 @@ var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (prop
     onClick = props.onClick,
     twoToneColor = props.twoToneColor,
     restProps = _objectWithoutProperties(props, AntdIcon_excluded);
-  var _React$useContext = external_react_namespaceObject.useContext(Context),
+  var _React$useContext = useContext(Context),
     _React$useContext$pre = _React$useContext.prefixCls,
     prefixCls = _React$useContext$pre === void 0 ? 'anticon' : _React$useContext$pre,
     rootClassName = _React$useContext.rootClassName;
@@ -12718,7 +12765,7 @@ var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (prop
     _normalizeTwoToneColo2 = slicedToArray_slicedToArray(_normalizeTwoToneColo, 2),
     primaryColor = _normalizeTwoToneColo2[0],
     secondaryColor = _normalizeTwoToneColo2[1];
-  return /*#__PURE__*/external_react_namespaceObject.createElement("span", _extends({
+  return /*#__PURE__*/createElement("span", _extends({
     role: "img",
     "aria-label": icon.name
   }, restProps, {
@@ -12726,7 +12773,7 @@ var Icon = /*#__PURE__*/external_react_namespaceObject.forwardRef(function (prop
     tabIndex: iconTabIndex,
     onClick: onClick,
     className: classString
-  }), /*#__PURE__*/external_react_namespaceObject.createElement(components_IconBase, {
+  }), /*#__PURE__*/createElement(components_IconBase, {
     icon: icon,
     primaryColor: primaryColor,
     secondaryColor: secondaryColor,
@@ -12746,15 +12793,16 @@ Icon.setTwoToneColor = setTwoToneColor;
 
 
 var CaretDownOutlined_CaretDownOutlined = function CaretDownOutlined(props, ref) {
-  return /*#__PURE__*/external_react_namespaceObject.createElement(AntdIcon, _extends({}, props, {
+  return /*#__PURE__*/createElement(AntdIcon, _extends({}, props, {
     ref: ref,
     icon: asn_CaretDownOutlined
   }));
 };
 
 /**![caret-down](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTg0MC40IDMwMEgxODMuNmMtMTkuNyAwLTMwLjcgMjAuOC0xOC41IDM1bDMyOC40IDM4MC44YzkuNCAxMC45IDI3LjUgMTAuOSAzNyAwTDg1OC45IDMzNWMxMi4yLTE0LjIgMS4yLTM1LTE4LjUtMzV6IiAvPjwvc3ZnPg==) */
-var RefIcon = /*#__PURE__*/external_react_namespaceObject.forwardRef(CaretDownOutlined_CaretDownOutlined);
-if (false) {}
+var RefIcon = /*#__PURE__*/forwardRef(CaretDownOutlined_CaretDownOutlined);
+if (false) // removed by dead control flow
+{}
 /* harmony default export */ const icons_CaretDownOutlined = (RefIcon);
 ;// ./src/platforms/react/components/select/dropdown.module.less
 // extracted by mini-css-extract-plugin
@@ -12762,7 +12810,7 @@ var dropdown_module_1 = "_module_dropdown_X2jF9";
 
 
 ;// ./src/platforms/react/components/select/DropDown.tsx
-var DropDown_excluded=["model","attr","value","onSetValue","formatOptions","placeholder","Icon","menuProps","children","onChange"];function DropDown_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function DropDown_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?DropDown_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):DropDown_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function DropDown(props){var _items$find;var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,placeholder=props.placeholder,_props$Icon=props.Icon,Icon=_props$Icon===void 0?icons_CaretDownOutlined:_props$Icon,_props$menuProps=props.menuProps,menuProps=_props$menuProps===void 0?{}:_props$menuProps,_props$children=props.children,children=_props$children===void 0?null:_props$children,onChange=props.onChange,resetProps=_objectWithoutProperties(props,DropDown_excluded);function _onClick(e){var _model$validate;var val=e===null||e===void 0?void 0:e.key;var _changed=value!==val;onSetValue===null||onSetValue===void 0||onSetValue(val);_changed&&(onChange===null||onChange===void 0?void 0:onChange(val));model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var items=formatDropDownOptions(model,attr);var currentLabel=(_items$find=items.find(function(i){return i.key==value;}))===null||_items$find===void 0?void 0:_items$find.label;var disabled=resetProps.disabled===true;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Dropdown,_extends({trigger:"click",menu:DropDown_objectSpread({items:items,onClick:_onClick,selectedKeys:["".concat(value||"")]},menuProps)},resetProps,{className:classnames_default()(dropdown_module_1,resetProps.className,{disabled:disabled})}),/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Space,null,children||currentLabel||placeholder||model.getAttributeHint(attr)||"请选择",/*#__PURE__*/external_react_namespaceObject["default"].createElement(Icon,null)));}
+var DropDown_excluded=["model","attr","value","onSetValue","formatOptions","placeholder","Icon","menuProps","children","onChange"];function DropDown_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function DropDown_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?DropDown_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):DropDown_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function DropDown(props){var _items$find;var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,formatOptions=props.formatOptions,placeholder=props.placeholder,_props$Icon=props.Icon,Icon=_props$Icon===void 0?icons_CaretDownOutlined:_props$Icon,_props$menuProps=props.menuProps,menuProps=_props$menuProps===void 0?{}:_props$menuProps,_props$children=props.children,children=_props$children===void 0?null:_props$children,onChange=props.onChange,resetProps=_objectWithoutProperties(props,DropDown_excluded);function _onClick(e){var _model$validate;var val=e===null||e===void 0?void 0:e.key;var _changed=value!==val;onSetValue===null||onSetValue===void 0||onSetValue(val);_changed&&(onChange===null||onChange===void 0?void 0:onChange(val));model===null||model===void 0||(_model$validate=model.validate)===null||_model$validate===void 0||_model$validate.call(model,attr);}var items=formatDropDownOptions(model,attr);var currentLabel=(_items$find=items.find(function(i){return i.key==value;}))===null||_items$find===void 0?void 0:_items$find.label;var disabled=resetProps.disabled===true;return/*#__PURE__*/default_0.createElement(Dropdown,_extends({trigger:"click",menu:DropDown_objectSpread({items:items,onClick:_onClick,selectedKeys:["".concat(value||"")]},menuProps)},resetProps,{className:classnames_default()(dropdown_module_1,resetProps.className,{disabled:disabled})}),/*#__PURE__*/default_0.createElement(Space,null,children||currentLabel||placeholder||model.getAttributeHint(attr)||"请选择",/*#__PURE__*/default_0.createElement(Icon,null)));}
 // EXTERNAL MODULE: ./node_modules/lodash/uniqBy.js
 var uniqBy = __webpack_require__(14);
 var uniqBy_default = /*#__PURE__*/__webpack_require__.n(uniqBy);
@@ -12784,20 +12832,20 @@ function useLedapDataProvider(dpConfig){var dpRef=useRef(new WebDataProvider(dpC
 //         dp?.off?.(WebDataProvider.EVENT_AFTERGETDATA, onAfterGetData)
 //     }
 // }, [])
-return{isLoading:loading,data:models,setParams:dp===null||dp===void 0?void 0:dp.setParams,isLoad:isLoad};}function useDpEvent(dp){var _useState=(0,external_react_namespaceObject.useState)(dp===null||dp===void 0?void 0:dp.loading),_useState2=slicedToArray_slicedToArray(_useState,2),loading=_useState2[0],setLoading=_useState2[1];(0,external_react_namespaceObject.useEffect)(function(){var _dp$on,_dp$on2;function onBeforeGetData(){setLoading(true);}function onAfterGetData(){setLoading(false);}dp===null||dp===void 0||(_dp$on=dp.on)===null||_dp$on===void 0||_dp$on.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$on2=dp.on)===null||_dp$on2===void 0||_dp$on2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);return function(){var _dp$off,_dp$off2;dp===null||dp===void 0||(_dp$off=dp.off)===null||_dp$off===void 0||_dp$off.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$off2=dp.off)===null||_dp$off2===void 0||_dp$off2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);};},[]);return{loading:loading,models:dp===null||dp===void 0?void 0:dp.models,isLoad:dp===null||dp===void 0?void 0:dp.isLoad};}
+return{isLoading:loading,data:models,setParams:dp===null||dp===void 0?void 0:dp.setParams,isLoad:isLoad};}function useDpEvent(dp){var _useState=useState(dp===null||dp===void 0?void 0:dp.loading),_useState2=slicedToArray_slicedToArray(_useState,2),loading=_useState2[0],setLoading=_useState2[1];useEffect(function(){var _dp$on,_dp$on2;function onBeforeGetData(){setLoading(true);}function onAfterGetData(){setLoading(false);}dp===null||dp===void 0||(_dp$on=dp.on)===null||_dp$on===void 0||_dp$on.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$on2=dp.on)===null||_dp$on2===void 0||_dp$on2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);return function(){var _dp$off,_dp$off2;dp===null||dp===void 0||(_dp$off=dp.off)===null||_dp$off===void 0||_dp$off.call(dp,WebDataProvider_WebDataProvider.EVENT_BEFOREGETDATA,onBeforeGetData);dp===null||dp===void 0||(_dp$off2=dp.off)===null||_dp$off2===void 0||_dp$off2.call(dp,WebDataProvider_WebDataProvider.EVENT_AFTERGETDATA,onAfterGetData);};},[]);return{loading:loading,models:dp===null||dp===void 0?void 0:dp.models,isLoad:dp===null||dp===void 0?void 0:dp.isLoad};}
 ;// ./src/platforms/react/components/searchinput/SearchInput.tsx
-var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,_props$fieldNames=props.fieldNames,fieldNames=_props$fieldNames===void 0?{label:"text",value:"id"}:_props$fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var _handleChange=function _handleChange(value){onSetValue===null||onSetValue===void 0||onSetValue(value);};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _onListScroll=function _onListScroll(e){var _e$target=e.target,scrollTop=_e$target.scrollTop,scrollHeight=_e$target.scrollHeight,clientHeight=_e$target.clientHeight;var isBottom=scrollTop+clientHeight+20>=scrollHeight;if(isBottom){dp.refresh('footer');}};var _options=uniqBy_default()(data,function(v){return v[fieldNames.value];});var _value=value;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Select,_extends({fieldNames:fieldNames,showSearch:true,allowClear:true,value:_value,placeholder:model.getAttributeHint(attr)||"",defaultActiveFirstOption:false,suffixIcon:null,filterOption:false,onSearch:_handleSearch,onChange:_handleChange,notFoundContent:loading?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Spin,{size:"small"}):null,options:_options,loading:loading,onPopupScroll:_onListScroll},resetProps));}
+var SearchInput_excluded=["value","onSetValue","model","attr","dp","fieldNames","paramName"];function SearchInput(props){var value=props.value,onSetValue=props.onSetValue,model=props.model,attr=props.attr,dp=props.dp,_props$fieldNames=props.fieldNames,fieldNames=_props$fieldNames===void 0?{label:"text",value:"id"}:_props$fieldNames,_props$paramName=props.paramName,paramName=_props$paramName===void 0?"keyword":_props$paramName,resetProps=_objectWithoutProperties(props,SearchInput_excluded);var _handleChange=function _handleChange(value){onSetValue===null||onSetValue===void 0||onSetValue(value);};var _useDpEvent=useDpEvent(dp),loading=_useDpEvent.loading,isLoad=_useDpEvent.isLoad,data=_useDpEvent.models;var _handleSearch=function _handleSearch(value){var searchParams=_defineProperty({},paramName,value);dp.setParams(searchParams);};var _onListScroll=function _onListScroll(e){var _e$target=e.target,scrollTop=_e$target.scrollTop,scrollHeight=_e$target.scrollHeight,clientHeight=_e$target.clientHeight;var isBottom=scrollTop+clientHeight+20>=scrollHeight;if(isBottom){dp.refresh('footer');}};var _options=uniqBy_default()(data,function(v){return v[fieldNames.value];});var _value=value;return/*#__PURE__*/default_0.createElement(Select,_extends({fieldNames:fieldNames,showSearch:true,allowClear:true,value:_value,placeholder:model.getAttributeHint(attr)||"",defaultActiveFirstOption:false,suffixIcon:null,filterOption:false,onSearch:_handleSearch,onChange:_handleChange,notFoundContent:loading?/*#__PURE__*/default_0.createElement(Spin,{size:"small"}):null,options:_options,loading:loading,onPopupScroll:_onListScroll},resetProps));}
 ;// ./src/platforms/react/components/datepicker/utils.js
 function getDateValue(val){if(!val){return"";}return dayjs_min_default()(val);}function getRangeDataValue(val){if(!val){return[];}if(typeof val=='string'||typeof val=='number'){return[dayjs_min_default()(val),dayjs_min_default()(val)];}if(Array.isArray(val)){return val.map(function(v){return getDateValue(v);});}return[];}
 ;// ./src/platforms/react/components/datepicker/DatePicker.tsx
-var DatePicker_excluded=["model","attr","value","onSetValue","format"];function DatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$format=props.format,format=_props$format===void 0?"YYYY-MM-DD":_props$format,reset=_objectWithoutProperties(props,DatePicker_excluded);function _onChange(_val){var val=_val?_val.format(format):undefined;onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr);var _value=getDateValue(value);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.DatePicker,_extends({format:format,defaultValue:value,placeholder:placeholder,onChange:_onChange,value:_value},reset));}
+var DatePicker_excluded=["model","attr","value","onSetValue","format"];function DatePicker_DatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$format=props.format,format=_props$format===void 0?"YYYY-MM-DD":_props$format,reset=_objectWithoutProperties(props,DatePicker_excluded);function _onChange(_val){var val=_val?_val.format(format):undefined;onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr);var _value=getDateValue(value);return/*#__PURE__*/default_0.createElement(DatePicker,_extends({format:format,defaultValue:value,placeholder:placeholder,onChange:_onChange,value:_value},reset));}
 ;// ./src/platforms/react/components/datepicker/RangeDatePicker.tsx
-var RangeDatePicker_excluded=["model","attr","value","onSetValue","format","onBlur","dp","validate","placeholder","showTime"];function RangeDatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,format=props.format,onBlur=props.onBlur,dp=props.dp,validate=props.validate,propPlaceholder=props.placeholder,showTime=props.showTime,reset=_objectWithoutProperties(props,RangeDatePicker_excluded);var _format=format||(showTime?"YYYY-MM-DD HH:mm:ss":"YYYY-MM-DD");function getVal(val){if(Array.isArray(val)){return val.map(function(v){return dayjs_min_default()(v).format(_format);});}return[];}function _onChange(_val){var val=!_val?[]:getVal(_val);onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr)||propPlaceholder||["开始时间","结束时间"];var _value=getRangeDataValue(value);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.DatePicker.RangePicker,_extends({format:_format,showTime:showTime,defaultValue:_value,placeholder:placeholder,onChange:_onChange,value:_value},reset));}
+var RangeDatePicker_excluded=["model","attr","value","onSetValue","format","onBlur","dp","validate","placeholder","showTime"];function RangeDatePicker(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,format=props.format,onBlur=props.onBlur,dp=props.dp,validate=props.validate,propPlaceholder=props.placeholder,showTime=props.showTime,reset=_objectWithoutProperties(props,RangeDatePicker_excluded);var _format=format||(showTime?"YYYY-MM-DD HH:mm:ss":"YYYY-MM-DD");function getVal(val){if(Array.isArray(val)){return val.map(function(v){return dayjs_min_default()(v).format(_format);});}return[];}function _onChange(_val){var val=!_val?[]:getVal(_val);onSetValue===null||onSetValue===void 0||onSetValue(val);}var placeholder=model.getAttributeHint(attr)||propPlaceholder||["开始时间","结束时间"];var _value=getRangeDataValue(value);return/*#__PURE__*/default_0.createElement(DatePicker.RangePicker,_extends({format:_format,showTime:showTime,defaultValue:_value,placeholder:placeholder,onChange:_onChange,value:_value},reset));}
 ;// ./src/platforms/react/components/table/Table.tsx
-var Table_excluded=["dp","columns","paginationProp","useSelection","rowSelection","onSelectionChanged","rowKey"];function Table_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function Table_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?Table_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):Table_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Table(props){var _props$dp=props.dp,dp=_props$dp===void 0?{}:_props$dp,columns=props.columns,_props$paginationProp=props.paginationProp,paginationProp=_props$paginationProp===void 0?{}:_props$paginationProp,useSelection=props.useSelection,rowSelectionProps=props.rowSelection,onSelectionChanged=props.onSelectionChanged,_props$rowKey=props.rowKey,rowKey=_props$rowKey===void 0?"id":_props$rowKey,reset=_objectWithoutProperties(props,Table_excluded);var data=dp.models,isLoading=dp.isLoading,pager=dp.pager,isLoad=dp.isLoad;(0,external_react_namespaceObject.useEffect)(function(){if(isLoad){return;}if(!isLoading){// dp.refresh()
-}},[isLoad,isLoading]);var _useState=(0,external_react_namespaceObject.useState)(Column.normalizeColumns(columns)),_useState2=slicedToArray_slicedToArray(_useState,2),ledapColumns=_useState2[0],setLedapColumns=_useState2[1];var _useState3=(0,external_react_namespaceObject.useState)(false),_useState4=slicedToArray_slicedToArray(_useState3,2),setBool=_useState4[1];var _updateView=function _updateView(){setBool(function(b){return!b;});};(0,external_react_namespaceObject.useEffect)(function(){setLedapColumns(Column.normalizeColumns(columns));},[columns]);var _onChange=function _onChange(pagination,filters,sorter){var _sorter$column;if(pagination.current!==pager.page){dp.changePage(pagination.current);return;}var shouldRefresh=false;// 判断排序变更
+var Table_excluded=["dp","columns","paginationProp","useSelection","rowSelection","onSelectionChanged","rowKey"];function Table_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function Table_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?Table_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):Table_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Table_Table(props){var _props$dp=props.dp,dp=_props$dp===void 0?{}:_props$dp,columns=props.columns,_props$paginationProp=props.paginationProp,paginationProp=_props$paginationProp===void 0?{}:_props$paginationProp,useSelection=props.useSelection,rowSelectionProps=props.rowSelection,onSelectionChanged=props.onSelectionChanged,_props$rowKey=props.rowKey,rowKey=_props$rowKey===void 0?"id":_props$rowKey,reset=_objectWithoutProperties(props,Table_excluded);var data=dp.models,isLoading=dp.isLoading,pager=dp.pager,isLoad=dp.isLoad;useEffect(function(){if(isLoad){return;}if(!isLoading){// dp.refresh()
+}},[isLoad,isLoading]);var _useState=useState(Column.normalizeColumns(columns)),_useState2=slicedToArray_slicedToArray(_useState,2),ledapColumns=_useState2[0],setLedapColumns=_useState2[1];var _useState3=useState(false),_useState4=slicedToArray_slicedToArray(_useState3,2),setBool=_useState4[1];var _updateView=function _updateView(){setBool(function(b){return!b;});};useEffect(function(){setLedapColumns(Column.normalizeColumns(columns));},[columns]);var _onChange=function _onChange(pagination,filters,sorter){var _sorter$column;if(pagination.current!==pager.page){dp.changePage(pagination.current);return;}var shouldRefresh=false;// 判断排序变更
 if(sorter!==null&&sorter!==void 0&&(_sorter$column=sorter.column)!==null&&_sorter$column!==void 0&&_sorter$column.sorter){var sortOrder=sorter.column;if(sortOrder!==getSortDir(dp,sorter.column.key)){var _dp$toggleSort;(_dp$toggleSort=dp.toggleSort)===null||_dp$toggleSort===void 0||_dp$toggleSort.call(dp,sorter.column.key);shouldRefresh=true;}}shouldRefresh&&dp.refresh();};var antColumns=getAntColumns(ledapColumns,dp);var pagination=Table_objectSpread({disabled:false,defaultCurrent:pager.page,defaultPageSize:pager.perPage,pageSize:pager.perPage,current:pager.page,hideOnSinglePage:true,// onShowSizeChange: _onShowSizeChange,
-total:pager.totalCount,showQuickJumper:true,showSizeChanger:false},paginationProp);var onRowSelectionChanged=function onRowSelectionChanged(selectedRowKeys,selectedRows){for(var i=0;i<data.length;i++){var model=data[i];if(selectedRowKeys.indexOf(model[rowKey])>-1){model.is_checked=true;}else{if(model.is_checked===true){model.is_checked=undefined;delete model.is_checked;}}}_updateView();onSelectionChanged&&onSelectionChanged(selectedRowKeys,selectedRows);};var rowSelection=rowSelectionProps;if(useSelection){var _dp$models;var selectedRowKeys=dp===null||dp===void 0||(_dp$models=dp.models)===null||_dp$models===void 0?void 0:_dp$models.filter(function(m){return m.is_checked===true;}).map(function(m){return m[rowKey];});rowSelection=Table_objectSpread({onChange:onRowSelectionChanged,selectedRowKeys:selectedRowKeys},rowSelectionProps||{});}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Table,_extends({rowKey:rowKey,rowSelection:rowSelection,columns:antColumns,onChange:_onChange,dataSource:data,loading:isLoading,pagination:pagination},reset));}/**
+total:pager.totalCount,showQuickJumper:true,showSizeChanger:false},paginationProp);var onRowSelectionChanged=function onRowSelectionChanged(selectedRowKeys,selectedRows){for(var i=0;i<data.length;i++){var model=data[i];if(selectedRowKeys.indexOf(model[rowKey])>-1){model.is_checked=true;}else{if(model.is_checked===true){model.is_checked=undefined;delete model.is_checked;}}}_updateView();onSelectionChanged&&onSelectionChanged(selectedRowKeys,selectedRows);};var rowSelection=rowSelectionProps;if(useSelection){var _dp$models;var selectedRowKeys=dp===null||dp===void 0||(_dp$models=dp.models)===null||_dp$models===void 0?void 0:_dp$models.filter(function(m){return m.is_checked===true;}).map(function(m){return m[rowKey];});rowSelection=Table_objectSpread({onChange:onRowSelectionChanged,selectedRowKeys:selectedRowKeys},rowSelectionProps||{});}return/*#__PURE__*/default_0.createElement(Table,_extends({rowKey:rowKey,rowSelection:rowSelection,columns:antColumns,onChange:_onChange,dataSource:data,loading:isLoading,pagination:pagination},reset));}/**
  * 将自定义的column格式转为antd识别的columns格式
  * @param {Array} ledapColumns
  * @param {Object} { onSort,onFilter... }
@@ -12807,16 +12855,16 @@ total:pager.totalCount,showQuickJumper:true,showSizeChanger:false},paginationPro
 // }
 var antdColumn=Table_objectSpread(Table_objectSpread({},column),{},{hidden:visible===false,title:getTableTitle(column)});if(attribute){antdColumn.dataIndex=attribute;antdColumn.key=attribute;}else{// 没有属性为操作
 antdColumn.key="action";}// 排序
-if(attribute&&useSort){antdColumn.showSorterTooltip={target:"sorter-icon"};var sortOrder=getSortDir(dp,attribute);antdColumn.sortOrder=sortOrder;antdColumn.sortDirections=["ascend","descend","ascend"];antdColumn.defaultSortOrder=sortOrder;antdColumn.sorter=true;}if(typeof value=="function"){antdColumn.render=function(val,item,index){return value(item,val,index);};}targetColumns.push(antdColumn);};for(var i=0;i<ledapColumns.length;i++){_loop();}return targetColumns;}function getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/external_react_namespaceObject["default"].createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}function getSortDir(dp,attribute){return dp.isSortAsc(attribute)?"ascend":dp.isSortDesc(attribute)?"descend":null;}
+if(attribute&&useSort){antdColumn.showSorterTooltip={target:"sorter-icon"};var sortOrder=getSortDir(dp,attribute);antdColumn.sortOrder=sortOrder;antdColumn.sortDirections=["ascend","descend","ascend"];antdColumn.defaultSortOrder=sortOrder;antdColumn.sorter=true;}if(typeof value=="function"){antdColumn.render=function(val,item,index){return value(item,val,index);};}targetColumns.push(antdColumn);};for(var i=0;i<ledapColumns.length;i++){_loop();}return targetColumns;}function getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/default_0.createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}function getSortDir(dp,attribute){return dp.isSortAsc(attribute)?"ascend":dp.isSortDesc(attribute)?"descend":null;}
 ;// ./src/platforms/react/components/button/ButtonGroup.tsx
-function ButtonGroup(props){return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Button.Group,props);}
+function ButtonGroup(props){return/*#__PURE__*/default_0.createElement(Button.Group,props);}
 // EXTERNAL MODULE: ./node_modules/react-dom/client.js
 var client = __webpack_require__(5338);
 ;// ./src/platforms/react/components/modal/Modal.tsx
-var Modal_excluded=["onClose","children"],_excluded2=["Modal","onClose","container"];var ModalContext=/*#__PURE__*/(0,external_react_namespaceObject.createContext)({closeModal:null});function Modal(props){var onClose=props.onClose,children=props.children,reset=_objectWithoutProperties(props,Modal_excluded);var _useContext=(0,external_react_namespaceObject.useContext)(ModalContext),open=_useContext.open,closeModal=_useContext.closeModal,root=_useContext.root,container=_useContext.container,_onClose=_useContext._onClose;var _close=function _close(){closeModal();};function _afterClose(e){_onClose&&_onClose();onClose&&onClose(e);}(0,external_react_namespaceObject.useEffect)(function(){return function(){var _root$unmount;root===null||root===void 0||(_root$unmount=root.unmount)===null||_root$unmount===void 0||_root$unmount.call(root);};},[]);function _onCancel(){_close();}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Modal,_extends({destroyOnClose:true,open:open,afterClose:_afterClose,onCancel:_onCancel,getContainer:function getContainer(){return container;}},reset),children);}Modal.create=function(props){var ModalComponent=props.Modal,onClose=props.onClose,container=props.container,reset=_objectWithoutProperties(props,_excluded2);var _container=container||document.getElementById("ledap-modal-root")||document.body;var div=document.createElement("div");_container.append(div);var root=client.createRoot(div);var _onClose=function _onClose(){var _div;// dom清理
+var Modal_excluded=["onClose","children"],_excluded2=["Modal","onClose","container"];var ModalContext=/*#__PURE__*/createContext({closeModal:null});function Modal_Modal(props){var onClose=props.onClose,children=props.children,reset=_objectWithoutProperties(props,Modal_excluded);var _useContext=useContext(ModalContext),open=_useContext.open,closeModal=_useContext.closeModal,root=_useContext.root,container=_useContext.container,_onClose=_useContext._onClose;var _close=function _close(){closeModal();};function _afterClose(e){_onClose&&_onClose();onClose&&onClose(e);}useEffect(function(){return function(){var _root$unmount;root===null||root===void 0||(_root$unmount=root.unmount)===null||_root$unmount===void 0||_root$unmount.call(root);};},[]);function _onCancel(){_close();}return/*#__PURE__*/default_0.createElement(Modal,_extends({destroyOnClose:true,open:open,afterClose:_afterClose,onCancel:_onCancel,getContainer:function getContainer(){return container;}},reset),children);}Modal_Modal.create=function(props){var ModalComponent=props.Modal,onClose=props.onClose,container=props.container,reset=_objectWithoutProperties(props,_excluded2);var _container=container||document.getElementById("ledap-modal-root")||document.body;var div=document.createElement("div");_container.append(div);var root=client.createRoot(div);var _onClose=function _onClose(){var _div;// dom清理
 onClose&&(onClose===null||onClose===void 0?void 0:onClose());// 在组件内部unmount
 // root.unmount();
-(_div=div)===null||_div===void 0||(_div=_div.parentNode)===null||_div===void 0||_div.removeChild(div);div=null;};root.render(/*#__PURE__*/external_react_namespaceObject["default"].createElement(ModalProvidr,{root:root,container:_container,_onClose:_onClose},/*#__PURE__*/external_react_namespaceObject["default"].createElement(ModalComponent,reset)));};function ModalProvidr(props){var root=props.root,container=props.container,_onClose=props._onClose;var _useState=(0,external_react_namespaceObject.useState)(true),_useState2=slicedToArray_slicedToArray(_useState,2),open=_useState2[0],setOpen=_useState2[1];function _closeModal(){setOpen(false);}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(ModalContext.Provider,{value:{closeModal:_closeModal,open:open,root:root,container:container,_onClose:_onClose}},props.children);}Modal.context=ModalContext;Modal.useModalContext=function(){return (0,external_react_namespaceObject.useContext)(ModalContext);};Modal.info=external_antd_namespaceObject.Modal.info;Modal.success=external_antd_namespaceObject.Modal.success;Modal.error=external_antd_namespaceObject.Modal.error;Modal.warning=external_antd_namespaceObject.Modal.warning;Modal.confirm=external_antd_namespaceObject.Modal.confirm;Modal.Provider=ModalProvidr;/* harmony default export */ const modal_Modal = (Modal);
+(_div=div)===null||_div===void 0||(_div=_div.parentNode)===null||_div===void 0||_div.removeChild(div);div=null;};root.render(/*#__PURE__*/default_0.createElement(ModalProvidr,{root:root,container:_container,_onClose:_onClose},/*#__PURE__*/default_0.createElement(ModalComponent,reset)));};function ModalProvidr(props){var root=props.root,container=props.container,_onClose=props._onClose;var _useState=useState(true),_useState2=slicedToArray_slicedToArray(_useState,2),open=_useState2[0],setOpen=_useState2[1];function _closeModal(){setOpen(false);}return/*#__PURE__*/default_0.createElement(ModalContext.Provider,{value:{closeModal:_closeModal,open:open,root:root,container:container,_onClose:_onClose}},props.children);}Modal_Modal.context=ModalContext;Modal_Modal.useModalContext=function(){return useContext(ModalContext);};Modal_Modal.info=Modal.info;Modal_Modal.success=Modal.success;Modal_Modal.error=Modal.error;Modal_Modal.warning=Modal.warning;Modal_Modal.confirm=Modal.confirm;Modal_Modal.Provider=ModalProvidr;/* harmony default export */ const modal_Modal = (Modal_Modal);
 ;// ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
 
 function _arrayWithoutHoles(r) {
@@ -12886,33 +12934,34 @@ var InboxOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 10
 
 
 var InboxOutlined_InboxOutlined = function InboxOutlined(props, ref) {
-  return /*#__PURE__*/external_react_namespaceObject.createElement(AntdIcon, _extends({}, props, {
+  return /*#__PURE__*/createElement(AntdIcon, _extends({}, props, {
     ref: ref,
     icon: asn_InboxOutlined
   }));
 };
 
 /**![inbox](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTg4NS4yIDQ0Ni4zbC0uMi0uOC0xMTIuMi0yODUuMWMtNS0xNi4xLTE5LjktMjcuMi0zNi44LTI3LjJIMjgxLjJjLTE3IDAtMzIuMSAxMS4zLTM2LjkgMjcuNkwxMzkuNCA0NDNsLS4zLjctLjIuOGMtMS4zIDQuOS0xLjcgOS45LTEgMTQuOC0uMSAxLjYtLjIgMy4yLS4yIDQuOFY4MzBhNjAuOSA2MC45IDAgMDA2MC44IDYwLjhoNjI3LjJjMzMuNSAwIDYwLjgtMjcuMyA2MC45LTYwLjhWNDY0LjFjMC0xLjMgMC0yLjYtLjEtMy43LjQtNC45IDAtOS42LTEuMy0xNC4xem0tMjk1LjgtNDNsLS4zIDE1LjdjLS44IDQ0LjktMzEuOCA3NS4xLTc3LjEgNzUuMS0yMi4xIDAtNDEuMS03LjEtNTQuOC0yMC42UzQzNiA0NDEuMiA0MzUuNiA0MTlsLS4zLTE1LjdIMjI5LjVMMzA5IDIxMGgzOTkuMmw4MS43IDE5My4zSDU4OS40em0tMzc1IDc2LjhoMTU3LjNjMjQuMyA1Ny4xIDc2IDkwLjggMTQwLjQgOTAuOCAzMy43IDAgNjUtOS40IDkwLjMtMjcuMiAyMi4yLTE1LjYgMzkuNS0zNy40IDUwLjctNjMuNmgxNTYuNVY4MTRIMjE0LjRWNDgwLjF6IiAvPjwvc3ZnPg==) */
-var InboxOutlined_RefIcon = /*#__PURE__*/external_react_namespaceObject.forwardRef(InboxOutlined_InboxOutlined);
-if (false) {}
+var InboxOutlined_RefIcon = /*#__PURE__*/forwardRef(InboxOutlined_InboxOutlined);
+if (false) // removed by dead control flow
+{}
 /* harmony default export */ const icons_InboxOutlined = (InboxOutlined_RefIcon);
 ;// ./src/platforms/react/components/uploader/uploader.tsx
-var uploader_excluded=["icon","attr","model","value","onSetValue","text","hint","dragger","children","beforeUpload","maxPxSize","maxFileKBSize","mimeTypes","upload","attach","onError"],uploader_excluded2=["uid"];function Uploader(props){var _model$getAttributeHi;var icon=props.icon,attr=props.attr,model=props.model,value=props.value,onSetValue=props.onSetValue,text=props.text,hint=props.hint,_props$dragger=props.dragger,dragger=_props$dragger===void 0?false:_props$dragger,children=props.children,beforeUpload=props.beforeUpload,maxPxSize=props.maxPxSize,maxFileKBSize=props.maxFileKBSize,mimeTypes=props.mimeTypes,upload=props.upload,attach=props.attach,onError=props.onError,reset=_objectWithoutProperties(props,uploader_excluded);var _reset$multiple=reset.multiple,multiple=_reset$multiple===void 0?false:_reset$multiple,onFileChanged=reset.onFileChanged;var _hint=hint||(model===null||model===void 0||(_model$getAttributeHi=model.getAttributeHint)===null||_model$getAttributeHi===void 0?void 0:_model$getAttributeHi.call(model,attr));var propValue=model[attr];var _defaultFileList=getDefaultFiles(propValue);var _useFileList=useFileList(_defaultFileList,upload,attach),fileList=_useFileList.fileList,removeFile=_useFileList.removeFile,addFile=_useFileList.addFile,clear=_useFileList.clear;function _addFile(file){_localCheck(file).then(function(){var clear=reset.multiple===false?true:false;addFile(file,clear);})["catch"](function(errmsg){external_antd_namespaceObject.message.error({content:errmsg});onError===null||onError===void 0||onError(errmsg);});}var _localCheck=/*#__PURE__*/function(){var _ref=_asyncToGenerator(/*#__PURE__*/regenerator_default().mark(function _callee(file){var fileKb;return regenerator_default().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:_context.prev=0;if(checkFileType(file,mimeTypes)){_context.next=3;break;}throw"文件格式错误";case 3:// 文件大小校验
-fileKb=file.size/1024;if(!(maxFileKBSize&&fileKb>maxFileKBSize)){_context.next=6;break;}throw"文件过大";case 6:if(!maxPxSize){_context.next=15;break;}_context.prev=7;_context.next=10;return checkFilePxSize(file,maxPxSize.width,maxPxSize.height);case 10:_context.next=15;break;case 12:_context.prev=12;_context.t0=_context["catch"](7);throw _context.t0;case 15:return _context.abrupt("return",Promise.resolve(true));case 18:_context.prev=18;_context.t1=_context["catch"](0);return _context.abrupt("return",Promise.reject(_context.t1));case 21:case"end":return _context.stop();}},_callee,null,[[0,18],[7,12]]);}));return function _localCheck(_x){return _ref.apply(this,arguments);};}();function _beforeUpload(file){if(typeof beforeUpload==="function"){// 业务校验
+var uploader_excluded=["icon","attr","model","value","onSetValue","text","hint","dragger","children","beforeUpload","maxPxSize","maxFileKBSize","mimeTypes","upload","attach","onError"],uploader_excluded2=["uid"];function Uploader(props){var _model$getAttributeHi;var icon=props.icon,attr=props.attr,model=props.model,value=props.value,onSetValue=props.onSetValue,text=props.text,hint=props.hint,_props$dragger=props.dragger,dragger=_props$dragger===void 0?false:_props$dragger,children=props.children,beforeUpload=props.beforeUpload,maxPxSize=props.maxPxSize,maxFileKBSize=props.maxFileKBSize,mimeTypes=props.mimeTypes,upload=props.upload,attach=props.attach,onError=props.onError,reset=_objectWithoutProperties(props,uploader_excluded);var _reset$multiple=reset.multiple,multiple=_reset$multiple===void 0?false:_reset$multiple,onFileChanged=reset.onFileChanged;var _hint=hint||(model===null||model===void 0||(_model$getAttributeHi=model.getAttributeHint)===null||_model$getAttributeHi===void 0?void 0:_model$getAttributeHi.call(model,attr));var propValue=model[attr];var _defaultFileList=getDefaultFiles(propValue);var _useFileList=useFileList(_defaultFileList,upload,attach),fileList=_useFileList.fileList,removeFile=_useFileList.removeFile,addFile=_useFileList.addFile,clear=_useFileList.clear;function _addFile(file){_localCheck(file).then(function(){var clear=reset.multiple===false?true:false;addFile(file,clear);})["catch"](function(errmsg){message.error({content:errmsg});onError===null||onError===void 0||onError(errmsg);});}var _localCheck=/*#__PURE__*/function(){var _ref=_asyncToGenerator(/*#__PURE__*/regenerator_default().mark(function _callee(file){var fileKb,_t,_t2;return regenerator_default().wrap(function(_context){while(1)switch(_context.prev=_context.next){case 0:_context.prev=0;if(checkFileType(file,mimeTypes)){_context.next=1;break;}throw"文件格式错误";case 1:// 文件大小校验
+fileKb=file.size/1024;if(!(maxFileKBSize&&fileKb>maxFileKBSize)){_context.next=2;break;}throw"文件过大";case 2:if(!maxPxSize){_context.next=6;break;}_context.prev=3;_context.next=4;return checkFilePxSize(file,maxPxSize.width,maxPxSize.height);case 4:_context.next=6;break;case 5:_context.prev=5;_t=_context["catch"](3);throw _t;case 6:return _context.abrupt("return",Promise.resolve(true));case 7:_context.prev=7;_t2=_context["catch"](0);return _context.abrupt("return",Promise.reject(_t2));case 8:case"end":return _context.stop();}},_callee,null,[[0,7],[3,5]]);}));return function _localCheck(_x){return _ref.apply(this,arguments);};}();function _beforeUpload(file){if(typeof beforeUpload==="function"){// 业务校验
 var res=beforeUpload===null||beforeUpload===void 0?void 0:beforeUpload(file,fileList);if(res!==null&&res!==void 0&&res.then&&typeof res.then=="function"){var _res$then$catch,_res$then;(_res$then$catch=(_res$then=res.then(function(promiseResule){if(promiseResule!==false){_addFile(file);}}))["catch"])===null||_res$then$catch===void 0||_res$then$catch.call(_res$then,function(){});}else if(res===false){// 值类型
 return false;}else{_addFile(file);}}else{_addFile(file);}// 自定义上传
 return false;}function _onRemove(file){removeFile(file);}// console.log(attr, "files:", fileList);
-(0,external_react_namespaceObject.useEffect)(function(){// console.log("file list changed:", fileList);
-var _fileList=upload?fileList.map(function(f){return f.url;}):fileList;var targetFile=multiple?_toConsumableArray(_fileList):_fileList[0];onFileChanged===null||onFileChanged===void 0||onFileChanged(targetFile);onSetValue===null||onSetValue===void 0||onSetValue(targetFile);},[fileList]);var Fragment=dragger?external_antd_namespaceObject.Upload.Dragger:external_antd_namespaceObject.Upload;var content=dragger?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_react_namespaceObject["default"].Fragment,null,/*#__PURE__*/external_react_namespaceObject["default"].createElement("p",{className:"ant-upload-drag-icon"},icon||/*#__PURE__*/external_react_namespaceObject["default"].createElement(icons_InboxOutlined,null)),/*#__PURE__*/external_react_namespaceObject["default"].createElement("p",{className:"ant-upload-text"},text||"点击或将文件拖拽到这里上传"),_hint&&/*#__PURE__*/external_react_namespaceObject["default"].createElement("p",{className:"ant-upload-hint"},_hint)):typeof children=="function"?children(fileList):children?children:/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Button,null,"\u70B9\u51FB\u4E0A\u4F20\u6587\u4EF6");return/*#__PURE__*/external_react_namespaceObject["default"].createElement(Fragment,_extends({fileList:fileList,onRemove:_onRemove,beforeUpload:_beforeUpload},reset),content);}function useFileList(){var initFileList=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var upload=arguments.length>1?arguments[1]:undefined;var attach=arguments.length>2?arguments[2]:undefined;var _useContext=(0,external_react_namespaceObject.useContext)(LedapAppContext),uploader=_useContext.uploader;var _useState=(0,external_react_namespaceObject.useState)(initFileList),_useState2=slicedToArray_slicedToArray(_useState,2),fileList=_useState2[0],setFileList=_useState2[1];function addFile(file){var clear=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var _olfFiles=clear?[]:fileList;setFileList([].concat(_toConsumableArray(_olfFiles),[file]));upload&&uploadFile(file);}function removeFile(file){var index=fileList.indexOf(file);var newFileList=fileList.slice();newFileList.splice(index,1);setFileList(newFileList);}function clear(){setFileList([]);}function updateFile(fileInfo){setFileList(function(fileList){return fileList.map(function(file){var uid=fileInfo.uid,reset=_objectWithoutProperties(fileInfo,uploader_excluded2);if(file.uid==uid){Object.assign(file,reset);return file;}else{return file;}});});}function uploadFile(file){if(!uploader){console.error("尚未配置 uploader");return;}uploader(file,attach).then(function(url){updateFile({uid:file.uid,url:url,status:"success"});})["catch"](function(){});}return{fileList:fileList,addFile:addFile,removeFile:removeFile,clear:clear,uploadFile:uploadFile};}function checkFileType(file,allowedTypes){if(!file||!file.name){return false;// 文件无效
+useEffect(function(){// console.log("file list changed:", fileList);
+var _fileList=upload?fileList.map(function(f){return f.url;}):fileList;var targetFile=multiple?_toConsumableArray(_fileList):_fileList[0];onFileChanged===null||onFileChanged===void 0||onFileChanged(targetFile);onSetValue===null||onSetValue===void 0||onSetValue(targetFile);},[fileList]);var Fragment=dragger?Upload.Dragger:Upload;var content=dragger?/*#__PURE__*/default_0.createElement(default_0.Fragment,null,/*#__PURE__*/default_0.createElement("p",{className:"ant-upload-drag-icon"},icon||/*#__PURE__*/default_0.createElement(icons_InboxOutlined,null)),/*#__PURE__*/default_0.createElement("p",{className:"ant-upload-text"},text||"点击或将文件拖拽到这里上传"),_hint&&/*#__PURE__*/default_0.createElement("p",{className:"ant-upload-hint"},_hint)):typeof children=="function"?children(fileList):children?children:/*#__PURE__*/default_0.createElement(Button,null,"\u70B9\u51FB\u4E0A\u4F20\u6587\u4EF6");return/*#__PURE__*/default_0.createElement(Fragment,_extends({fileList:fileList,onRemove:_onRemove,beforeUpload:_beforeUpload},reset),content);}function useFileList(){var initFileList=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var upload=arguments.length>1?arguments[1]:undefined;var attach=arguments.length>2?arguments[2]:undefined;var _useContext=useContext(LedapAppContext),uploader=_useContext.uploader;var _useState=useState(initFileList),_useState2=slicedToArray_slicedToArray(_useState,2),fileList=_useState2[0],setFileList=_useState2[1];function addFile(file){var clear=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var _olfFiles=clear?[]:fileList;setFileList([].concat(_toConsumableArray(_olfFiles),[file]));upload&&uploadFile(file);}function removeFile(file){var index=fileList.indexOf(file);var newFileList=fileList.slice();newFileList.splice(index,1);setFileList(newFileList);}function clear(){setFileList([]);}function updateFile(fileInfo){setFileList(function(fileList){return fileList.map(function(file){var uid=fileInfo.uid,reset=_objectWithoutProperties(fileInfo,uploader_excluded2);if(file.uid==uid){Object.assign(file,reset);return file;}else{return file;}});});}function uploadFile(file){if(!uploader){console.error("尚未配置 uploader");return;}uploader(file,attach).then(function(url){updateFile({uid:file.uid,url:url,status:"success"});})["catch"](function(){});}return{fileList:fileList,addFile:addFile,removeFile:removeFile,clear:clear,uploadFile:uploadFile};}function checkFileType(file,allowedTypes){if(!file||!file.name){return false;// 文件无效
 }return allowedTypes.some(function(type){return file.type===type||file.name.toLowerCase().endsWith(".".concat(type.toLowerCase()));});}function checkFilePxSize(file,width,height){return new Promise(function(resolve,reject){var img=new Image();img.onload=function(){if(img.width>width||img.height>height){reject("图像尺寸过大");}else{resolve(true);}};img.onerror=function(e){reject("图像加载失败");};img.src=URL.createObjectURL(file);});}function getDefaultFiles(value){var _value$;if(!value){return[];}if(typeof value=="string"&&value.length>0){return[{url:value,name:value}];}if(value.length==0){return[];}// array
 if((_value$=value[0])!==null&&_value$!==void 0&&_value$.url){return value;}if(typeof value[0]=="string"){return value.map(function(item){return{name:item,url:item};});}return[];}/* harmony default export */ const uploader = (Uploader);
 ;// ./src/platforms/react/components/segmented/Segmented.tsx
-var Segmented_excluded=["model","attr","value","onSetValue"];function Segmented(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,Segmented_excluded);var itemList=formatSelectOptions(model,attr);function _onChange(val){onSetValue===null||onSetValue===void 0||onSetValue(val);}return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Segmented,_extends({defaultValue:propValue,value:propValue,options:itemList,onChange:_onChange},resetProps));}
+var Segmented_excluded=["model","attr","value","onSetValue"];function Segmented_Segmented(props){var model=props.model,attr=props.attr,propValue=props.value,onSetValue=props.onSetValue,resetProps=_objectWithoutProperties(props,Segmented_excluded);var itemList=formatSelectOptions(model,attr);function _onChange(val){onSetValue===null||onSetValue===void 0||onSetValue(val);}return/*#__PURE__*/default_0.createElement(Segmented,_extends({defaultValue:propValue,value:propValue,options:itemList,onChange:_onChange},resetProps));}
 ;// ./src/platforms/react/components/Detail/Detail.tsx
-var Detail_excluded=["model","columns","title","column","colon"];function Detail_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function Detail_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?Detail_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):Detail_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Detail(props){var model=props.model,columns=props.columns,_props$title=props.title,title=_props$title===void 0?null:_props$title,_props$column=props.column,column=_props$column===void 0?1:_props$column,_props$colon=props.colon,colon=_props$colon===void 0?true:_props$colon,reset=_objectWithoutProperties(props,Detail_excluded);var _useState=(0,external_react_namespaceObject.useState)(Column.normalizeColumns(columns)),_useState2=slicedToArray_slicedToArray(_useState,2),ledapColumns=_useState2[0],setLedapColumns=_useState2[1];var _useState3=(0,external_react_namespaceObject.useState)(false),_useState4=slicedToArray_slicedToArray(_useState3,2),setBool=_useState4[1];var _updateView=function _updateView(){setBool(function(b){return!b;});};(0,external_react_namespaceObject.useEffect)(function(){setLedapColumns(Column.normalizeColumns(columns));},[columns]);var antColumns=Detail_getAntColumns(ledapColumns,model);return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Descriptions,_extends({column:column,colon:colon,bordered:true,title:title,items:antColumns},reset));}function Detail_getAntColumns(ledapColumns,model){var targetColumns=[];for(var i=0;i<ledapColumns.length;i++){var column=ledapColumns[i];var label=column.label,value=column.value,attribute=column.attribute,visible=column.visible;// 不可见
-if(visible==false){continue;}var antdColumn=Detail_objectSpread(Detail_objectSpread({},column),{},{label:Detail_getTableTitle(column)});if(attribute){antdColumn.key=attribute;}if(typeof value=="function"){antdColumn.children=value(model);}else{antdColumn.children="".concat(model[attribute]);}targetColumns.push(antdColumn);}return targetColumns;}function Detail_getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/external_react_namespaceObject["default"].createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}
+var Detail_excluded=["model","columns","title","column","colon"];function Detail_ownKeys(e,r){var t=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);r&&(o=o.filter(function(r){return Object.getOwnPropertyDescriptor(e,r).enumerable;})),t.push.apply(t,o);}return t;}function Detail_objectSpread(e){for(var r=1;r<arguments.length;r++){var t=null!=arguments[r]?arguments[r]:{};r%2?Detail_ownKeys(Object(t),!0).forEach(function(r){_defineProperty(e,r,t[r]);}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(t)):Detail_ownKeys(Object(t)).forEach(function(r){Object.defineProperty(e,r,Object.getOwnPropertyDescriptor(t,r));});}return e;}function Detail(props){var model=props.model,columns=props.columns,_props$title=props.title,title=_props$title===void 0?null:_props$title,_props$column=props.column,column=_props$column===void 0?1:_props$column,_props$colon=props.colon,colon=_props$colon===void 0?true:_props$colon,reset=_objectWithoutProperties(props,Detail_excluded);var _useState=useState(Column.normalizeColumns(columns)),_useState2=slicedToArray_slicedToArray(_useState,2),ledapColumns=_useState2[0],setLedapColumns=_useState2[1];var _useState3=useState(false),_useState4=slicedToArray_slicedToArray(_useState3,2),setBool=_useState4[1];var _updateView=function _updateView(){setBool(function(b){return!b;});};useEffect(function(){setLedapColumns(Column.normalizeColumns(columns));},[columns]);var antColumns=Detail_getAntColumns(ledapColumns,model);return/*#__PURE__*/default_0.createElement(Descriptions,_extends({column:column,colon:colon,bordered:true,title:title,items:antColumns},reset));}function Detail_getAntColumns(ledapColumns,model){var targetColumns=[];for(var i=0;i<ledapColumns.length;i++){var column=ledapColumns[i];var label=column.label,value=column.value,attribute=column.attribute,visible=column.visible;// 不可见
+if(visible==false){continue;}var antdColumn=Detail_objectSpread(Detail_objectSpread({},column),{},{label:Detail_getTableTitle(column)});if(attribute){antdColumn.key=attribute;}if(typeof value=="function"){antdColumn.children=value(model);}else{antdColumn.children="".concat(model[attribute]);}targetColumns.push(antdColumn);}return targetColumns;}function Detail_getTableTitle(column){var labelFormat=column.labelFormat,label=column.label,attribute=column.attribute;if(typeof label=="function"){if(labelFormat=="html"){return/*#__PURE__*/default_0.createElement("span",{dangerouslySetInnerHTML:{__html:label()}});}return label();}return label||attribute;}
 ;// ./src/platforms/react/components/color-picker/ColorPicker.tsx
-var ColorPicker_excluded=["attr","model","onSetValue","value","format"];function ColorPicker(props){var attr=props.attr,model=props.model,onSetValue=props.onSetValue,value=props.value,_props$format=props.format,format=_props$format===void 0?"hex":_props$format,resetProps=_objectWithoutProperties(props,ColorPicker_excluded);var _handleChange=function _handleChange(colorHex){var _val=typeof colorHex==='string'?colorHex:colorHex===null||colorHex===void 0?void 0:colorHex.toHexString();onSetValue(_val);};return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.ColorPicker,_extends({onChange:_handleChange,format:format,value:value},resetProps));}/* harmony default export */ const color_picker_ColorPicker = (ColorPicker);
+var ColorPicker_excluded=["attr","model","onSetValue","value","format"];function ColorPicker_ColorPicker(props){var attr=props.attr,model=props.model,onSetValue=props.onSetValue,value=props.value,_props$format=props.format,format=_props$format===void 0?"hex":_props$format,resetProps=_objectWithoutProperties(props,ColorPicker_excluded);var _handleChange=function _handleChange(colorHex){var _val=typeof colorHex==='string'?colorHex:colorHex===null||colorHex===void 0?void 0:colorHex.toHexString();onSetValue(_val);};return/*#__PURE__*/default_0.createElement(ColorPicker,_extends({onChange:_handleChange,format:format,value:value},resetProps));}/* harmony default export */ const color_picker_ColorPicker = (ColorPicker_ColorPicker);
 ;// ./node_modules/@ant-design/icons-svg/es/asn/PlusOutlined.js
 // This icon file is generated automatically.
 var PlusOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" } }, { "tag": "path", "attrs": { "d": "M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z" } }] }, "name": "plus", "theme": "outlined" };
@@ -12927,18 +12976,19 @@ var PlusOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 89
 
 
 var PlusOutlined_PlusOutlined = function PlusOutlined(props, ref) {
-  return /*#__PURE__*/external_react_namespaceObject.createElement(AntdIcon, _extends({}, props, {
+  return /*#__PURE__*/createElement(AntdIcon, _extends({}, props, {
     ref: ref,
     icon: asn_PlusOutlined
   }));
 };
 
 /**![plus](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjY0IDY0IDg5NiA4OTYiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQ4MiAxNTJoNjBxOCAwIDggOHY3MDRxMCA4LTggOGgtNjBxLTggMC04LThWMTYwcTAtOCA4LTh6IiAvPjxwYXRoIGQ9Ik0xOTIgNDc0aDY3MnE4IDAgOCA4djYwcTAgOC04IDhIMTYwcS04IDAtOC04di02MHEwLTggOC04eiIgLz48L3N2Zz4=) */
-var PlusOutlined_RefIcon = /*#__PURE__*/external_react_namespaceObject.forwardRef(PlusOutlined_PlusOutlined);
-if (false) {}
+var PlusOutlined_RefIcon = /*#__PURE__*/forwardRef(PlusOutlined_PlusOutlined);
+if (false) // removed by dead control flow
+{}
 /* harmony default export */ const icons_PlusOutlined = (PlusOutlined_RefIcon);
 ;// ./src/platforms/react/components/tag-list/TagList.tsx
-function TagList(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$useSort=props.useSort,useSort=_props$useSort===void 0?false:_props$useSort,_props$useAdd=props.useAdd,useAdd=_props$useAdd===void 0?true:_props$useAdd,_props$closable=props.closable,closable=_props$closable===void 0?true:_props$closable,_props$addText=props.addText,addText=_props$addText===void 0?"添加":_props$addText,_props$inputType=props.inputType,inputType=_props$inputType===void 0?"number":_props$inputType,_props$tagProps=props.tagProps,tagProps=_props$tagProps===void 0?{}:_props$tagProps;var _useState=(0,external_react_namespaceObject.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),inputVisible=_useState2[0],setInputVisible=_useState2[1];var _useState3=(0,external_react_namespaceObject.useState)(""),_useState4=slicedToArray_slicedToArray(_useState3,2),inputValue=_useState4[0],setInputValue=_useState4[1];var inputRef=(0,external_react_namespaceObject.useRef)(null);var _value=typeof value==="string"||typeof value==="number"?[value]:Array.isArray(value)?value:[];var showInput=function showInput(){setInputVisible(true);};var handleInputChange=function handleInputChange(e){setInputValue(e.target.value);};var handleInputConfirm=function handleInputConfirm(){if(inputValue&&!_value.includes(inputValue)){var newValue=[].concat(_toConsumableArray(_value),[inputValue]);onSetValue(newValue);}setInputVisible(false);setInputValue("");};(0,external_react_namespaceObject.useEffect)(function(){if(inputVisible){var _inputRef$current;(_inputRef$current=inputRef.current)===null||_inputRef$current===void 0||_inputRef$current.focus();}},[inputVisible]);var AddFragment=useAdd?inputVisible?/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Input,{ref:inputRef,type:inputType,size:"small",style:{width:140,height:22,marginInlineEnd:8,verticalAlign:"top"},value:inputValue,onChange:handleInputChange,onBlur:handleInputConfirm,onPressEnter:handleInputConfirm}):/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Tag,{style:{height:22,borderStyle:"dashed",cursor:"pointer"},icon:/*#__PURE__*/external_react_namespaceObject["default"].createElement(icons_PlusOutlined,null),onClick:showInput},addText):null;return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Flex,{wrap:true,style:{rowGap:8}},_value.map(function(item,index){return/*#__PURE__*/external_react_namespaceObject["default"].createElement(external_antd_namespaceObject.Tag,_extends({key:index,closable:closable,onClose:function onClose(e){var newValue=_toConsumableArray(_value);newValue.splice(index,1);onSetValue===null||onSetValue===void 0||onSetValue(newValue);}},tagProps),item);}),AddFragment);}
+function TagList(props){var model=props.model,attr=props.attr,value=props.value,onSetValue=props.onSetValue,_props$useSort=props.useSort,useSort=_props$useSort===void 0?false:_props$useSort,_props$useAdd=props.useAdd,useAdd=_props$useAdd===void 0?true:_props$useAdd,_props$closable=props.closable,closable=_props$closable===void 0?true:_props$closable,_props$addText=props.addText,addText=_props$addText===void 0?"添加":_props$addText,_props$inputType=props.inputType,inputType=_props$inputType===void 0?"number":_props$inputType,_props$tagProps=props.tagProps,tagProps=_props$tagProps===void 0?{}:_props$tagProps;var _useState=useState(false),_useState2=slicedToArray_slicedToArray(_useState,2),inputVisible=_useState2[0],setInputVisible=_useState2[1];var _useState3=useState(""),_useState4=slicedToArray_slicedToArray(_useState3,2),inputValue=_useState4[0],setInputValue=_useState4[1];var inputRef=useRef(null);var _value=typeof value==="string"||typeof value==="number"?[value]:Array.isArray(value)?value:[];var showInput=function showInput(){setInputVisible(true);};var handleInputChange=function handleInputChange(e){setInputValue(e.target.value);};var handleInputConfirm=function handleInputConfirm(){if(inputValue&&!_value.includes(inputValue)){var newValue=[].concat(_toConsumableArray(_value),[inputValue]);onSetValue(newValue);}setInputVisible(false);setInputValue("");};useEffect(function(){if(inputVisible){var _inputRef$current;(_inputRef$current=inputRef.current)===null||_inputRef$current===void 0||_inputRef$current.focus();}},[inputVisible]);var AddFragment=useAdd?inputVisible?/*#__PURE__*/default_0.createElement(Input,{ref:inputRef,type:inputType,size:"small",style:{width:140,height:22,marginInlineEnd:8,verticalAlign:"top"},value:inputValue,onChange:handleInputChange,onBlur:handleInputConfirm,onPressEnter:handleInputConfirm}):/*#__PURE__*/default_0.createElement(Tag,{style:{height:22,borderStyle:"dashed",cursor:"pointer"},icon:/*#__PURE__*/default_0.createElement(icons_PlusOutlined,null),onClick:showInput},addText):null;return/*#__PURE__*/default_0.createElement(Flex,{wrap:true,style:{rowGap:8}},_value.map(function(item,index){return/*#__PURE__*/default_0.createElement(Tag,_extends({key:index,closable:closable,onClose:function onClose(e){var newValue=_toConsumableArray(_value);newValue.splice(index,1);onSetValue===null||onSetValue===void 0||onSetValue(newValue);}},tagProps),item);}),AddFragment);}
 ;// ./src/platforms/react/contexts/index.ts
 
 ;// ./src/platforms/react/hooks/index.ts
@@ -12951,32 +13001,4 @@ focus:'focus'//获取焦点时
 };
 ;// ./src/platforms/react/index.ts
 
-var __webpack_exports__BaseInput = __webpack_exports__.aE;
-var __webpack_exports__Button = __webpack_exports__.$n;
-var __webpack_exports__ButtonGroup = __webpack_exports__.e2;
-var __webpack_exports__Checkbox = __webpack_exports__.Sc;
-var __webpack_exports__CheckboxGroup = __webpack_exports__.$Q;
-var __webpack_exports__ColorPicker = __webpack_exports__.sk;
-var __webpack_exports__ConfigProvider = __webpack_exports__.sG;
-var __webpack_exports__DatePicker = __webpack_exports__.lr;
-var __webpack_exports__Detail = __webpack_exports__.kZ;
-var __webpack_exports__Dropdown = __webpack_exports__.ms;
-var __webpack_exports__Form = __webpack_exports__.lV;
-var __webpack_exports__FormContext = __webpack_exports__.cK;
-var __webpack_exports__FormItem = __webpack_exports__.eI;
-var __webpack_exports__FormItemContext = __webpack_exports__.zG;
-var __webpack_exports__FormItemLabel = __webpack_exports__.cm;
-var __webpack_exports__FormValidateEvent = __webpack_exports__.Ds;
-var __webpack_exports__Modal = __webpack_exports__.aF;
-var __webpack_exports__Radio = __webpack_exports__.sx;
-var __webpack_exports__RadioGroup = __webpack_exports__.z6;
-var __webpack_exports__RangeDatePicker = __webpack_exports__.wT;
-var __webpack_exports__SearchInput = __webpack_exports__.DO;
-var __webpack_exports__Segmented = __webpack_exports__.$q;
-var __webpack_exports__Select = __webpack_exports__.l6;
-var __webpack_exports__Table = __webpack_exports__.XI;
-var __webpack_exports__TagList = __webpack_exports__.LY;
-var __webpack_exports__Uploader = __webpack_exports__.d9;
-var __webpack_exports__useInputGroup = __webpack_exports__.rW;
-var __webpack_exports__useLedapModel = __webpack_exports__.b1;
-export { __webpack_exports__BaseInput as BaseInput, __webpack_exports__Button as Button, __webpack_exports__ButtonGroup as ButtonGroup, __webpack_exports__Checkbox as Checkbox, __webpack_exports__CheckboxGroup as CheckboxGroup, __webpack_exports__ColorPicker as ColorPicker, __webpack_exports__ConfigProvider as ConfigProvider, __webpack_exports__DatePicker as DatePicker, __webpack_exports__Detail as Detail, __webpack_exports__Dropdown as Dropdown, __webpack_exports__Form as Form, __webpack_exports__FormContext as FormContext, __webpack_exports__FormItem as FormItem, __webpack_exports__FormItemContext as FormItemContext, __webpack_exports__FormItemLabel as FormItemLabel, __webpack_exports__FormValidateEvent as FormValidateEvent, __webpack_exports__Modal as Modal, __webpack_exports__Radio as Radio, __webpack_exports__RadioGroup as RadioGroup, __webpack_exports__RangeDatePicker as RangeDatePicker, __webpack_exports__SearchInput as SearchInput, __webpack_exports__Segmented as Segmented, __webpack_exports__Select as Select, __webpack_exports__Table as Table, __webpack_exports__TagList as TagList, __webpack_exports__Uploader as Uploader, __webpack_exports__useInputGroup as useInputGroup, __webpack_exports__useLedapModel as useLedapModel };
+export { BaseInput, button_Button as Button, ButtonGroup, Checkbox_Checkbox as Checkbox, CheckboxGroup, color_picker_ColorPicker as ColorPicker, configProvider_ConfigProvider as ConfigProvider, DatePicker_DatePicker as DatePicker, Detail, DropDown as Dropdown, Form_Form as Form, contexts_FormContext as FormContext, formItem_FormItem as FormItem, contexts_FormItemContext as FormItemContext, formItem_FormItemLabel as FormItemLabel, FormValidateEvent, modal_Modal as Modal, radio_Radio as Radio, RadioGroup, RangeDatePicker, SearchInput, Segmented_Segmented as Segmented, Select_Select as Select, Table_Table as Table, TagList, uploader as Uploader, useInputGroup, useLedapModel };

@@ -1240,7 +1240,7 @@ module.exports = identity;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var copyObject = __webpack_require__(1791),
-    getSymbols = __webpack_require__(2283);
+    getSymbols = __webpack_require__(4664);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -1260,31 +1260,48 @@ module.exports = copySymbols;
 /***/ }),
 
 /***/ 2283:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(1791),
+    createAssigner = __webpack_require__(999),
+    keysIn = __webpack_require__(7241);
 
 /**
- * This method returns a new empty array.
+ * This method is like `_.assign` except that it iterates over own and
+ * inherited source properties.
+ *
+ * **Note:** This method mutates `object`.
  *
  * @static
  * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {Array} Returns the new empty array.
+ * @since 4.0.0
+ * @alias extend
+ * @category Object
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @returns {Object} Returns `object`.
+ * @see _.assign
  * @example
  *
- * var arrays = _.times(2, _.stubArray);
+ * function Foo() {
+ *   this.a = 1;
+ * }
  *
- * console.log(arrays);
- * // => [[], []]
+ * function Bar() {
+ *   this.c = 3;
+ * }
  *
- * console.log(arrays[0] === arrays[1]);
- * // => false
+ * Foo.prototype.b = 2;
+ * Bar.prototype.d = 4;
+ *
+ * _.assignIn({ 'a': 0 }, new Foo, new Bar);
+ * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
  */
-function stubArray() {
-  return [];
-}
+var assignIn = createAssigner(function(object, source) {
+  copyObject(source, keysIn(source), object);
+});
 
-module.exports = stubArray;
+module.exports = assignIn;
 
 
 /***/ }),
@@ -1866,7 +1883,7 @@ module.exports = cloneBuffer;
 /***/ 3346:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__(4664);
+module.exports = __webpack_require__(2283);
 
 
 /***/ }),
@@ -2535,48 +2552,31 @@ module.exports = mapCacheHas;
 /***/ }),
 
 /***/ 4664:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var copyObject = __webpack_require__(1791),
-    createAssigner = __webpack_require__(999),
-    keysIn = __webpack_require__(7241);
+/***/ ((module) => {
 
 /**
- * This method is like `_.assign` except that it iterates over own and
- * inherited source properties.
- *
- * **Note:** This method mutates `object`.
+ * This method returns a new empty array.
  *
  * @static
  * @memberOf _
- * @since 4.0.0
- * @alias extend
- * @category Object
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
- * @see _.assign
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
  * @example
  *
- * function Foo() {
- *   this.a = 1;
- * }
+ * var arrays = _.times(2, _.stubArray);
  *
- * function Bar() {
- *   this.c = 3;
- * }
+ * console.log(arrays);
+ * // => [[], []]
  *
- * Foo.prototype.b = 2;
- * Bar.prototype.d = 4;
- *
- * _.assignIn({ 'a': 0 }, new Foo, new Bar);
- * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
  */
-var assignIn = createAssigner(function(object, source) {
-  copyObject(source, keysIn(source), object);
-});
+function stubArray() {
+  return [];
+}
 
-module.exports = assignIn;
+module.exports = stubArray;
 
 
 /***/ }),
@@ -5073,19 +5073,6 @@ module.exports = baseClone;
 /************************************************************************/
 var __webpack_exports__ = {};
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  bI: () => (/* reexport */ BaseObject),
-  M9: () => (/* reexport */ DataProvider),
-  Jh: () => (/* reexport */ Event),
-  Kx: () => (/* reexport */ Model),
-  dK: () => (/* reexport */ Pagination),
-  BW: () => (/* reexport */ ValidatorFactory),
-  aC: () => (/* reexport */ WebDataProvider),
-  _$: () => (/* binding */ helpers),
-  Qs: () => (/* binding */ widgets)
-});
-
 // NAMESPACE OBJECT: ./src/platforms/vue/index.ts
 var vue_namespaceObject = {};
 __webpack_require__.r(vue_namespaceObject);
@@ -5293,6 +5280,9 @@ function _inherits(t, e) {
   }), e && _setPrototypeOf(t, e);
 }
 
+// EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
+var isEqual = __webpack_require__(2404);
+var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 // EXTERNAL MODULE: ./node_modules/lodash/get.js
 var get = __webpack_require__(8156);
 var get_default = /*#__PURE__*/__webpack_require__.n(get);
@@ -5302,6 +5292,9 @@ var intersection_default = /*#__PURE__*/__webpack_require__.n(intersection);
 // EXTERNAL MODULE: ./node_modules/lodash/isEmpty.js
 var lodash_isEmpty = __webpack_require__(2193);
 var isEmpty_default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty);
+// EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
+var cloneDeep = __webpack_require__(8055);
+var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
 // EXTERNAL MODULE: ./node_modules/lodash/set.js
 var set = __webpack_require__(3560);
 var set_default = /*#__PURE__*/__webpack_require__.n(set);
@@ -5903,36 +5896,6 @@ function FnValidator_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConst
 // EXTERNAL MODULE: ./node_modules/lodash/extend.js
 var lodash_extend = __webpack_require__(3346);
 var extend_default = /*#__PURE__*/__webpack_require__.n(lodash_extend);
-;// ./src/base/Pagination.ts
-function Pagination_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Pagination_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Pagination_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Pagination_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
-var Pagination=/*#__PURE__*/function(_BaseObject){function Pagination(){var _this;_classCallCheck(this,Pagination);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Pagination_callSuper(this,Pagination,[].concat(args));_defineProperty(_this,"totalCount",0);_defineProperty(_this,"pageCount",0);_defineProperty(_this,"perPage",20);_defineProperty(_this,"page",1);return _this;}_inherits(Pagination,_BaseObject);return _createClass(Pagination,[{key:"currentPage",get:function get(){return this.page;},set:function set(value){// page不允许超出范围
-if(value>this.pageCount){value=this.pageCount;}if(value<=0){value=1;}this.emit(Pagination.EVENT_SETPAGE,value,this.page,this);this.page=value;}},{key:"hasPrev",value:function hasPrev(){return this.currentPage>1;}},{key:"hasNext",value:function hasNext(){return this.currentPage<this.pageCount;}}]);}(BaseObject);_defineProperty(Pagination,"EVENT_SETPAGE",'page_setpage');
-;// ./src/base/DataProvider.ts
-function DataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
-var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model);_this.modelClass=get_default()(config,'modelClass',Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
-},{key:"toggleSort",value:function toggleSort(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var singleSort=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}var process=function process(attr){if(_this4._sort[attr]){if(_this4.isSortAsc(attr)){_this4._sort[attr]=DataProvider.SORT_DESC;}else{_this4._sort[attr]=DataProvider.SORT_ASC;}}else{_this4._sort[attr]=DataProvider.SORT_ASC;}};if(singleSort){var attribute=attributes[0];if(!attribute){return this.sort;}Object.keys(this._sort).forEach(function(key){if(key!==attribute){delete _this4._sort[key];}});process(attribute);}else{Object.keys(attributes).forEach(function(index){var key=attributes[index];process(key);});}return this.sort;}// 如果不传参则获取当前的url, params的传参会优先
-},{key:"getParams",value:function getParams(){var _this5=this;var args=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params={};Object.keys(this.searchModel).forEach(function(key){params[key]=_this5.searchModel[key];});params['page']=this.pager.currentPage;params['per-page']=this.pager.perPage;params['sort']=this.sort;Object.keys(args).forEach(function(key){params[key]=args[key];});return params;}},{key:"load",value:function load(data){var _this6=this;var append=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var primaryKey=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'';var params=get_default()(data,'params',{});if(!this.isLoad){var searchModel=new this['searchModelClass']();searchModel.load(params);this.searchModel=searchModel;}else{this.searchModel=this.searchModel.load(params);}var meta=get_default()(data,'meta',{});this.pager=this.pager.load(meta);this.sort=get_default()(data,'sort','');var models=this.models;if(isEmpty_default()(models)||!append){models=[];}var items=get_default()(data,'items',[]);var modelDict={};// 如果设置了primaryKey，则按primaryKey进行去重
-if(!isEmpty_default()(primaryKey)){Object.keys(models).forEach(function(key){var tempModel=models[key];if(tempModel.hasOwnProperty(primaryKey)){modelDict[tempModel[primaryKey]]=key;}});}Object.keys(items).forEach(function(key){var item=items[key];var model=new _this6.modelClass();model.load(item);if(!isEmpty_default()(primaryKey)&&model.hasOwnProperty(primaryKey)){if(modelDict.hasOwnProperty(model[primaryKey])){var tempKey=modelDict[model[primaryKey]];models[tempKey]=model;}else{modelDict[model[primaryKey]]=models.length;models.push(model);}}else{models.push(model);}});this.models=models;this.isLoad=true;this.init();return this;}},{key:"remove",value:function remove(){var _this7=this;var index=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(typeof index==='string'){index=parseInt(index,0);}if(typeof index==='number'){return this.models.splice(index,1);}var value=null;Object.keys(this.models).forEach(function(key){if(index===_this7.models[key]){value=_this7.remove(key);}});return value;}},{key:"localSort",value:function localSort(){var sortBy=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var attribute=Object.keys(this._sort)[0];if(!attribute){return;}this.sortModels(attribute,this.isSortAsc(attribute),sortBy);}},{key:"sortModels",value:function sortModels(attribute){var asc=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var sortBy=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;if(sortBy===null){sortBy=function sortBy(value1,value2,sortType){if(value1===value2){return 0;}if(sortType){return value1>value2?1:-1;}return value1<value2?1:-1;};}var compare=function compare(a,b){return sortBy(a[attribute],b[attribute],asc);};this.models.sort(compare);}}],[{key:"getInstance",value:function getInstance(data){var searchModelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Model;var modelClass=arguments.length>2&&arguments[2]!==undefined?arguments[2]:Model;var paginationClass=arguments.length>3&&arguments[3]!==undefined?arguments[3]:Pagination;var config={data:data,searchModelClass:searchModelClass,modelClass:modelClass,paginationClass:paginationClass};return new DataProvider(config);}}]);}(BaseObject);_defineProperty(DataProvider,"SORT_ASC",4);_defineProperty(DataProvider,"SORT_DESC",3);
-;// ./src/base/WebDataProvider.ts
-function WebDataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,WebDataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function WebDataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(WebDataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 数据提供器
-var WebDataProvider=/*#__PURE__*/function(_DataProvider){// 不允许请求同时进行，在ajax搜索时很有用
-function WebDataProvider(config){var _this2;_classCallCheck(this,WebDataProvider);_this2=WebDataProvider_callSuper(this,WebDataProvider,[config]);// 是否为加载中...
-_defineProperty(_this2,"isLoading",false);// 正常需要加载配置数据，此标签来判断是否应该加载配置数据
-_defineProperty(_this2,"isLoad",false);// 配置的标志位，指示后端是否传递配置过来
-_defineProperty(_this2,"configName",'withConfig');_defineProperty(_this2,"append",false);// 默认为id
-_defineProperty(_this2,"primaryKey",'id');config=merge_default()({},App.webDpConfig,config);_this2.httpRequest=get_default()(config,'httpRequest',null);_this2.httpOptions=get_default()(config,'httpOptions',null);_this2.primaryKey=get_default()(config,'primaryKey','id');_this2.configName=get_default()(config,'configName','withConfig');_this2.callback=get_default()(config,'callback',null);_this2.timeWait=get_default()(config,'timeWait',600);if(!_this2.httpRequest){throw new Error('httpRequest必须配置');}return _this2;}_inherits(WebDataProvider,_DataProvider);return _createClass(WebDataProvider,[{key:"refresh",value:function refresh(){var refreshType=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'refresh';if(refreshType==='header'){this.append=false;// 头部下拉刷新会将page置为1
-this.changePage(1,true);}else if(refreshType==='footer'){this.append=true;this.changePage(this.pager.currentPage+1,true);}else{this.append=false;this.changePage(this.pager.currentPage,true);}}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
-},{key:"setParams",value:function setParams(params){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;// 设置参数
-this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
-this.sort=sort;var page=changePage?1:this.pager.currentPage;this.changePage(page,reload);}// 用于网页的页码点击中
-},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){this.loadData();}}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
-},{key:"loadData",value:function loadData(){var _this=this;var getData=function getData(){if(!_this.beforeGetData()){return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);},function(error){_this.afterGetData(false,error);});};if(this.timeWait){if(this._timer){clearTimeout(this._timer);}this._timer=setTimeout(getData,this.timeWait);}else{getData();}}// 获取数据之前
-},{key:"beforeGetData",value:function beforeGetData(){this.isLoading=true;var reqData=get_default()(this.httpOptions,'params',{});reqData=this.getParams(reqData);reqData[this.configName]=!this.isLoad;this.httpOptions['params']=reqData;this.emit(WebDataProvider.EVENT_BEFOREGETDATA,this,{dp:this});return true;}// 获取数据
-},{key:"processData",value:function processData(data){this.load(data,this.append,this.primaryKey);}// 获取数据之后
-},{key:"afterGetData",value:function afterGetData(success,data){if(success){this.isLoad=true;}this.isLoading=false;this.append=false;this.httpOptions['params']={};this.emit(WebDataProvider.EVENT_AFTERGETDATA,this,{dp:this,success:success,data:data});if(this.callback){this.callback(data,success,this);}if(this._timer){clearTimeout(this._timer);}}}]);}(DataProvider);_defineProperty(WebDataProvider,"EVENT_BEFOREGETDATA",'DP_BEFORE_GETDATA');_defineProperty(WebDataProvider,"EVENT_AFTERGETDATA",'DP_AFTER_GETDATA');
-// EXTERNAL MODULE: ./node_modules/lodash/cloneDeep.js
-var cloneDeep = __webpack_require__(8055);
-var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
 ;// ./src/platforms/vue/components/group/tab.ts
 /* harmony default export */ const tab = ({name:'tab',props:{tag:{type:String,"default":'a'},dataKey:{type:[String,Number,Boolean],"default":null},attr:{type:String},canClose:{type:Boolean,"default":false},disabled:{type:Boolean,"default":false}},data:function data(){return{status:false,groupKey:this.dataKey,tagName:this.tag};},methods:{open:function open(){this.status=true;},close:function close(){this.status=false;},isOpen:function isOpen(){return this.status===true;},click:function click(){var isOpen=this.isOpen();var type='open';if(this.canClose){type=isOpen?'close':'open';}this[type]();this.$emit('toggle',{type:type,vm:this});}},template:"\n    <component :is=\"tagName\" :class=\"{'active': isOpen()}\" :disabled=\"disabled\" @click=\"click\">\n        <slot></slot>\n   </component>"});
 ;// ./src/platforms/vue/components/group/checkbox.ts
@@ -6058,9 +6021,6 @@ formValue:function formValue(){return this.model[this.attr];}},watch:{formValue:
 init:function init(){this.value=this.model[this.attr];},// 上层履盖
 inputChange:function inputChange(e){this.value=e.target.value;if(this.value){this.request(_defineProperty({},this.paramName,this.value));}this.inputListeners.input(e);},focusChange:function focusChange(e){this.inputListeners.focus(e);},blurChange:function blurChange(e){this.inputListeners.blur(e);},// 选择model
 choose:function choose(model,index,e){var _this4=this;if(typeof model[this.itemName]!=='undefined'){this.model[this.attr]=this.value=model[this.itemName];setTimeout(function(){_this4.request(_defineProperty({},_this4.paramName,_this4.value));},this.delay);}this.$emit('choose',model,index,e);}},template:"<div style=\"position: relative;\">\n    <span>\n        <input :name=\"attr\" :value=\"value\" :placeholder=\"model.getAttributeHint(attr)\" v-on=\"listeners\" autocomplete=\"off\" v-bind=\"$attrs\">\n    </span>\n    <ul v-show=\"showList\" style=\"position: absolute;\" :style=\"{opacity: isHide ? 0 : 1}\">\n        <li v-for=\"(model, index) in models\" @click=\"choose(model, index, $event)\">\n            <slot name=\"tab\" :model=\"model\" :index=\"index\">{{model[itemName]}}</slot>\n        </li>\n    </ul>\n</div>",depends:['form-item']}));
-// EXTERNAL MODULE: ./node_modules/lodash/isEqual.js
-var isEqual = __webpack_require__(2404);
-var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
 ;// ./src/platforms/vue/components/formItem/select2.ts
 var select2_input=cloneDeep_default()(searchinput);/* harmony default export */ const select2 = (merge_default()(select2_input,{name:'select2',props:{keyName:{type:String,"default":'id'},multiple:{type:Boolean,"default":false}},data:function data(){return{showError:this.model.getFirstError(this.attr),isFocus:false,isHide:false,// input的值
 value:'',models:this.dataProvider.models||[],filter:this.dataFilter,selected:{}};},watch:{selected:function selected(value){var keys=Object.keys(value);if(this.multiple){// 为了防止死循环，只有当值不同的时候才进行赋值
@@ -6087,7 +6047,7 @@ var step=cloneDeep_default()(tab);/* harmony default export */ const step_step =
 ;// ./src/platforms/vue/index.ts
 
 ;// ./src/platforms/vue/Theme.ts
-function Theme_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Theme_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Theme_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Theme_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var Theme=/*#__PURE__*/function(_BaseObject){function Theme(){var _this;_classCallCheck(this,Theme);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Theme_callSuper(this,Theme,[].concat(args));_defineProperty(_this,"key",'default');_defineProperty(_this,"components",{});_defineProperty(_this,"_registerComps",{});return _this;}_inherits(Theme,_BaseObject);return _createClass(Theme,[{key:"getComponentByName",value:function getComponentByName(name){return get_default()(this.components,name,null);}},{key:"addComponent",value:function addComponent(comp){var cloneFrom=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;var parentComp=null;if(cloneFrom){parentComp=this.getComponentByName(cloneFrom);}if(parentComp){comp=merge_default()(cloneDeep_default()(parentComp),comp);}if(!comp.hasOwnProperty('name')){throw new Error('组件必须有name字段');}if(this.components.hasOwnProperty(comp['name'])){throw new Error('该组件名已经被占用，请重新设置组件名');}this.components[comp['name']]=comp;return comp;}// 注册组件, 循环遍历整棵树
+function Theme_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Theme_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Theme_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Theme_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var Theme=/*#__PURE__*/function(_BaseObject){function Theme(){var _this;_classCallCheck(this,Theme);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Theme_callSuper(this,Theme,[].concat(args));_defineProperty(_this,"key",'default');_defineProperty(_this,"components",{});_defineProperty(_this,"_registerComps",{});return _this;}_inherits(Theme,_BaseObject);return _createClass(Theme,[{key:"getComponentByName",value:function getComponentByName(name){return get_default()(this.components,name,null);}},{key:"addComponent",value:function addComponent(comp){var cloneFrom=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;var parentComp=null;if(cloneFrom){parentComp=this.getComponentByName(cloneFrom);}if(parentComp){comp=merge_default()(cloneDeep_default()(parentComp),comp);}if(!comp.hasOwnProperty('name')){throw new Error('组件必须有name字段');}if(this.components.hasOwnProperty(comp['name'])){throw new Error('该组件名已经被占用，请重新设置组件名');}this.components[comp['name']]=comp;return comp;}},{key:"registerAll",value:function registerAll(vue){return this.register(Object.keys(this.components),vue);}// 注册组件, 循环遍历整棵树
 },{key:"register",value:function register(name,vue){var _this2=this;var objs=[];if(typeof name==='string'){var comp=this.getComponentByName(name);if(comp){objs.push(comp);}}else{Object.keys(name).forEach(function(key){var comp=_this2.getComponentByName(name[key]);if(comp){objs.push(comp);}});}Object.keys(objs).forEach(function(key){var obj=objs[key];// 如果有depend先register depend组件
 if(obj.hasOwnProperty('depends')&&!_this2._registerComps.hasOwnProperty(obj.name)){_this2.register(obj['depends'],vue);}vue['component'](_this2.getName(obj.name),obj);_this2._registerComps[obj.name]=true;});}},{key:"getName",value:function getName(name){var suffix=this.key==='default'?'':this.key;return name+suffix;}}],[{key:"getInstance",value:// 全局的一些配置
 function getInstance(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var key=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'default';var theme=null;if(Theme.themes.hasOwnProperty(key)){theme=Theme.themes[key];}else{theme=new Theme();theme.key=key;Theme.themes[key]=theme;}Object.keys(vue_namespaceObject).forEach(function(index){var obj=vue_namespaceObject[index];if(obj.hasOwnProperty('name')){theme.components[obj['name']]=obj;}});theme.components=merge_default()(theme.components,config);return theme;}}]);}(BaseObject);_defineProperty(Theme,"themes",{});
@@ -6109,6 +6069,7 @@ function bind(fn, thisArg) {
 
 const {toString: utils_toString} = Object.prototype;
 const {getPrototypeOf} = Object;
+const {iterator, toStringTag} = Symbol;
 
 const kindOf = (cache => thing => {
     const str = utils_toString.call(thing);
@@ -6235,7 +6196,28 @@ const isPlainObject = (val) => {
   }
 
   const prototype = getPrototypeOf(val);
-  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in val) && !(Symbol.iterator in val);
+  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(toStringTag in val) && !(iterator in val);
+}
+
+/**
+ * Determine if a value is an empty object (safely handles Buffers)
+ *
+ * @param {*} val The value to test
+ *
+ * @returns {boolean} True if value is an empty object, otherwise false
+ */
+const isEmptyObject = (val) => {
+  // Early return for non-objects or Buffers to prevent RangeError
+  if (!utils_isObject(val) || isBuffer(val)) {
+    return false;
+  }
+  
+  try {
+    return Object.keys(val).length === 0 && Object.getPrototypeOf(val) === Object.prototype;
+  } catch (e) {
+    // Fallback for any other objects that might cause RangeError with Object.keys()
+    return false;
+  }
 }
 
 /**
@@ -6360,6 +6342,11 @@ function forEach(obj, fn, {allOwnKeys = false} = {}) {
       fn.call(null, obj[i], i, obj);
     }
   } else {
+    // Buffer check
+    if (isBuffer(obj)) {
+      return;
+    }
+
     // Iterate over object keys
     const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
     const len = keys.length;
@@ -6373,6 +6360,10 @@ function forEach(obj, fn, {allOwnKeys = false} = {}) {
 }
 
 function findKey(obj, key) {
+  if (isBuffer(obj)){
+    return null;
+  }
+
   key = key.toLowerCase();
   const keys = Object.keys(obj);
   let i = keys.length;
@@ -6586,13 +6577,13 @@ const isTypedArray = (TypedArray => {
  * @returns {void}
  */
 const forEachEntry = (obj, fn) => {
-  const generator = obj && obj[Symbol.iterator];
+  const generator = obj && obj[iterator];
 
-  const iterator = generator.call(obj);
+  const _iterator = generator.call(obj);
 
   let result;
 
-  while ((result = iterator.next()) && !result.done) {
+  while ((result = _iterator.next()) && !result.done) {
     const pair = result.value;
     fn.call(obj, pair[0], pair[1]);
   }
@@ -6713,7 +6704,7 @@ const toFiniteNumber = (value, defaultValue) => {
  * @returns {boolean}
  */
 function isSpecCompliantForm(thing) {
-  return !!(thing && isFunction(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
+  return !!(thing && isFunction(thing.append) && thing[toStringTag] === 'FormData' && thing[iterator]);
 }
 
 const toJSONObject = (obj) => {
@@ -6724,6 +6715,11 @@ const toJSONObject = (obj) => {
     if (utils_isObject(source)) {
       if (stack.indexOf(source) >= 0) {
         return;
+      }
+
+      //Buffer check
+      if (isBuffer(source)) {
+        return source;
       }
 
       if(!('toJSON' in source)) {
@@ -6782,6 +6778,10 @@ const asap = typeof queueMicrotask !== 'undefined' ?
 
 // *********************
 
+
+const isIterable = (thing) => thing != null && isFunction(thing[iterator]);
+
+
 /* harmony default export */ const utils = ({
   isArray: utils_isArray,
   isArrayBuffer,
@@ -6793,6 +6793,7 @@ const asap = typeof queueMicrotask !== 'undefined' ?
   isBoolean,
   isObject: utils_isObject,
   isPlainObject,
+  isEmptyObject,
   isReadableStream,
   isRequest,
   isResponse,
@@ -6837,7 +6838,8 @@ const asap = typeof queueMicrotask !== 'undefined' ?
   isAsyncFn,
   isThenable,
   setImmediate: _setImmediate,
-  asap
+  asap,
+  isIterable
 });
 
 ;// ./node_modules/axios/lib/core/AxiosError.js
@@ -7070,6 +7072,10 @@ function toFormData(obj, formData, options) {
 
     if (utils.isDate(value)) {
       return value.toISOString();
+    }
+
+    if (utils.isBoolean(value)) {
+      return value.toString();
     }
 
     if (!useBlob && utils.isBlob(value)) {
@@ -7478,7 +7484,7 @@ const origin = hasBrowserEnv && window.location.href || 'http://localhost';
 
 
 function toURLEncodedForm(data, options) {
-  return helpers_toFormData(data, new platform.classes.URLSearchParams(), Object.assign({
+  return helpers_toFormData(data, new platform.classes.URLSearchParams(), {
     visitor: function(value, key, path, helpers) {
       if (platform.isNode && utils.isBuffer(value)) {
         this.append(key, value.toString('base64'));
@@ -7486,8 +7492,9 @@ function toURLEncodedForm(data, options) {
       }
 
       return helpers.defaultVisitor.apply(this, arguments);
-    }
-  }, options));
+    },
+    ...options
+  });
 }
 
 ;// ./node_modules/axios/lib/helpers/formDataToJSON.js
@@ -7910,10 +7917,18 @@ class AxiosHeaders {
       setHeaders(header, valueOrRewrite)
     } else if(utils.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
       setHeaders(parseHeaders(header), valueOrRewrite);
-    } else if (utils.isHeaders(header)) {
-      for (const [key, value] of header.entries()) {
-        setHeader(value, key, rewrite);
+    } else if (utils.isObject(header) && utils.isIterable(header)) {
+      let obj = {}, dest, key;
+      for (const entry of header) {
+        if (!utils.isArray(entry)) {
+          throw TypeError('Object iterator must return a key-value pair');
+        }
+
+        obj[key = entry[0]] = (dest = obj[key]) ?
+          (utils.isArray(dest) ? [...dest, entry[1]] : [dest, entry[1]]) : entry[1];
       }
+
+      setHeaders(obj, valueOrRewrite)
     } else {
       header != null && setHeader(valueOrRewrite, header, rewrite);
     }
@@ -8053,6 +8068,10 @@ class AxiosHeaders {
 
   toString() {
     return Object.entries(this.toJSON()).map(([header, value]) => header + ': ' + value).join('\n');
+  }
+
+  getSetCookie() {
+    return this.get("set-cookie") || [];
   }
 
   get [Symbol.toStringTag]() {
@@ -8289,7 +8308,7 @@ function throttle(fn, freq) {
       clearTimeout(timer);
       timer = null;
     }
-    fn.apply(null, args);
+    fn(...args);
   }
 
   const throttled = (...args) => {
@@ -8473,7 +8492,7 @@ function combineURLs(baseURL, relativeURL) {
  */
 function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
   let isRelativeUrl = !isAbsoluteURL(requestedURL);
-  if (baseURL && isRelativeUrl || allowAbsoluteUrls == false) {
+  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
@@ -8578,7 +8597,7 @@ function mergeConfig(config1, config2) {
     headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
   };
 
-  utils.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
+  utils.forEach(Object.keys({...config1, ...config2}), function computeConfigValue(prop) {
     const merge = mergeMap[prop] || mergeDeepProperties;
     const configValue = merge(config1[prop], config2[prop], prop);
     (utils.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
@@ -8604,7 +8623,7 @@ function mergeConfig(config1, config2) {
 
   newConfig.headers = headers = core_AxiosHeaders.from(headers);
 
-  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config.params, config.paramsSerializer);
+  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
 
   // HTTP basic authentication
   if (auth) {
@@ -9154,7 +9173,7 @@ const resolveBodyLength = async (headers, body) => {
       credentials: isCredentialsSupported ? withCredentials : undefined
     });
 
-    let response = await fetch(request);
+    let response = await fetch(request, fetchOptions);
 
     const isStreamResponse = supportsResponseStream && (responseType === 'stream' || responseType === 'response');
 
@@ -9200,7 +9219,7 @@ const resolveBodyLength = async (headers, body) => {
   } catch (err) {
     unsubscribe && unsubscribe();
 
-    if (err && err.name === 'TypeError' && /fetch/i.test(err.message)) {
+    if (err && err.name === 'TypeError' && /Load failed|fetch/i.test(err.message)) {
       throw Object.assign(
         new core_AxiosError('Network Error', core_AxiosError.ERR_NETWORK, config, request),
         {
@@ -9380,7 +9399,7 @@ function dispatchRequest(config) {
 }
 
 ;// ./node_modules/axios/lib/env/data.js
-const VERSION = "1.8.1";
+const VERSION = "1.11.0";
 ;// ./node_modules/axios/lib/helpers/validator.js
 
 
@@ -9505,7 +9524,7 @@ const Axios_validators = validator.validators;
  */
 class Axios {
   constructor(instanceConfig) {
-    this.defaults = instanceConfig;
+    this.defaults = instanceConfig || {};
     this.interceptors = {
       request: new core_InterceptorManager(),
       response: new core_InterceptorManager()
@@ -9638,8 +9657,8 @@ class Axios {
 
     if (!synchronousRequestInterceptors) {
       const chain = [dispatchRequest.bind(this), undefined];
-      chain.unshift.apply(chain, requestInterceptorChain);
-      chain.push.apply(chain, responseInterceptorChain);
+      chain.unshift(...requestInterceptorChain);
+      chain.push(...responseInterceptorChain);
       len = chain.length;
 
       promise = Promise.resolve(config);
@@ -10075,7 +10094,7 @@ axios.default = axios;
 
 ;// ./src/App.ts
 function App_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,App_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function App_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(App_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var App=/*#__PURE__*/function(_BaseObject){function App(){_classCallCheck(this,App);return App_callSuper(this,App,arguments);}_inherits(App,_BaseObject);return _createClass(App,null,[{key:"config",value:// 全局的一些配置
-function config(){var _config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};App.themeConfig=get_default()(_config,'themeConfig',{});App.request=get_default()(_config,'request',null);if(App.request===null){App.request=function(httpOptions,success,fail){lib_axios.request(httpOptions).then(function(response){success(response.data);})["catch"](function(error){fail(error);});};}App.webDpConfig=get_default()(_config,'webDpConfig',{});if(App.webDpConfig.httpRequest===undefined){App.webDpConfig.httpRequest=App.request;}App.validators=get_default()(_config,'validators',{});}},{key:"getModel",value:function getModel(){var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var modelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;if(modelClass===null){modelClass=Model;}var model=new modelClass();return model.load(data);}},{key:"getWebDp",value:function getWebDp(config){config=merge_default()({},App.webDpConfig,config);var webDp=new WebDataProvider(config);return webDp;}/**
+function config(){var _config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};App.themeConfig=get_default()(_config,'themeConfig',{});App.request=get_default()(_config,'request',null);if(App.request===null){App.request=function(httpOptions,success,fail){lib_axios.request(httpOptions).then(function(response){success(response.data);})["catch"](function(error){fail(error);});};}App.webDpConfig=get_default()(_config,'webDpConfig',{});if(App.webDpConfig.httpRequest===undefined){App.webDpConfig.httpRequest=App.request;}App.validators=get_default()(_config,'validators',{});}},{key:"getModel",value:function getModel(){var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var modelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;if(modelClass===null){modelClass=Model;}var model=new modelClass();return model.load(data);}},{key:"getWebDp",value:function getWebDp(config){config=merge_default()({},App.webDpConfig,config);var webDp=new WebDataProvider(config);return webDp;}},{key:"getHttpModel",value:function getHttpModel(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};if(!config['httpRequest']){config['httpRequest']=App.request;}return HttpModel.find(config,params);}/**
      * 注册组件（仅vue组件可注册）
      * @param name 
      * @param vue 
@@ -10090,8 +10109,10 @@ validator=new FnValidator(attribute,type,options);}return validator;}}]);}();_de
 function Model_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Model_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Model_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Model_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}function Model_superPropGet(t,o,e,r){var p=_get(_getPrototypeOf(1&r?t.prototype:t),o,e);return 2&r&&"function"==typeof p?function(t){return p.apply(e,t);}:p;}var Model=/*#__PURE__*/function(_BaseObject){function Model(){var _this;_classCallCheck(this,Model);_this=Model_callSuper(this,Model);// 当前的错误
 _defineProperty(_this,"_errors",{});// 当前的场景
 _defineProperty(_this,"_scenario",Model.SCENARIO_DEFAULT);// 当前的校验器
-_defineProperty(_this,"_validators",[]);_this._errors={};_this._scenario='';_this._validators=[];return _this;}_inherits(Model,_BaseObject);return _createClass(Model,[{key:"init",value:function init(){// 手动触发触发双绑
-this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttributeLabel.bind(this);this.getAttributeHint=this.getAttributeHint.bind(this);this.getValidatorData=this.getValidatorData.bind(this);Model_superPropGet(Model,"init",this,3)([]);}/* 规则, 规则的格式为
+_defineProperty(_this,"_validators",[]);// 标签的Map
+_defineProperty(_this,"_attrLabels",{});_defineProperty(_this,"_attrHints",{});_defineProperty(_this,"_attrRules",{});// 两个变量用于记录数据的变化情况
+_defineProperty(_this,"_old",{});_this._errors={};_this._scenario='';_this._validators=[];return _this;}_inherits(Model,_BaseObject);return _createClass(Model,[{key:"init",value:function init(){// 手动触发触发双绑
+this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttributeLabel.bind(this);this.getAttributeHint=this.getAttributeHint.bind(this);this.getValidatorData=this.getValidatorData.bind(this);Model_superPropGet(Model,"init",this,3)([]);}},{key:"isPrivateKey",value:function isPrivateKey(key){return key.charAt(0)==='_';}/* 规则, 规则的格式为
      *  {
      *      'attribute1' : {
      *        'type1' : {...},
@@ -10099,27 +10120,62 @@ this.isRequired=this.isRequired.bind(this);this.getAttributeLabel=this.getAttrib
      *       },
      *      'attribute2' : {...}
      *  }
-     */},{key:"rules",value:function rules(){return{};}// model的所有的字段的意义,需要上层覆盖
-},{key:"attributeLabels",value:function attributeLabels(){return{};}// model的所有的字段的hint,需要上层覆盖
-},{key:"attributeHints",value:function attributeHints(){return{};}// 只load数据
-},{key:"load",value:function load(data){var _this2=this;this.emit(Model.EVENT_BEFORELOAD,this);Object.keys(data).forEach(function(key){if(_typeof(data[key])==='object'&&data[key]!==null&&data[key].hasOwnProperty('value')){var rules=_this2.rules();var attrLabels=_this2.attributeLabels();var attrHints=_this2.attributeHints();var obj=data[key];if(obj.hasOwnProperty('label')){attrLabels[key]=obj.label;}if(obj.hasOwnProperty('hint')){attrHints[key]=obj.hint;}if(obj.hasOwnProperty('rules')){// 依次将rule规则存入到model中
-Object.keys(obj.rules).forEach(function(i){var rule=obj.rules[i];if(rule.hasOwnProperty('type')){set_default()(rules,[key,rule.type],rule.options||{});}});}_this2.emit(Model.EVENT_LOAD,_this2,key,obj.value);_this2[key]=obj.value;_this2.rules=function(){return rules;};_this2.attributeLabels=function(){return attrLabels;};_this2.attributeHints=function(){return attrHints;};}else{_this2.emit(Model.EVENT_LOAD,_this2,key,data[key]);_this2[key]=data[key];}});this.init();this.emit(Model.EVENT_AFTERLOAD,this);return this;}},{key:"beforeValidate",value:function beforeValidate(){this.emit(Model.EVENT_BEFORE_VALIDATE,this);return true;}},{key:"afterValidate",value:function afterValidate(){// TODO: emit events
+     */},{key:"rules",value:function rules(){return this._attrRules;}// model的所有的字段的意义,可以上层覆盖
+},{key:"attributeLabels",value:function attributeLabels(){return this._attrLabels;}// model的所有的字段的hint,可以上层覆盖
+},{key:"attributeHints",value:function attributeHints(){return this._attrHints;}// 只load数据
+},{key:"load",value:function load(data){var _this2=this;this.emit(Model.EVENT_BEFORELOAD,this);Object.keys(data).forEach(function(key){if(_typeof(data[key])==='object'&&data[key]!==null&&data[key].hasOwnProperty('value')){var rules=_this2.rules();var _attrLabels=_this2.attributeLabels();var _attrHints=_this2.attributeHints();var obj=data[key];if(obj.hasOwnProperty('label')){_attrLabels[key]=obj.label;}if(obj.hasOwnProperty('hint')){_attrHints[key]=obj.hint;}if(obj.hasOwnProperty('rules')){// 依次将rule规则存入到model中
+Object.keys(obj.rules).forEach(function(i){var rule=obj.rules[i];if(rule.hasOwnProperty('type')){set_default()(rules,[key,rule.type],rule.options||{});}});}_this2.emit(Model.EVENT_LOAD,_this2,key,obj.value);_this2[key]=obj.value;_this2._old[key]=cloneDeep_default()(obj.value);_this2._attrRules=rules;_this2._attrLabels=_attrLabels;_this2._attrHints=_attrHints;}else{_this2.emit(Model.EVENT_LOAD,_this2,key,data[key]);_this2[key]=data[key];_this2._old[key]=cloneDeep_default()(data[key]);}});this.init();this.emit(Model.EVENT_AFTERLOAD,this);return this;}},{key:"beforeValidate",value:function beforeValidate(){this.emit(Model.EVENT_BEFORE_VALIDATE,this);return true;}},{key:"afterValidate",value:function afterValidate(){// TODO: emit events
 this.emit(Model.EVENT_AFTER_VALIDATE,this);return;}},{key:"scenario",get:function get(){if(!this._scenario){this._scenario=Model.SCENARIO_DEFAULT;}return this._scenario;},set:function set(value){this._scenario=value;}/* 返回所有的scenarios,格式
      * {
      *    "scenarios1" : {'field1','field2'},
      *    "scenarios2" => {},
      * }
-     */},{key:"scenarios",value:function scenarios(){var scenarios={};scenarios[Model.SCENARIO_DEFAULT]=[];// 将所有的字段填充到DEFAULT中
-Object.keys(this).forEach(function(key){scenarios[Model.SCENARIO_DEFAULT].push(key);});return scenarios;}},{key:"getValidators",value:function getValidators(){if(isEmpty_default()(this._validators)){this._validators=this.createValidators();}return this._validators;}},{key:"createValidators",value:function createValidators(){var _this3=this;this._validators=[];var rules=this.rules();Object.keys(rules).forEach(function(attribute){Object.keys(rules[attribute]).forEach(function(type){var validator=_this3.createValidator(attribute,type,rules[attribute][type]);if(validator){_this3._validators.push(validator);}});});return this._validators;}},{key:"createValidator",value:function createValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};if(typeof ruleType==='string'&&this.hasOwnProperty(ruleType)&&typeof this[ruleType]==='function'){ruleType=this[ruleType];}return ValidatorFactory.getInstance(attribute,ruleType,options);}// validate方法，判断model的数据是否合法,如果返回false代表不合法
-},{key:"validate",value:function validate(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var clearErrors=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}if(!this.beforeValidate()){return false;}var scenarios=this.scenarios();var scenario=this.scenario;if(!scenarios.hasOwnProperty(scenario)){return false;}// 调用validator去验证
-if(isEmpty_default()(attributes)){attributes=scenarios[scenario];}attributes=intersection_default()(attributes,scenarios[scenario]);if(clearErrors){this.clearErrors(attributes);}var validators=this.getValidators();Object.keys(validators).forEach(function(index){var validator=validators[index];if(attributes.indexOf(validator.attribute)>-1){validator.validateAttribute(_this4);}});this.afterValidate();return!this.hasErrors();}// 返回相应的规则数据
+     */},{key:"scenarios",value:function scenarios(){var _this3=this;var scenarios={};var attributes=[];Object.keys(this).forEach(function(key){if(!_this3.isPrivateKey(key)){attributes.push(key);}});Object.keys(this.rules()).forEach(function(key){if(attributes.indexOf(key)===-1){attributes.push(key);}});scenarios[Model.SCENARIO_DEFAULT]=attributes;return scenarios;}},{key:"getValidators",value:function getValidators(){if(isEmpty_default()(this._validators)){this._validators=this.createValidators();}return this._validators;}},{key:"createValidators",value:function createValidators(){var _this4=this;this._validators=[];var rules=this.rules();Object.keys(rules).forEach(function(attribute){Object.keys(rules[attribute]).forEach(function(type){var validator=_this4.createValidator(attribute,type,rules[attribute][type]);if(validator){_this4._validators.push(validator);}});});return this._validators;}},{key:"createValidator",value:function createValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};if(typeof ruleType==='string'&&typeof this[ruleType]==='function'){ruleType=this[ruleType];}return ValidatorFactory.getInstance(attribute,ruleType,options);}// validate方法，判断model的数据是否合法,如果返回false代表不合法
+},{key:"validate",value:function validate(){var _this5=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var clearErrors=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}if(!this.beforeValidate()){return false;}var scenarios=this.scenarios();var scenario=this.scenario;if(!scenarios.hasOwnProperty(scenario)){return false;}// 调用validator去验证
+if(isEmpty_default()(attributes)){attributes=scenarios[scenario];}attributes=intersection_default()(attributes,scenarios[scenario]);if(clearErrors){this.clearErrors(attributes);}var validators=this.getValidators();Object.keys(validators).forEach(function(index){var validator=validators[index];if(attributes.indexOf(validator.attribute)>-1){validator.validateAttribute(_this5);}});this.afterValidate();return!this.hasErrors();}// 返回相应的规则数据
 },{key:"getValidatorData",value:function getValidatorData(attribute,type,key){var defaultVal=arguments.length>3&&arguments[3]!==undefined?arguments[3]:'';var rules=this.rules();return get_default()(rules,[attribute,type,key],defaultVal);}},{key:"addValidator",value:function addValidator(attribute,ruleType){var options=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};var validator=this.createValidator(attribute,ruleType,options);if(validator){this.getValidators().push(validator);}}// 判断是否为required
-},{key:"isRequired",value:function isRequired(attribute){var rules=this.rules();return get_default()(rules,[attribute,'required'],false);}// 判断当前attribute是否有错误
+},{key:"isRequired",value:function isRequired(attribute){var rules=this.rules();return get_default()(rules,[attribute,'required'],false);}// 获取属性值的列表
+},{key:"getValidator",value:function getValidator(attribute,type){var rules=this.rules();return get_default()(rules,[attribute,type],null);}// 获取属性值的
+},{key:"getAttributeDesc",value:function getAttributeDesc(attribute){var dict=this.getValidator(attribute,'dict');if(dict){var list=dict.list;var value=this[attribute];return list[value]||value;}return this[attribute];}// 判断当前attribute是否有错误
 },{key:"hasErrors",value:function hasErrors(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;// 如果没有传attribute
 if(!attribute){return!isEmpty_default()(this._errors);}return!isEmpty_default()(this._errors[attribute]);}// 获取所有的错误
 },{key:"getErrors",value:function getErrors(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;if(!attribute){return this._errors;}return get_default()(this._errors,attribute,[]);}},{key:"getFirstError",value:function getFirstError(){var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var error=this.getErrors(attribute);if(attribute){return get_default()(error,'0','');}for(var attr in error){return error[attr][0];}return'';}// 添加错误
-},{key:"addError",value:function addError(attribute){var error=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';if(!attribute){return;}if(isEmpty_default()(this._errors[attribute])){this._errors[attribute]=[];}this._errors[attribute].push(error);}},{key:"clearErrors",value:function clearErrors(){var _this5=this;var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';if(!attribute){this._errors={};}else{if(typeof attribute==='string'){attribute=[attribute];}Object.keys(attribute).forEach(function(index){var key=attribute[index];delete _this5._errors[key];});}}},{key:"getAttributeHint",value:function getAttributeHint(attribute){var hints=this.attributeHints();if(hints.hasOwnProperty(attribute)){return hints[attribute];}return'';}// 根据attribute获取label
-},{key:"getAttributeLabel",value:function getAttributeLabel(attribute){var attrLabels=this.attributeLabels();if(attrLabels.hasOwnProperty(attribute)){return attrLabels[attribute];}return attribute;}}]);}(BaseObject);_defineProperty(Model,"SCENARIO_DEFAULT",'default');_defineProperty(Model,"EVENT_BEFORELOAD",'MODEL_BEFORE_LOAD');_defineProperty(Model,"EVENT_LOAD",'MODEL_LOAD');_defineProperty(Model,"EVENT_AFTERLOAD",'MODEL_AFTER_LOAD');_defineProperty(Model,"EVENT_BEFORE_VALIDATE",'MODEL_BEFORE_VALIDATE');_defineProperty(Model,"EVENT_AFTER_VALIDATE",'MODEL_AFTER_VALIDATE');
+},{key:"addError",value:function addError(attribute){var error=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';if(!attribute){return;}if(isEmpty_default()(this._errors[attribute])){this._errors[attribute]=[];}this._errors[attribute].push(error);}},{key:"addRule",value:function addRule(attribute,rule){if(!attribute){return;}if(rule.hasOwnProperty('type')){set_default()(this._attrRules,[attribute,rule.type],rule.options||{});}}},{key:"clearErrors",value:function clearErrors(){var _this6=this;var attribute=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';if(!attribute){this._errors={};}else{if(typeof attribute==='string'){attribute=[attribute];}Object.keys(attribute).forEach(function(index){var key=attribute[index];delete _this6._errors[key];});}}},{key:"getAttributeHint",value:function getAttributeHint(attribute){var defaultValue=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';var hints=this.attributeHints();return hints[attribute]||defaultValue;}},{key:"setAttributeHint",value:function setAttributeHint(attribute,hint){this._attrHints[attribute]=hint;}},{key:"setAttributeLabel",value:function setAttributeLabel(attribute,label){this._attrLabels[attribute]=label;}// 根据attribute获取label
+},{key:"getAttributeLabel",value:function getAttributeLabel(attribute){var defaultValue=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'';var _attrLabels=this.attributeLabels();return _attrLabels[attribute]||defaultValue||attribute;}},{key:"clone",value:function clone(){var _this7=this;var data=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var model=new Model();model._attrRules=cloneDeep_default()(this._attrRules);model._attrLabels=cloneDeep_default()(this._attrLabels);model._attrHints=cloneDeep_default()(this._attrHints);model._errors=cloneDeep_default()(this._errors);if(!data){data={};Object.keys(this).forEach(function(key){if(!_this7.isPrivateKey(key)){data[key]=cloneDeep_default()(_this7[key]);}});}model.load(data);return model;}// reset
+},{key:"reset",value:function reset(){var _this8=this;Object.keys(this._old).forEach(function(key){_this8[key]=_this8._old[key];});}},{key:"sync",value:function sync(){var _this9=this;Object.keys(this._old).forEach(function(key){_this9._old[key]=cloneDeep_default()(_this9[key]);});}},{key:"getChangeData",value:function getChangeData(){var _this0=this;var dirtyObject={};Object.keys(this._old).forEach(function(key){if(!isEqual_default()(_this0[key],_this0._old[key])){dirtyObject[key]=_this0[key];}});return dirtyObject;}}]);}(BaseObject);_defineProperty(Model,"SCENARIO_DEFAULT",'default');_defineProperty(Model,"EVENT_BEFORELOAD",'MODEL_BEFORE_LOAD');_defineProperty(Model,"EVENT_LOAD",'MODEL_LOAD');_defineProperty(Model,"EVENT_AFTERLOAD",'MODEL_AFTER_LOAD');_defineProperty(Model,"EVENT_BEFORE_VALIDATE",'MODEL_BEFORE_VALIDATE');_defineProperty(Model,"EVENT_AFTER_VALIDATE",'MODEL_AFTER_VALIDATE');
+;// ./src/base/Pagination.ts
+function Pagination_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,Pagination_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function Pagination_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(Pagination_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
+var Pagination=/*#__PURE__*/function(_BaseObject){function Pagination(){var _this;_classCallCheck(this,Pagination);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=Pagination_callSuper(this,Pagination,[].concat(args));_defineProperty(_this,"totalCount",0);_defineProperty(_this,"pageCount",0);_defineProperty(_this,"perPage",20);_defineProperty(_this,"page",1);return _this;}_inherits(Pagination,_BaseObject);return _createClass(Pagination,[{key:"currentPage",get:function get(){return this.page;},set:function set(value){// page不允许超出范围
+if(value>this.pageCount){value=this.pageCount;}if(value<=0){value=1;}this.emit(Pagination.EVENT_SETPAGE,value,this.page,this);this.page=value;}},{key:"hasPrev",value:function hasPrev(){return this.currentPage>1;}},{key:"hasNext",value:function hasNext(){return this.currentPage<this.pageCount;}}]);}(BaseObject);_defineProperty(Pagination,"EVENT_SETPAGE",'page_setpage');
+;// ./src/base/DataProvider.ts
+function DataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,DataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function DataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(DataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 分页器类,主要是来解决分页的问题
+var DataProvider=/*#__PURE__*/function(_BaseObject){function DataProvider(config){var _this;_classCallCheck(this,DataProvider);_this=DataProvider_callSuper(this,DataProvider);_defineProperty(_this,"isLoad",false);_defineProperty(_this,"modelCallback",null);_defineProperty(_this,"_sort",{});_this.searchModelClass=get_default()(config,'searchModelClass',Model);_this.modelClass=get_default()(config,'modelClass',Model);_this.paginationClass=get_default()(config,'paginationClass',Pagination);_this.searchModel=get_default()(config,'searchModel');if(isEmpty_default()(_this.searchModel)){_this.searchModel=new _this['searchModelClass']();}_this.pager=get_default()(config,'pager');if(isEmpty_default()(_this.pager)){_this.pager=new _this['paginationClass']();}_this.sort=get_default()(config,'sort','');_this.modelCallback=get_default()(config,'modelCallback',null);var data=get_default()(config,'data',{});_this.load(data);return _this;}_inherits(DataProvider,_BaseObject);return _createClass(DataProvider,[{key:"sort",get:function get(){var _this2=this;var arr=[];if(isEmpty_default()(this._sort)){this._sort={};}Object.keys(this._sort).forEach(function(key){var value=_this2._sort[key];if(value===DataProvider.SORT_DESC){arr.push('-'+key);}else{arr.push(key);}});return arr.join(',');},set:function set(sort){var _this3=this;if(typeof sort==='string'){var arr=sort.split(',');this._sort={};Object.keys(arr).forEach(function(i){var str=arr[i];var value=DataProvider.SORT_ASC;if(str.slice(0,1)==='-'){str=str.slice(1,str.length);value=DataProvider.SORT_DESC;}if(str){_this3._sort[str]=value;}});}if(isEmpty_default()(sort)){sort={};}if(_typeof(sort)==='object'){this._sort=sort;}}},{key:"isSortAsc",value:function isSortAsc(attribute){if(this._sort[attribute]===DataProvider.SORT_ASC){return true;}return false;}},{key:"isSortDesc",value:function isSortDesc(attribute){if(this._sort[attribute]===DataProvider.SORT_DESC){return true;}return false;}// 切换排序方式
+},{key:"toggleSort",value:function toggleSort(){var _this4=this;var attributes=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[];var singleSort=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(typeof attributes==='string'){attributes=[attributes];}var process=function process(attr){if(_this4._sort[attr]){if(_this4.isSortAsc(attr)){_this4._sort[attr]=DataProvider.SORT_DESC;}else{_this4._sort[attr]=DataProvider.SORT_ASC;}}else{_this4._sort[attr]=DataProvider.SORT_ASC;}};if(singleSort){var attribute=attributes[0];if(!attribute){return this.sort;}Object.keys(this._sort).forEach(function(key){if(key!==attribute){delete _this4._sort[key];}});process(attribute);}else{Object.keys(attributes).forEach(function(index){var key=attributes[index];process(key);});}return this.sort;}// 如果不传参则获取当前的url, params的传参会优先
+},{key:"getParams",value:function getParams(){var _this5=this;var args=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params={};Object.keys(this.searchModel).forEach(function(key){params[key]=_this5.searchModel[key];});params['page']=this.pager.currentPage;params['per-page']=this.pager.perPage;params['sort']=this.sort;Object.keys(args).forEach(function(key){params[key]=args[key];});return params;}},{key:"load",value:function load(data){var _this6=this;var append=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var primaryKey=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'';var params=get_default()(data,'params',{});if(!this.isLoad){var searchModel=new this['searchModelClass']();searchModel.load(params);this.searchModel=searchModel;}else{this.searchModel=this.searchModel.load(params);}var meta=get_default()(data,'meta',{});this.pager=this.pager.load(meta);this.sort=get_default()(data,'sort','');var models=this.models;if(isEmpty_default()(models)||!append){models=[];}var items=get_default()(data,'items',[]);var modelDict={};// 如果设置了primaryKey，则按primaryKey进行去重
+if(!isEmpty_default()(primaryKey)){Object.keys(models).forEach(function(key){var tempModel=models[key];if(tempModel.hasOwnProperty(primaryKey)){modelDict[tempModel[primaryKey]]=key;}});}Object.keys(items).forEach(function(key){var item=items[key];var model=new _this6.modelClass();model.load(item);if(!isEmpty_default()(primaryKey)&&model.hasOwnProperty(primaryKey)){if(modelDict.hasOwnProperty(model[primaryKey])){var tempKey=modelDict[model[primaryKey]];models[tempKey]=model;}else{modelDict[model[primaryKey]]=models.length;models.push(model);}}else{models.push(model);}});this.models=models;this.isLoad=true;this.init();return this;}},{key:"remove",value:function remove(){var _this7=this;var index=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(typeof index==='string'){index=parseInt(index,0);}if(typeof index==='number'){return this.models.splice(index,1);}var value=null;Object.keys(this.models).forEach(function(key){if(index===_this7.models[key]){value=_this7.remove(key);}});return value;}},{key:"localSort",value:function localSort(){var sortBy=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var attribute=Object.keys(this._sort)[0];if(!attribute){return;}this.sortModels(attribute,this.isSortAsc(attribute),sortBy);}},{key:"sortModels",value:function sortModels(attribute){var asc=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var sortBy=arguments.length>2&&arguments[2]!==undefined?arguments[2]:null;if(sortBy===null){sortBy=function sortBy(value1,value2,sortType){if(value1===value2){return 0;}if(sortType){return value1>value2?1:-1;}return value1<value2?1:-1;};}var compare=function compare(a,b){return sortBy(a[attribute],b[attribute],asc);};this.models.sort(compare);}}],[{key:"getInstance",value:function getInstance(data){var searchModelClass=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Model;var modelClass=arguments.length>2&&arguments[2]!==undefined?arguments[2]:Model;var paginationClass=arguments.length>3&&arguments[3]!==undefined?arguments[3]:Pagination;var config={data:data,searchModelClass:searchModelClass,modelClass:modelClass,paginationClass:paginationClass};return new DataProvider(config);}}]);}(BaseObject);_defineProperty(DataProvider,"SORT_ASC",4);_defineProperty(DataProvider,"SORT_DESC",3);
+;// ./src/base/WebDataProvider.ts
+function WebDataProvider_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,WebDataProvider_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function WebDataProvider_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(WebDataProvider_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}// 数据提供器
+var WebDataProvider=/*#__PURE__*/function(_DataProvider){// 不允许请求同时进行，在ajax搜索时很有用
+function WebDataProvider(config){var _this2;_classCallCheck(this,WebDataProvider);_this2=WebDataProvider_callSuper(this,WebDataProvider,[config]);// 是否为加载中...
+_defineProperty(_this2,"isLoading",false);// 正常需要加载配置数据，此标签来判断是否应该加载配置数据
+_defineProperty(_this2,"isLoad",false);// 配置的标志位，指示后端是否传递配置过来
+_defineProperty(_this2,"configName",'withConfig');_defineProperty(_this2,"append",false);// 默认为id
+_defineProperty(_this2,"primaryKey",'id');config=merge_default()({},App.webDpConfig,config);_this2.httpRequest=get_default()(config,'httpRequest',null);_this2.httpOptions=get_default()(config,'httpOptions',null);_this2.primaryKey=get_default()(config,'primaryKey','id');_this2.configName=get_default()(config,'configName','withConfig');_this2.callback=get_default()(config,'callback',null);_this2.timeWait=get_default()(config,'timeWait',600);if(!_this2.httpRequest){throw new Error('httpRequest必须配置');}return _this2;}_inherits(WebDataProvider,_DataProvider);return _createClass(WebDataProvider,[{key:"refresh",value:function refresh(){var refreshType=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'refresh';if(refreshType==='header'){this.append=false;// 头部下拉刷新会将page置为1
+return this.changePage(1,true);}if(refreshType==='footer'){this.append=true;return this.changePage(this.pager.currentPage+1,true);}this.append=false;return this.changePage(this.pager.currentPage,true);}// 正常修改参数之后，会导致页码变更。为了防止出现不好的用户体验，正常会将page置为1
+},{key:"setParams",value:function setParams(params){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;// 设置参数
+this.searchModel.load(params);var page=changePage?1:this.pager.currentPage;return this.changePage(page,reload);}},{key:"setSort",value:function setSort(){var sort=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'';var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;var changePage=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;// 设置参数
+this.sort=sort;var page=changePage?1:this.pager.currentPage;return this.changePage(page,reload);}// 用于网页的页码点击中
+},{key:"changePage",value:function changePage(page){var reload=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;this.pager.currentPage=page;if(reload){return this.loadData();}return new Promise(function(resolve,reject){resolve({});});}},{key:"nextPage",value:function nextPage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage+1,reload);}},{key:"prePage",value:function prePage(){var reload=arguments.length>0&&arguments[0]!==undefined?arguments[0]:true;return this.changePage(this.pager.currentPage-1,reload);}// 发起请求
+},{key:"loadData",value:function loadData(){var _this3=this;var _this=this;var getData=function getData(resolve,reject){var ret=_this.beforeGetData();if(!ret){if(reject){reject(new Error('数据核验失败'));}return;}_this.httpRequest(_this.httpOptions,function(data){_this.processData(data);_this.afterGetData(true,data);if(resolve){resolve(data);}},function(error){_this.afterGetData(false,error);if(reject){reject(error);}});};return new Promise(function(resolve,reject){if(_this3.timeWait){if(_this3._timer){clearTimeout(_this3._timer);}_this3._timer=setTimeout(function(){getData(resolve,reject);},_this3.timeWait);}else{getData(resolve,reject);}});}// 获取数据之前
+},{key:"beforeGetData",value:function beforeGetData(){this.isLoading=true;var reqData=get_default()(this.httpOptions,'params',{});reqData=this.getParams(reqData);reqData[this.configName]=!this.isLoad;this.httpOptions['params']=reqData;this.emit(WebDataProvider.EVENT_BEFOREGETDATA,this,{dp:this});return true;}// 获取数据
+},{key:"processData",value:function processData(data){this.load(data,this.append,this.primaryKey);}// 获取数据之后
+},{key:"afterGetData",value:function afterGetData(success,data){if(success){this.isLoad=true;}this.isLoading=false;this.append=false;this.httpOptions['params']={};this.emit(WebDataProvider.EVENT_AFTERGETDATA,this,{dp:this,success:success,data:data});if(this.callback){this.callback(data,success,this);}if(this._timer){clearTimeout(this._timer);}}}]);}(DataProvider);_defineProperty(WebDataProvider,"EVENT_BEFOREGETDATA",'DP_BEFORE_GETDATA');_defineProperty(WebDataProvider,"EVENT_AFTERGETDATA",'DP_AFTER_GETDATA');
+;// ./src/base/HttpModel.ts
+function HttpModel_callSuper(t,o,e){return o=_getPrototypeOf(o),_possibleConstructorReturn(t,HttpModel_isNativeReflectConstruct()?Reflect.construct(o,e||[],_getPrototypeOf(t).constructor):o.apply(t,e));}function HttpModel_isNativeReflectConstruct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));}catch(t){}return(HttpModel_isNativeReflectConstruct=function _isNativeReflectConstruct(){return!!t;})();}var HttpModel=/*#__PURE__*/function(_Model){function HttpModel(){var _this;var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};_classCallCheck(this,HttpModel);_this=HttpModel_callSuper(this,HttpModel);_defineProperty(_this,"_primaryKey",'id');_defineProperty(_this,"_basePath",'');_defineProperty(_this,"_viewPath",'/view');_defineProperty(_this,"_createPath",'/create');_defineProperty(_this,"_updatePath",'/update');_defineProperty(_this,"_deletePath",'/delete');var keyMap={httpRequest:'_httpRequest',primaryKey:'_primaryKey',basePath:'_basePath',viewPath:'_viewPath',createPath:'_createPath',updatePath:'_updatePath',deletePath:'_deletePath'};Object.keys(keyMap).forEach(function(key){if(config.hasOwnProperty(key)){_this[keyMap[key]]=config[key];}});if(!_this._httpRequest){throw new Error('httpRequest必须配置');}if(!_this._basePath){throw new Error('basePath必须配置');}return _this;}_inherits(HttpModel,_Model);return _createClass(HttpModel,[{key:"createUrl",get:function get(){return this._basePath+this._createPath;}},{key:"viewUrl",get:function get(){return this._basePath+this._viewPath;}},{key:"updateUrl",get:function get(){return this._basePath+this._updatePath;}},{key:"deleteUrl",get:function get(){return this._basePath+this._deletePath;}// 找到相关的参数
+},{key:"getRequestData",value:function getRequestData(){var _this2=this;var excludePrimaryKey=arguments.length>0&&arguments[0]!==undefined?arguments[0]:false;var data={};Object.keys(this).forEach(function(key){if(_this2.isPrivateKey(key)){return;}data[key]=_this2[key];});if(excludePrimaryKey){delete data[this._primaryKey];}return data;}},{key:"getChangedRequestData",value:function getChangedRequestData(){var _this3=this;var changedData=this.getChangeData();var data={};Object.keys(changedData).forEach(function(key){if(_this3.isPrivateKey(key)){return;}data[key]=changedData[key];});return data;}},{key:"getModel",value:function getModel(){var _this4=this;var id=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};return new Promise(function(resolve,reject){_this4._httpRequest({url:_this4.viewUrl+'?'+_this4._primaryKey+'='+id,params:params,method:'GET'},function(data){_this4.load(data.data);resolve({model:_this4,data:data});},function(error){reject(error);});});}},{key:"process",value:function process(httpOptions,resolve,reject){var _this5=this;this._httpRequest(httpOptions,function(data){_this5.load(data.data);_this5.sync();resolve({model:_this5,data:data});},function(error){reject(error);});}// 更新model
+},{key:"updateModel",value:function updateModel(){var _this6=this;var dirtyObject=this.getChangedRequestData();return new Promise(function(resolve,reject){if(dirtyObject==null||Object.keys(dirtyObject).length===0){return resolve({model:_this6,data:{}});}if(dirtyObject.hasOwnProperty(_this6._primaryKey)){return reject(new Error('不允许更改primaryKey'));}_this6.process({url:_this6.updateUrl+'?'+_this6._primaryKey+'='+_this6[_this6._primaryKey],method:'POST',data:dirtyObject},resolve,reject);});}// 创建新model
+},{key:"createModel",value:function createModel(){var _this7=this;var data=this.getRequestData(true);return new Promise(function(resolve,reject){_this7.process({url:_this7.createUrl,method:'POST',data:data},resolve,reject);});}// 删除当前model
+},{key:"deleteModel",value:function deleteModel(){var _this8=this;return new Promise(function(resolve,reject){if(!_this8[_this8._primaryKey]){return reject(new Error('primaryKey不能为空'));}_this8.process({url:_this8.deleteUrl+'?'+_this8._primaryKey+'='+_this8[_this8._primaryKey],method:'POST',data:{}},resolve,reject);});}}],[{key:"find",value:function find(){var config=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};var model=new this(config);if(params.hasOwnProperty('withConfig')){params['withConfig']=!!params['withConfig'];}return model.getModel(params[model._primaryKey]||0,params);}}]);}(Model);
 ;// ./src/base/index.ts
 
 ;// ./src/widgets/index.ts
@@ -10128,13 +10184,4 @@ if(!attribute){return!isEmpty_default()(this._errors);}return!isEmpty_default()(
 
 ;// ./src/index.core.ts
 var widgets=widgets_namespaceObject;var helpers=helpers_namespaceObject;
-var __webpack_exports__BaseObject = __webpack_exports__.bI;
-var __webpack_exports__DataProvider = __webpack_exports__.M9;
-var __webpack_exports__Event = __webpack_exports__.Jh;
-var __webpack_exports__Model = __webpack_exports__.Kx;
-var __webpack_exports__Pagination = __webpack_exports__.dK;
-var __webpack_exports__ValidatorFactory = __webpack_exports__.BW;
-var __webpack_exports__WebDataProvider = __webpack_exports__.aC;
-var __webpack_exports__helpers = __webpack_exports__._$;
-var __webpack_exports__widgets = __webpack_exports__.Qs;
-export { __webpack_exports__BaseObject as BaseObject, __webpack_exports__DataProvider as DataProvider, __webpack_exports__Event as Event, __webpack_exports__Model as Model, __webpack_exports__Pagination as Pagination, __webpack_exports__ValidatorFactory as ValidatorFactory, __webpack_exports__WebDataProvider as WebDataProvider, __webpack_exports__helpers as helpers, __webpack_exports__widgets as widgets };
+export { BaseObject, DataProvider, Event, HttpModel, Model, Pagination, ValidatorFactory, WebDataProvider, helpers, widgets };
