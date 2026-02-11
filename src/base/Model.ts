@@ -42,6 +42,10 @@ export default class Model extends BaseObject {
         super.init();
     }
 
+    protected isPrivateKey(key: string) {
+        return key.charAt(0) === '_';
+    }
+
     /* 规则, 规则的格式为
      *  {
      *      'attribute1' : {
@@ -90,14 +94,14 @@ export default class Model extends BaseObject {
                 }
                 this.emit(Model.EVENT_LOAD, this, key, obj.value);
                 this[key] = obj.value;
-                this._old[key] = obj.value;
+                this._old[key] = lodash.cloneDeep(obj.value);
                 this._attrRules = rules;
                 this._attrLabels = _attrLabels;
                 this._attrHints = _attrHints;
             } else {
                 this.emit(Model.EVENT_LOAD, this, key, data[key]);
                 this[key] = data[key];
-                this._old[key] = data[key];
+                this._old[key] = lodash.cloneDeep(data[key]);
             }
         });
         this.init();
@@ -134,11 +138,18 @@ export default class Model extends BaseObject {
      */
     public scenarios() {
         const scenarios = {};
-        scenarios[Model.SCENARIO_DEFAULT] = [];
-        // 将所有的字段填充到DEFAULT中
+        const attributes = [];
         Object.keys(this).forEach(key => {
-            scenarios[Model.SCENARIO_DEFAULT].push(key);
+            if (!this.isPrivateKey(key)) {
+                attributes.push(key);
+            }
         });
+        Object.keys(this.rules()).forEach(key => {
+            if (attributes.indexOf(key) === -1) {
+                attributes.push(key);
+            }
+        });
+        scenarios[Model.SCENARIO_DEFAULT] = attributes;
         return scenarios;
     }
 
@@ -164,7 +175,7 @@ export default class Model extends BaseObject {
     }
 
     public createValidator(attribute: string, ruleType: any, options: object = {}) {
-        if (typeof ruleType === 'string' && this.hasOwnProperty(ruleType) && typeof this[ruleType] === 'function') {
+        if (typeof ruleType === 'string' && typeof this[ruleType] === 'function') {
             ruleType = this[ruleType];
         }
         return ValidatorFactory.getInstance(attribute, ruleType, options);
@@ -234,7 +245,8 @@ export default class Model extends BaseObject {
         const dict = this.getValidator(attribute,  'dict');
         if (dict) {
             const list = dict.list;
-            return list[attribute] || this[attribute];
+            const value = this[attribute];
+            return list[value] || value;
         }
         return this[attribute];
     }
@@ -327,7 +339,12 @@ export default class Model extends BaseObject {
         model._attrHints = lodash.cloneDeep(this._attrHints);
         model._errors = lodash.cloneDeep(this._errors);
         if (!data) {
-            data = JSON.parse(JSON.stringify(this));
+            data = {};
+            Object.keys(this).forEach(key => {
+                if (!this.isPrivateKey(key)) {
+                    data[key] = lodash.cloneDeep(this[key]);
+                }
+            });
         }
         model.load(data);
         return model;
@@ -342,21 +359,15 @@ export default class Model extends BaseObject {
 
     public sync() {
         Object.keys(this._old).forEach(key => {
-            this._old[key] = this[key];
+            this._old[key] = lodash.cloneDeep(this[key]);
         });
     }
 
     public getChangeData() {
         const dirtyObject = {};
         Object.keys(this._old).forEach(key => {
-            if (this[key] !== this._old[key]) {
+            if (!lodash.isEqual(this[key], this._old[key])) {
                 dirtyObject[key] = this[key];
-            } else {
-                // 如果引用类型，直接强行赋值
-                const valueType = typeof (this[key]);
-                if (['object'].indexOf(valueType) > -1) {
-                    dirtyObject[key] = this[key];
-                }
             }
         });
         return dirtyObject;
