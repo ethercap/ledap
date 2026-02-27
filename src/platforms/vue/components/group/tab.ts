@@ -6,7 +6,7 @@ export default {
             default: 'a',
         },
         dataKey: {
-            type: [String, Number],
+            type: [String, Number, Boolean],
             default: null,
         },
         attr: {

@@ -10,6 +10,7 @@ export {default as Pager} from './components/list/pager';
 export {default as DetailView} from './components/detailview';
 
 export {default as BaseInput} from './components/formItem/baseinput';
+export {default as BoolInput} from './components/formItem/boolinput';
 export {default as FormItem} from './components/formItem/formitem';
 export {default as DropDown} from './components/formItem/dropdown';
 export {default as GroupInput} from './components/formItem/groupinput';
