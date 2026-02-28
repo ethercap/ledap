@@ -331,9 +331,14 @@ export default class Model extends BaseObject {
         const _attrLabels = this.attributeLabels();
         return _attrLabels[attribute] || defaultValue || attribute;
     }
-    
+   
+    public getConfig()
+    {
+        return {};
+    }
+
     public clone(data = null) {
-        const model = new Model();
+        const model = new this.constructor(this.getConfig());
         model._attrRules = lodash.cloneDeep(this._attrRules);
         model._attrLabels = lodash.cloneDeep(this._attrLabels);
         model._attrHints = lodash.cloneDeep(this._attrHints);

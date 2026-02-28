@@ -12,18 +12,20 @@ export default class HttpModel extends Model {
     private _updatePath = '/update';
     private _deletePath = '/delete';
 
+    private _keyMap = {
+        httpRequest: '_httpRequest',
+        primaryKey: '_primaryKey',
+        basePath: '_basePath',
+        viewPath: '_viewPath',
+        createPath: '_createPath',
+        updatePath: '_updatePath',
+        deletePath: '_deletePath',
+    };
+
 
     constructor(config: object = {}) {
         super();
-        const keyMap = {
-            httpRequest: '_httpRequest',
-            primaryKey: '_primaryKey',
-            basePath: '_basePath',
-            viewPath: '_viewPath',
-            createPath: '_createPath',
-            updatePath: '_updatePath',
-            deletePath: '_deletePath',
-        };
+        let keyMap = this._keyMap;
         Object.keys(keyMap).forEach(key => {
             if (config.hasOwnProperty(key)) {
                 this[keyMap[key]] = config[key];
@@ -36,6 +38,19 @@ export default class HttpModel extends Model {
             throw new Error('basePath必须配置');
         }
     }
+
+    public getConfig()
+    {
+        let config = {};
+        let keyMap = this._keyMap;
+        Object.keys(keyMap).forEach(key => {
+            if (this[keyMap[key]]) {
+                config[key] = this[keyMap[key]];
+            }
+        });
+        return config;
+    }
+
 
     get createUrl(): string {
         return this._basePath + this._createPath;
@@ -119,6 +134,9 @@ export default class HttpModel extends Model {
     public updateModel() {
         const dirtyObject = this.getChangedRequestData();
         return new Promise((resolve, reject) => {
+            if (!this[this._primaryKey]) {
+                return reject(new Error('primaryKey不能为空')); 
+            }
             if (dirtyObject == null || Object.keys(dirtyObject).length === 0) {
                 return resolve({model:this, data:{}}); 
             }
@@ -157,6 +175,21 @@ export default class HttpModel extends Model {
                 data: {},
             }, resolve, reject); 
         });
+    }
+
+    // 保存model，根据是否有primaryKey判断是更新还是创建
+    public save(type) {
+        if(type === "create") {
+            return this.createModel();
+        }else if(type === "update") {
+            return this.updateModel();
+        }else {
+            if (this[this._primaryKey]) {
+                return this.updateModel();
+            } else {
+                return this.createModel();
+            }
+        }
     }
 }
 
