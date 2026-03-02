@@ -23,6 +23,10 @@ export default {
                 return ['blur'];
             },
         },
+        inputTag: {
+            type: String,
+            default: 'baseinput',
+        },
     },
     data() {
         return {
@@ -77,7 +81,7 @@ export default {
             <label>{{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
         </slot>
         <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
-            <baseinput :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></baseinput>
+            <component :is="inputTag" :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></component>
         </slot>
         <slot name="error" :model="model" :attr="attr" :showError="showError">
             <p v-show="showError">{{showError}}</p>

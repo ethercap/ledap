@@ -7,9 +7,9 @@ var themeConfig = {
                 <label class="col-sm-3 col-form-label text-right"> {{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
             </slot>
             <div class="col-sm-9">
-                <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
-                    <baseinput :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></baseinput>
-                </slot>
+            <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
+                <component :is="inputTag" :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></component>
+            </slot>
                 <slot name="error" :model="model" :attr="attr" :showError="showError">
                     <b-form-invalid-feedback :state="!Boolean(showError)">
                     {{showError}}

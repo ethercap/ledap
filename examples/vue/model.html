@@ -90,6 +90,8 @@
                       </searchinput>
                   </template>
               </form-item>
+              <form-item class="form-group" :model="model" attr="searchTag" label="inputTag搜索" input-tag="searchinput" :data-provider="dp" item-name="name" @choose="choose">
+              </form-item>
               <form-item class="form-group" :model="model" attr="search2">
                   <template v-slot="p">
                       <select2 v-bind="p" :data-provider="dp" @choose="choose" :multiple="true" item-name="name">
@@ -213,7 +215,8 @@ var app = new Vue({
           }),
           model :  ledap.App.getModel({
               phone: '',
-              introduce: ''
+              introduce: '',
+              searchTag: ''
           }),
           model1 : new Model(),
           model2 : new LocalModel(),
