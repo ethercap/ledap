@@ -12,7 +12,6 @@ export default class DataProvider extends BaseObject {
     public pager: Pagination;
     public isLoad: boolean = false;
     public models: Model[];
-    public modelCallback  = null;
 
     public _sort: object = {};
 
@@ -34,7 +33,6 @@ export default class DataProvider extends BaseObject {
             this.pager = new this['paginationClass']();
         }
         this.sort = lodash.get(config, 'sort', '');
-        this.modelCallback = lodash.get(config, 'modelCallback', null);
         const data = lodash.get(config, 'data', {});
         this.load(data);
     }
