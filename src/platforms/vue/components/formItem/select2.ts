@@ -14,6 +14,27 @@ export default lodash.merge(input, {
             type: Boolean,
             default: false,
         },
+        placeholder: {
+            type: String,
+            default: '',
+        },
+        webFocusSearch: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    mounted() {
+        if (this.filter === null) {
+            this.filter = (model, index, collection) => {
+                const keyword = String(this.value || '').toLowerCase();
+                if (!keyword) {
+                    return true;
+                }
+                const text = String(model[this.itemName] || '').toLowerCase();
+                return text.indexOf(keyword) > -1;
+            };
+        }
+        this.init();
     },
     data() {
         return {
@@ -27,7 +48,44 @@ export default lodash.merge(input, {
             selected: {}
         };
     },
+    computed: {
+        showList() {
+            return this.isFocus;
+        },
+        listeners() {
+            return lodash.assign({}, this.$listeners,  {
+                input: e => {
+                    this.inputChange(e);
+                },
+                focus: e => {
+                    this.isFocus = true;
+                    this.focusChange(e);
+                    if (!this.isWebDp() || this.webFocusSearch) {
+                        this.request({
+                            [this.keyName]: [],
+                            [this.paramName]: this.value
+                        });
+                    }
+                },
+                blur: e => {
+                    this.isHide = true;
+                    setTimeout(() => {
+                        this.isHide = false;
+                        this.isFocus = false;
+                    }, this.delay);
+                    this.blurChange(e);
+                },
+            });
+        },
+        // 这里的formValue是表单里提交给后端的值
+        formValue() {
+            return this.model[this.attr];
+        }
+    },
     watch: {
+        formValue(newValue: any, oldValue: any) {
+            this.init();
+        },
         selected(value) {
             const keys = Object.keys(value);
             if (this.multiple) {
@@ -40,6 +98,9 @@ export default lodash.merge(input, {
         }
     },
     methods: {
+        isWebDp() {
+            return this.dataProvider.refresh && typeof (this.dataProvider.refresh) === 'function';
+        },
         init() {
             // 如果没有selected,先请求
             if (this.model[this.attr] && lodash.isEmpty(this.selected)) {
@@ -49,6 +110,28 @@ export default lodash.merge(input, {
                 }, this.syncSelected);
             }
             this.syncSelected();
+        },
+        request(params, callback = key => {}) {
+            if (this.isWebDp()) {
+                this.dataProvider.callback = data => {
+                    this.models = this.dataProvider.models;
+                    callback(this.models);
+                };
+                this.dataProvider.setParams(params);
+            } else {
+                if (!this.value) {
+                    this.models = this.dataProvider.models || [];
+                    callback(this.models);
+                    return;
+                }
+                this.models = lodash.filter(this.dataProvider.models || [], this.filter);
+                callback(this.models);
+            }
+        },
+        focusChange(e) {
+            if (this.$listeners.focus) {
+                this.$listeners.focus(e);
+            }
         },
         syncSelected() {
             if (this.multiple && typeof (this.model[this.attr]) != 'object') {
@@ -70,13 +153,15 @@ export default lodash.merge(input, {
         },
         inputChange(e) {
             this.value = e.target.value;
-            if (this.value) {
+            if (!this.isWebDp() || this.value) {
                 this.request({
                     [this.keyName]: [],
                     [this.paramName]: this.value
                 });
             }
-            this.inputListeners.input(null);
+            if (this.$listeners.input) {
+                this.$listeners.input(null);
+            }
         },
         blurChange(e) {
             if (!this.multiple) {
@@ -87,7 +172,9 @@ export default lodash.merge(input, {
                     this.value = '';
                 }
             }
-            this.inputListeners.blur(e);
+            if (this.$listeners.blur) {
+                this.$listeners.blur(e);
+            }
         },
         // 选择model
         choose(model, index, e) {
@@ -121,7 +208,12 @@ export default lodash.merge(input, {
         clear() {
             this.selected = {};
             this.value = '';
-            this.models = [];
+            if (!this.isWebDp()) {
+                this.request({
+                    [this.keyName]: [],
+                    [this.paramName]: this.value
+                });
+            }
             this.$emit('clear');
         }
     },
@@ -129,7 +221,7 @@ export default lodash.merge(input, {
 `<div style="position: relative;">
     <span>
         <span v-if="multiple" v-for="model,key in selected" :key="key" @click="choose(model, key, $event)">{{model[itemName]}}</span>
-        <input ref="input" :name="attr" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" v-bind="$attrs">
+        <input ref="input" :name="attr" :value="value" :placeholder="placeholder || model.getAttributeHint(attr)" v-on="listeners" autocomplete="off" v-bind="$attrs">
         <span v-if="!multiple && value" @click="clear">X</span>
     </span>
     <ul v-show="showList" style="position: absolute;" :style="{opacity: isHide ? 0 : 1}">

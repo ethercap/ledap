@@ -109,13 +109,19 @@ export default lodash.merge(input, {
                     [this.paramName]: this.value
                 });
             }
-            this.inputListeners.input(e);
+            if (this.inputListeners.input) {
+                this.inputListeners.input(e);
+            }
         },
         focusChange(e) {
-            this.inputListeners.focus(e);
+            if (this.inputListeners.focus) {
+                this.inputListeners.focus(e);
+            }
         },
         blurChange(e) {
-            this.inputListeners.blur(e);
+            if (this.inputListeners.blur) {
+                this.inputListeners.blur(e);
+            }
         },
         // 选择model
         choose(model, index, e) {

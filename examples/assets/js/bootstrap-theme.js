@@ -7,9 +7,9 @@ var themeConfig = {
                 <label class="col-sm-3 col-form-label text-right"> {{label || model.getAttributeLabel(attr)}}{{model.isRequired(attr) ? '*' : ''}}</label>
             </slot>
             <div class="col-sm-9">
-                <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
-                    <baseinput :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></baseinput>
-                </slot>
+            <slot :model="model" :attr="attr" :validate="validate" :inputListeners="inputListeners">
+                <component :is="inputTag" :model="model" :attr="attr" :inputListeners="inputListeners" v-bind="$attrs"></component>
+            </slot>
                 <slot name="error" :model="model" :attr="attr" :showError="showError">
                     <b-form-invalid-feedback :state="!Boolean(showError)">
                     {{showError}}
@@ -55,8 +55,8 @@ var themeConfig = {
         <span v-if="multiple" v-for="model,key in selected" :key="key">
             <button class="btn btn-sm btn-light" @click="choose(model, key, $event)">{{model[itemName]}}{{'  x'}}</button>&nbsp;
         </span>
-        <input :name="attr" ref="input" :value="value" :placeholder="model.getAttributeHint(attr)" v-on="listeners" v-bind="$attrs" autocomplete="off" class="border-0 flex-fill mw-100" style="outline-color:white;min-width:0;">
-        <b-icon-x v-if="!multiple && value" @click="clear" style="cursor: pointer;"></b-icon-x>
+        <input :name="attr" ref="input" :value="value" :placeholder="placeholder || model.getAttributeHint(attr)" v-on="listeners" v-bind="$attrs" autocomplete="off" class="border-0 flex-fill mw-100" style="outline-color:white;min-width:0;">
+        <span v-if="!multiple && value" @click="clear" style="cursor: pointer;">X</span>
     </div>
     <ul v-show="showList" class="list-unstyled position-absolute w-100 border bg-light" :class="[isHide ? 'invisible' : 'visible']" style="z-index: 10;">
         <div v-if="dataProvider.isLoading" class="text-center py-2">加载中</div>

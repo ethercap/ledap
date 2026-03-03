@@ -51,6 +51,10 @@ export default class Theme extends BaseObject {
         return comp;
     }
 
+    public registerAll(vue) {
+        return this.register(Object.keys(this.components), vue);
+    }
+
     // 注册组件, 循环遍历整棵树
     public register(name, vue) {
         const objs = [];

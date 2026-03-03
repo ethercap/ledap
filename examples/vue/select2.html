@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select2示例</title>
+      <link rel="stylesheet" href="../assets/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/lib/bootstrap-vue/bootstrap-vue.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap-theme.css">
+    <style>
+      .selected-tags {
+        margin-top: 10px;
+      }
+      .selected-tags .tag {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 2px 8px;
+        margin: 2px;
+        border-radius: 3px;
+      }
+      .form-item-container {
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="app" class="container">
+        <h3>Select2组件示例</h3>
+
+        <div class="form-group">
+          <label>1. 单选-select2 (本地数据):</label>
+          <div class="form-item-container">
+            <form-item :model="model" attr="city" label="城市">
+              <select2
+                :model="model"
+                attr="city"
+                :data-provider="cityDp"
+                placeholder="请选择城市"
+                item-name="name"
+                key-name="id">
+              </select2>
+            </form-item>
+          </div>
+          <div>当前值: {{model.city}}</div>
+        </div>
+
+        <div class="form-group">
+          <label>2. 多选-select2 (本地数据):</label>
+          <div class="form-item-container">
+            <form-item :model="model2" attr="tags" label="标签">
+              <select2
+                :model="model2"
+                attr="tags"
+                :data-provider="tagDp"
+                :multiple="true"
+                placeholder="请选择标签"
+                item-name="name"
+                key-name="id">
+              </select2>
+            </form-item>
+          </div>
+          <div>当前值: {{model2.tags}}</div>
+        </div>
+
+        <div class="form-group">
+          <label>3. 单选-select2 (WebDataProvider):</label>
+          <div class="form-item-container">
+            <form-item :model="model3" attr="province" label="省份">
+              <select2
+                :model="model3"
+                attr="province"
+                :data-provider="webDp"
+                placeholder="请选择省份"
+                item-name="name"
+                key-name="id"
+                @choose="onChoose">
+              </select2>
+            </form-item>
+          </div>
+          <div>当前值: {{model3.province}}</div>
+          <div v-if="lastSelected" class="selected-tags">
+            最后选择: <span class="tag">{{lastSelected.name}}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>4. 带初始值的单选:</label>
+          <div class="form-item-container">
+            <form-item :model="model4" attr="country" label="国家">
+              <select2
+                :model="model4"
+                attr="country"
+                :data-provider="countryDp"
+                placeholder="请选择国家"
+                item-name="name"
+                key-name="code">
+              </select2>
+            </form-item>
+          </div>
+          <div>当前值: {{model4.country}}</div>
+        </div>
+
+        <div class="form-group">
+          <label>5. 带初始值的多选:</label>
+          <div class="form-item-container">
+            <form-item :model="model5" attr="hobbies" label="爱好">
+              <select2
+                :model="model5"
+                attr="hobbies"
+                :data-provider="hobbyDp"
+                :multiple="true"
+                placeholder="请选择爱好"
+                item-name="name"
+                key-name="id">
+              </select2>
+            </form-item>
+          </div>
+          <div>当前值: {{model5.hobbies}}</div>
+        </div>
+      </div>
+
+      <script src="../assets/lib/vue/vue.js"></script>
+      <script src="../dist/ledap.js"></script>
+      <script src="../assets/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+      <script src="../assets/js/bootstrap-theme.js"></script>
+      <script src="../assets/js/ledap-init.js"></script>
+  </body>
+  <script>
+const ledap = window["ledap"];
+ledap.App.register(['form-item', 'select2'], Vue);
+
+var app = new Vue({
+  el: '#app',
+  data: () => {
+    return {
+      model: ledap.App.getModel({city: ''}),
+      model2: ledap.App.getModel({tags: []}),
+      model3: ledap.App.getModel({province: ''}),
+      model4: ledap.App.getModel({country: 'US'}),
+      model5: ledap.App.getModel({hobbies: ['1', '3']}),
+      lastSelected: null,
+      cityDp: new ledap.DataProvider({
+        data: {
+          items: [
+            {id: '1', name: '北京'},
+            {id: '2', name: '上海'},
+            {id: '3', name: '广州'},
+            {id: '4', name: '深圳'},
+            {id: '5', name: '杭州'},
+            {id: '6', name: '成都'},
+            {id: '7', name: '武汉'},
+            {id: '8', name: '西安'},
+          ]
+        }
+      }),
+      tagDp: new ledap.DataProvider({
+        data: {
+          items: [
+            {id: '1', name: '编程'},
+            {id: '2', name: '设计'},
+            {id: '3', name: '产品'},
+            {id: '4', name: '运营'},
+            {id: '5', name: '市场'},
+          ]
+        }
+      }),
+      countryDp: new ledap.DataProvider({
+        data: {
+          items: [
+            {code: 'CN', name: '中国'},
+            {code: 'US', name: '美国'},
+            {code: 'JP', name: '日本'},
+            {code: 'KR', name: '韩国'},
+            {code: 'GB', name: '英国'},
+            {code: 'DE', name: '德国'},
+          ]
+        }
+      }),
+      hobbyDp: new ledap.DataProvider({
+        data: {
+          items: [
+            {id: '1', name: '阅读'},
+            {id: '2', name: '运动'},
+            {id: '3', name: '音乐'},
+            {id: '4', name: '旅行'},
+            {id: '5', name: '游戏'},
+            {id: '6', name: '摄影'},
+          ]
+        }
+      }),
+      webDp: ledap.App.getWebDp({
+        httpOptions: {
+          url: '/data/dp_1.json'
+        },
+        searchParam: 'keyword'
+      })
+    };
+  },
+  methods: {
+    onChoose(model, index, event) {
+      this.lastSelected = model;
+      console.log('选择了:', model);
+    }
+  }
+});
+  </script>
+</html>

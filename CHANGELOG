@@ -1,3 +1,25 @@
+##[0.1.14] - 2025-8-23
+
+### Added
+- vue Theme Add registerAll function
+- Add `HttpModel` base class for CRUD model requests
+- Add `App.getHttpModel(config, params)` helper for quick model fetch
+- Add vue example page `examples/vue/httpModel.html` for HttpModel CRUD test
+
+### Changed
+- HttpModel private fields unified to `_` prefix and request payload filters private keys
+- HttpModel `find` normalizes `withConfig` to boolean when provided
+- examples html now keep `.min` for third-party libs and only switch ledap bundles to non-min files
+
+### Fixed
+- Fix HttpModel request option key from `parmas` to `params`
+- Fix HttpModel primary key config typo (`primaryKey`)
+- Fix Model `getAttributeDesc` dict mapping by using field value as dict key
+- Fix Model `clone` to copy only business fields (exclude private `_` fields)
+- Improve Model change detection with deep compare and deep sync snapshot
+- Fix Model default `scenarios` to exclude private fields and include rule-defined attributes
+- Fix Model custom validator method resolution to support prototype methods
+
 
 ## [0.1.13]
 
@@ -36,7 +58,6 @@
 ## [0.1.11] - 2025-02-12
 
 #### Changed
-
 - updated packages
 
 ##[0.1.10] - 2021-01-20
